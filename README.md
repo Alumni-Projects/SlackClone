@@ -3,3 +3,6 @@ install node modules
 
 live server: 
 "npm run dev"
+
+für das Kompilieren:
+"npm run build"
