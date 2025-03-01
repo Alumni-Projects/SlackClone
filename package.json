@@ -1,61 +1,18 @@
 {
-  "name": "dabubble",
-  "version": "1.0.0",
-  "main": "index.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@fortawesome/free-solid-svg-icons": "^6.6.0",
-    "@fortawesome/react-fontawesome": "^0.2.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-icons": "^5.3.0",
-    "react-router-dom": "^6.26.1",
-    "styled-components": "^6.1.12"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.9.0",
-    "@types/jest": "^29.5.12",
-    "@types/node": "^22.4.0",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "css-loader": "^7.1.2",
-    "eslint": "^9.9.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-react": "^7.35.0",
-    "globals": "^15.9.0",
-    "html-webpack-plugin": "^5.6.0",
-    "husky": "^9.1.5",
-    "lint-staged": "^15.2.9",
-    "mini-css-extract-plugin": "^2.9.0",
-    "postcss-styled-syntax": "^0.6.4",
-    "prettier": "^3.3.3",
-    "stylelint": "^16.8.2",
-    "stylelint-config-recommended": "^14.0.1",
-    "stylelint-config-standard": "^36.0.1",
-    "stylelint-config-styled-components": "^0.1.1",
-    "stylelint-processor-styled-components": "^1.0.0",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "^8.2.0",
-    "typescript-plugin-styled-components": "^3.0.0",
-    "webpack": "^5.93.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4"
-  },
+  "name": "slack-clone",
+  "version": "0.0.0",
   "scripts": {
-    "dev": "webpack serve --port 3000",
-    "build": "NODE_ENV=production webpack",
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
     "lint": "npm lint:js && npm lint:css",
     "lint:js": "eslint 'src/**/*.{ts,tsx}'",
     "lint:js:fix": "npm run lint:js --fix",
     "lint:css": "stylelint './src/**/*.{ts,tsx}'",
     "lint:css:fix": "npm run lint:css --fix",
-    "prettier:fix": "prettier --config .prettierrc 'src/**/*.{ts,tsx}' --write",
-    "prepare": "husky"
+    "prettier:fix": "prettier --config .prettierrc 'src/**/*.{ts,tsx}' --write"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -63,5 +20,33 @@
       "npm run lint:js:fix",
       "npm run lint:css:fix"
     ]
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^19.0.0",
+    "@angular/common": "^19.0.0",
+    "@angular/compiler": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "@angular/forms": "^19.0.0",
+    "@angular/platform-browser": "^19.0.0",
+    "@angular/platform-browser-dynamic": "^19.0.0",
+    "@angular/router": "^19.0.0",
+    "husky": "^9.1.7",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.0.2",
+    "@angular/cli": "^19.0.2",
+    "@angular/compiler-cli": "^19.0.0",
+    "@types/jasmine": "~5.1.0",
+    "jasmine-core": "~5.4.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.6.2"
   }
 }
