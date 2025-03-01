@@ -1,0 +1,124 @@
+.devspace {
+    width: 366px;
+    height: 940px;
+    background-color: var(--white-color);
+    padding: 32px 30px 32px 30px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    font-family: 'Nunito', sans-serif, serif;
+}
+
+.devspace-header {
+    display: flex;
+    align-items: center;
+    width: 306px;
+    height: 60px;
+    justify-content: space-between;
+
+}
+
+.devspace-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: var(--font-size-title-default);
+    font-weight: var(--font-weight-extra-bold);
+    line-height: 32.74px;
+
+}
+
+.devspace-edit-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+
+    & img {
+        width: var(--icon-size-m);
+        height: var(--icon-size-m);
+    }
+
+    &:hover {
+        cursor: pointer;
+        background-color: var(--bg-color);
+        border-radius: 50%;
+        transition: all 0.75ms ease-in-out;
+
+        & img {
+            content: url('../../../assets/img/DevEditHover.png');
+        }
+    }
+}
+
+.devspace-channels{
+    width: 306px;
+    min-width: 162px;  
+    
+}
+
+.devspace-channel-title{
+    width: 100%;
+    height:46px; 
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;   
+}
+
+.devspace-channel-title-content{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    & div{
+        display: flex;
+        gap: 10px;
+        font-size: var( --font-size-l) ;
+        font-weight: var(--font-weight-extra-bold);
+        line-height: 27.28px;
+    }
+   
+}
+
+
+.devspace-channel-title-content:hover {
+    cursor: pointer;
+
+    .active-Channel-Icon {
+        content: url('../../../assets/img/arrow_drop_down_right_hover.png');
+    }
+
+    .active-Channel-Icon-None {
+        content: url('../../../assets/img/arrow_drop_downHover.png');
+    }
+
+     div {
+        color: var(--primary-color);
+        transition: all 0.3s ease-in-out;
+
+        img {
+            content: url('../../../assets/img/workspacesHover.png');
+        }
+    }
+}
+
+.devspace-add-channel{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover{
+        cursor: pointer;
+        background-color: var(--bg-color);
+        border-radius: 50%;
+        transition: all 0.75ms ease-in-out;
+        & img{
+            content: url('../../../assets/img/addChannelHover.png');
+        }
+    }
+}
+
+
