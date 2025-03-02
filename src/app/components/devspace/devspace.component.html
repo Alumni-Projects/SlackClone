@@ -1,3 +1,6 @@
+@if(devspaceService.openDevspace){
+    
+
 <section class="devspace">
     <div class="devspace-header">
         <div class="devspace-logo">
@@ -10,8 +13,10 @@
     <div class="devspace-channels">
         <div class="devspace-channel-title">
             <div class="devspace-channel-title-content" (click)="channelActive()">
-                <span>@if(activeChannel){<img [class.active-Channel-Icon]="activeChannel"  src="./img/arrow_drop_down_right.png" alt="">}@else{
-                    <img [class.active-Channel-Icon-None]="activeChannel == false"  src="./img/arrow_drop_down.png" alt="">}</span>
+                <span>
+                    <img [class.active-Channel-Icon]="activeChannel" [class.active-Channel-Icon-None]="!activeChannel"
+                        [src]="imageUrl" alt="">
+                </span>
                 <div>
                     <span><img src="./img/workspaces.png" alt=""></span>
                     <span>Channels</span>
@@ -19,6 +24,64 @@
             </div>
             <span (click)="openDialog()" class="devspace-add-channel"><img src="./img/addChannel.png" alt=""></span>
         </div>
+        @if(!activeChannel){
+
+        <div class="devspace-channel-list">
+
+            @for(item of devspaceService.channels; track item.name; let i = $index){
+            <div [class.activeChannel]="devspaceService.channels[i].channelActiveTalk"
+                class="devspace-channel-list-item" (click)="channelActiveClass(i)">
+                <span><img src="./img/tagChannelName.png" alt=""></span>
+                <div>
+                    <span>{{item.name}}</span>
+                </div>
+            </div>
+            }@empty{
+
+
+            <div>
+                <span>Erstelle einen Channel</span>
+            </div>
+
+            }
+        </div>
+
+        <div class="devspace-add-channel-button" (click)="openDialog()"><img src="./img/add_circle.png" alt="">
+            <p>Channel hinzufügen</p>
+        </div>
+        }
+    </div>
+
+    <div class="devspace-direct-messages">
+        <div class="devspace-direct-messages-title" (click)="messageActive()">
+            <span><img [class.active-Message-Icon]="directMessages" [class.active-Message-Icon-None]="!directMessages"
+                    [src]="imageUrlMessage" alt=""></span>
+            <div class="devspace-direct-messages-title-content">
+                <span><img src="./img/account_circle.png" alt=""></span>
+                <span>Direktnachrichten</span>
+            </div>
+        </div>
+        @if(!directMessages){
+        <div class="devspace-direct-messages-list">
+            @for(item of devspaceService.accounts; track item.name; let i = $index){
+
+            <div class="devspace-direct-messages-item" (click)="messageActiveClass(i)" [class.active-Account]="devspaceService.accounts[i].activeMessage" >
+                <span class="devspace-direct-messages-icon"><img src="{{item.pic}}" alt="">
+                    @if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>
+                    }@else{<span class="active-Account-Icon-None"></span>}
+                </span>
+
+                <span class="devspace-direct-messages-name">{{item.name}}
+                    @if(devspaceService.accounts[i].activeSelf){(Du)} </span>
+            </div>
+
+            }@empty{
+                <div>Keine Kontakte vorhanden</div>
+            }
+        </div>
+        }
+
     </div>
 
 </section>
+}
