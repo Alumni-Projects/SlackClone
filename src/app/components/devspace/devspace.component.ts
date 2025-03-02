@@ -76,7 +76,12 @@ channelActiveClass(i:number){
   this.devspaceService.channels.forEach((channel,) => {
     channel.channelActiveTalk = false;
   });
+  this.devspaceService.accounts.forEach((account,) => {
+    account.activeMessage = false;
+  });
   this.devspaceService.channels[i].channelActiveTalk = !this.devspaceService.channels[i].channelActiveTalk;
+  
+  
 }
 
 messageActiveClass(i:number){
@@ -84,7 +89,11 @@ messageActiveClass(i:number){
   this.devspaceService.accounts.forEach((account,) => {
     account.activeMessage = false;
   });
+  this.devspaceService.channels.forEach((channel,) => {
+    channel.channelActiveTalk = false;
+  });
   this.devspaceService.accounts[i].activeMessage = !this.devspaceService.accounts[i].activeMessage;
+
 
 }
 
