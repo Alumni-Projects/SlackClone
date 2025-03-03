@@ -7,7 +7,7 @@
             <img src="./img/WorkspaceLogo.png" alt="">
             <p>Devspace</p>
         </div>
-        <div class="devspace-edit-logo"><img src="./img/DevEdit.png" alt=""></div>
+        <div class="devspace-edit-logo" (click)="openMessage()"><img src="./img/DevEdit.png" alt=""></div>
     </div>
 
     <div class="devspace-channels">
@@ -30,7 +30,7 @@
 
             @for(item of devspaceService.channels; track item.name; let i = $index){
             <div [class.activeChannel]="devspaceService.channels[i].channelActiveTalk"
-                class="devspace-channel-list-item" (click)="channelActiveClass(i)">
+                class="devspace-channel-list-item" (click)="channelActiveClass(i); closeMessage()" >
                 <span><img src="./img/tagChannelName.png" alt=""></span>
                 <div>
                     <span>{{item.name}}</span>
@@ -65,7 +65,7 @@
         <div class="devspace-direct-messages-list">
             @for(item of devspaceService.accounts; track item.name; let i = $index){
 
-            <div class="devspace-direct-messages-item" (click)="messageActiveClass(i)" [class.active-Account]="devspaceService.accounts[i].activeMessage" >
+            <div class="devspace-direct-messages-item" (click)="messageActiveClass(i);closeMessage()" [class.active-Account]="devspaceService.accounts[i].activeMessage" >
                 <span class="devspace-direct-messages-icon"><img src="{{item.pic}}" alt="">
                     @if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>
                     }@else{<span class="active-Account-Icon-None"></span>}

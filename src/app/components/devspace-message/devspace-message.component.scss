@@ -1,0 +1,8 @@
+.devspace-message-area{
+    width: calc(100vw - 440px);    
+    height: 940px;
+    background-color: var(--white-color);    
+    border-radius: 30px;
+    display: flex;
+    flex-shrink: 0;
+}

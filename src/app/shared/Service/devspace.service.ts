@@ -9,6 +9,7 @@ export class DevspaceService {
   channelsName: string = "";
   channelsDescription: string = "";
   openDevspace: boolean = true;
+  openMessage: boolean = false;
 
 
 

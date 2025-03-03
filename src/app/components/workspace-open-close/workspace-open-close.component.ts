@@ -14,8 +14,9 @@ export class WorkspaceOpenCloseComponent {
   constructor(public devspaceService: DevspaceService) { }
 
   openCLoseMenu() {
-    this.openMenu = !this.openMenu
-    this.devspaceService.openDevspace = !this.devspaceService.openDevspace
+    this.openMenu = !this.openMenu;
+    this.devspaceService.openDevspace = !this.devspaceService.openDevspace;
+    this.devspaceService.openMessage = false;
   }
 
 }
