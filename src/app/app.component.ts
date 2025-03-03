@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { DevspaceComponent } from './components/devspace/devspace.component';
+import { WorkspaceOpenCloseComponent } from './components/workspace-open-close/workspace-open-close.component';
+import { DevspaceMessageComponent } from './components/devspace-message/devspace-message.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,DevspaceComponent,WorkspaceOpenCloseComponent,DevspaceMessageComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

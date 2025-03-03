@@ -4,7 +4,7 @@
 :root {
     --primary-color: #444df2;
     --secondary-color: #797ef3;
-    --bg-color: #eceefe;
+    --bg-color: #eceefe;   
     --white-color: #fff;
     --black-color: #000;
     --grey-dark: #686868;
@@ -136,4 +136,16 @@ select {
     --border-radius-m: 20px;
     --border-radius-l: 25px;
     --border-radius-xl: 100px;
+}
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width: none !important;
+    
 }
