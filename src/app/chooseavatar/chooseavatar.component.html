@@ -1,10 +1,10 @@
 <div class="sign-in-layout">
   <header class="sign-in-header">
     <a routerLink="/" class="icon-link">
-      <img src="assets/icons/arrow_back.svg" alt="Zurück" class="arrow-icon" />
     </a>
     <h1 class="sign-in-title">Wähle deinen Avatar</h1>
   </header>
+  <mat-icon [style.color]="iconColor" [style.font-size]="iconSize">arrow_back</mat-icon>
 
   <div class="avatar-preview">
     <img [src]="avatarImage" alt="Default Avatar" class="choose-image" />
