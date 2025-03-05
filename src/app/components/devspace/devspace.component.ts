@@ -22,21 +22,21 @@ export class DevspaceComponent implements OnInit {
 
   constructor(public dialog: MatDialog, public devspaceService: DevspaceService) { }
 
-  imageUrl = './img/arrow_drop_down.png';
-  imageUrlMessage = './img/arrow_drop_down.png';
+  imageUrl = '/assets/img/arrow_drop_down.png';
+  imageUrlMessage = '/assets/img/arrow_drop_down.png';
 
   channelActive() {
     this.activeChannel = !this.activeChannel;
     this.imageUrl = this.activeChannel
-      ? './img/arrow_drop_down_right.png'
-      : './img/arrow_drop_down.png';
+      ? '/assets/img/arrow_drop_down_right.png'
+      : '/assets/img/arrow_drop_down.png';
   }
 
   messageActive() {
     this.directMessages = !this.directMessages;
     this.imageUrlMessage = this.directMessages
-      ? './img/arrow_drop_down_right.png'
-      : './img/arrow_drop_down.png';
+      ? '/assets/img/arrow_drop_down_right.png'
+      : '/assets/img/arrow_drop_down.png';
   }
 
   ngOnInit() {
@@ -47,14 +47,14 @@ export class DevspaceComponent implements OnInit {
 
   preloadImages(): Promise<void> {
     const imageUrls = [
-      './img/arrow_drop_down_right.png',
-      './img/arrow_drop_down.png',
-      './img/arrow_drop_down_right_hover.png',
-      './img/arrow_drop_downHover.png',
-      './img/account_circle.png',
-      './img/account_circle_hover.png',
-      './img/workspaces.png',
-      './img/workspacesHover.png',
+      '/assets/img/arrow_drop_down_right.png',
+      '/assets/img/arrow_drop_down.png',
+      '/assets/img/arrow_drop_down_right_hover.png',
+      '/assets/img/arrow_drop_downHover.png',
+      '/assets/img/account_circle.png',
+      '/assets/img/account_circle_hover.png',
+      '/assets/img/workspaces.png',
+      '/assets/img/workspacesHover.png',
 
     ];
 

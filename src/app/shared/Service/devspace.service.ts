@@ -23,11 +23,11 @@ export class DevspaceService {
   ];
 
   accounts: DevspaceAccount[] = [
-    { name: 'Frederik Beck', active: true, pic: './img/Avatar1.png', activeSelf: true, activeMessage: false },
-    { name: 'Sofia Müller', active: false, pic: './img/Avatar2.png', activeSelf: false, activeMessage: false },
-    { name: 'Noah Braun', active: true, pic: './img/Avatar3.png', activeSelf: false, activeMessage: false },
-    { name: 'Elias Beumann', active: false, pic: './img/Avatar5.png', activeSelf: false, activeMessage: false },
-    { name: 'Frederik Beck', active: true, pic: './img/Avatar6.png', activeSelf: false, activeMessage: false },
+    { name: 'Frederik Beck', active: true, pic: '/assets/img/Avatar1.png', activeSelf: true, activeMessage: false },
+    { name: 'Sofia Müller', active: false, pic: '/assets/img/Avatar2.png', activeSelf: false, activeMessage: false },
+    { name: 'Noah Braun', active: true, pic: '/assets/img/Avatar3.png', activeSelf: false, activeMessage: false },
+    { name: 'Elias Beumann', active: false, pic: '/assets/img/Avatar5.png', activeSelf: false, activeMessage: false },
+    { name: 'Frederik Beck', active: true, pic: '/assets/img/Avatar6.png', activeSelf: false, activeMessage: false },
 
   ];
 }

@@ -7,7 +7,6 @@
     position: absolute;
     left: 0;
     top: 581px;
-    // top: 70%;
     background-color: var(--white-color);
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
@@ -31,7 +30,7 @@
         }
 
         & img {
-            content: url('../../../assets/img/Showmenu_hover.png');
+            content: url('/assets/img/Showmenu_hover.png');
         }
 
     }
@@ -42,7 +41,7 @@
 .close-menu {
     &:hover {
         & img {
-            content: url('../../../assets/img/Showmenu_open_hover.png');
+            content: url('/assets/img/Showmenu_open_hover.png');
         }
     }
 }
@@ -64,4 +63,3 @@
     height: 32px;
 }
 
-.openMenu {}

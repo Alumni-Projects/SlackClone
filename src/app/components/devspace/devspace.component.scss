@@ -48,7 +48,7 @@
         transition: all 0.75ms ease-in-out;
 
         & img {
-            content: url('../../../assets/img/DevEditHover.png');
+            content: url('/assets/img/DevEditHover.png');
             
         }
     }
@@ -92,12 +92,12 @@
     cursor: pointer;
 
     .active-Channel-Icon {
-        content: url('../../../assets/img/arrow_drop_down_right_hover.png');
+        content: url('/assets/img/arrow_drop_down_right_hover.png');
        
     }
 
     .active-Channel-Icon-None {
-        content: url('../../../assets/img/arrow_drop_downHover.png');
+        content: url('/assets/img/arrow_drop_downHover.png');
         
     }
 
@@ -106,7 +106,7 @@
         transition: all 0.75ms ease-in-out;
 
         img {
-            content: url('../../../assets/img/workspacesHover.png');
+            content: url('/assets/img/workspacesHover.png');
         }
     }
 }
@@ -125,7 +125,7 @@
         transition: all 0.75ms ease-in-out;
 
         & img {
-            content: url('../../../assets/img/addChannelHover.png');
+            content: url('/assets/img/addChannelHover.png');
         }
     }
 }
@@ -164,7 +164,7 @@
 
 
         & img {
-            content: url('../../../assets/img/tagHover.png');
+            content: url('/assets/img/tagHover.png');
         }
     }
 
@@ -192,7 +192,7 @@
         cursor: pointer;
 
         & img {
-            content: url('../../../assets/img/add_circle_hover.png');
+            content: url('/assets/img/add_circle_hover.png');
         }
 
         & p {
@@ -208,7 +208,7 @@
     transition: all 0.75ms ease-in-out;
 
     & img {
-        content: url('../../../assets/img/tagHover.png');
+        content: url('/assets/img/tagHover.png');
     }
 
     & span {
@@ -261,11 +261,11 @@
     cursor: pointer;
 
     .active-Message-Icon {
-        content: url('../../../assets/img/arrow_drop_down_right_hover.png');
+        content: url('/assets/img/arrow_drop_down_right_hover.png');
     }
 
     .active-Message-Icon-None {
-        content: url('../../../assets/img/arrow_drop_downHover.png');
+        content: url('/assets/img/arrow_drop_downHover.png');
     }
 
     .devspace-direct-messages-title-content {
@@ -275,7 +275,7 @@
         }
 
         & span:nth-of-type(1) {
-            content: url('../../../assets/img/account_circle_hover.png');
+            content: url('/assets/img/account_circle_hover.png');
         }
 
     }

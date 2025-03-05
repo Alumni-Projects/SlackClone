@@ -4,10 +4,10 @@
 <section class="devspace">
     <div class="devspace-header">
         <div class="devspace-logo">
-            <img src="./img/WorkspaceLogo.png" alt="">
+            <img src="/assets/img/WorkspaceLogo.png" alt="">
             <p>Devspace</p>
         </div>
-        <div class="devspace-edit-logo" (click)="openMessage()"><img src="./img/DevEdit.png" alt=""></div>
+        <div class="devspace-edit-logo" (click)="openMessage()"><img src="/assets/img/DevEdit.png" alt=""></div>
     </div>
 
     <div class="devspace-channels">
@@ -18,11 +18,11 @@
                         [src]="imageUrl" alt="">
                 </span>
                 <div>
-                    <span><img src="./img/workspaces.png" alt=""></span>
+                    <span><img src="/assets/img/workspaces.png" alt=""></span>
                     <span>Channels</span>
                 </div>
             </div>
-            <span (click)="openDialog()" class="devspace-add-channel"><img src="./img/addChannel.png" alt=""></span>
+            <span (click)="openDialog()" class="devspace-add-channel"><img src="/assets/img/addChannel.png" alt=""></span>
         </div>
         @if(!activeChannel){
 
@@ -31,7 +31,7 @@
             @for(item of devspaceService.channels; track item.name; let i = $index){
             <div [class.activeChannel]="devspaceService.channels[i].channelActiveTalk"
                 class="devspace-channel-list-item" (click)="channelActiveClass(i); closeMessage()" >
-                <span><img src="./img/tagChannelName.png" alt=""></span>
+                <span><img src="/assets/img/tagChannelName.png" alt=""></span>
                 <div>
                     <span>{{item.name}}</span>
                 </div>
@@ -46,7 +46,7 @@
             }
         </div>
 
-        <div class="devspace-add-channel-button" (click)="openDialog()"><img src="./img/add_circle.png" alt="">
+        <div class="devspace-add-channel-button" (click)="openDialog()"><img src="/assets/img/add_circle.png" alt="">
             <p>Channel hinzufügen</p>
         </div>
         }
@@ -57,7 +57,7 @@
             <span><img [class.active-Message-Icon]="directMessages" [class.active-Message-Icon-None]="!directMessages"
                     [src]="imageUrlMessage" alt=""></span>
             <div class="devspace-direct-messages-title-content">
-                <span><img src="./img/account_circle.png" alt=""></span>
+                <span><img src="/assets/img/account_circle.png" alt=""></span>
                 <span>Direktnachrichten</span>
             </div>
         </div>
