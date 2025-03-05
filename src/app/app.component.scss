@@ -1,0 +1,9 @@
+.devspace-test-area{
+    display: flex;    
+    gap: 20px;
+    margin-right: var(--devspace-margin-right);
+    margin-left: var(--devspace-margin-left);
+    margin-top: var(--devspace-margin-top);
+    margin-bottom: var(--devspace-margin-bottom);
+    max-width: var(--devspace-max-width);    
+}
