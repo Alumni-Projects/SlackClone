@@ -1,0 +1,21 @@
+<section class="devspace-dialog">
+    <div class="devspace-dialog-header">
+        <span>Channel erstellen</span>
+        <span (click)="closeDialog()"><img src="/assets/img/dialogClose.png" alt="" ></span>
+    </div>
+    <div class="devspace-dialog-title">
+        <p>Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum
+            Beispiel.</p>
+    </div>
+    <div class="devspace-dialog-input-Name">
+        <span>Channel-Name</span>
+        <input type="text" placeholder=" z.B. Kooperationsprojekte" #channelInput>
+    </div>
+
+<div class="devspace-dialog-input-Description">
+    <span><p>Beschreibung</p> <p>(optional)</p></span>
+    <input type="text" placeholder="Dein Text hier"  #channelDescription>
+</div>
+
+<div class="devspace-dialog-create" (click)="createChannel()"><span>Erstellen</span></div>
+</section>

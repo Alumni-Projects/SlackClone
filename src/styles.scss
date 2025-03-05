@@ -1,10 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
 
+
+/* You can add global styles to this file, and also import other style files */
+// devspace Area
+:root {
+    --devspace-margin-left: 20px;
+    --devspace-margin-right: 20px;
+    --devspace-margin-top: 115px;
+    --devspace-margin-bottom: 25px;
+    --devspace-max-width: 1900px;
+}
+
+//Devspace Message Input Area
+:root {
+    --width-devspace-message-area: calc(100vw - 440px);
+}
 //Colors
 :root {
     --primary-color: #444df2;
     --secondary-color: #797ef3;
-    --bg-color: #eceefe;
+    --bg-color: #eceefe;   
     --white-color: #fff;
     --black-color: #000;
     --grey-dark: #686868;
@@ -16,7 +30,7 @@
 
 //Fonts
 @font-face {
-    font-family: Nunito;
+    font-family: 'Nunito';
     src: url('assets/fonts/Nunito-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
@@ -50,6 +64,8 @@ h5 {
     --icon-size-l: 32px;
 }
 
+
+
 //Main
 /*
   1. Use a more-intuitive box-sizing model.
@@ -75,15 +91,15 @@ h5 {
 body {
     line-height: 1.5;
     margin: 0;
-    font-family: Nunito, sans-serif;
+    font-family: 'Nunito', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: #eceefe;
 }
 
 @font-face {
-    font-family: Nunito;
-    src: url('/public/fonts/Nunito-Medium.ttf') format('truetype');
+    font-family: 'Nunito';
+    src: url('assets/fonts/Nunito-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
 }
@@ -136,4 +152,16 @@ select {
     --border-radius-m: 20px;
     --border-radius-l: 25px;
     --border-radius-xl: 100px;
+}
+
+
+
+html, body { height: 100%; }
+body { margin: 0;  }
+
+
+
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width: none !important;
+    
 }
