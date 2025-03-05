@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     gap: 25px;
-    font-family: 'Nunito', sans-serif, serif;
+    
 }
 
 .devspace-header {
@@ -49,6 +49,7 @@
 
         & img {
             content: url('../../../assets/img/DevEditHover.png');
+            
         }
     }
 }
@@ -92,10 +93,12 @@
 
     .active-Channel-Icon {
         content: url('../../../assets/img/arrow_drop_down_right_hover.png');
+       
     }
 
     .active-Channel-Icon-None {
         content: url('../../../assets/img/arrow_drop_downHover.png');
+        
     }
 
     div {
@@ -146,8 +149,7 @@
     transition: all 0.75ms ease-in-out;
     cursor: pointer;
 
-    & span {
-        font-family: 'Nunito', sans-serif, serif;
+    & span {        
         font-size: var(--font-size-m);
         font-weight: var(--font-weight-normal);
         line-height: 24.55px;
@@ -179,8 +181,7 @@
     gap: 15px;
     transition: all 0.75ms ease-in-out;
 
-    & p {
-        font-family: 'Nunito', sans-serif, serif;
+    & p {        
         font-size: var(--font-size-m);
         font-weight: var(--font-weight-normal);
         line-height: 24.55px;
@@ -247,8 +248,7 @@
         transition: all 125ms ease-in-out;
     }
 
-    & span:nth-of-type(2) {
-        font-family: 'Nunito', sans-serif, serif;
+    & span:nth-of-type(2) {       
         font-size: var(--font-size-l);
         font-weight: var(--font-weight-extra-bold);
         line-height: 27.28px;
@@ -314,8 +314,7 @@
       
 }
 
-.devspace-direct-messages-name{
-    font-family: 'Nunito', sans-serif, serif;
+.devspace-direct-messages-name{    
     font-size: var(--font-size-m);
     font-weight: var(--font-weight-normal);
     line-height: 24.55px;

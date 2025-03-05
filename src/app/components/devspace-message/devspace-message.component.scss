@@ -1,5 +1,5 @@
 .devspace-message-area{
-    width: calc(100vw - 440px);    
+    width: var(--width-devspace-message-area);    
     height: 940px;
     background-color: var(--white-color);    
     border-radius: 30px;

@@ -6,8 +6,8 @@ import { DevspaceAccount } from '../../shared/interface/devspace-account';
   providedIn: 'root'
 })
 export class DevspaceService {
-  channelsName: string = "";
-  channelsDescription: string = "";
+  channelsName = "";
+  channelsDescription = "";
   openDevspace: boolean = true;
   openMessage: boolean = false;
 
