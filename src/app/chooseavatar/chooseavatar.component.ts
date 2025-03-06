@@ -12,12 +12,11 @@ import { CommonModule } from '@angular/common';
   imports: [MatIconModule, CommonModule],
   standalone: true
 })
-
 export class ChooseAvatarComponent implements OnInit {
-  avatarImage = '/assets/avatars/avatar1.svg';
+  avatarImage = '/assets/avatar/avatar0.svg';
   userName = 'Frederik Beck';
-  iconColor = Color;
-  iconSize: string = IconSize.Medium;
+  iconColor = Color.Black;
+  iconSize: string = IconSize.Small;
   Color = Color;
   isMobile = false;
 
@@ -25,15 +24,28 @@ export class ChooseAvatarComponent implements OnInit {
     { src: '/assets/avatar/avatar1.svg' },
     { src: '/assets/avatar/avatar2.svg' },
     { src: '/assets/avatar/avatar3.svg' },
-    { src: '/assets/avatar/avatar4.svg' }
+    { src: '/assets/avatar/avatar4.svg' },
+    { src: '/assets/avatar/avatar5.svg' }
   ];
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
-    this.breakpointObserver.observe([Breakpoints.Handset])
-      .subscribe(result => {
+    if (!this.avatarImage || this.avatarImage === '') {
+      this.avatarImage =
+        this.avatars.length > 0
+          ? this.avatars[0].src
+          : '/assets/avatar/avatar0.svg';
+    }
+
+    this.breakpointObserver
+      .observe([Breakpoints.Handset])
+      .subscribe((result) => {
         this.isMobile = result.matches;
       });
+  }
+
+  chooseAvatar(avatar: { src: string }) {
+    this.avatarImage = avatar.src;
   }
 }

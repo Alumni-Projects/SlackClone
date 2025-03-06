@@ -1,0 +1,47 @@
+
+  {
+    "stylelint.validate": ["typescript", "typescriptreact"],
+    "editor.formatOnSave": true,
+    "editor.fontSize": 13,
+    "terminal.integrated.fontSize": 13,
+    "editor.tabSize": 4,
+    "editor.rulers": [80],
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.fixAll.eslint": "explicit"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[php]": {
+      "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+    },
+    "intelephense.files.associations": ["*.php", "*.phtml"],
+    "editor.unicodeHighlight.allowedCharacters": {
+      " ": true,
+      "‑": true
+    },
+    "editor.stickyScroll.enabled": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.settings.useSplitJSON": true,
+    "workbench.settings.editor": "json",
+    "extensions.ignoreRecommendations": true,
+    // "gitlens.codeLens.authors.enabled": false,
+    // "gitlens.codeLens.enabled": false,
+    // "gitlens.currentLine.enabled": false,
+    // "gitlens.hovers.currentLine.over": "line",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "typescript.updateImportsOnFileMove.enabled": "never",
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "settingsSync.ignoredExtensions": [
+      "styled-components.vscode-styled-components",
+      "stylelint.vscode-stylelint",
+      "ms-vsliveshare.vsliveshare"
+    ],
+    "javascript.updateImportsOnFileMove.enabled": "never",
+    "security.workspace.trust.untrustedFiles": "open",
+    "window.commandCenter": false,
+    "window.zoomLevel": 1,
+    "gitlens.currentLine.format": "",
+    "[php]": {
+      "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+    }
+  }
