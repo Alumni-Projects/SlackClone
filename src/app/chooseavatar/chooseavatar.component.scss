@@ -3,114 +3,167 @@
 :host {
   display: block;
 }
+
 header {
-  	display: flex;
-} 
+  display: flex;
+}
+
 .sign-in-layout {
   display: flex;
   flex-direction: column;
   background: var(--white-color);
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.08);
   border-radius: var(--border-radius-m);
-  padding: 35px 20px;
-  margin: 15px auto 60px;
-  max-width: 696px;
+  margin: 0 auto;
+  max-width: 606px;
   width: 100%;
 
-
-  @include respond(xs) {
-    padding: 50px;
+  @include respond(s) {
     width: -webkit-fill-available;
   }
+  &-user-name {
+    color: var(--black-color);
+    font-size: var(--font-size-xl);
 
+    @include respond(s) {
+      text-align: center;
+    }
+  }
+}
+
+.title {
+  display: flex;
+  align-items: flex-start;
+  margin: 26px 21px 0 21px;
+
+  @include respond(s) {
+    margin: 40px 0 0 40px;
+    align-items: center;
+  }
+  mat-icon {
+    margin-top: 12px;
+    @include respond(s) {
+      margin: auto;
+    }
+  }
+}
+
+.wrapper {
+  padding: 0 21px 26px;
+
+  @include respond(s) {
+    padding: 0 67px 40px;
+  }
 }
 
 .sign-in-header {
   display: flex;
   align-items: center;
   width: 100%;
+
+  .sign-in-title {
+    font-weight: bold;
+    text-align: center;
+    color: var(--primary-color);
+    margin-left: 18px;
+    font-size: var(--font-size-xl);
+
+    @include respond(s) {
+      font-size: var(--font-size-xxl);
+    }
+  }
+
+  .arrow-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
 }
 
-.sign-in-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
-  color: var(--primary-color);
-  margin-left: 18px;
-}
-
-.arrow-icon {
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-}
-
-.avatar-preview {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-}
-
-.choose-image {
-  width: 100px;
-  height: 100px;
-  cursor: pointer;
-  border-radius: var(--border-radius-xl);
-  background-color: var(--bg-color);
-}
-
-.large-avatar {
-  width: 120px;
-  height: 120px;
-  background-color: var(--light-purple);
-}
-
-.user-name {
-  font-size: var(--font-size-xl);
-  color: var(--black-color);
-  font-weight: var(--font-weight-extra-bold);
-  text-align: center;
-}
-
-.avatar-subtext {
-  font-size: var(--font-size-l);
-  text-align: center;
-  margin: 8px 0 16px;
-  color: var(--grey-dark);
-}
-
-.avatar-list {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.avatar-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  overflow: hidden;
-  background-color: var(--white-color);
-  border: 2px solid transparent;
-  transition: border-color 0.2s;
-}
-
-.avatar-item:hover {
-  border-color: var(--primary-color);
-}
-
-.avatar-upload {
+.avatar {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+
+  &-preview {
+    justify-content: center;
+    margin: 24px 0 24px 42px;
+
+    @include respond(s) {
+      margin: 56px 0 32px;
+    }
+  }
+
+  &-upload {
+    margin-top: 0;
+
+    @include respond(s) {
+      margin-top: 42px;
+    }
+  }
+
+  &-list {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+
+    @include respond(s) {
+      gap: 12px;
+    }
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: var(--white-color);
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+
+    @include respond(s) {
+      width: 64px;
+      height: 64px;
+    }
+
+    &:hover {
+      border-color: var(--primary-color);
+    }
+  }
+
+  &-subtext {
+    font-size: var(--font-size-l);
+    margin: 8px 0 16px;
+    color: var(--black-color);
+    font-size: var(--font-size-l);
+  }
+
+  &-large {
+    width: 120px;
+    height: 120px;
+    background-color: var(--light-purple);
+  }
+}
+
+.choose-image {
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  border-radius: var(--border-radius-xl);
+  background-color: var(--bg-color);
+  margin: 0 auto;
+
+  @include respond(s) {
+    width: 168px;
+    height: 168px;
+  }
 }
 
 .button-box-end {
-  margin-top: 20px;
+  margin-top: 24px;
   display: flex;
   justify-content: flex-end;
 }
@@ -125,8 +178,8 @@ header {
   font-weight: bold;
   border: none;
   transition: background-color 0.2s ease-in-out;
-}
 
-.primary-button:hover {
-  background-color: var(--secondary-color);
+  &:hover {
+    background-color: var(--secondary-color);
+  }
 }

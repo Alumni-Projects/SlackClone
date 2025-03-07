@@ -1,5 +1,5 @@
 <div class="sign-in-layout">
-  <header class="sign-in-header">
+  <div class="title">
     <mat-icon
       [style.color]="iconColor"
       [style.font-size]="iconSize"
@@ -7,36 +7,43 @@
     >
       arrow_back
     </mat-icon>
-
-    <a routerLink="/" class="icon-link"> </a>
-    <h1 class="sign-in-title">Wähle deinen Avatar</h1>
-  </header>
-
-  <div class="avatar-preview">
-    <img
-      [src]="avatarImage"
-      alt="Default Avatar"
-      class="choose-image large-avatar"
-    />
+    <header class="sign-in-header">
+      <a routerLink="/" class="icon-link"> </a>
+      <h1 class="sign-in-title">Wähle deinen Avatar</h1>
+    </header>
   </div>
 
-  <h2 class="user-name">{{ userName }}</h2>
-
-  <p class="avatar-subtext">Aus der Liste wählen</p>
-
-  <div class="avatar-list">
-    <div
-      *ngFor="let avatar of avatars"
-      class="avatar-item"
-      (click)="chooseAvatar(avatar)"
-    >
-      <img [src]="avatar.src" alt="Avatar" class="choose-image avatar-option" />
+  <div class="wrapper">
+    <div class="avatar-preview">
+      <img
+        [src]="avatarImage"
+        alt="Default Avatar"
+        class="choose-image large-avatar"
+      />
     </div>
-  </div>
 
-  <div class="avatar-upload"></div>
+    <h2 class="sign-in-layout-user-name">{{ userName }}</h2>
 
-  <div class="button-box-end">
-    <button class="primary-button">Weiter</button>
+    <p class="avatar-subtext">Aus der Liste wählen</p>
+
+    <div class="avatar-list">
+      <div
+        *ngFor="let avatar of avatars"
+        class="avatar-item"
+        (click)="chooseAvatar(avatar)"
+      >
+        <img
+          [src]="avatar.src"
+          alt="Avatar"
+          class="choose-image avatar-option"
+        />
+      </div>
+    </div>
+
+    <div class="avatar-upload"></div>
+
+    <div class="button-box-end">
+      <button class="primary-button">Weiter</button>
+    </div>
   </div>
 </div>

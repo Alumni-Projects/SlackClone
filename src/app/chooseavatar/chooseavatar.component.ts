@@ -25,7 +25,8 @@ export class ChooseAvatarComponent implements OnInit {
     { src: '/assets/avatar/avatar2.svg' },
     { src: '/assets/avatar/avatar3.svg' },
     { src: '/assets/avatar/avatar4.svg' },
-    { src: '/assets/avatar/avatar5.svg' }
+    { src: '/assets/avatar/avatar5.svg' },
+    { src: '/assets/avatar/avatar6.svg' }
   ];
 
   constructor(private breakpointObserver: BreakpointObserver) {}
