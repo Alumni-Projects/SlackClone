@@ -13,3 +13,4 @@ export enum MediaQuery {
   L = `@media (width >= ${Breakpoint.L})`,
   XL = `@media (width >= ${Breakpoint.XL})`
 }
+
