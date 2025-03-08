@@ -13,8 +13,9 @@ import { CommonModule } from '@angular/common';
   standalone: true
 })
 export class ChooseAvatarComponent implements OnInit {
+  [x: string]: any;
   avatarImage = '/assets/avatar/avatar0.svg';
-  userName = 'Frederik Beck';
+  username = 'Frederik Beck';
   iconColor = Color.Black;
   iconSize: string = IconSize.Small;
   Color = Color;

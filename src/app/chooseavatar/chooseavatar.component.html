@@ -22,22 +22,20 @@
       />
     </div>
 
-    <h2 class="sign-in-layout-user-name">{{ userName }}</h2>
+    <h2 class="sign-in-layout-user-name">{{ username }}</h2>
 
     <p class="avatar-subtext">Aus der Liste wählen</p>
 
     <div class="avatar-list">
-      <div
-        *ngFor="let avatar of avatars"
-        class="avatar-item"
-        (click)="chooseAvatar(avatar)"
-      >
+      @for (avatar of avatars; track avatar) {
+      <div class="avatar-item" (click)="chooseAvatar(avatar)">
         <img
           [src]="avatar.src"
           alt="Avatar"
           class="choose-image avatar-option"
         />
       </div>
+      }
     </div>
 
     <div class="avatar-upload"></div>
