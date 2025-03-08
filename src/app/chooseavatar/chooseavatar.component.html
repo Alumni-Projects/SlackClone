@@ -1,0 +1,47 @@
+<div class="sign-in-layout">
+  <div class="title">
+    <mat-icon
+      [style.color]="iconColor"
+      [style.font-size]="iconSize"
+      class="arrow-icon"
+    >
+      arrow_back
+    </mat-icon>
+    <header class="sign-in-header">
+      <a routerLink="/" class="icon-link"> </a>
+      <h1 class="sign-in-title">Wähle deinen Avatar</h1>
+    </header>
+  </div>
+
+  <div class="wrapper">
+    <div class="avatar-preview">
+      <img
+        [src]="avatarImage"
+        alt="Default Avatar"
+        class="choose-image large-avatar"
+      />
+    </div>
+
+    <h2 class="sign-in-layout-user-name">{{ username }}</h2>
+
+    <p class="avatar-subtext">Aus der Liste wählen</p>
+
+    <div class="avatar-list">
+      @for (avatar of avatars; track avatar) {
+      <div class="avatar-item" (click)="chooseAvatar(avatar)">
+        <img
+          [src]="avatar.src"
+          alt="Avatar"
+          class="choose-image avatar-option"
+        />
+      </div>
+      }
+    </div>
+
+    <div class="avatar-upload"></div>
+
+    <div class="button-box-end">
+      <button class="primary-button">Weiter</button>
+    </div>
+  </div>
+</div>

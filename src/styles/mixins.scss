@@ -1,0 +1,21 @@
+// Breakpoint Variablen (SCSS)
+$bp-xs: 395px;
+$bp-s: 480px;
+$bp-m: 768px;
+$bp-l: 1024px;
+$bp-xl: 1200px;
+
+// Mixin  Media Queries
+@mixin respond($breakpoint) {
+  @if $breakpoint == xs {
+    @media (min-width: $bp-xs) { @content; }
+  } @else if $breakpoint == s {
+    @media (min-width: $bp-s) { @content; }
+  } @else if $breakpoint == m {
+    @media (min-width: $bp-m) { @content; }
+  } @else if $breakpoint == l {
+    @media (min-width: $bp-l) { @content; }
+  } @else if $breakpoint == xl {
+    @media (min-width: $bp-xl) { @content; }
+  }
+}
