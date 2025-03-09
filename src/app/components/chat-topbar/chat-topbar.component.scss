@@ -23,20 +23,3 @@
   color: var(--color-black);
 }
 
-.user-status {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.current-user-name {
-  font-size: var(--font-size-xl);
-  font-weight: bold;
-}
-
-.profile-img {
-  height: 70px;
-  width: 70px;
-  border-radius: 50%;
-  object-fit: cover;
-}

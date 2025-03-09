@@ -1,0 +1,34 @@
+.user-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.current-user-name {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+}
+
+.profile-container {
+  position: relative;
+}
+
+.profile-img {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+}
+
+.profile-container::after {
+  content: '';
+  position: absolute;
+  bottom: 1px;
+  right: 0px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--online-green);
+  border-radius: 50%;
+  border: 2px solid var(--bg-color);
+}
