@@ -1,17 +1,27 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileDialogComponent } from './profile-dialog/profile-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
-import { IconSize } from '../../Enums/iconSize';
-import { Color } from '../../Enums/color';
-import { CommonModule } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-profile',
-imports: [MatIconModule, CommonModule],
+  standalone: true,
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss'
+  styleUrls: ['./profile.component.scss'],
+  imports: [MatIconModule, MatMenuModule]
 })
 export class ProfileComponent {
-  iconColor = Color.Black;
-  iconSize: string = IconSize.Small;
-  Color = Color;
+  constructor(private dialog: MatDialog) {}
+
+  openProfile() {
+    this.dialog.open(ProfileDialogComponent, {
+      width: '400px', 
+      panelClass: 'custom-dialog-container' 
+    });
+  }
+
+  logout() {
+    console.log('Logout geklickt'); 
+  }
 }

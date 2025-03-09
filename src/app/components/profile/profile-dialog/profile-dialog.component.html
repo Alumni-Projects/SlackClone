@@ -1,0 +1,23 @@
+<mat-dialog-content class="profile-dialog">
+  <h2>Profil</h2>
+  <button mat-icon-button class="close-btn" (click)="closeDialog()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <div class="profile-header">
+    <img class="profile-img" src="assets/img/Avatar1.png" alt="Profile picture">
+    <h3>Steffen Hoffmann</h3>
+    <span class="status">
+      <mat-icon class="status-icon">circle</mat-icon> Aktiv
+    </span>
+  </div>
+
+  <div class="profile-info">
+    <p><mat-icon>email</mat-icon> <strong>E-Mail-Adresse</strong></p>
+    <a href="mailto:thehoffman@beispiel.com">thehoffmpiel.com</a>
+  </div>
+
+  <button mat-button color="primary" class="message-btn">
+    <mat-icon>chat</mat-icon> Nachricht
+  </button>
+</mat-dialog-content>

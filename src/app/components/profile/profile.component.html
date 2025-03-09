@@ -1,10 +1,16 @@
-<div class="user-status">
+<div class="user-status"  [matMenuTriggerFor]="menu">
+
   <div class="current-user-name">Frederik Beck</div>
+
   <div class="profile-container">
     <img class="profile-img" src="assets/img/Avatar1.png" alt="Profile picture of Frederik Beck">
-    
+
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openProfile()">Profil</button>
+      <button mat-menu-item (click)="logout()">Log Out</button>
+    </mat-menu>
   </div>
-  <mat-icon [style.color]="iconColor" [style.fontSize]="iconSize">
-    keyboard_arrow_down
-  </mat-icon>
+
+  <mat-icon>keyboard_arrow_down</mat-icon>
 </div>

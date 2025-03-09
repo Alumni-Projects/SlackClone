@@ -1,0 +1,42 @@
+
+.user-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.current-user-name {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+
+.profile-img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+mat-icon {
+  font-size: 24px;
+  color: var(--color-black);
+}
+
+
+.mat-menu-panel {
+  border-radius: 10px;
+  padding: 10px 0;
+  box-shadow: var(--shadow-normal);
+}
+
+.mat-menu-item {
+  font-size: 16px;
+}
