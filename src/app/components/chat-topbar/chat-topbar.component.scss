@@ -1,0 +1,42 @@
+.chat-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 34px;
+  height: 115px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  width: auto;
+  padding-right: 20px;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-black);
+}
+
+.user-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.current-user-name {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+}
+
+.profile-img {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
