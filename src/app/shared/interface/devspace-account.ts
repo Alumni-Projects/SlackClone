@@ -4,4 +4,5 @@ export interface DevspaceAccount {
     pic: string;
     activeSelf: boolean;
     activeMessage: boolean;
+    channel?: string [];
 }

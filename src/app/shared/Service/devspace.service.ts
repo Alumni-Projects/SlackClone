@@ -8,8 +8,8 @@ import { DevspaceAccount } from '../../shared/interface/devspace-account';
 export class DevspaceService {
   channelsName = "";
   channelsDescription = "";
-  openDevspace: boolean = true;
-  openMessage: boolean = false;
+  openDevspace = true;
+  openMessage = false;
 
 
 
@@ -18,12 +18,12 @@ export class DevspaceService {
   channels: Devspace[] = [
     {
       name: 'Entwicklerteam', description: 'Dieser Channel ist für alle Entwickler zuständig..',
-      channelActiveTalk: false
+      channelActiveTalk: false, 
     },
   ];
 
   accounts: DevspaceAccount[] = [
-    { name: 'Frederik Beck', active: true, pic: '/assets/img/Avatar1.png', activeSelf: true, activeMessage: false },
+    { name: 'Florian Beck', active: true, pic: '/assets/img/Avatar1.png', activeSelf: true, activeMessage: false, },
     { name: 'Sofia Müller', active: false, pic: '/assets/img/Avatar2.png', activeSelf: false, activeMessage: false },
     { name: 'Noah Braun', active: true, pic: '/assets/img/Avatar3.png', activeSelf: false, activeMessage: false },
     { name: 'Elias Beumann', active: false, pic: '/assets/img/Avatar5.png', activeSelf: false, activeMessage: false },
