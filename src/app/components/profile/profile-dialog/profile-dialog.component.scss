@@ -1,42 +1,101 @@
-
-.user-status {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-}
-
-.current-user-name {
-  font-size: var(--font-size-xl);
-  font-weight: bold;
-}
-
-.profile-container {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+.profile-dialog {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  width: 360px;
   position: relative;
-}
+  &-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 45px;
+  }
+  h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    text-align: left;
+  }
 
-.profile-img {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+  .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
 
-mat-icon {
-  font-size: 24px;
-  color: var(--color-black);
-}
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
 
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
 
-.mat-menu-panel {
-  border-radius: 10px;
-  padding: 10px 0;
-  box-shadow: var(--shadow-normal);
-}
+   h2 {
+    font-size:var(--font-size-ml);
+    color: var(--black-color);
 
-.mat-menu-item {
-  font-size: 16px;
+  }
+  .status {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #6b7280; // Grauton statt Schwarz für dezenteren Look
+
+    mat-icon {
+      color: #4CAF50;
+      font-size: 14px; // Etwas kleiner, damit es nicht dominiert
+      margin-right: 5px;
+    }
+  }
+
+  .profile-info {
+    margin-top: 8px;
+    font-size: 14px;
+
+    p {
+      font-weight: bold;
+      color: #000;
+    }
+
+    a {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+  }
+
+  // Nachricht-Button optimieren (kleiner & mit mehr Abstand)
+  .message-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 80%; // Nicht mehr 100%, sondern schmaler
+    padding: 10px;
+    background: #3b82f6;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 8px; // Etwas weniger stark gerundet
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    margin: 16px auto 0 auto; // Zentrieren mit Auto-Margin
+
+    &:hover {
+      background: #2563eb;
+    }
+
+    mat-icon {
+      font-size: 16px;
+      color: white;
+    }
+  }
 }

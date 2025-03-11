@@ -1,3 +1,7 @@
+.mat-mdc-menu-content {
+  background-color: var(--deeppink-color);
+}
+
 .user-status {
   display: flex;
   align-items: center;
@@ -33,3 +37,4 @@
   border-radius: 50%;
   border: 2px solid var(--bg-color);
 }
+

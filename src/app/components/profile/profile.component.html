@@ -5,11 +5,11 @@
   <div class="profile-container">
     <img class="profile-img" src="assets/img/Avatar1.png" alt="Profile picture of Frederik Beck">
 
-
-    <mat-menu #menu="matMenu">
+    <mat-menu #menu="matMenu" class="profile-menu">
       <button mat-menu-item (click)="openProfile()">Profil</button>
-      <button mat-menu-item (click)="logout()">Log Out</button>
+      <button mat-menu-item (click)="logout()" class="logout-link">Log Out</button>
     </mat-menu>
+    
   </div>
 
   <mat-icon>keyboard_arrow_down</mat-icon>

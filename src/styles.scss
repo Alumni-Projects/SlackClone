@@ -49,6 +49,7 @@ h5 {
     --font-size-s: 16px;
     --font-size-m: 18px;
     --font-size-l: 20px;
+    --font-size-ml: 24px;
     --font-size-xl: 32px;
     --font-size-xxl: 46px;
     --font-weight-normal: 400;
@@ -152,6 +153,7 @@ select {
     --border-radius-m: 20px;
     --border-radius-l: 25px;
     --border-radius-xl: 100px;
+    --dropdown-radius: 30px 0 30px 30px;
 }
 
 
@@ -164,4 +166,53 @@ body { margin: 0;  }
 .cdk-overlay-pane.mat-mdc-dialog-panel {
     max-width: none !important;
     
+}
+
+/* Profile Menu */
+.mat-mdc-menu-panel.profile-menu {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.profile-menu .mat-mdc-menu-content {
+
+  margin-top: 24px;
+  padding:30px;
+  width: 280px;
+}
+.cdk-overlay-connected-position-bounding-box {
+  top: 200px;
+}
+
+.mat-mdc-menu-item.mat-focus-indicator:hover {
+  background-color: transparent !important;
+}
+.profile-menu .mat-mdc-menu-content span.mat-mdc-menu-item-text {
+  color: var(--black-color);
+  font-size: var(--font-size-ml);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.profile-menu .mat-mdc-menu-content {
+  border-radius: var(--dropdown-radius);  
+  background-color: var(--white-color);
+}
+
+/* Profil-Link (bleibt ohne Hover-Effekt) */
+.mat-mdc-menu-item {
+  background: none;
+}
+
+/* Log Out als Link */
+.mat-mdc-menu-item.logout-link {
+  color: var(--deeppink-color);
+}
+
+/* Nur Log Out bekommt den Hover-Effekt */
+.mat-mdc-menu-item.logout-link:hover .mat-mdc-menu-item-text {
+  color: var(--primary-color);
+}
+.mat-mdc-dialog-surface.mdc-dialog__surface {
+  background-color: transparent;
 }
