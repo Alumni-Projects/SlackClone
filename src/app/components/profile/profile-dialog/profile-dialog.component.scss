@@ -29,10 +29,11 @@
     align-items: center;
     gap: 12px;
     margin-bottom: 12px;
+    justify-content: space-evenly;
 
     img {
-      width: 80px;
-      height: 80px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       object-fit: cover;
     }
