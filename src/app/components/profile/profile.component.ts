@@ -16,7 +16,7 @@ export class ProfileComponent {
 
   openProfile() {
     this.dialog.open(ProfileDialogComponent, {
-      width: '400px', 
+      width: '500px', 
       panelClass: "profile-menu"
     });
   }

@@ -95,7 +95,7 @@ body {
     font-family: 'Nunito', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: #eceefe;
+    background: var(--bg-color);
 }
 
 @font-face {
@@ -199,7 +199,7 @@ body { margin: 0;  }
   background-color: var(--white-color);
 }
 
-/* Profil-Link (bleibt ohne Hover-Effekt) */
+/* Profil-Link */
 .mat-mdc-menu-item {
   background: none;
 }
@@ -209,7 +209,6 @@ body { margin: 0;  }
   color: var(--deeppink-color);
 }
 
-/* Nur Log Out bekommt den Hover-Effekt */
 .mat-mdc-menu-item.logout-link:hover .mat-mdc-menu-item-text {
   color: var(--primary-color);
 }
