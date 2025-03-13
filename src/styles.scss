@@ -27,7 +27,11 @@
     --online-green: #92c83e;
     --mail-blue: #1381ff;
 }
-
+//Shadow
+:root {
+  --shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  ;
+}
 //Fonts
 @font-face {
     font-family: 'Nunito';
@@ -163,25 +167,30 @@ body { margin: 0;  }
 
 
 
-.cdk-overlay-pane.mat-mdc-dialog-panel {
+.cdk-overlay-panel.mat-mdc-dialog-panel {
     max-width: none !important;
-    
+
 }
 
 /* Profile Menu */
 .mat-mdc-menu-panel.profile-menu {
   background-color: transparent;
   box-shadow: none;
+  overflow: inherit!important;
 }
 
-.profile-menu .mat-mdc-menu-content {
 
-  margin-top: 24px;
-  padding:30px;
-  width: 280px;
+// .mat-mdc-content
+// .profile-menu .mat-mdc-menu-content {
+//   margin-top: 50px;
+
+// }
+.profile-menu.div.mat-mdc-content {
+  box-shadow: var(--shadow);
+box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
 }
 .cdk-overlay-connected-position-bounding-box {
-  top: 200px;
+  top: 112px!important;
 }
 
 .mat-mdc-menu-item.mat-focus-indicator:hover {
@@ -196,7 +205,13 @@ body { margin: 0;  }
 
 .profile-menu .mat-mdc-menu-content {
   border-radius: var(--dropdown-radius);  
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  padding: 24px;
   background-color: var(--white-color);
+  :not(:last-child) {
+    margin-bottom: 15px; 
+  }
 }
 
 /* Profil-Link */
@@ -204,14 +219,12 @@ body { margin: 0;  }
   background: none;
 }
 
-/* Log Out als Link */
-.mat-mdc-menu-item.logout-link {
-  color: var(--deeppink-color);
-}
 
+/* Log Out als Link */
 .mat-mdc-menu-item.logout-link:hover .mat-mdc-menu-item-text {
   color: var(--primary-color);
 }
 .mat-mdc-dialog-surface.mdc-dialog__surface {
   background-color: transparent;
 }
+

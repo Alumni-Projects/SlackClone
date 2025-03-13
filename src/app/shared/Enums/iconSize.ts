@@ -1,5 +1,6 @@
 export enum IconSize {
-    Small = '--icon-size-s',
-    Medium = '--icon-size-m',
-    Large = '--icon-size-l'
+  Small = '--icon-size-s',
+  Medium = '--icon-size-m',
+  Large = '--icon-size-l'
 }
+

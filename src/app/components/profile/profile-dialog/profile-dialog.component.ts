@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon'; // WICHTIG!
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { IconSize } from '../../../shared/Enums/iconSize';
 import { Color } from '../../../shared/Enums/color';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile-dialog',
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     MatDialogModule,
-    MatIconModule // WICHTIG: Damit Mat-Icons erkannt werden!
+    MatIconModule
   ]
 })
 export class ProfileDialogComponent {

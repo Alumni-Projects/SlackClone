@@ -3,11 +3,11 @@
   <div class="current-user-name">Frederik Beck</div>
 
   <div class="profile-container">
-    <img class="profile-img" src="../../../assets/avatar/Avatar3.svg" alt="Profile picture of Frederik Beck">
+    <img class="profile-img" src="../../../assets/avatar/avatar3.svg" alt="Profile picture of Frederik Beck">
 
     <mat-menu #menu="matMenu" class="profile-menu">
-      <button mat-menu-item (click)="openProfile()">Profil</button>
-      <button mat-menu-item (click)="logout()" class="logout-link">Log Out</button>
+      <button mat-menu-item disableRipple (click)="openProfile()">Profil</button>
+      <button mat-menu-item disableRipple (click)="logout()" class="logout-link">Log Out</button>
     </mat-menu>
     
   </div>

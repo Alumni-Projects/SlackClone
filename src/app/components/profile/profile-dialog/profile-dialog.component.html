@@ -3,7 +3,8 @@
     <h2>Profil</h2>
     <button mat-icon-button class="close-btn" (click)="closeDialog()">
       <mat-icon 
-        [ngStyle]="{ 'font-size': IconSize.Medium, 'color': Color.Black }" 
+        [style.font-size]="IconSize.Medium" 
+        [style.color]="Color.Black" 
         class="arrow-icon">
         close
       </mat-icon>
@@ -11,26 +12,46 @@
   </div>
 
   <div class="profile-header">
-    <img class="profile-img" src="assets/avatar/Avatar3.svg" alt="Profile picture">
+    <img class="profile-img" src="../../../../assets/avatar/avatar3.svg" alt="Profile picture">
   </div>
 
-  <div>
+  <div class="profile-info-item">
     <h3>Steffen Hoffmann</h3>
+    <div class="status">
+      <div class="status-indicator"></div>
+      <!-- <mat-icon 
+        [style.color]="Color.Green" 
+        [style.font-size]="IconSize.Small" 
+        class="arrow-icon">
+        circle
+      </mat-icon>  -->
+      <div class="status-text">Aktiv</div>
+    </div>
   </div>
 
-  <div class="status">
-    <mat-icon 
-      [ngStyle]="{ 'font-size': IconSize.Small, 'color': Color.Green }">
-      circle
-    </mat-icon> Aktiv
-  </div>
+  
 
   <div class="profile-info">
-    <p>
+    <div class="profile-info-item">
+      <div class="profile-info-item-mail">
       <mat-icon 
-        [ngStyle]="{ 'font-size': IconSize.Medium, 'color': Color.GreyDark }">
-        email
+        [style.font-size]="IconSize.Medium" 
+        [style.color]="Color.GreyDark">
+        mail_outline
       </mat-icon>
       <strong>E-Mail-Adresse</strong>
-    </p>
-    <a href="mailto:thehoffman@beispiel.com">thehoffmanispiel.com</a>
+
+    </div>
+      <a href="mailto:thehoffman@beispiel.com">thehoffmaneispiel.com</a>
+
+    </div>
+  </div>
+
+  <button mat-button color="primary" class="message-btn">
+    <mat-icon 
+      [style.font-size]="IconSize.Large" 
+      [style.color]="Color.Black">
+      chat_bubble_outline 
+    </mat-icon> Nachricht
+  </button>
+</mat-dialog-content>
