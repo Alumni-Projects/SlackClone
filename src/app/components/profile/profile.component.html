@@ -1,16 +1,12 @@
-<div class="user-status"  [matMenuTriggerFor]="menu">
-
+<div class="user-status" (click)="openProfilePopup()">
   <div class="current-user-name">Frederik Beck</div>
 
   <div class="profile-container">
     <img class="profile-img" src="../../../assets/avatar/avatar3.svg" alt="Profile picture of Frederik Beck">
-
-    <mat-menu #menu="matMenu" class="profile-menu">
-      <button mat-menu-item disableRipple (click)="openProfile()">Profil</button>
-      <button mat-menu-item disableRipple (click)="logout()" class="logout-link">Log Out</button>
-    </mat-menu>
-    
   </div>
 
   <mat-icon>keyboard_arrow_down</mat-icon>
 </div>
+
+<!-- Eigenes Overlay statt `MatMenu` -->
+<app-profile-popup [isOpen]="isProfileOpen" (close)="isProfileOpen = false"></app-profile-popup>

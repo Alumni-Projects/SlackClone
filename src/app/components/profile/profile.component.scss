@@ -1,4 +1,4 @@
-
+@import '../../../styles/mixins.scss';
 .user-status {
   display: flex;
   align-items: center;
@@ -7,8 +7,12 @@
 }
 
 .current-user-name {
-  font-size: var(--font-size-xl);
-  font-weight: bold;
+
+  display: none;
+  @include respond(s) { 
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+  }
 }
 
 .profile-container {
