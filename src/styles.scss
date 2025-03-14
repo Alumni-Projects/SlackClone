@@ -1,24 +1,25 @@
-
-
 /* You can add global styles to this file, and also import other style files */
 // devspace Area
 :root {
     --devspace-margin-left: 20px;
     --devspace-margin-right: 20px;
-    --devspace-margin-top: 115px;
+    --devspace-margin-top: 25px;
     --devspace-margin-bottom: 25px;
-    --devspace-max-width: 1900px;
+    --devspace-max-width: 1920px;
 }
 
 //Devspace Message Input Area
 :root {
-    --width-devspace-message-area: calc(100vw - 440px);
+    --width-devspace-message-area: 1494px;
 }
+
+
+
 //Colors
 :root {
     --primary-color: #444df2;
     --secondary-color: #797ef3;
-    --bg-color: #eceefe;   
+    --bg-color: #eceefe;
     --white-color: #fff;
     --black-color: #000;
     --grey-dark: #686868;
@@ -65,24 +66,48 @@ h5 {
 }
 
 // icons active
-.active-Account-Icon{
+.active-Account-Icon {
     width: 13px;
     height: 13px;
     position: absolute;
     bottom: 5px;
     left: 38px;
     border-radius: 50%;
+    border: 2px solid var(--bg-color);
     background-color: var(--online-green);
 }
 
-.active-Account-Icon-None{
+.active-Account-Icon-None {
     width: 13px;
     height: 13px;
     position: absolute;
     border-radius: 50%;
+    border: 2px solid var(--bg-color);
     background-color: var(--grey-dark);
     bottom: 5px;
     left: 38px;
+}
+
+.active-Account-Icon-header {
+    width: 16.67px;
+    height: 16.67px;
+    position: absolute;
+    bottom: 2px;
+    left: 53.33px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-color);
+    background-color: var(--online-green);
+}
+
+.active-Account-Icon-None-header {
+    width: 16.67px;
+    height: 16.67px;
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid var(--bg-color);
+    background-color: var(--grey-dark);
+    bottom: 2px;
+    left: 53.33px;
 }
 
 
@@ -177,12 +202,18 @@ select {
 
 
 
-html, body { height: 100%; }
-body { margin: 0;  }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
 
 
 
 .cdk-overlay-pane.mat-mdc-dialog-panel {
     max-width: none !important;
-    
+
 }

@@ -24,7 +24,7 @@
             </label>
         </div>
         @if(openSelect){
-        <div class="devspace-dialog-add-contact-list-selected-contact">
+        <div class="devspace-dialog-add-contact-list-selected-contact" (click)="focusInput()">
             <div class="selected-Contacts-area">
                 @for(item of accountSelected.slice(0,1); track item.name; let i = $index){
 
@@ -37,7 +37,7 @@
                     {{accountSelected.length -
                     1}}</span>}
             </div>
-            <input type="text" [(ngModel)]="inputValue" (input)="updateButtonState()" (click)="SelectContactClose()">
+            <input type="text" [(ngModel)]="inputValue"  (click)="SelectContactClose()" #contactInput>
             @if(inputValue){
             <div class="selected-Contacts">
                 @for(item of filteredAccounts; track item.name; let i = $index){
@@ -56,7 +56,7 @@
                 @for(item of accountSelected; track item.name; let i = $index){
                 <div class="selected-contact-item-content-selected">
                     <span><img src="{{item.pic}}" alt="">{{item.name}}</span>
-                    <img (click)="removeContact(i)" src="/assets/img/dialogClose.png" alt="">
+                    <img class="selected-contact-item-content-selected-close" (click)="removeContact(i)" src="/assets/img/dialogClose.png" alt="">
                 </div>
                 }
             </div>
@@ -65,7 +65,7 @@
         }
     </div>
     <div class="devspace-dialog-add-contact-create">
-        <input type="button" value="Erstellen" [disabled]="isDisabled">
+        <input type="button" value="Erstellen" [disabled]="isDisabled" (click)=" addChannel()" >
 
 
     </div>

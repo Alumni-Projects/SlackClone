@@ -10,6 +10,10 @@ export class DevspaceService {
   channelsDescription = "";
   openDevspace = true;
   openMessage = false;
+  openAddMessage = false;
+  openChannel = false;
+  openThread = false;
+  openDirectMessage = false;
 
 
 
@@ -21,7 +25,8 @@ export class DevspaceService {
       channelActiveTalk: false, 
     },
   ];
-
+  emojis = ['😊', '😂', '❤️', '👍', '🔥'];
+  
   accounts: DevspaceAccount[] = [
     { name: 'Florian Beck', active: true, pic: '/assets/img/Avatar1.png', activeSelf: true, activeMessage: false, },
     { name: 'Sofia Müller', active: false, pic: '/assets/img/Avatar2.png', activeSelf: false, activeMessage: false },

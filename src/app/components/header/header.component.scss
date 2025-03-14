@@ -1,0 +1,115 @@
+.header {
+    display: flex;
+    height: 70px;
+    width: 100%;
+    padding-left: 30px;
+    margin-bottom: 20px;
+
+}
+
+
+.logo {
+    width: 242.11px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 29px;
+    margin-right: 114px;
+
+    & img {
+        width: 70px;
+        height: 70px;
+    }
+
+    & span {
+
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-extra-bold);
+    }
+}
+
+.search {
+    height: 70px;
+    max-width: 989px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--white-color);
+    border-radius: 42px;
+    padding: 17.5px 45px 17.5px 45px;
+    gap: 0 149px 0 114px;
+    margin-right: 149px;
+    
+
+
+    & input {
+        width: 90%;
+        height: 33px;
+        border: none;
+        font-size: var(--font-size-title-default);
+        font-weight: var(--font-weight-normal);
+        line-height: 24.55px;
+        cursor: pointer;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::placeholder {
+            font-size: var(--font-size-title-default);
+            font-weight: var(--font-weight-normal);
+            line-height: 100%;
+            color: var(--grey-dark);
+        }
+    }
+}
+
+.header-icon {
+    width: 342px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;    
+    gap: 20px;
+    transition: all 125ms ease-in-out;
+    flex-shrink: 0;
+
+    & span:nth-of-type(1) {
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-extra-bold);
+        line-height: 100%;
+        color: var(--black-color);
+    }
+
+    .header-icon-arrow {
+        width: 30px;
+        height: 30px;
+
+    }
+
+    &:hover {
+        cursor: pointer;
+
+        & span:nth-of-type(1) {
+            color: var(--secondary-color);
+        }
+
+        .header-icon-arrow {
+            content: url('/assets/img/keyboard_arrow_down_hover.png');
+
+        }
+
+    }
+
+}
+
+.header-icon-img {
+    position: relative;
+
+    & img {
+        height: 70px;
+        width: 70px;
+    }
+}
