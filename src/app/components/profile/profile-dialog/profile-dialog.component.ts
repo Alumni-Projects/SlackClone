@@ -11,21 +11,14 @@ import { Color } from '../../../shared/Enums/color';
   standalone: true,
   templateUrl: './profile-dialog.component.html',
   styleUrls: ['./profile-dialog.component.scss'],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatIconModule
-  ]
+  imports: [CommonModule, MatDialogModule, MatIconModule]
 })
 export class ProfileDialogComponent {
-
   closeDialog() {
     this.dialogRef.close();
-    
-}
+  }
   Color = Color;
   IconSize = IconSize;
   isProfileOpen = false;
   constructor(private dialogRef: MatDialogRef<ProfileDialogComponent>) {}
-
 }

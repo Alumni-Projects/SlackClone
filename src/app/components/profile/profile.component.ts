@@ -4,7 +4,7 @@ import { ProfileDialogComponent } from './profile-dialog/profile-dialog.componen
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +18,7 @@ export class ProfileComponent {
   isProfileOpen = false;
 
   logout() {
-    console.log('Logout geklickt'); 
+    console.log('Logout geklickt');
   }
   openProfilePopup() {
     this.isProfileOpen = !this.isProfileOpen;

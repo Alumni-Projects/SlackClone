@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  HostListener
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { IconSize } from '../../../shared/Enums/iconSize';
 import { Color } from '../../../shared/Enums/color';
@@ -10,18 +16,13 @@ import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.compone
   selector: 'app-profile-popup',
   templateUrl: './profile-popup.component.html',
   styleUrls: ['./profile-popup.component.scss'],
-  imports: [
-      MatIconModule,
-      CommonModule,
-      MatDialogModule
-    ]
+  imports: [MatIconModule, CommonModule, MatDialogModule]
 })
 export class ProfilePopupComponent {
   Color = Color;
   IconSize = IconSize;
-  @Input() isOpen = false; 
+  @Input() isOpen = false;
   @Output() close = new EventEmitter<void>();
-
 
   constructor(private dialog: MatDialog) {}
 

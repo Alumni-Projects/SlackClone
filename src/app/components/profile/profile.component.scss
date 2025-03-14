@@ -7,11 +7,11 @@
 }
 
 .current-user-name {
-
   display: none;
-  @include respond(s) { 
+  @include respond(s) {
     font-size: var(--font-size-xl);
     font-weight: bold;
+    display: inline;
   }
 }
 
@@ -38,4 +38,3 @@
   border-radius: 50%;
   border: 2px solid var(--bg-color);
 }
-
