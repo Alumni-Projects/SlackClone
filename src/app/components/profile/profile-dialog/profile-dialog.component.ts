@@ -18,12 +18,14 @@ import { Color } from '../../../shared/Enums/color';
   ]
 })
 export class ProfileDialogComponent {
-  Color = Color;
-  IconSize = IconSize;
-
-  constructor(private dialogRef: MatDialogRef<ProfileDialogComponent>) {}
 
   closeDialog() {
     this.dialogRef.close();
-  }
+    
+}
+  Color = Color;
+  IconSize = IconSize;
+  isProfileOpen = false;
+  constructor(private dialogRef: MatDialogRef<ProfileDialogComponent>) {}
+
 }

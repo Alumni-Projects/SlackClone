@@ -1,0 +1,6 @@
+<div class="profile-popup" *ngIf="isOpen" (click)="closePopup()">
+  <div class="profile-popup-content" (click)="stopPropagation($event)">
+    <div class="profile-popup-content-title" (click)="openProfileDialog()">Profil</div>
+    <div class="profile-popup-content-title logout" (click)="closePopup()">Logout</div>
+  </div>
+</div>
