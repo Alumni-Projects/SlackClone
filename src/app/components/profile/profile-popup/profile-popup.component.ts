@@ -16,25 +16,26 @@ import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.compone
   selector: 'app-profile-popup',
   templateUrl: './profile-popup.component.html',
   styleUrls: ['./profile-popup.component.scss'],
-  imports: [MatIconModule, CommonModule, MatDialogModule]
+  imports: [MatIconModule, CommonModule, MatDialogModule],
 })
 export class ProfilePopupComponent {
   Color = Color;
   IconSize = IconSize;
   @Input() isOpen = false;
   @Output() close = new EventEmitter<void>();
+  isClosing = false;
 
   constructor(private dialog: MatDialog) {}
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
     if (this.isOpen) {
-      this.close.emit(); // Schließt das Popup-Menü
+      this.startCloseAnimation();
     }
   }
 
   stopPropagation(event: Event) {
-    event.stopPropagation(); // Verhindert das Schließen, wenn innerhalb geklickt wird
+    event.stopPropagation();
   }
 
   openProfileDialog() {
@@ -42,10 +43,14 @@ export class ProfilePopupComponent {
       width: '500px',
       panelClass: 'profile-menu'
     });
-    this.closePopup(); // Schließt das Menü, wenn der Dialog geöffnet wird
+    this.startCloseAnimation();
   }
 
-  closePopup() {
-    this.close.emit();
+  startCloseAnimation() {
+    this.isClosing = true;
+    setTimeout(() => {
+      this.isClosing = false;
+      this.close.emit();
+    }, 200); 
   }
 }

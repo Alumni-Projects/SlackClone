@@ -1,19 +1,28 @@
-<div class="profile-popup" *ngIf="isOpen" (click)="closePopup()">
-  <div class="profile-popup-content" (click)="stopPropagation($event)">
-    <div class="profile-popup-wrapper-handle" (click)="closePopup()">
+<div
+  class="profile-popup"
+  *ngIf="isOpen"
+  (click)="startCloseAnimation()"
+>
+  <div
+    class="profile-popup-content"
+    [class.slide-in]="isOpen && !isClosing"
+    [class.slide-out]="isClosing"
+    (click)="stopPropagation($event)"
+  >
+    <div class="profile-popup-wrapper-handle" (click)="startCloseAnimation()">
       <div class="profile-popup-handle"></div>
     </div>
     <div class="profile-popup-content-title" (click)="openProfileDialog()">
-      <mat-icon [style.font-size]="IconSize.Medium" [style.color]="Color.Black"
-        >person_outline</mat-icon
-      >
+      <mat-icon [style.font-size]="IconSize.Medium" [style.color]="Color.Black">
+        person_outline
+      </mat-icon>
       Profil
     </div>
 
-    <div class="profile-popup-content-title logout" (click)="closePopup()">
-      <mat-icon [style.font-size]="IconSize.Medium" [style.color]="Color.Black"
-        >logout</mat-icon
-      >
+    <div class="profile-popup-content-title logout" (click)="startCloseAnimation()">
+      <mat-icon [style.font-size]="IconSize.Medium" [style.color]="Color.Black">
+        logout
+      </mat-icon>
       Logout
     </div>
   </div>
