@@ -1,0 +1,73 @@
+@mixin button-style($variant: 'primary', $has-icon: false) {
+    height: 49px;
+    border-radius: 25px;
+    border-width: 1px;
+    cursor: pointer;
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-extra-bold);
+    padding: 12px 25px;
+
+    @if $has-icon ==true {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    @if $variant =='primary' or $variant =='primary-icon' {
+        color: var(--white-color);
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+
+        &:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        &:active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        &:disabled {
+            background-color: var(--grey-dark);
+            border-color: var(--grey-dark);
+        }
+    }
+
+    @else if $variant =='secondary' {
+        color: var(--primary-color);
+        background-color: var(--white-color);
+        border-color: var(--primary-color);
+
+        &:hover {
+            color: var(--white-color);
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        &:active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--white-color);
+        }
+
+        &:disabled {
+            background-color: var(--white-color);
+            border-color: var(--grey-dark);
+            color: var(--grey-dark);
+        }
+    }
+}
+
+.button-primary {
+    @include button-style('primary');
+}
+
+.button-secondary {
+    @include button-style('secondary');
+}
+
+.button-primary-icon {
+    @include button-style('primary-icon', true);
+}
