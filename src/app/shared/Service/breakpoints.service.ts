@@ -15,7 +15,6 @@ export class BreakpointsService {
     this.mobileQuery.addEventListener('change', (event) => {
       this.isMobileSubject.next(event.matches);
     });
-
     this.isMobile$.subscribe(value => {
       
       this.breankpointMain = value;

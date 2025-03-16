@@ -14,9 +14,6 @@ export class DevspaceService {
   openChannel = false;
   openThread = true;
   openDirectMessage = false;
-
-
-
   constructor() { }
 
   channels: Devspace[] = [
@@ -25,6 +22,7 @@ export class DevspaceService {
       channelActiveTalk: false, 
     },
   ];
+  
   emojis = ['😊', '😂', '❤️', '👍', '🔥'];
   
   accounts: DevspaceAccount[] = [

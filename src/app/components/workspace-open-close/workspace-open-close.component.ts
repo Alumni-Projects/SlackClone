@@ -13,8 +13,7 @@ import { BreakpointsService } from '../../shared/Service/breakpoints.service';
 export class WorkspaceOpenCloseComponent {
   openMenu: boolean = false
   
-  constructor(public devspaceService: DevspaceService, public breakpoints:BreakpointsService) {
-    
+  constructor(public devspaceService: DevspaceService, public breakpoints:BreakpointsService) {    
    }
 
   openCLoseMenu() {
