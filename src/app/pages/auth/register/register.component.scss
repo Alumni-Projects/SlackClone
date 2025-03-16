@@ -1,0 +1,146 @@
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.form {
+    padding: 40px 67px;
+    width: 606px;
+}
+
+.selected-user {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .username {
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-extra-bold);
+    }
+}
+
+.checkbox-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+
+
+    a {
+        color: var(--purple-3);
+    }
+}
+
+.privacy-policy {
+    font-weight: var(--font-weight-normal);
+    color: var(--primary-color);
+    text-decoration: unset;
+    padding: 0 5px;
+
+    &:hover {
+        background-color: var(--bg-color);
+        border-radius: 30px;
+        font-weight: var(--font-weight-bold);
+    }
+}
+
+.selected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: var(--icon-size-xxl);
+        height: var(--icon-size-xxl);
+    }
+}
+
+.avatars {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+
+    img {
+        width: var(--icon-size-xl);
+        height: var(--icon-size-xl);
+        margin: 4px;
+        cursor: pointer;
+
+        @media (max-width: 768px) {
+            width: 48px;
+            height: 48px;
+
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    form {
+        padding: 20px !important;
+        width: 380px !important;
+    }
+
+    .title {
+        gap: 15px !important;
+    }
+
+}
+
+// ####################################################################################################################
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-icon {
+    width: 24px;
+    height: 24px;
+    display: none;
+}
+
+/* Unchecked, kein Hover */
+.checkbox .unchecked {
+    display: block;
+}
+
+/* Unchecked, Hover */
+.checkbox-container:hover .unchecked {
+    display: none;
+}
+
+.checkbox-container:hover .unchecked-hover {
+    display: block;
+}
+
+/* Checked, kein Hover */
+.checkbox input[type="checkbox"]:checked~.checked {
+    display: block;
+}
+
+/* Checked, Hover */
+.checkbox input[type="checkbox"]:checked~.checked-hover {
+    display: none;
+    /* Standardmäßig aus */
+}
+
+.checkbox-container:hover input[type="checkbox"]:checked~.checked {
+    display: none;
+}
+
+.checkbox-container:hover input[type="checkbox"]:checked~.checked-hover {
+    display: block;
+}
