@@ -4,7 +4,6 @@
     width: 100%;
     padding-left: 30px;
     margin-bottom: 20px;
-
 }
 
 
@@ -40,9 +39,7 @@
     border-radius: 42px;
     padding: 17.5px 45px 17.5px 45px;
     gap: 0 149px 0 114px;
-    margin-right: 149px;
-    
-
+    margin-right: 149px;  
 
     & input {
         width: 90%;
@@ -86,7 +83,6 @@
     .header-icon-arrow {
         width: 30px;
         height: 30px;
-
     }
 
     &:hover {
@@ -98,7 +94,6 @@
 
         .header-icon-arrow {
             content: url('/assets/img/keyboard_arrow_down_hover.png');
-
         }
 
     }
@@ -107,7 +102,6 @@
 
 .header-icon-img {
     position: relative;
-
     & img {
         height: 70px;
         width: 70px;

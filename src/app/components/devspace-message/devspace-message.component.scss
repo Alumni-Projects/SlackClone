@@ -2,7 +2,6 @@
     padding-left: 71px;
     padding-right: 71px;
     position: relative;
-
 }
 
 .devspace-message-area {
@@ -14,8 +13,6 @@
     flex-direction: column;
     justify-content: space-between;
     padding-bottom: 40px;
-
-
 }
 
 .devspace-message-title {
@@ -119,14 +116,11 @@
     border-radius: 20px;
     border: 1px solid var(--light-purple);
     position: relative;
-
-
 }
 
 .devspace-message-write-area-input {
     width: 100%;
     height: 80%;
-
     &:focus {
         outline: none;
     }
@@ -167,9 +161,7 @@
 .devspace-message-write-area-icons-bars {
     display: flex;
     align-items: center;
-
     gap: 10px;
-
 
     & span {
         display: flex;
@@ -190,7 +182,6 @@
                 content: url('/assets/img/smiley_hover.png');
             }
         }
-
     }
 
     & span:nth-of-type(2) {
@@ -222,7 +213,6 @@
     padding: 20px;
     gap: 15px;
     z-index: 100;
-
 }
 
 .devspace-message-contact-bar {
@@ -242,7 +232,6 @@
     padding: 20px;
     gap: 15px;
     z-index: 100;
-
 }
 
 
@@ -291,8 +280,6 @@
         }
     }
 }
-
-
 
 .selected-Contact-Item {
     display: flex;
