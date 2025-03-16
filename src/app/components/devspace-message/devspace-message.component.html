@@ -2,7 +2,30 @@
 <Section class="devspace-message-area">
     <div class="devspace-message-title">
         <span>Neue Nachricht</span>
-        <input type="text" placeholder="An: #Channel oder @jemand oder E-Mail Adresse">
+        <input type="text" placeholder="An: #Channel oder @jemand oder E-Mail Adresse" #messageTitle [(ngModel)]="messageText"
+            (input)="onInputChange(messageText)">
+        @if(openContactBarSearch){
+        <div class="devspace-message-contact-search">
+            @for(item of devspaceService.accounts; track item.name; let i = $index){
+
+            <div class="selected-Contact-Item" (click)=" selectContactSearch(i)"><span><img src="{{item.pic}}"
+                        alt="">@if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>
+                    }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}}</div>
+            }@empty {
+
+            <div>Keine Kontakte gefunden</div>
+
+            }
+        </div>
+        }
+        @if(openChannelBarSearch){
+        <div class="devspace-message-channel-search">
+            @for(item of devspaceService.channels; track item; let i = $index){
+            <span (click)="selectChannelSearch(i)"><img src="/assets/img/tagChannelName.png" alt="">
+                {{item.name}}</span>
+            }
+        </div>
+        }
     </div>
 
     <div class="devspace-message-write">
@@ -17,7 +40,7 @@
                     <span (click)="openAt()"> <img src="/assets/img/at.png" alt=""></span>
 
                 </div>
-                <span><img src="/assets/img/send.png" alt=""></span>
+                <span (click)="addMessage()"><img src="/assets/img/send.png" alt=""></span>
             </div>
 
             @if(openSmileyBar){
@@ -42,6 +65,15 @@
                 }
 
 
+            </div>
+            }
+
+
+            @if(openChannelBar){
+            <div class="devspace-message-channel-bar">
+                @for(item of devspaceService.channels; track item; let i = $index){
+                <span (click)="selectChannel(i)"><img src="/assets/img/tagChannelName.png" alt=""> {{item.name}}</span>
+                }
             </div>
             }
         </div>

@@ -59,7 +59,8 @@ export class DevspaceDialogContactComponent implements OnInit {
           isChecked = true;
           this.selectedCheckbox = id;
           if (id === 'selectedContacts') {
-            isSelectedContactsChecked = true;            
+            isSelectedContactsChecked = true; 
+            this.isDisabled = true;           
           }
           if (id === 'allContacts') {
             this.isDisabled = false;

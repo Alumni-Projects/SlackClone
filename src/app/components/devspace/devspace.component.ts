@@ -131,6 +131,6 @@ export class DevspaceComponent implements OnInit {
     });
     this.devspaceService.openChannel = true;
     this.devspaceService.openDirectMessage = false;
-    this.devspaceService.openThread = false;
+    
   }
 }
