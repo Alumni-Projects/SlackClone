@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DevspaceDialogComponent } from './devspace-dialog/devspace-dialog.component';
+import { DevspaceDialogComponent } from '../devspace-dialog/devspace-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { DevspaceService } from '../../shared/Service/devspace.service';
+import { DevspaceService } from '../../shared/services/devspace-service/devspace.service';
+
 
 
 
@@ -106,7 +107,7 @@ export class DevspaceComponent implements OnInit {
     this.devspaceService.openMessage = true;
   }
 
-  closeMessage(){
+  closeMessage() {
     this.devspaceService.openMessage = false;
   }
 }
