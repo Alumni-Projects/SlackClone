@@ -1,10 +1,10 @@
-import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { DevspaceService } from '../../../shared/Service/devspace.service';
 import { FormsModule } from '@angular/forms'; // Importieren!
-import { DevspaceAccount } from '../../../shared/interface/devspace-account';
-import { BreakpointsService } from '../../../shared/Service/breakpoints.service';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
+import { DevspaceAccount } from '@shared/interface/devspace-account';
 
 @Component({
   selector: 'app-devspace-dialog-contact',
@@ -23,7 +23,7 @@ export class DevspaceDialogContactComponent implements OnInit {
   openSelectContact: boolean = false;
   @ViewChild('contactInput') contactInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints:BreakpointsService) {
+  constructor(private dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService) {
     this.accounts = this.devspaceService.accounts;
     this.accountSelected = [];
     console.log(this.accountSelected);
@@ -59,8 +59,8 @@ export class DevspaceDialogContactComponent implements OnInit {
           isChecked = true;
           this.selectedCheckbox = id;
           if (id === 'selectedContacts') {
-            isSelectedContactsChecked = true; 
-            this.isDisabled = true;           
+            isSelectedContactsChecked = true;
+            this.isDisabled = true;
           }
           if (id === 'allContacts') {
             this.isDisabled = false;
@@ -74,36 +74,36 @@ export class DevspaceDialogContactComponent implements OnInit {
       this.isDisabled = true;
     }
 
-    
+
 
     this.openSelect = isSelectedContactsChecked;
-    
+
   }
 
 
 
   selectContact(i: number) {
-     
+
     if (!this.accountSelected?.some(item => item.name === this.filteredAccounts[i].name)) {
       this.accountSelected!.push(this.filteredAccounts[i]);
       this.inputValue = '';
-      
+
     }
 
-    if(this.accountSelected.length > 0){
+    if (this.accountSelected.length > 0) {
       this.isDisabled = false;
-    }else{
+    } else {
       this.isDisabled = true;
     }
-   
+
   }
 
   removeContact(i: number) {
-    this.accountSelected.splice(i,1);
-    this.openSelectContact = false;   
-    if(this.accountSelected.length > 0){
+    this.accountSelected.splice(i, 1);
+    this.openSelectContact = false;
+    if (this.accountSelected.length > 0) {
       this.isDisabled = false;
-    }else{
+    } else {
       this.isDisabled = true;
     }
   }
@@ -113,18 +113,18 @@ export class DevspaceDialogContactComponent implements OnInit {
     this.inputValue = '';
   }
 
-  SelectContactClose(){
+  SelectContactClose() {
     this.openSelectContact = false;
-    
+
   }
 
-  focusInput(){
-    this.contactInput.nativeElement.focus();     
+  focusInput() {
+    this.contactInput.nativeElement.focus();
   }
 
   addChannel() {
-     let channel = {name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelActiveTalk: false};
-    this.devspaceService.channels.push(channel);   
-    this.dialog.closeAll(); 
+    let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelActiveTalk: false };
+    this.devspaceService.channels.push(channel);
+    this.dialog.closeAll();
   }
 }
