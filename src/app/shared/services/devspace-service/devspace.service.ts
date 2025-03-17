@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Devspace } from '../../shared/interface/devspace';
-import { DevspaceAccount } from '../../shared/interface/devspace-account';
+import { Devspace } from '@shared/interface/devspace';
+import { DevspaceAccount } from '@shared/interface/devspace-account';
 
 @Injectable({
   providedIn: 'root'

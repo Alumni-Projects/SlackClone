@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { IconSize } from '../../shared/Enums/iconSize';
-import { Color } from '../../shared/Enums/color';
+import { IconSize } from '@shared/Enums/iconSize';
+import { Color } from '@shared/Enums/color';
 import { CommonModule } from '@angular/common';
 import { ProfileComponent } from '../profile/profile.component';
 

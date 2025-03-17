@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DevspaceService } from '../../shared/Service/devspace.service';
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 
 @Component({
   selector: 'app-devspace-message',

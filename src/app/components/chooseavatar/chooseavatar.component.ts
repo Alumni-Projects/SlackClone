@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatIconModule } from '@angular/material/icon';
-import { IconSize } from '../Enums/iconSize';
-import { Color } from '../Enums/color';
 import { CommonModule } from '@angular/common';
+import { Color } from '@shared/Enums/color';
+import { IconSize } from '@shared/Enums/iconSize';
 
 @Component({
   selector: 'app-chooseavatar',
@@ -30,7 +30,7 @@ export class ChooseAvatarComponent implements OnInit {
     { src: '/assets/avatar/avatar6.svg' }
   ];
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit(): void {
     if (!this.avatarImage || this.avatarImage === '') {

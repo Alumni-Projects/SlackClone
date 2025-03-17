@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="box box-container">
+
+        <h2>E-Mail-Verifizierung</h2>
+        @if(verified){
+        <p>Deine E-Mail-Adresse wurde erfolgreich verifiziert.</p>
+        <div class="btn-container">
+
+            <button class="button-primary" (click)="goToLogin()">Zum Login</button>
+        </div>
+        }@else {
+
+        <p>Bitte überprüfe deine E-Mail-Adresse, um dein Konto zu aktivieren.</p>
+        @if(isLoggedIn){
+        <div class="btn-container">
+
+            <button class="button-primary" (click)="resendVerification()">Verifizierungs-E-Mail erneut senden</button>
+        </div>
+        }
+        }
+    </div>
+</div>

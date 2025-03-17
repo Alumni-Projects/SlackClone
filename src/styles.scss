@@ -1,22 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
 @use 'assets/themes/mixins.scss' as *;
+@use 'assets/themes/inputs.scss' as *;
+@use 'assets/themes/buttons.scss' as *;
+
+
+
 
 html {
-  @include mat.theme((
-    color: (
-      theme-type: light,
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+    @include mat.theme((color: (theme-type: light,
+                primary: mat.$azure-palette,
+                tertiary: mat.$blue-palette,
+            ),
+            typography: Roboto,
+            density: 0,
+        ));
 }
-
 
 // devspace Area
 :root {
@@ -32,11 +33,12 @@ html {
 :root {
     --width-devspace-message-area: calc(100vw - 440px);
 }
+
 //Colors
 :root {
     --primary-color: #444df2;
     --secondary-color: #797ef3;
-    --bg-color: #eceefe;   
+    --bg-color: #eceefe;
     --white-color: #fff;
     --black-color: #000;
     --grey-dark: #686868;
@@ -44,12 +46,15 @@ html {
     --purple-3: #535af1;
     --online-green: #92c83e;
     --mail-blue: #1381ff;
+    --error-msg: #ED1E79;
 }
+
 //Shadow
 :root {
-  --shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-  ;
+    --shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    ;
 }
+
 //Fonts
 @font-face {
     font-family: 'Nunito';
@@ -67,6 +72,7 @@ h5 {
 }
 
 :root {
+    --font-size-error: 14px;
     --font-size-title-default: 24px;
     --font-size-s: 16px;
     --font-size-m: 18px;
@@ -85,8 +91,18 @@ h5 {
     --icon-size-s: 16px;
     --icon-size-m: 24px;
     --icon-size-l: 32px;
+    --icon-size-xl: 64px;
+    --icon-size-xxl: 168px;
 }
 
+//Breakpoints
+:root {
+    --breakpoint-xs: 395px;
+    --breakpoint-s: 480px;
+    --breakpoint-m: 768px;
+    --breakpoint-l: 1024px;
+    --breakpoint-xl: 1200px;
+}
 
 
 //Main
@@ -112,11 +128,14 @@ h5 {
     4. Improve text rendering
     */
 body {
-    line-height: 1.5;
+    // line-height: 1.5;
     margin: 0;
     font-family: 'Nunito', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: #eceefe;
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-bold);
     background: var(--bg-color);
 }
 
@@ -178,11 +197,61 @@ select {
     --dropdown-radius: 30px 0 30px 30px;
 }
 
-html, body { height: 100%; }
-body { margin: 0;  }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+.overlay-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.box {
+    border-radius: 30px;
+    box-shadow: 0px 2px 10px 0px #00000014;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-weight: var(--font-weight-normal);
+}
+
+.title-auth {
+    font-size: var(--font-size-xxl);
+    color: var(--primary-color);
+    font-weight: var(--font-weight-extra-bold);
+
+    @media (max-width: 768px) {
+        font-size: var(--font-size-xl);
+        width: 203px;
+    }
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
 
 
 .cdk-overlay-pane.mat-mdc-dialog-panel {
     max-width: none !important;
-    
 }
