@@ -1,0 +1,133 @@
+.form {
+    width: 606px;
+    gap: 40px;
+
+    padding: 50px 60px;
+
+    .title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 30px;
+
+        & span:last-child {
+            font-size: 20px;
+
+            @media (max-width: 768px) {
+                font-size: var(--font-size-s);
+            }
+        }
+
+        @media (max-width: 768px) {
+            gap: 20px;
+        }
+    }
+
+    .input-container {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        .forgot-password {
+            display: flex;
+            justify-content: center;
+            font-weight: var(--font-weight-normal);
+            cursor: pointer;
+
+            a {
+                color: var(--primary-color);
+                text-decoration: unset;
+                padding: 5px 15px;
+
+                &:hover {
+                    background-color: var(--bg-color);
+                    border-radius: 30px;
+                    font-weight: var(--font-weight-bold);
+                }
+            }
+
+        }
+
+        @media (max-width: 768px) {
+            gap: 30px;
+        }
+    }
+
+    .or-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+
+
+
+        div {
+            border: 1px solid var(--light-purple);
+            width: 100%;
+        }
+    }
+
+
+    .btn-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    @media (max-width: 768px) {
+        width: 380px;
+        gap: 20px;
+        padding: 35px 20px;
+
+        .title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+.register-container {
+    position: absolute;
+    top: 75px;
+    right: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+
+    span {
+        margin-right: 15px;
+    }
+
+    a {
+        color: var(--secondary-color);
+        text-decoration: none;
+        border: 1px solid transparent;
+        padding: 10px 15px;
+        border-radius: 30px;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--primary-color);
+            border-color: var(--light-purple);
+            font-weight: var(--font-weight-bold);
+        }
+    }
+
+    @media (max-width: 768px) {
+        position: unset;
+    }
+}
+
+.container {
+    @media (max-width: 768px) {
+        padding-top: 100px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        height: calc(100vh - 40px);
+    }
+}

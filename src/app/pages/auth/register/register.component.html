@@ -1,0 +1,121 @@
+<div class="container">
+
+    <form class="box form">
+        <div class="icon" (click)="backToLogin()">
+            <mat-icon aria-hidden="false" aria-label="mail" fontIcon="arrow_back"></mat-icon>
+        </div>
+        @if (!continue) {
+        <div class="title">
+            <span class="title-auth">Konto erstellen</span>
+            <span>Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</span>
+        </div>
+        <div class="input-container">
+            <div>
+                <div class="input-bg">
+                    <mat-icon aria-hidden="false" aria-label="mail" fontIcon="person_outline"></mat-icon>
+                    <input [formControl]="usernameFormControl" type="text" placeholder="Name und Nachname">
+                    @if(usernameFormControl.touched || usernameFormControl.dirty){
+                    @if(usernameFormControl.errors?.['required'] || usernameFormControl.hasError('incorrect')){
+                    <p>Name und Nachname sind erforderlich.</p>
+                    } @else if (usernameFormControl.hasError('special')) {
+                    <p>Keine Sonderzeichen erlaubt.</p>
+                    }
+                    }
+                </div>
+            </div>
+            <div>
+                <div class="input-bg">
+                    <mat-icon aria-hidden="false" aria-label="mail" fontIcon="mail_outline"></mat-icon>
+                    <input [formControl]="emailFormControl" type="email" placeholder="beispielname@email.com">
+                    @if (emailFormControl.invalid && (emailFormControl.touched || emailFormControl.dirty)) {
+                    @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+                    <p>
+                        *Diese E-Mail-Adresse ist leider ungültig.
+                    </p>
+                    }
+                    @if(emailFormControl.hasError('required')) {
+                    <p>
+                        E-Mail-Adresse ist erforderlich.
+                    </p>
+                    }
+                    }
+                </div>
+            </div>
+
+            <div>
+                <div class="input-bg">
+                    <mat-icon aria-hidden="false" aria-label="mail" fontIcon="lock_outline"></mat-icon>
+                    <input [formControl]="passwordFormControl" type="password" placeholder="Passwort">
+                    @if(passwordFormControl.touched || passwordFormControl.dirty){
+                    @if(passwordFormControl.errors?.['minlength'] && !passwordFormControl.errors?.['required']){
+                    <p>Mindestens 8 Zeichen erforderlich.</p>
+                    }
+                    @if(passwordFormControl.errors?.['required']){
+                    <p>Passwort ist erforderlich.</p>
+                    }
+                    }
+                </div>
+            </div>
+
+            <div class="checkbox-container" (click)="toggleCheckbox()">
+                <div class="checkbox">
+                    <input type="checkbox" [checked]="isChecked">
+                    @if(!isChecked){
+                    <img class="checkbox-icon unchecked" src="/assets/img/checkbox/check_box.svg" alt="Unchecked">
+                    <img class="checkbox-icon unchecked-hover" src="/assets/img/checkbox/check_box_hover.svg"
+                        alt="Unchecked Hover">
+                    }@else {
+                    <img class="checkbox-icon checked" src="/assets/img/checkbox/check_box_checked.svg" alt="Checked">
+                    <img class="checkbox-icon checked-hover" src="/assets/img/checkbox/check_box_checked_hover.svg"
+                        alt="Checked Hover">
+                    }
+                </div>
+                <span>Ich stimme der <a class="privacy-policy">Datenschutzerklärung</a> zu.</span>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button [disabled]="registerForm.invalid || !isChecked" class="button-primary"
+                (click)="clickContinue()">Weiter</button>
+        </div>
+        }@else {
+        <div class="title">
+            <span class="title-auth">Wähle deinen Avatar</span>
+        </div>
+        <div class="selected">
+            <img src="assets/avatar/{{selectedAvatar}}" alt="Avatar">
+        </div>
+
+        <div class="selected-user">
+            <div>
+                <span class="username">{{usernameFormControl.value}}</span>
+            </div>
+
+            <div style="text-align: left;">
+                <span>Aus der Liste wählen</span>
+            </div>
+
+            <div class="avatars">
+                @for (avatar of avatars; track $index) {
+                <img class="" src="assets/avatar/{{avatar}}" alt="{{avatar}}" (click)="selectAvatar(avatar)">
+                }
+            </div>
+        </div>
+        @if(errorMessage){
+        <div class="error">
+            <p style="color: red;">{{errorMessage}}</p>
+        </div>
+        }
+        <div class="btn-container">
+            <button [disabled]="registerForm.invalid || !isChecked || selectedAvatar === 'avatar0.svg'"
+                class="button-primary" (click)="createUser()">Erstellen</button>
+        </div>
+        }
+    </form>
+
+    <app-overlay>
+        <span>
+            Verifizierungscode gesendet!
+        </span>
+    </app-overlay>
+</div>

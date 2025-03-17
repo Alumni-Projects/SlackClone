@@ -1,0 +1,38 @@
+<div class="container">
+    <form class="box form">
+        <div class="icon" (click)="backToLogin()">
+            <mat-icon aria-hidden="false" aria-label="mail" fontIcon="arrow_back"></mat-icon>
+        </div>
+        <div class="title">
+            <span class="title-auth">Passwort zurücksetzen</span>
+        </div>
+        <div>
+            <span>Bitte geben Sie Ihre E-Mail-Adresse ein.</span>
+        </div>
+        <div class="input-container">
+            <div>
+                <div class="input-bg">
+                    <mat-icon aria-hidden="false" aria-label="mail" fontIcon="mail_outline"></mat-icon>
+                    <input [formControl]="emailFormControl" type="email" placeholder="beispielname@email.com">
+                </div>
+            </div>
+        </div>
+        <div>
+            <span>
+                Wir senden Ihnen eine E-Mail, über die <br> Sie Ihr Passwort ändern können.
+            </span>
+        </div>
+        <div class="btn-container">
+            <button [disabled]="emailFormControl.invalid" class="button-primary" (click)="sendMail()">E-Mail
+                senden</button>
+        </div>
+    </form>
+    <app-overlay>
+        <div class="overlay-container">
+            <mat-icon aria-hidden="false" aria-label="send" fontIcon="send"></mat-icon>
+            <span>
+                E-Mail gesendet
+            </span>
+        </div>
+    </app-overlay>
+</div>

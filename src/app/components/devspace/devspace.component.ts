@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DevspaceDialogComponent } from './devspace-dialog/devspace-dialog.component';
+import { DevspaceDialogComponent } from '../devspace-dialog/devspace-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { DevspaceService } from '../../shared/Service/devspace.service';
-import { BreakpointsService } from '../../shared/Service/breakpoints.service';
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 
 
 
@@ -131,6 +131,6 @@ export class DevspaceComponent implements OnInit {
     });
     this.devspaceService.openChannel = true;
     this.devspaceService.openDirectMessage = false;
-    
+
   }
 }

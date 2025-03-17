@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { DevspaceService } from '../../shared/Service/devspace.service';
-import { BreakpointsService } from '../../shared/Service/breakpoints.service';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 
 
 @Component({
@@ -12,9 +12,9 @@ import { BreakpointsService } from '../../shared/Service/breakpoints.service';
 })
 export class WorkspaceOpenCloseComponent {
   openMenu: boolean = false
-  
-  constructor(public devspaceService: DevspaceService, public breakpoints:BreakpointsService) {    
-   }
+
+  constructor(public devspaceService: DevspaceService, public breakpoints: BreakpointsService) {
+  }
 
   openCLoseMenu() {
     this.openMenu = !this.openMenu;

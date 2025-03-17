@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DevspaceService } from '../../shared/Service/devspace.service';
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 
 
 @Component({
@@ -10,10 +10,10 @@ import { DevspaceService } from '../../shared/Service/devspace.service';
 })
 export class HeaderComponent {
   constructor(public devspaceService: DevspaceService) { }
-  placeholder(){
-    if(window.innerWidth > 768){
+  placeholder() {
+    if (window.innerWidth > 768) {
       return "Devspace durchsuchen"
-    }else{
+    } else {
       return "Gehe zu.."
     }
   }

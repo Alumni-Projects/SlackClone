@@ -5,5 +5,6 @@ export enum Color {
     White = '--white-color',
     BgColor = '--bg-color',
     LightPurple = '--light-purple',
-    Purple3 = '--purple-3'
+    Purple3 = '--purple-3',
+    Green="--online-green",
 }

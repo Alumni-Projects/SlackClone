@@ -1,8 +1,8 @@
-import { Component,ViewChild, ElementRef } from '@angular/core';
-import { MatDialog} from '@angular/material/dialog';
-import { DevspaceService } from '../../../shared/Service/devspace.service';
-import { DevspaceDialogContactComponent } from '../devspace-dialog-contact/devspace-dialog-contact.component';
-import { BreakpointsService } from '../../../shared/Service/breakpoints.service';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DevspaceDialogContactComponent } from '@components/devspace/devspace-dialog-contact/devspace-dialog-contact.component';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 
 @Component({
   selector: 'app-devspace-dialog',
@@ -13,19 +13,19 @@ import { BreakpointsService } from '../../../shared/Service/breakpoints.service'
 export class DevspaceDialogComponent {
   @ViewChild('channelInput') channelInput!: ElementRef;
   @ViewChild('channelDescription') channelDescription!: ElementRef;
-  
 
-  constructor(private dialog: MatDialog, public devspaceService: DevspaceService,public breakpoints:BreakpointsService) { }
 
-  closeDialog(){
+  constructor(private dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService) { }
+
+  closeDialog() {
     this.dialog.closeAll();
   }
-  createChannel(){
+  createChannel() {
     this.devspaceService.channelsName = this.channelInput.nativeElement.value;
-    this.devspaceService.channelsDescription = this.channelDescription.nativeElement.value; 
+    this.devspaceService.channelsDescription = this.channelDescription.nativeElement.value;
     // let channel = {name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelActiveTalk: false};
     // this.devspaceService.channels.push(channel);   
-    
+
     this.dialog.closeAll();
     this.openDialog();
   }

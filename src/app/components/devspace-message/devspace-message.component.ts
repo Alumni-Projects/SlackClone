@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild, ChangeDetectorRef, } from '@angular/core';
-import { DevspaceService } from '../../shared/Service/devspace.service';
-import { FormsModule } from '@angular/forms';  //
-
+import { FormsModule } from '@angular/forms';
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 
 @Component({
   selector: 'app-devspace-message',
