@@ -10,7 +10,7 @@
 
             <div class="selected-Contact-Item" (click)=" selectContactSearch(i)"><span><img src="{{item.pic}}"
                         alt="">@if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>
-                    }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}}</div>
+                    }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}} @if(devspaceService.accounts[i].activeSelf){(Du)}</div>
             }@empty {
 
             <div>Keine Kontakte gefunden</div>
@@ -40,7 +40,7 @@
                     <span (click)="openAt()"> <img src="/assets/img/at.png" alt=""></span>
 
                 </div>
-                <span (click)="addMessage()"><img src="/assets/img/send.png" alt=""></span>
+                <span class="devspace-message-write-area-icons-bars-send" (click)="addMessage()"><img src="/assets/img/send.png" alt=""></span>
             </div>
 
             @if(openSmileyBar){
@@ -57,7 +57,7 @@
 
                 <div class="selected-Contact-Item" (click)="selectContact(i)"><span><img src="{{item.pic}}"
                             alt="">@if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>
-                        }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}}</div>
+                        }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}} @if(devspaceService.accounts[i].activeSelf){(Du)}</div>
                 }@empty {
 
                 <div>Keine Kontakte gefunden</div>
@@ -72,7 +72,7 @@
             @if(openChannelBar){
             <div class="devspace-message-channel-bar">
                 @for(item of devspaceService.channels; track item; let i = $index){
-                <span (click)="selectChannel(i)"><img src="/assets/img/tagChannelName.png" alt=""> {{item.name}}</span>
+                <span (click)="selectChannel(i)"><img src="/assets/img/tagChannelName.png" alt=""> {{item.name}} </span>
                 }
             </div>
             }

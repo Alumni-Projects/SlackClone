@@ -12,7 +12,7 @@ export class DevspaceService {
   openMessage = false;
   openAddMessage = false;
   openChannel = false;
-  openThread = true;
+  openThread = false;
   openDirectMessage = false;
   constructor() { }
 

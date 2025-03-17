@@ -209,6 +209,10 @@ export class DevspaceMessageComponent {
     const contactName = this.devspaceService.accounts[i].name;
     const lastAtIndex = this.messageText.lastIndexOf('@');
 
+    if (this.messageText.includes(contactName)) {
+      return;
+    }
+
     if (lastAtIndex !== -1) {
 
       this.messageText =
@@ -225,6 +229,11 @@ export class DevspaceMessageComponent {
   selectChannelSearch(i: number) {
     const channelName = this.devspaceService.channels[i].name;
     const lastAtIndex = this.messageText.lastIndexOf('#');
+
+    if (this.messageText.includes(channelName)) {
+      return;
+
+    }
 
     if (lastAtIndex !== -1) {
       this.messageText =
