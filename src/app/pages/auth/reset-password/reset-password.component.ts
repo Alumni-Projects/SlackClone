@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OverlayComponent } from "../../../components/overlay/overlay.component";
-import { AuthService } from '../../../shared/services/auth-service/auth.service';
+import { OverlayComponent } from "@components/overlay/overlay.component";
+import { AuthService } from '@shared/services/auth-service/auth.service';
 
 @Component({
   selector: 'app-reset-password',

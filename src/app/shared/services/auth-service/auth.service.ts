@@ -4,7 +4,6 @@ import { FirebaseApp, initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../../../environments/environment';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../firestore-service/firestore.service';
-import { RegisterComponent } from '../../../pages/auth/register/register.component';
 @Injectable({
   providedIn: 'root'
 })

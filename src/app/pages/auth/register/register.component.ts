@@ -3,9 +3,9 @@ import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormGroup, A
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { Router } from '@angular/router';
-import { OverlayComponent } from '../../../components/overlay/overlay.component';
+import { OverlayComponent } from '@components/overlay/overlay.component';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../shared/services/auth-service/auth.service';
+import { AuthService } from '@shared/services/auth-service/auth.service';
 
 @Component({
   selector: 'app-register',

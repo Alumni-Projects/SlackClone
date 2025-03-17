@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { DevspaceService } from '../../shared/services/devspace-service/devspace.service';
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 
 
 @Component({

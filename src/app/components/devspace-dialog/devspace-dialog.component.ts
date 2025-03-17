@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DevspaceService } from '../../shared/services/devspace-service/devspace.service';
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 
 @Component({
   selector: 'app-devspace-dialog',

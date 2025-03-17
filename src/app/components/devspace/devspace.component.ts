@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DevspaceDialogComponent } from '../devspace-dialog/devspace-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { DevspaceService } from '../../shared/services/devspace-service/devspace.service';
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 
 
 

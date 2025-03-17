@@ -3,7 +3,7 @@ import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angu
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../shared/services/auth-service/auth.service';
+import { AuthService } from '@shared/services/auth-service/auth.service';
 
 @Component({
   selector: 'app-login',
