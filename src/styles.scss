@@ -1,6 +1,22 @@
-
-
 /* You can add global styles to this file, and also import other style files */
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+
 // devspace Area
 :root {
     --devspace-margin-left: 20px;
@@ -9,6 +25,7 @@
     --devspace-margin-bottom: 25px;
     --devspace-max-width: 1900px;
 }
+
 
 //Devspace Message Input Area
 :root {
@@ -160,15 +177,11 @@ select {
     --dropdown-radius: 30px 0 30px 30px;
 }
 
-
-
 html, body { height: 100%; }
 body { margin: 0;  }
 
 
-
-.cdk-overlay-panel.mat-mdc-dialog-panel {
+.cdk-overlay-pane.mat-mdc-dialog-panel {
     max-width: none !important;
-
+    
 }
-
