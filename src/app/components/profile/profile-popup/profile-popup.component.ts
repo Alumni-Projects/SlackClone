@@ -6,8 +6,8 @@ import {
   HostListener
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { IconSize } from '../../../shared/Enums/iconSize';
-import { Color } from '../../../shared/Enums/color';
+import { IconSize } from '@shared/Enums/iconSize';
+import { Color } from '@shared/Enums/color';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.component';
@@ -25,7 +25,7 @@ export class ProfilePopupComponent {
   @Output() close = new EventEmitter<void>();
   isClosing = false;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {

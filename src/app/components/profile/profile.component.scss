@@ -1,3 +1,5 @@
+@use '@themes/mixins.scss' as *;
+
 .user-status {
   display: flex;
   align-items: center;
@@ -7,6 +9,7 @@
 
 .current-user-name {
   display: none;
+
   @include respond(s) {
     font-size: var(--font-size-xl);
     font-weight: bold;

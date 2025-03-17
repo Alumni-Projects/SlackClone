@@ -3,8 +3,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { IconSize } from '../../../shared/Enums/iconSize';
-import { Color } from '../../../shared/Enums/color';
+import { IconSize } from '@shared/Enums/iconSize';
+import { Color } from '@shared/Enums/color';
 
 @Component({
   selector: 'app-profile-dialog',
@@ -20,5 +20,5 @@ export class ProfileDialogComponent {
   Color = Color;
   IconSize = IconSize;
   isProfileOpen = false;
-  constructor(private dialogRef: MatDialogRef<ProfileDialogComponent>) {}
+  constructor(private dialogRef: MatDialogRef<ProfileDialogComponent>) { }
 }
