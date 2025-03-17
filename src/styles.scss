@@ -1,23 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
-
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+@use 'assets/themes/mixins.scss' as *;
 @use 'assets/themes/inputs.scss' as *;
 @use 'assets/themes/buttons.scss' as *;
 
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
+
 
 html {
-  @include mat.theme((
-    color: (
-      theme-type: light,
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+    @include mat.theme((color: (theme-type: light,
+                primary: mat.$azure-palette,
+                tertiary: mat.$blue-palette,
+            ),
+            typography: Roboto,
+            density: 0,
+        ));
 }
 
 // devspace Area
@@ -50,6 +49,12 @@ html {
     --error-msg: #ED1E79;
 }
 
+//Shadow
+:root {
+    --shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    ;
+}
+
 //Fonts
 @font-face {
     font-family: 'Nunito';
@@ -72,6 +77,7 @@ h5 {
     --font-size-s: 16px;
     --font-size-m: 18px;
     --font-size-l: 20px;
+    --font-size-ml: 24px;
     --font-size-xl: 32px;
     --font-size-xxl: 46px;
     --font-weight-normal: 400;
@@ -130,6 +136,7 @@ body {
     background: #eceefe;
     font-size: var(--font-size-m);
     font-weight: var(--font-weight-bold);
+    background: var(--bg-color);
 }
 
 @font-face {
@@ -187,6 +194,7 @@ select {
     --border-radius-m: 20px;
     --border-radius-l: 25px;
     --border-radius-xl: 100px;
+    --dropdown-radius: 30px 0 30px 30px;
 }
 
 html,
@@ -234,12 +242,16 @@ body {
     }
 }
 
-html, body { height: 100%; }
-body { margin: 0;  }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
 
 
 .cdk-overlay-pane.mat-mdc-dialog-panel {
     max-width: none !important;
 }
-
-    
