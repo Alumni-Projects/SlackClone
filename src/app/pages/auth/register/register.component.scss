@@ -112,7 +112,7 @@
     display: none;
 }
 
-/* Unchecked, kein Hover */
+/* Unchecked, no Hover */
 .checkbox .unchecked {
     display: block;
 }
@@ -126,7 +126,7 @@
     display: block;
 }
 
-/* Checked, kein Hover */
+/* Checked, no Hover */
 .checkbox input[type="checkbox"]:checked~.checked {
     display: block;
 }
@@ -134,7 +134,6 @@
 /* Checked, Hover */
 .checkbox input[type="checkbox"]:checked~.checked-hover {
     display: none;
-    /* Standardmäßig aus */
 }
 
 .checkbox-container:hover input[type="checkbox"]:checked~.checked {

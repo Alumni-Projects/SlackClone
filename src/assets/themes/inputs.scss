@@ -13,7 +13,6 @@
 
     @if $variant =='default' {
 
-        // Styles für den Standardinput
         input {
             flex: 1;
             border: none;
@@ -44,7 +43,6 @@
     }
 
     @else if $variant =='google' {
-        // Zusätzliche Styles für den Google-Input
         cursor: pointer;
         justify-content: center;
 

@@ -29,7 +29,7 @@ export class AuthService {
       this.user = user;
       if (user) {
         if (user.isAnonymous) {
-          this.router.navigate(['/dashboard']); // Gäste direkt zu Dashboard
+          this.router.navigate(['/dashboard']);
         } else if (user.emailVerified) {
           this.firestoreService.fetchUserFromFirestore(user.uid).then(userData => {
             console.log('User data loaded:', userData);
@@ -111,7 +111,7 @@ export class AuthService {
       const userCredential = await signInAnonymously(this.auth);
       const user = userCredential.user;
       const profile = this.avatars[Math.floor(Math.random() * this.avatars.length)];
-      await this.firestoreService.saveGuestToFirestore(user, profile); // Speichere Gast-Daten
+      await this.firestoreService.saveGuestToFirestore(user, profile);
       console.log('Logged in as guest:', user.uid);
     } catch (error) {
       console.error('Guest login error:', error);
@@ -132,7 +132,6 @@ export class AuthService {
     }
   }
 
-  // Passwort zurücksetzen
   async resetPassword(email: string): Promise<void> {
     try {
       await sendPasswordResetEmail(this.auth, email);
@@ -142,7 +141,6 @@ export class AuthService {
     }
   }
 
-  // E-Mail aktualisieren
   async updateEmail(newEmail: string): Promise<void> {
     const user = this.getUser();
     if (!user) {
@@ -193,7 +191,6 @@ export class AuthService {
     }
   }
 
-  // Hilfsmethoden
   getUser(): User | null {
     return this.auth.currentUser;
   }

@@ -48,7 +48,7 @@ export class FirestoreService {
       uid: user.uid,
       ip: await fetch("https://checkip.amazonaws.com/").then(res => res.text()),
       profile: profile,
-      displayName: `Guest_${user.uid.slice(0, 5)}`, // Eindeutiger Gastname
+      displayName: `Guest_${user.uid.slice(0, 5)}`,
       isAnonymous: true,
       createdAt: new Date().toISOString()
     };
