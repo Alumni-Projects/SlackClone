@@ -16,7 +16,7 @@ import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.compone
   selector: 'app-profile-popup',
   templateUrl: './profile-popup.component.html',
   styleUrls: ['./profile-popup.component.scss'],
-  imports: [MatIconModule, CommonModule, MatDialogModule],
+  imports: [MatIconModule, CommonModule, MatDialogModule]
 })
 export class ProfilePopupComponent {
   Color = Color;
@@ -51,6 +51,6 @@ export class ProfilePopupComponent {
     setTimeout(() => {
       this.isClosing = false;
       this.close.emit();
-    }, 200); 
+    }, 200);
   }
 }
