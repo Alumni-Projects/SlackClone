@@ -1,0 +1,10 @@
+.thread {
+    width: 485px;
+    height: 940px;
+    background-color: var(--white-color);
+    padding: 32px 30px 32px 30px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}

@@ -1,16 +1,20 @@
-<section class="workspace">
-    <div class="workspace-content" [class.close-menu]="openMenu" (click)="openCLoseMenu()">
+@if(!breakpoints.breankpointMain){
+    <section class="workspace">
+        <div class="workspace-content" [class.close-menu]="openMenu" (click)="openCLoseMenu()">
+    
+            @if(devspaceService.openDevspace){
+                <img src="/assets/img/Showmenu.png" alt="">
+            }@else{
+                <img src="/assets/img/Showmenu_open.png" alt="">
+            }
+    
+            @if(devspaceService.openDevspace){
+                <p>Workspace-Menü schließen </p>
+            } @else {
+                <p>Workspace-Menü öffnen </p>
+            }
+        </div>
+    </section>
+}
+    
 
-        @if(devspaceService.openDevspace){
-            <img src="/assets/img/Showmenu.png" alt="">
-        }@else{
-            <img src="/assets/img/Showmenu_open.png" alt="">
-        }
-
-        @if(devspaceService.openDevspace){
-            <p>Workspace-Menü schließen </p>
-        } @else {
-            <p>Workspace-Menü öffnen </p>
-        }
-    </div>
-</section>

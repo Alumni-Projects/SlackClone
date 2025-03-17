@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     gap: 25px;
-    
+    position: relative;
 }
 
 .devspace-header {
@@ -16,7 +16,6 @@
     width: 306px;
     height: 60px;
     justify-content: space-between;
-
 }
 
 .devspace-logo {
@@ -26,7 +25,6 @@
     font-size: var(--font-size-title-default);
     font-weight: var(--font-weight-extra-bold);
     line-height: 32.74px;
-
 }
 
 .devspace-edit-logo {
@@ -49,8 +47,38 @@
 
         & img {
             content: url('/assets/img/DevEditHover.png');
-            
+
         }
+    }
+}
+
+.devspace-edit-logo-mobile {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-color);
+    position: absolute;
+    bottom: 57px;
+    right: 16px;
+    padding: 8px 8px 0 10px;
+    border-radius: 50%;
+
+    & img {
+        width: 40px;
+        height: 40px;
+    }
+
+    box-shadow: none;
+    border: none;
+
+    &:hover {
+        background-color: var(--secondary-color);
+        cursor: pointer;
+
+    }
+
+    &:active {
+        background-color: var(--primary-color);
+
     }
 }
 
@@ -60,7 +88,6 @@
     flex-direction: column;
     gap: 20px;
     transition: height 0.75ms ease-in-out;
-
 }
 
 .devspace-channel-title {
@@ -84,21 +111,19 @@
         font-weight: var(--font-weight-extra-bold);
         line-height: 27.28px;
     }
-
 }
 
 
 .devspace-channel-title-content:hover {
     cursor: pointer;
-
     .active-Channel-Icon {
         content: url('/assets/img/arrow_drop_down_right_hover.png');
-       
+
     }
 
     .active-Channel-Icon-None {
         content: url('/assets/img/arrow_drop_downHover.png');
-        
+
     }
 
     div {
@@ -136,6 +161,8 @@
     flex-direction: column;
     gap: 13px;
     padding-left: 30px;
+
+
 }
 
 .devspace-channel-list-item {
@@ -149,28 +176,24 @@
     transition: all 0.75ms ease-in-out;
     cursor: pointer;
 
-    & span {        
+    & span {
         font-size: var(--font-size-m);
         font-weight: var(--font-weight-normal);
         line-height: 24.55px;
         color: black;
+
+
     }
 
     &:hover {
         background-color: var(--bg-color);
         border-radius: 20px;
-
-
-
-
         & img {
             content: url('/assets/img/tagHover.png');
         }
     }
 
-
 }
-
 
 .devspace-add-channel-button {
     width: 100%;
@@ -181,7 +204,7 @@
     gap: 15px;
     transition: all 0.75ms ease-in-out;
 
-    & p {        
+    & p {
         font-size: var(--font-size-m);
         font-weight: var(--font-weight-normal);
         line-height: 24.55px;
@@ -224,8 +247,6 @@
     display: flex;
     flex-direction: column;
     gap: 25px;
-
-
 }
 
 .devspace-direct-messages-title {
@@ -234,21 +255,18 @@
     display: flex;
     align-items: center;
     gap: 15px;
-
 }
 
 .devspace-direct-messages-title-content {
     display: flex;
     gap: 15px;
-
-
     & span:nth-of-type(1) {
         width: 24px;
         height: 24px;
         transition: all 125ms ease-in-out;
     }
 
-    & span:nth-of-type(2) {       
+    & span:nth-of-type(2) {
         font-size: var(--font-size-l);
         font-weight: var(--font-weight-extra-bold);
         line-height: 27.28px;
@@ -259,7 +277,6 @@
 
 .devspace-direct-messages-title:hover {
     cursor: pointer;
-
     .active-Message-Icon {
         content: url('/assets/img/arrow_drop_down_right_hover.png');
     }
@@ -281,8 +298,8 @@
     }
 }
 
-.devspace-direct-messages-list{
-    width: fit-content;    
+.devspace-direct-messages-list {
+    width: fit-content;
     display: flex;
     flex-direction: column;
     padding-left: 40px;
@@ -295,55 +312,36 @@
     gap: 15px;
     padding-left: 20px;
     padding-right: 20px;
-    width: fit-content;    
+    width: fit-content;
 }
 
-.devspace-direct-messages-item:hover{
+.devspace-direct-messages-item:hover {
     cursor: pointer;
     background-color: var(--bg-color);
     border-radius: 35px;
 }
-    
 
-.devspace-direct-messages-icon{
+
+.devspace-direct-messages-icon {
     position: relative;
-    & img {            
+    & img {
         width: 50px;
         height: 50px;
-    }   
-      
+    }
+
 }
 
-.devspace-direct-messages-name{    
+.devspace-direct-messages-name {
     font-size: var(--font-size-m);
     font-weight: var(--font-weight-normal);
     line-height: 24.55px;
 }
 
-.active-Account-Icon{
-    width: 13px;
-    height: 13px;
-    position: absolute;
-    bottom: 5px;
-    left: 38px;
-    border-radius: 50%;
-    background-color: var(--online-green);
-}
-
-.active-Account-Icon-None{
-    width: 13px;
-    height: 13px;
-    position: absolute;
-    border-radius: 50%;
-    background-color: var(--grey-dark);
-    bottom: 5px;
-    left: 38px;
-}
-
-.active-Account{
+.active-Account {
     background-color: var(--bg-color);
     border-radius: 35px;
-    & .devspace-direct-messages-name{
+
+    & .devspace-direct-messages-name {
         color: var(--purple-3);
         font-weight: var(--font-weight-extra-bold);
     }

@@ -1,14 +1,17 @@
-@if(devspaceService.openDevspace){
-    
+@if(devspaceService.openDevspace){    
 
 <section class="devspace">
-    <div class="devspace-header">
-        <div class="devspace-logo">
-            <img src="/assets/img/WorkspaceLogo.png" alt="">
-            <p>Devspace</p>
+    
+    @if(!breakpoints.breankpointMain){
+        <div class="devspace-header">
+            <div class="devspace-logo">
+                <img src="/assets/img/WorkspaceLogo.png" alt="">
+                <p>Devspace</p>
+            </div>
+            <div class="devspace-edit-logo" (click)="openMessage()"><img src="/assets/img/DevEdit.png" alt=""></div>
         </div>
-        <div class="devspace-edit-logo" (click)="openMessage()"><img src="/assets/img/DevEdit.png" alt=""></div>
-    </div>
+    }
+    
 
     <div class="devspace-channels">
         <div class="devspace-channel-title">
@@ -29,7 +32,7 @@
         <div class="devspace-channel-list">
 
             @for(item of devspaceService.channels; track item.name; let i = $index){
-            <div [class.activeChannel]="devspaceService.channels[i].channelActiveTalk"
+            <div (click)="openChannel(i)" [class.activeChannel]="devspaceService.channels[i].channelActiveTalk"
                 class="devspace-channel-list-item" (click)="channelActiveClass(i); closeMessage()" >
                 <span><img src="/assets/img/tagChannelName.png" alt=""></span>
                 <div>
@@ -82,6 +85,8 @@
         }
 
     </div>
-
+    @if(breakpoints.breankpointMain){
+        <div class="devspace-edit-logo-mobile"> <img src="/assets/img/edit_square.png" alt=""></div>
+    }
 </section>
 }

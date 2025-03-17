@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DevspaceDialogComponent } from '../devspace-dialog/devspace-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 
 
 
@@ -20,8 +21,13 @@ export class DevspaceComponent implements OnInit {
   directMessages: boolean = false
   imagesLoaded = false;
   channelActiveTalk: boolean = false;
+  breankpointHeader: boolean = false
 
-  constructor(public dialog: MatDialog, public devspaceService: DevspaceService) { }
+  constructor(public dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService) {
+
+  }
+
+
 
   imageUrl = '/assets/img/arrow_drop_down.png';
   imageUrlMessage = '/assets/img/arrow_drop_down.png';
@@ -94,6 +100,8 @@ export class DevspaceComponent implements OnInit {
       channel.channelActiveTalk = false;
     });
     this.devspaceService.accounts[i].activeMessage = !this.devspaceService.accounts[i].activeMessage;
+    this.devspaceService.openChannel = false;
+    this.devspaceService.openDirectMessage = true;
 
 
   }
@@ -105,9 +113,24 @@ export class DevspaceComponent implements OnInit {
       channel.channelActiveTalk = false;
     });
     this.devspaceService.openMessage = true;
+    this.devspaceService.openChannel = false;
+    this.devspaceService.openDirectMessage = false;
+    this.devspaceService.openThread = false;
   }
 
   closeMessage() {
     this.devspaceService.openMessage = false;
+  }
+
+  openChannel(i: number) {
+    this.devspaceService.accounts.forEach((account,) => {
+      account.activeMessage = false;
+    });
+    this.devspaceService.channels.forEach((channel,) => {
+      channel.channelActiveTalk = false;
+    });
+    this.devspaceService.openChannel = true;
+    this.devspaceService.openDirectMessage = false;
+
   }
 }

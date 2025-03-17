@@ -23,15 +23,15 @@ html {
 :root {
     --devspace-margin-left: 20px;
     --devspace-margin-right: 20px;
-    --devspace-margin-top: 115px;
+    --devspace-margin-top: 25px;
     --devspace-margin-bottom: 25px;
-    --devspace-max-width: 1900px;
+    --devspace-max-width: 1920px;
 }
 
 
 //Devspace Message Input Area
 :root {
-    --width-devspace-message-area: calc(100vw - 440px);
+    --width-devspace-message-area: 1494px;
 }
 
 //Colors
@@ -93,6 +93,51 @@ h5 {
     --icon-size-l: 32px;
     --icon-size-xl: 64px;
     --icon-size-xxl: 168px;
+}
+
+// icons active
+.active-Account-Icon {
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    bottom: 5px;
+    left: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-color);
+    background-color: var(--online-green);
+}
+
+.active-Account-Icon-None {
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid var(--bg-color);
+    background-color: var(--grey-dark);
+    bottom: 5px;
+    left: 38px;
+}
+
+.active-Account-Icon-header {
+    width: 16.67px;
+    height: 16.67px;
+    position: absolute;
+    bottom: 2px;
+    left: 53.33px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-color);
+    background-color: var(--online-green);
+}
+
+.active-Account-Icon-None-header {
+    width: 16.67px;
+    height: 16.67px;
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid var(--bg-color);
+    background-color: var(--grey-dark);
+    bottom: 2px;
+    left: 53.33px;
 }
 
 //Breakpoints

@@ -1,8 +1,82 @@
 @if(devspaceService.openMessage){
-    <Section class="devspace-message-area">
+<Section class="devspace-message-area">
+    <div class="devspace-message-title">
+        <span>Neue Nachricht</span>
+        <input type="text" placeholder="An: #Channel oder @jemand oder E-Mail Adresse" #messageTitle [(ngModel)]="messageText"
+            (input)="onInputChange(messageText)">
+        @if(openContactBarSearch){
+        <div class="devspace-message-contact-search">
+            @for(item of devspaceService.accounts; track item.name; let i = $index){
+
+            <div class="selected-Contact-Item" (click)=" selectContactSearch(i)"><span><img src="{{item.pic}}"
+                        alt="">@if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>
+                    }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}} @if(devspaceService.accounts[i].activeSelf){(Du)}</div>
+            }@empty {
+
+            <div>Keine Kontakte gefunden</div>
+
+            }
+        </div>
+        }
+        @if(openChannelBarSearch){
+        <div class="devspace-message-channel-search">
+            @for(item of devspaceService.channels; track item; let i = $index){
+            <span (click)="selectChannelSearch(i)"><img src="/assets/img/tagChannelName.png" alt="">
+                {{item.name}}</span>
+            }
+        </div>
+        }
+    </div>
+
+    <div class="devspace-message-write">
+        <div class="devspace-message-write-area">
+            <div #messageInput contenteditable="true" class="devspace-message-write-area-input" (click)="closeBars()">
+
+            </div>
+
+            <div class="devspace-message-write-area-icons">
+                <div class="devspace-message-write-area-icons-bars">
+                    <span (click)="openSmiley()"><img src="/assets/img/smiley.png" alt=""></span>
+                    <span (click)="openAt()"> <img src="/assets/img/at.png" alt=""></span>
+
+                </div>
+                <span class="devspace-message-write-area-icons-bars-send" (click)="addMessage()"><img src="/assets/img/send.png" alt=""></span>
+            </div>
+
+            @if(openSmileyBar){
+            <div class="devspace-message-smiley-bar">
+                @for(item of devspaceService.emojis; track item; let i = $index){
+                <span (click)="selectSmiley(i)">{{item}}</span>
+                }
+            </div>
+            }
+
+            @if(openContactBar){
+            <div class="devspace-message-contact-bar">
+                @for(item of devspaceService.accounts; track item.name; let i = $index){
+
+                <div class="selected-Contact-Item" (click)="selectContact(i)"><span><img src="{{item.pic}}"
+                            alt="">@if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>
+                        }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}} @if(devspaceService.accounts[i].activeSelf){(Du)}</div>
+                }@empty {
+
+                <div>Keine Kontakte gefunden</div>
+
+                }
 
 
+            </div>
+            }
 
-    </Section>
+
+            @if(openChannelBar){
+            <div class="devspace-message-channel-bar">
+                @for(item of devspaceService.channels; track item; let i = $index){
+                <span (click)="selectChannel(i)"><img src="/assets/img/tagChannelName.png" alt=""> {{item.name}} </span>
+                }
+            </div>
+            }
+        </div>
+    </div>
+</Section>
 }
-
