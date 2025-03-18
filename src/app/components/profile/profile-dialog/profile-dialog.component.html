@@ -3,14 +3,15 @@
     <h2>Profil</h2>
     <button mat-icon-button class="close-btn" (click)="closeDialog()">
       <mat-icon
-        [style.font-size]="IconSize.Medium"
-        [style.color]="Color.Black"
+        [style.font-size]="'24px'"
+        [style.color]="'black'"
         class="arrow-icon"
       >
         close
       </mat-icon>
     </button>
   </div>
+
   <div class="profile-header">
     <img
       class="profile-img"
@@ -26,25 +27,22 @@
       <div class="status-text">Aktiv</div>
     </div>
   </div>
+
   <div class="profile-info">
     <div class="profile-info-item">
       <div class="profile-info-item-mail">
-        <mat-icon
-          [style.font-size]="IconSize.Medium"
-          [style.color]="Color.GreyDark"
-        >
+        <mat-icon [style.font-size]="'24px'" [style.color]="'#666'">
           mail_outline
         </mat-icon>
         <strong>E-Mail-Adresse</strong>
       </div>
-      <a href="mailto:thehoffman@beispiel.com">thehoffmaneispiel.com</a>
+      <a href="mailto:thehoffman@beispiel.com">thehofeispiel.com</a>
     </div>
   </div>
-
-  <button mat-button color="primary" class="message-btn">
-    <mat-icon [style.font-size]="IconSize.Large" [style.color]="Color.Black">
-      chat_bubble_outline
-    </mat-icon>
-    Nachricht
-  </button>
+  <div class="btn-container btn-container--center">
+    <button class="button-primary">
+      <mat-icon [style.font-size]="IconSize.Medium"> mail_outline </mat-icon
+      >Nachricht
+    </button>
+  </div>
 </mat-dialog-content>
