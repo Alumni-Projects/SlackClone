@@ -1,1 +1,17 @@
-<router-outlet />
+<div class="background">
+</div>
+<div class="logo-container">
+    <div class="img-container">
+        <img src="assets/img/mainLogo.png" alt="Logo" class="logo">
+    </div>
+    <span class="title">DABubble</span>
+</div>
+<div class="content">
+    @if(!isDashboardRoute && !isSmallDisplay){
+    <div class="logo-end">
+        <img src="assets/img/mainLogo.png" alt="Logo">
+        <span>DABubble</span>
+    </div>
+    }
+    <router-outlet></router-outlet>
+</div>

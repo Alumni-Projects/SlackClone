@@ -1,0 +1,149 @@
+.background {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: #fff;
+    animation: fadeOut 0.8s 4s forwards;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    @media (max-width: 768px) {
+        top: 45%;
+        left: 35%;
+        animation: moveLeftLong 1s 1.5s forwards;
+    }
+
+
+    @media (min-width: 768px) {
+        animation: moveLeft 1s 1.5s forwards,
+            moveTopLeft 2s 3s forwards;
+    }
+}
+
+.img-container {
+    padding: 20px;
+    z-index: 1;
+    background: #fff;
+
+    animation: unsetColor 0.8s 3.3s forwards;
+}
+
+.logo {
+    width: 200px;
+    height: auto;
+
+    @media (max-width: 768px) {
+        width: 80px;
+        max-width: unset;
+    }
+}
+
+.title {
+    color: var(--primary-color);
+    font-size: var(--font-size-xxl);
+    transform: translateX(-100%);
+    animation: slideRight 0.8s 2s forwards,
+        setColor 0.8s 3.5s forwards;
+
+    @media (max-width: 768px) {
+        font-size: var(--font-size-l);
+    }
+}
+
+.content {
+    opacity: 0;
+    position: relative;
+    animation: fadeIn 0.3s 5s forwards;
+}
+
+.logo-end {
+    position: absolute;
+    top: 75px;
+    left: 75px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-size-xl);
+
+    @media (max-width: 768px) {
+        left: 0;
+        right: 0;
+        top: 30px;
+        font-size: var(--font-size-l);
+    }
+}
+
+.fade-out {
+    animation: fadeOut 0.8s forwards;
+}
+
+@keyframes moveLeft {
+    to {
+        left: 45%;
+        transform: translateX(-20%);
+    }
+}
+
+@keyframes moveLeftLong {
+    to {
+        left: 45%;
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes slideRight {
+    to {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+}
+
+@keyframes moveTopLeft {
+    0% {
+        top: 50%;
+        left: 45%;
+        transform: translateX(-20%) scale(1);
+    }
+
+    100% {
+        top: 0px;
+        left: 0px;
+        transform: translateX(-10%) translateY(-10%) scale(0.45);
+        display: none;
+    }
+}
+
+@keyframes setColor {
+    to {
+        color: var(--black-color);
+    }
+}
+
+@keyframes unsetColor {
+    to {
+        background: unset;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        display: none;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
