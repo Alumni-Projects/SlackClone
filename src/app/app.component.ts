@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 
 
@@ -9,6 +9,7 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  @ViewChild('logo') logo!: ElementRef<HTMLInputElement>;
   isDashboardRoute = false;
   isSmallDisplay = false;
 
@@ -18,11 +19,14 @@ export class AppComponent {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.isDashboardRoute = event.urlAfterRedirects === '/dashboard';
-        if (event.urlAfterRedirects === '/login')
-          this.isSmallDisplay = window.innerHeight < 900 && window.innerWidth < 768;
+        this.isSmallDisplay = window.innerHeight < 900 && window.innerWidth < 768;
       }
     });
 
+    setTimeout(() => {
+      const logo = this.logo.nativeElement;
+      logo.style.display = 'none';
+    }, 4500);
 
   }
 
