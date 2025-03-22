@@ -96,12 +96,16 @@ export class AuthService {
         return;
       }
 
-      if (!user.emailVerified) {
-        throw new Error('E-Mail nicht verifiziert.');
-      }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Google login error: ', error);
-      throw error;
+      switch (error.code) {
+        case 'auth/too-many-requests':
+          return Promise.reject('Zu viele fehlerhafte Versuche. Bitte warte einen Moment.');
+        case 'auth/user-disabled':
+          return Promise.reject('Der Benutzer wurde blockiert.');
+        default:
+          return Promise.reject('Ein unbekannter Fehler ist aufgetreten. Versuche es später erneut.');
+      }
     }
   }
 

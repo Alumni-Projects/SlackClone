@@ -1,0 +1,142 @@
+.background {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(var(--secondary-color), #313AE5);
+    animation: fadeOut .8s 2.4s forwards;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: calc(50% - 80px);
+    left: calc(50% - 80px);
+
+    @media (max-width: 768px) {
+        animation: moveLeftShort .6s .8s forwards;
+    }
+
+    @media (min-width: 768px) {
+        animation: moveLeft .6s .8s forwards,
+            moveTopLeft 1.2s 2s forwards;
+    }
+}
+
+.img-container {
+    padding: 20px;
+    z-index: 1;
+    animation: unsetColor .8s 3.3s forwards;
+}
+
+.logo {
+    width: 184px;
+    height: auto;
+
+    @media (max-width: 768px) {
+        width: 80px;
+        max-width: unset;
+    }
+}
+
+.title {
+    color: var(--white-color);
+    font-size: var(--font-size-xxl);
+    font-weight: var(--font-weight-extra-bold);
+    clip-path: inset(0 0 0 100%);
+    transform: translateX(-100%);
+    animation: slideRight .8s 1.2s forwards,
+        setColor 0.8s 3.5s forwards;
+
+    @media (max-width: 768px) {
+        font-size: var(--font-size-l);
+    }
+}
+
+.content {
+    opacity: 0;
+    position: relative;
+    animation: fadeIn .3s 3.2s forwards;
+}
+
+.logo-end {
+    position: absolute;
+    top: 75px;
+    left: 75px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-size-xl);
+
+    @media (max-width: 768px) {
+        left: 0;
+        right: 0;
+        top: 30px;
+        font-size: var(--font-size-l);
+    }
+}
+
+.fade-out {
+    animation: fadeOut 0.8s forwards;
+}
+
+@keyframes moveLeft {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes moveLeftShort {
+    to {
+        transform: translateX(-20%);
+    }
+}
+
+@keyframes slideRight {
+    to {
+        transform: translateX(0);
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+@keyframes moveTopLeft {
+    0% {
+        transform: translateX(-50%) scale(1);
+    }
+
+    100% {
+        top: 0px;
+        left: 0px;
+        transform: translateX(-5%) scale(0.65);
+        display: none;
+    }
+}
+
+@keyframes setColor {
+    to {
+        color: var(--black-color);
+    }
+}
+
+@keyframes unsetColor {
+    to {
+        background: unset;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        display: none;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}

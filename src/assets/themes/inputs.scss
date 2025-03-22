@@ -64,6 +64,11 @@
             font-weight: var(--font-weight-bold);
         }
     }
+
+    @media (max-width: 768px) {
+        gap: 8px;
+        padding: 18px 16px;
+    }
 }
 
 .input-bg {
