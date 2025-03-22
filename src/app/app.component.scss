@@ -6,7 +6,7 @@
     width: 100%;
     height: 100vh;
     background: linear-gradient(var(--secondary-color), #313AE5);
-    animation: fadeOut 0.8s 3.6s forwards;
+    animation: fadeOut .8s 2.4s forwards;
 }
 
 .logo-container {
@@ -18,21 +18,19 @@
     left: calc(50% - 80px);
 
     @media (max-width: 768px) {
-        animation: moveLeftShort 1s 1.5s forwards;
+        animation: moveLeftShort .6s .8s forwards;
     }
 
-
     @media (min-width: 768px) {
-        animation: moveLeft 0.6s 1.5s forwards,
-            moveTopLeft 1.5s 3s forwards;
+        animation: moveLeft .6s .8s forwards,
+            moveTopLeft 1.2s 2s forwards;
     }
 }
 
 .img-container {
     padding: 20px;
     z-index: 1;
-
-    animation: unsetColor 0.8s 3.3s forwards;
+    animation: unsetColor .8s 3.3s forwards;
 }
 
 .logo {
@@ -51,7 +49,7 @@
     font-weight: var(--font-weight-extra-bold);
     clip-path: inset(0 0 0 100%);
     transform: translateX(-100%);
-    animation: slideRight 0.8s 2s forwards,
+    animation: slideRight .8s 1.2s forwards,
         setColor 0.8s 3.5s forwards;
 
     @media (max-width: 768px) {
@@ -62,7 +60,7 @@
 .content {
     opacity: 0;
     position: relative;
-    animation: fadeIn 0.3s 4.5s forwards;
+    animation: fadeIn .3s 3.2s forwards;
 }
 
 .logo-end {
@@ -114,7 +112,7 @@
     100% {
         top: 0px;
         left: 0px;
-        transform: translateX(-10%) translateY(-10%) scale(0.45);
+        transform: translateX(-5%) scale(0.65);
         display: none;
     }
 }
