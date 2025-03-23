@@ -1,19 +1,32 @@
+@use '@themes/mixins.scss' as *;
+
 .chat-topbar {
   display: flex;
   height: 70px;
   width: 100%;
-  padding-left: 20px;
   margin-bottom: 20px;
   justify-content: space-between;
   gap: 20px;
+  @include respond(m) {
+    padding-left: 20px;
+  }
 }
 
 .logo {
+  width: 100%;
   height: 70px;
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  gap: 29px;
+  gap: 20px;
+
+  @include respond(s) {
+    width: auto;
+  }
+
+  @include respond(m) {
+    width: 360px;
+  }
 
   & img {
     width: 70px;
@@ -21,13 +34,18 @@
   }
 
   & span {
+    display: none;
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-extra-bold);
+
+    @include respond(l) {
+      display: block;
+    }
   }
 }
 
 .search {
-  width: calc(100% - 20px);
+  width: 50vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,19 +77,25 @@
 }
 
 .header-icon {
-  width: 342px;
-  height: 70px;
   display: flex;
   align-items: center;
   gap: 20px;
   transition: all 125ms ease-in-out;
   flex-shrink: 0;
+  justify-content: end;
+  width: clamp(200px, 25vw, 346px);
 
   & span:nth-of-type(1) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-extra-bold);
     line-height: 100%;
     color: var(--black-color);
+    @include respond(l) {
+      display: block;
+    }
   }
 
   .header-icon-arrow {
@@ -99,19 +123,19 @@
     width: 70px;
   }
 }
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 
 .logo img {
   width: auto;
-  padding-right: 20px;
 }
 
 .logo-text {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--color-black);
+  display: block;
+
+  @include respond(s) {
+    display: block;
+  }
+
+  @include respond(m) {
+    display: none;
+  }
 }
