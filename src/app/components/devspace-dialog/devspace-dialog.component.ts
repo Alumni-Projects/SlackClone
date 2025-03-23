@@ -13,6 +13,9 @@ import { DevspaceService } from '@shared/services/devspace-service/devspace.serv
 export class DevspaceDialogComponent {
   @ViewChild('channelInput') channelInput!: ElementRef;
   @ViewChild('channelDescription') channelDescription!: ElementRef;
+  channelInputError: boolean = false;
+  charsLeft: number = 20;
+
 
 
   constructor(private dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService) { }
@@ -23,14 +26,16 @@ export class DevspaceDialogComponent {
   createChannel() {
     this.devspaceService.channelsName = this.channelInput.nativeElement.value;
     this.devspaceService.channelsDescription = this.channelDescription.nativeElement.value;
-    // let channel = {name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelActiveTalk: false};
-    // this.devspaceService.channels.push(channel);   
-
     this.dialog.closeAll();
     this.openDialog();
   }
 
   openDialog() {
     this.dialog.open(DevspaceDialogContactComponent);
+  }
+
+  chars(){
+    this.charsLeft = 20 - this.channelInput.nativeElement.value.length;
+    this.channelInputError = this.channelInput.nativeElement.value.length === 20;
   }
 }

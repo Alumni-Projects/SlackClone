@@ -1,17 +1,17 @@
-@if(devspaceService.openDevspace){    
+@if(devspaceService.openDevspace){
 
 <section class="devspace">
-    
+
     @if(!breakpoints.breankpointMain){
-        <div class="devspace-header">
-            <div class="devspace-logo">
-                <img src="/assets/img/WorkspaceLogo.png" alt="">
-                <p>Devspace</p>
-            </div>
-            <div class="devspace-edit-logo" (click)="openMessage()"><img src="/assets/img/DevEdit.png" alt=""></div>
+    <div class="devspace-header">
+        <div class="devspace-logo">
+            <img src="/assets/img/WorkspaceLogo.png" alt="">
+            <p>Devspace</p>
         </div>
+        <div class="devspace-edit-logo" (click)="openMessage()"><img src="/assets/img/DevEdit.png" alt=""></div>
+    </div>
     }
-    
+
 
     <div class="devspace-channels">
         <div class="devspace-channel-title">
@@ -25,7 +25,8 @@
                     <span>Channels</span>
                 </div>
             </div>
-            <span (click)="openDialog()" class="devspace-add-channel"><img src="/assets/img/addChannel.png" alt=""></span>
+            <span (click)="openDialog()" class="devspace-add-channel"><img src="/assets/img/addChannel.png"
+                    alt=""></span>
         </div>
         @if(!activeChannel){
 
@@ -33,9 +34,9 @@
 
             @for(item of devspaceService.channels; track item.name; let i = $index){
             <div (click)="openChannel(i)" [class.activeChannel]="devspaceService.channels[i].channelActiveTalk"
-                class="devspace-channel-list-item" (click)="channelActiveClass(i); closeMessage()" >
+                class="devspace-channel-list-item" (click)="channelActiveClass(i); closeMessage()">
                 <span><img src="/assets/img/tagChannelName.png" alt=""></span>
-                <div>
+                <div class="devspace-channel-list-item-name">
                     <span>{{item.name}}</span>
                 </div>
             </div>
@@ -68,7 +69,8 @@
         <div class="devspace-direct-messages-list">
             @for(item of devspaceService.accounts; track item.name; let i = $index){
 
-            <div class="devspace-direct-messages-item" (click)="messageActiveClass(i);closeMessage()" [class.active-Account]="devspaceService.accounts[i].activeMessage" >
+            <div class="devspace-direct-messages-item" (click)="messageActiveClass(i);closeMessage()"
+                [class.active-Account]="devspaceService.accounts[i].activeMessage">
                 <span class="devspace-direct-messages-icon"><img src="{{item.pic}}" alt="">
                     @if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>
                     }@else{<span class="active-Account-Icon-None"></span>}
@@ -79,14 +81,14 @@
             </div>
 
             }@empty{
-                <div>Keine Kontakte vorhanden</div>
+            <div>Keine Kontakte vorhanden</div>
             }
         </div>
         }
 
     </div>
     @if(breakpoints.breankpointMain){
-        <div class="devspace-edit-logo-mobile"> <img src="/assets/img/edit_square.png" alt=""></div>
+    <div class="devspace-edit-logo-mobile"> <img src="/assets/img/edit_square.png" alt=""></div>
     }
 </section>
 }

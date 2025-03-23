@@ -30,9 +30,8 @@ export class DevspaceDialogContactComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-    this.lastChannel = this.devspaceService.channels[this.devspaceService.channels.length - 1];
-
+  ngOnInit(): void {    
+    this.lastChannel = this.devspaceService.channelsName;
   }
 
   get filteredAccounts(): DevspaceAccount[] {
@@ -124,7 +123,7 @@ export class DevspaceDialogContactComponent implements OnInit {
 
   addChannel() {
     let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelActiveTalk: false };
-    this.devspaceService.channels.push(channel);
+    this.devspaceService.channels.push(channel);       
     this.dialog.closeAll();
   }
 }

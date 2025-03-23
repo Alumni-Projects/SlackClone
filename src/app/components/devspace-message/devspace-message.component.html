@@ -2,15 +2,16 @@
 <Section class="devspace-message-area">
     <div class="devspace-message-title">
         <span>Neue Nachricht</span>
-        <input type="text" placeholder="An: #Channel oder @jemand oder E-Mail Adresse" #messageTitle [(ngModel)]="messageText"
-            (input)="onInputChange(messageText)">
+        <div #addInput contenteditable="true" class="devspace-message-add-area-input" (input)="checkPlaceholder()">
+        </div>
         @if(openContactBarSearch){
         <div class="devspace-message-contact-search">
             @for(item of devspaceService.accounts; track item.name; let i = $index){
 
             <div class="selected-Contact-Item" (click)=" selectContactSearch(i)"><span><img src="{{item.pic}}"
                         alt="">@if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>
-                    }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}} @if(devspaceService.accounts[i].activeSelf){(Du)}</div>
+                    }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}}
+                @if(devspaceService.accounts[i].activeSelf){(Du)}</div>
             }@empty {
 
             <div>Keine Kontakte gefunden</div>
@@ -40,7 +41,8 @@
                     <span (click)="openAt()"> <img src="/assets/img/at.png" alt=""></span>
 
                 </div>
-                <span class="devspace-message-write-area-icons-bars-send" (click)="addMessage()"><img src="/assets/img/send.png" alt=""></span>
+                <span class="devspace-message-write-area-icons-bars-send" (click)="addMessage()"><img
+                        src="/assets/img/send.png" alt=""></span>
             </div>
 
             @if(openSmileyBar){
@@ -57,7 +59,8 @@
 
                 <div class="selected-Contact-Item" (click)="selectContact(i)"><span><img src="{{item.pic}}"
                             alt="">@if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>
-                        }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}} @if(devspaceService.accounts[i].activeSelf){(Du)}</div>
+                        }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}}
+                    @if(devspaceService.accounts[i].activeSelf){(Du)}</div>
                 }@empty {
 
                 <div>Keine Kontakte gefunden</div>
