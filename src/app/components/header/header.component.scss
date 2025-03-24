@@ -22,10 +22,6 @@
   gap: 10px;
   width: auto;
 
-  @include respond(xs) {
-    width: auto;
-  }
-
   @include respond(m) {
     width: auto;
   }
@@ -35,21 +31,23 @@
   }
 
   & img {
-    width: 70px;
-    height: 70px;
+    width: 45px;
+    height: auto;
     flex-shrink: 0;
+    @include respond(xs) {
+      width: 70px;
+      height: auto;
+    }
   }
 
   & span {
     display: block;
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-ml);
     font-weight: var(--font-weight-extra-bold);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 
     @include respond(s) {
       display: block;
+      font-size: var(--font-size-xl);
     }
     @include respond(m) {
       display: none;
@@ -116,12 +114,27 @@
   &-icon {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     transition: all 125ms ease-in-out;
     flex-shrink: 0;
     justify-content: end;
+    @include respond(s) {
+      gap: 20px;
+    }
   }
+  &-icon-img {
+    position: relative;
 
+    & img {
+      width: 45px;
+
+      height: auto;
+      @include respond(s) {
+        width: 70px;
+        gap: 20px;
+      }
+    }
+  }
   &-icon-arrow {
     width: 30px;
     height: 30px;
@@ -140,11 +153,11 @@
   }
 }
 
-.header-icon-img {
-  position: relative;
-
-  & img {
-    height: 70px;
-    width: 70px;
+.active-Account-Icon-header {
+  bottom: -6px;
+  left: 33.33px;
+  @include respond(s) {
+    bottom: -3px;
+    left: 50px;
   }
 }
