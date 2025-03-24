@@ -38,7 +38,6 @@ export class DevspaceMessageComponent {
     messageDiv.focus();
     const selection = window.getSelection();
     const range = document.createRange();
-
     if (!messageDiv.textContent?.trim()) {
       messageDiv.innerHTML = "";
     }
@@ -60,8 +59,6 @@ export class DevspaceMessageComponent {
     this.openSmileyBar = false;
     this.openContactBar = true;
   }
-
-
 
   selectContact(i: number) {
     this.openContactBar = false;
@@ -123,12 +120,16 @@ export class DevspaceMessageComponent {
       const textBeforeCursor = range.startContainer.textContent?.slice(0, range.startOffset) || "";
       if (textBeforeCursor.endsWith("@")) {
         this.openContactBar = true;
-      } else {
+        this.openContactBarSearch = false;
+        this.openChannelBarSearch = false;
+      }else{
         this.openContactBar = false;
       }
 
       if (textBeforeCursor.endsWith("#")) {
         this.openChannelBar = true;
+        this.openContactBarSearch = false;
+        this.openChannelBarSearch = false;
       } else {
         this.openChannelBar = false;
       }
@@ -143,12 +144,18 @@ export class DevspaceMessageComponent {
       const textBeforeCursor = range.startContainer.textContent?.slice(0, range.startOffset) || "";
       if (textBeforeCursor.endsWith("@")) {
         this.openContactBarSearch = true;
+        this.openSmileyBar = false;
+        this.openContactBar = false;
+        this.openChannelBar = false;      
       } else {
         this.openContactBarSearch = false;
       }
 
       if (textBeforeCursor.endsWith("#")) {
         this.openChannelBarSearch = true;
+        this.openSmileyBar = false;
+        this.openContactBar = false;
+        this.openChannelBar = false;
       } else {
         this.openChannelBarSearch = false;
       }
@@ -215,13 +222,11 @@ export class DevspaceMessageComponent {
 
   addMessage() {
     const message = this.messageInput.nativeElement.textContent;
-    console.log(message);
-    debugger
     const channels = this.channelNameMessage();
     const contacts = this.contactNameMessage();
     const channelInput = this.channelNameInput();
     const contactInput = this.contactNameInput();
-    console.log(channels, contacts, channelInput, contactInput);
+    console.log(channels, contacts, channelInput, contactInput, message);
 
 
     this.messageInput.nativeElement.textContent = "";
@@ -331,7 +336,7 @@ export class DevspaceMessageComponent {
 
 
 
-  selectChannelSearch(i: number) {   
+  selectChannelSearch(i: number) {
     this.openChannelBarSearch = false;
     const channelName = this.devspaceService.channels[i].name;
     const messageDiv = this.addInput.nativeElement as HTMLDivElement;
@@ -342,7 +347,7 @@ export class DevspaceMessageComponent {
     for (const contact of existingContacts) {
       if (contact.textContent === "#" + channelName) {
         range.collapse(false);
-        
+
         return;
       }
     }

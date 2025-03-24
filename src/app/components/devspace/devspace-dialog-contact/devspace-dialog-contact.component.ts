@@ -21,12 +21,13 @@ export class DevspaceDialogContactComponent implements OnInit {
   accounts;
   accountSelected: DevspaceAccount[] = [];
   openSelectContact: boolean = false;
+  allContactsChecked: boolean = false;
+  selectContactsChecked: boolean = false;
   @ViewChild('contactInput') contactInput!: ElementRef<HTMLInputElement>;
 
   constructor(private dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService) {
     this.accounts = this.devspaceService.accounts;
-    this.accountSelected = [];
-    console.log(this.accountSelected);
+    this.accountSelected = [];   
 
   }
 
@@ -36,7 +37,7 @@ export class DevspaceDialogContactComponent implements OnInit {
 
   get filteredAccounts(): DevspaceAccount[] {
     return this.accounts
-      .filter(account => account.name.toLowerCase().startsWith(this.inputValue.toLowerCase()));  // Filtert das ganze Objekt basierend auf der Eingabe
+      .filter(account => account.name.toLowerCase().startsWith(this.inputValue.toLowerCase())); 
   }
   closeDialog() {
     this.dialog.closeAll();
@@ -59,10 +60,11 @@ export class DevspaceDialogContactComponent implements OnInit {
           this.selectedCheckbox = id;
           if (id === 'selectedContacts') {
             isSelectedContactsChecked = true;
-            this.isDisabled = true;
+            this.isDisabled = true;            
           }
           if (id === 'allContacts') {
             this.isDisabled = false;
+            this.allContactsChecked = true;
           }
         }
       }
@@ -72,27 +74,21 @@ export class DevspaceDialogContactComponent implements OnInit {
       this.selectedCheckbox = null;
       this.isDisabled = true;
     }
-
-
-
     this.openSelect = isSelectedContactsChecked;
 
   }
 
-
-
   selectContact(i: number) {
-
     if (!this.accountSelected?.some(item => item.name === this.filteredAccounts[i].name)) {
       this.accountSelected!.push(this.filteredAccounts[i]);
       this.inputValue = '';
-
     }
-
     if (this.accountSelected.length > 0) {
       this.isDisabled = false;
+      this.selectContactsChecked =true;
     } else {
       this.isDisabled = true;
+      
     }
 
   }
@@ -114,7 +110,6 @@ export class DevspaceDialogContactComponent implements OnInit {
 
   SelectContactClose() {
     this.openSelectContact = false;
-
   }
 
   focusInput() {
@@ -123,7 +118,17 @@ export class DevspaceDialogContactComponent implements OnInit {
 
   addChannel() {
     let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelActiveTalk: false };
-    this.devspaceService.channels.push(channel);       
+    this.devspaceService.channels.push(channel);
+    if(this.allContactsChecked){
+      const contactsAll = this.devspaceService.accounts.map(account => account.name);
+      console.log(contactsAll);      
+    }
+
+    if(this.selectContactsChecked){ 
+      const contactsSelect = this.accountSelected.map(account => account.name);
+      console.log(contactsSelect);
+    }
+           
     this.dialog.closeAll();
   }
 }

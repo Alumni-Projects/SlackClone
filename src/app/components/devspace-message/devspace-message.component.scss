@@ -15,7 +15,7 @@
     padding-bottom: 40px;
 }
 
-.devspace-message-add-area-input{
+.devspace-message-add-area-input {
     border-radius: 30px;
     border: 1px solid var(--light-purple);
     color: var(--black-color);
@@ -25,6 +25,7 @@
     font-size: var(--font-size-m);
     font-weight: var(--font-weight-normal);
     line-height: 100%;
+    overflow: auto;
 
     &:hover {
         border: 1px solid var(--purple-3);
@@ -45,10 +46,33 @@
 }
 
 .devspace-message-add-area-input.placeholder-active::before {
-    content: "An: #channel, oder @jemand "; /* Dein Platzhalter-Text */
-    color: gray; /* Farbe des Platzhalters */    
-    pointer-events: none; /* Damit der Platzhalter nicht klickbar ist */
-  }
+    content: "An: #channel, oder @jemand ";
+    color: gray;
+    pointer-events: none;
+}
+
+.devspace-message-add-area-input::-webkit-scrollbar-button {
+    display: none;
+}
+
+.devspace-message-add-area-input::-webkit-scrollbar {
+    width: 6px;
+}
+
+.devspace-message-add-area-input::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 35px;
+}
+
+.devspace-message-add-area-input::-webkit-scrollbar-thumb {
+    background: var(--purple-3);
+    border-radius: 35px;
+}
+
+.devspace-message-add-area-input::-webkit-scrollbar-thumb:hover {
+    background: var(--light-purple);
+    cursor: pointer;
+}
 
 .devspace-message-title {
     display: flex;
@@ -69,8 +93,6 @@
         font-weight: var(--font-weight-extra-bold);
         color: var(--black-color);
     }
-
-    
 
     .devspace-message-channel-search {
         display: flex;
@@ -131,6 +153,30 @@
     border-radius: 20px;
     border: 1px solid var(--light-purple);
     position: relative;
+
+}
+
+.devspace-message-write-area-input::-webkit-scrollbar-button {
+    display: none;
+}
+
+.devspace-message-write-area-input::-webkit-scrollbar {
+    width: 6px;
+}
+
+.devspace-message-write-area-input::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 35px;
+}
+
+.devspace-message-write-area-input::-webkit-scrollbar-thumb {
+    background: var(--purple-3);
+    border-radius: 35px;
+}
+
+.devspace-message-write-area-input::-webkit-scrollbar-thumb:hover {
+    background: var(--light-purple);
+    cursor: pointer;
 }
 
 .devspace-message-write-area-input {
@@ -148,15 +194,17 @@
 .devspace-message-smiley-bar {
     position: absolute;
     min-height: 50px;
-    width: 30%;
-    bottom: 20px;
-    left: 71px;
+    width: 300px;
+    top: -280px;
+    left: 20px;
     display: flex;
     align-items: center;
     padding: 10px;
     gap: 10px;
     z-index: 100;
-    border-radius: 30px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
     background-color: var(--white-color);
     border: 1px solid var(--light-purple);
     flex-wrap: wrap;
@@ -212,11 +260,12 @@
         }
     }
 
-   
+
 }
 
 .devspace-message-write-area-icons-bars-send {
     cursor: pointer;
+
     &:hover {
         & img {
             content: url('/assets/img/send_hover.png');
@@ -334,4 +383,3 @@
         border-radius: 35px;
     }
 }
-
