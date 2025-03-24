@@ -3,6 +3,7 @@
     <img src="assets/logo.svg" alt="Logo" />
     <span class="logo-text">DABubble</span>
   </div>
+
   <div class="search">
     <input type="text" [placeholder]="placeholder()" />
     <img src="/assets/img/search_lupe.png" alt="" />
@@ -10,21 +11,20 @@
 
   <div class="header">
     <div class="header-icon" (click)="openProfilePopup()">
-      <span>{{ devspaceService.accounts[0].name }}</span>
-      <span class="header-icon-img">
-        <img
-          src="{{ devspaceService.accounts[0].pic }}"
-          alt=""
-        />@if(devspaceService.accounts[0].active){<span
-          class="active-Account-Icon-header"
-        ></span>
-        }@else{<span class="active-Account-Icon-None-header"></span>}
+      <span class="header-username">
+        {{ devspaceService.accounts[0].name }}
       </span>
+
+      <div class="header-icon-img">
+        <img src="{{ devspaceService.accounts[0].pic }}" alt="" />
+        @if (devspaceService.accounts[0].active) {
+        <span class="active-Account-Icon-header"></span>
+        } @else {
+        <span class="active-Account-Icon-None-header"></span>
+        }
+      </div>
+
       <mat-icon>keyboard_arrow_down</mat-icon>
     </div>
   </div>
 </div>
-<app-profile-popup
-  [isOpen]="isProfileOpen"
-  (close)="isProfileOpen = false"
-></app-profile-popup>
