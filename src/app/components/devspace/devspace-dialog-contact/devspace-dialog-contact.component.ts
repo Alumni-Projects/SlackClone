@@ -27,17 +27,17 @@ export class DevspaceDialogContactComponent implements OnInit {
 
   constructor(private dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService) {
     this.accounts = this.devspaceService.accounts;
-    this.accountSelected = [];   
+    this.accountSelected = [];
 
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.lastChannel = this.devspaceService.channelsName;
   }
 
   get filteredAccounts(): DevspaceAccount[] {
     return this.accounts
-      .filter(account => account.name.toLowerCase().startsWith(this.inputValue.toLowerCase())); 
+      .filter(account => account.name.toLowerCase().startsWith(this.inputValue.toLowerCase()));
   }
   closeDialog() {
     this.dialog.closeAll();
@@ -60,7 +60,7 @@ export class DevspaceDialogContactComponent implements OnInit {
           this.selectedCheckbox = id;
           if (id === 'selectedContacts') {
             isSelectedContactsChecked = true;
-            this.isDisabled = true;            
+            this.isDisabled = true;
           }
           if (id === 'allContacts') {
             this.isDisabled = false;
@@ -85,10 +85,10 @@ export class DevspaceDialogContactComponent implements OnInit {
     }
     if (this.accountSelected.length > 0) {
       this.isDisabled = false;
-      this.selectContactsChecked =true;
+      this.selectContactsChecked = true;
     } else {
       this.isDisabled = true;
-      
+
     }
 
   }
@@ -117,18 +117,24 @@ export class DevspaceDialogContactComponent implements OnInit {
   }
 
   addChannel() {
-    let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelActiveTalk: false };
-    this.devspaceService.channels.push(channel);
-    if(this.allContactsChecked){
+
+    if (this.allContactsChecked) {
       const contactsAll = this.devspaceService.accounts.map(account => account.name);
-      console.log(contactsAll);      
+      let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelActiveTalk: false, contacts: contactsAll };
+      this.devspaceService.channels.push(channel);
+      console.log(contactsAll);
+      console.log(this.devspaceService.channels);
     }
 
-    if(this.selectContactsChecked){ 
+    if (this.selectContactsChecked) {
       const contactsSelect = this.accountSelected.map(account => account.name);
+      let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelActiveTalk: false, contacts: contactsSelect };
+      this.devspaceService.channels.push(channel);
       console.log(contactsSelect);
+      console.log(this.devspaceService.channels);
+
     }
-           
+
     this.dialog.closeAll();
   }
 }

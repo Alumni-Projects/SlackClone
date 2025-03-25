@@ -15,16 +15,21 @@ export class DevspaceService {
   openThread = false;
   openDirectMessage = false;
   channelNameInput: string = '';
+  openSmileyBar = false;
+  openContactBar = false;
+  openChannelBar = false;
+  openContactBarSearch = false;
+  openChannelBarSearch = false;
   constructor() { }
 
   channels: Devspace[] = [
     {
       name: 'Entwicklerteam', description: 'Dieser Channel ist für alle Entwickler zuständig..',
-      channelActiveTalk: false,
+      channelActiveTalk: false, contact: ["Florian Beck", "Sofia Müller", "Noah Braun"]
     },
   ];
 
-  
+
 
   emojis = ['😊', '😂', '❤️', '👍', '🔥', '🎉', '💡', '😎', '🚀', '✨', '🙌', '🎶', '🥳', '💪', '🧐', '🌟', '🤩', '🍀', '🏆', '🤖', '👀', '💯', '🤗', '🤔', '😜', '😇', '😅', '🤝', '🎯', '🦾', '🕶️', '🐱', '🎨', '🏅', '💰', '🛠️', '📚', '📝', '📢', '🎤', '🌍', '🔑', '💌', '🕹️', '🔮', '🎭', '🛸', '👨‍💻', '👩‍💻', '🧠', '⚡', '🛤️', '⏳', '🌀', '💎', '🥇', '📈', '🗝️', '🃏', '🎲', '💥'];
 
@@ -33,8 +38,10 @@ export class DevspaceService {
     { name: 'Sofia Müller', active: false, pic: '/assets/img/Avatar2.png', activeSelf: false, activeMessage: false },
     { name: 'Noah Braun', active: true, pic: '/assets/img/Avatar3.png', activeSelf: false, activeMessage: false },
     { name: 'Elias Beumann', active: false, pic: '/assets/img/Avatar5.png', activeSelf: false, activeMessage: false },
-    { name: 'Frederik Beck', active: true, pic: '/assets/img/Avatar6.png', activeSelf: false, activeMessage: false },  
+    { name: 'Frederik Beck', active: true, pic: '/assets/img/Avatar6.png', activeSelf: false, activeMessage: false },
 
-    
+
   ];
+
+
 }
