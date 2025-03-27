@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '@shared/services/auth-service/auth.service';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfilePopupComponent } from '../profile/profile-popup/profile-popup.component';
@@ -13,6 +14,7 @@ import { Color } from '@shared/Enums/color';
   imports: [ProfilePopupComponent, MatIcon]
 })
 export class HeaderComponent {
+
   isProfileOpen = false;
   Color = Color;
   IconSize = IconSize;
@@ -29,7 +31,17 @@ export class HeaderComponent {
     this.isProfileOpen = !this.isProfileOpen;
   }
 
-  logout(): void {
-    console.log('Logout geklickt');
+  constructor(public devspaceService: DevspaceService, private authService: AuthService) { }
+  placeholder() {
+    if (window.innerWidth > 768) {
+      return "Devspace durchsuchen"
+    } else {
+      return "Gehe zu.."
+    }
+
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

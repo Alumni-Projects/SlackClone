@@ -264,6 +264,13 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: calc(100vh - 70px);
+    }
 }
 
 .box {
