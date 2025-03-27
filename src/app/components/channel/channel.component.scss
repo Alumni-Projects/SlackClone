@@ -1,7 +1,15 @@
-.devspace-channel {
+.devspace-channel {   
     height: 940px;
     background-color: var(--white-color);
     border-radius: 30px;
     display: flex;
     flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 40px;
+}
+
+.devspace-channel-app-message-input-area{
+    padding-left: 45px;
+    padding-right: 45px;
 }

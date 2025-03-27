@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
+
 
 @Component({
   selector: 'app-message-input-area',
@@ -8,10 +9,17 @@ import { DevspaceService } from '@shared/services/devspace-service/devspace.serv
   styleUrl: './message-input-area.component.scss'
 })
 export class MessageInputAreaComponent {
-  constructor( public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef) { }
+  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef) {
+
+  }
   @ViewChild('messageInput') messageInput!: ElementRef;
-  
- 
+  @Input() context!: 'message' | 'channel' | 'thread' | 'directmessage';
+
+
+  ngAfterViewInit(): void {
+    this.inputSearchMessages();
+  }
+
   selectSmiley(i: number) {
     const emoji = this.devspaceService.emojis[i];
     const messageDiv = this.messageInput.nativeElement as HTMLDivElement;
@@ -38,6 +46,7 @@ export class MessageInputAreaComponent {
   openAt() {
     this.devspaceService.openSmileyBar = false;
     this.devspaceService.openContactBar = true;
+    this.devspaceService.barContext = this.context;
   }
   selectContact(i: number) {
     this.devspaceService.openContactBar = false;
@@ -85,9 +94,13 @@ export class MessageInputAreaComponent {
     messageDiv.focus();
   }
   openSmiley() {
-    this.devspaceService.openSmileyBar = !this.devspaceService.openSmileyBar;
-    this.devspaceService.openContactBar = false;
-    this.devspaceService.openChannelBar = false;
+    if (this.devspaceService.barContext !== this.context) {
+      this.devspaceService.openSmileyBar = false;
+      this.devspaceService.openContactBar = false;
+      this.devspaceService.openChannelBar = false;
+    }
+    this.devspaceService.openSmileyBar = true;
+    this.devspaceService.barContext = this.context;
   }
 
   closeBars() {
@@ -140,19 +153,74 @@ export class MessageInputAreaComponent {
     this.cdRef.detectChanges();
   }
   addMessage() {
-    const message = this.messageInput.nativeElement.textContent;
-    const channels = this.channelNameMessage();
-    const contacts = this.contactNameMessage();   
-    console.log(channels, contacts,  message);
+    switch (this.context) {
+      case 'message':
+        this.sortDataFromMessage();
+        break;
+      case 'channel':
+        this.sortDataFromChannel();
+        break;
+      case 'thread':
+        this.sortDataFromThread();
+        break;
+      case 'directmessage':
+        this.sortDataFromDirectMessage();
+        break;
+    }
+    this.clearInputFieldMessage();
+    this.closeBarsAll();
+  }
 
-
-    this.messageInput.nativeElement.textContent = "";
-    
+  closeBarsAll() {
     this.devspaceService.openChannelBarSearch = false;
     this.devspaceService.openContactBarSearch = false;
     this.devspaceService.openSmileyBar = false;
     this.devspaceService.openContactBar = false;
     this.devspaceService.openChannelBar = false;
+  }
+
+  sortDataFromMessage() {
+    const message = this.messageInput.nativeElement.textContent;
+    const channels = this.channelNameMessage();
+    const contacts = this.contactNameMessage();
+    console.log("Neue Message text", channels, contacts, message);
+    this.devspaceService.contactArray.subscribe((contacts) => {
+      console.log("Aktuelle Kontakte:", contacts);
+    });
+
+    this.devspaceService.channelArray.subscribe((channels) => {
+      console.log("Aktuelle Kanäle:", channels);
+    });
+  }
+
+  sortDataFromChannel() {
+    const message = this.messageInput.nativeElement.textContent;
+    const channels = this.channelNameMessage();
+    const contacts = this.contactNameMessage();
+    console.log("Channel text", channels, contacts, message);
+  }
+
+  sortDataFromThread() {
+    const message = this.messageInput.nativeElement.textContent;
+    const channels = this.channelNameMessage();
+    const contacts = this.contactNameMessage();
+    console.log("thread text", channels, contacts, message);
+  }
+
+  sortDataFromDirectMessage() {
+    const message = this.messageInput.nativeElement.textContent;
+    const channels = this.channelNameMessage();
+    const contacts = this.contactNameMessage();
+    console.log("direkt Message text", channels, contacts, message);
+  }
+
+  clearInputFieldMessage() {
+    this.messageInput.nativeElement.textContent = "";
+    this.clearDiv();
+  }
+
+  clearDiv() {
+    this.devspaceService.setClearInputMessage(true);
   }
 
   contactNameMessage() {
@@ -181,20 +249,28 @@ export class MessageInputAreaComponent {
       const selection = window.getSelection();
       if (!selection || selection.rangeCount === 0) return;
       const range = selection.getRangeAt(0);
-      const textBeforeCursor = range.startContainer.textContent?.slice(0, range.startOffset) || "";
+      const container = range.startContainer;
+      let textBeforeCursor = "";
+
+      if (container.nodeType === Node.TEXT_NODE) {
+        textBeforeCursor = container.textContent?.slice(0, range.startOffset) || "";
+      } else if (container.nodeType === Node.ELEMENT_NODE) {
+        textBeforeCursor = container.textContent || "";
+      }
+
       if (textBeforeCursor.endsWith("@")) {
         this.devspaceService.openContactBar = true;
-        this.devspaceService.openContactBarSearch = false;
-        this.devspaceService.openChannelBarSearch = false;
-      }else{
+        this.devspaceService.openChannelBar = false;
+        this.devspaceService.barContext = this.context; // 👈 Speichert die aktuelle Komponente
+      } else if (this.devspaceService.barContext === this.context) {
         this.devspaceService.openContactBar = false;
       }
 
       if (textBeforeCursor.endsWith("#")) {
         this.devspaceService.openChannelBar = true;
-        this.devspaceService.openContactBarSearch = false;
-        this.devspaceService.openChannelBarSearch = false;
-      } else {
+        this.devspaceService.openContactBar = false;
+        this.devspaceService.barContext = this.context; // 👈 Speichert die aktuelle Komponente
+      } else if (this.devspaceService.barContext === this.context) {
         this.devspaceService.openChannelBar = false;
       }
     });

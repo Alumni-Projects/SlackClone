@@ -14,7 +14,7 @@
                     src="/assets/img/send.png" alt=""></span>
         </div>
 
-        @if(devspaceService.openSmileyBar){
+        @if(devspaceService.openSmileyBar && devspaceService.barContext === context){
         <div class="devspace-message-smiley-bar">
             @for(item of devspaceService.emojis; track item; let i = $index){
             <span (click)="selectSmiley(i)">{{item}}</span>
@@ -22,31 +22,29 @@
         </div>
         }
 
-        @if(devspaceService.openContactBar){
-        <div class="devspace-message-contact-bar">
-            @for(item of devspaceService.accounts; track item.name; let i = $index){
-
-            <div class="selected-Contact-Item" (click)="selectContact(i)"><span><img src="{{item.pic}}"
-                        alt="">@if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>
-                    }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}}
-                @if(devspaceService.accounts[i].activeSelf){(Du)}</div>
-            }@empty {
-
-            <div>Keine Kontakte gefunden</div>
-
-            }
-
-
-        </div>
-        }
-
-
-        @if(devspaceService.openChannelBar){
-        <div class="devspace-message-channel-bar">
-            @for(item of devspaceService.channels; track item; let i = $index){
-            <span (click)="selectChannel(i)"><img src="/assets/img/tagChannelName.png" alt=""> {{item.name}} </span>
-            }
-        </div>
-        }
+        @if(devspaceService.openContactBar && devspaceService.barContext === context){
+            <div class="devspace-message-contact-bar">
+              @for(item of devspaceService.accounts; track item.name; let i = $index){
+                <div class="selected-Contact-Item" (click)="selectContact(i)">
+                  <span><img src="{{item.pic}}" alt="">
+                    @if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>}
+                    @else{<span class="active-Account-Icon-None"></span>}
+                  </span>
+                  {{item.name}} @if(devspaceService.accounts[i].activeSelf){(Du)}
+                </div>
+              }
+              @empty {
+                <div>Keine Kontakte gefunden</div>
+              }
+            </div>
+          }
+          
+          @if(devspaceService.openChannelBar && devspaceService.barContext === context){
+            <div class="devspace-message-channel-bar">
+              @for(item of devspaceService.channels; track item; let i = $index){
+                <span (click)="selectChannel(i)"><img src="/assets/img/tagChannelName.png" alt=""> {{item.name}} </span>
+              }
+            </div>
+          }
     </div>
 </div>

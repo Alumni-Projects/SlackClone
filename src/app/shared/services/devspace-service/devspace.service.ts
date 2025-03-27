@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Devspace } from '@shared/interface/devspace';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class DevspaceService {
   openMessage = false;
   openAddMessage = false;
   openChannel = false;
-  openThread = false;
+  openThread = true;
   openDirectMessage = false;
   channelNameInput: string = '';
   openSmileyBar = false;
@@ -20,7 +21,19 @@ export class DevspaceService {
   openChannelBar = false;
   openContactBarSearch = false;
   openChannelBarSearch = false;
+  channelArray = new BehaviorSubject<any[]>([]);
+  contactArray = new BehaviorSubject<any[]>([]);
+  clearInputMessage = false;  
+  barContext: 'message' | 'channel' | 'thread' | 'directmessage' | null = null;
   constructor() { }
+
+  private clearInputMessageSubject = new BehaviorSubject<boolean>(false);
+  clearInputMessage$ = this.clearInputMessageSubject.asObservable();
+
+ 
+  setClearInputMessage(status: boolean) {
+    this.clearInputMessageSubject.next(status);
+  }
 
   channels: Devspace[] = [
     {

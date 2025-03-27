@@ -4,4 +4,12 @@
     border-radius: 30px;
     display: flex;
     flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 40px;
+}
+
+.devspace-direct-message-app-message-input-area{
+    padding-left: 45px;
+    padding-right: 45px;
 }
