@@ -11,15 +11,17 @@ import { Color } from '@shared/Enums/color';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [ProfilePopupComponent, MatIcon]
+  imports: [ProfilePopupComponent, MatIcon], // nur wenn standalone: true!
+  standalone: true
 })
 export class HeaderComponent {
-
   isProfileOpen = false;
   Color = Color;
   IconSize = IconSize;
+
   constructor(
     public devspaceService: DevspaceService,
+    private authService: AuthService,
     private dialog: MatDialog
   ) {}
 
@@ -31,17 +33,7 @@ export class HeaderComponent {
     this.isProfileOpen = !this.isProfileOpen;
   }
 
-  constructor(public devspaceService: DevspaceService, private authService: AuthService) { }
-  placeholder() {
-    if (window.innerWidth > 768) {
-      return "Devspace durchsuchen"
-    } else {
-      return "Gehe zu.."
-    }
-
-  }
-
-  logout() {
+  logout(): void {
     this.authService.logout();
   }
 }
