@@ -6,31 +6,61 @@ import { DevspaceAccount } from '@shared/interface/devspace-account';
   providedIn: 'root'
 })
 export class DevspaceService {
-  channelsName = "";
-  channelsDescription = "";
+  channelsName = '';
+  channelsDescription = '';
   openDevspace = true;
   openMessage = false;
   openAddMessage = false;
   openChannel = false;
   openThread = false;
   openDirectMessage = false;
-  constructor() { }
+  constructor() {}
 
   channels: Devspace[] = [
     {
-      name: 'Entwicklerteam', description: 'Dieser Channel ist für alle Entwickler zuständig..',
-      channelActiveTalk: false, 
-    },
+      name: 'Entwicklerteam',
+      description: 'Dieser Channel ist für alle Entwickler zuständig..',
+      channelActiveTalk: false
+    }
   ];
-  
-  emojis = ['😊', '😂', '❤️', '👍', '🔥'];
-  
-  accounts: DevspaceAccount[] = [
-    { name: 'Florian Beck', active: true, pic: '/assets/img/Avatar1.png', activeSelf: true, activeMessage: false, },
-    { name: 'Sofia Müller', active: false, pic: '/assets/img/Avatar2.png', activeSelf: false, activeMessage: false },
-    { name: 'Noah Braun', active: true, pic: '/assets/img/Avatar3.png', activeSelf: false, activeMessage: false },
-    { name: 'Elias Beumann', active: false, pic: '/assets/img/Avatar5.png', activeSelf: false, activeMessage: false },
-    { name: 'Frederik Beck', active: true, pic: '/assets/img/Avatar6.png', activeSelf: false, activeMessage: false },
 
+  emojis = ['😊', '😂', '❤️', '👍', '🔥'];
+
+  accounts: DevspaceAccount[] = [
+    {
+      name: 'Florian Beck',
+      active: true,
+      pic: '/assets/avatar/avatar1.svg',
+      activeSelf: true,
+      activeMessage: false
+    },
+    {
+      name: 'Sofia Müller',
+      active: false,
+      pic: '/assets/avatar/avatar2.svg',
+      activeSelf: false,
+      activeMessage: false
+    },
+    {
+      name: 'Noah Braun',
+      active: true,
+      pic: '/assets/avatar/avatar3.svg',
+      activeSelf: false,
+      activeMessage: false
+    },
+    {
+      name: 'Elias Beumann',
+      active: false,
+      pic: '/assets/avatar/avatar5.svg',
+      activeSelf: false,
+      activeMessage: false
+    },
+    {
+      name: 'Frederik Beck',
+      active: true,
+      pic: '/assets/avatar/avatar6.svg',
+      activeSelf: false,
+      activeMessage: false
+    }
   ];
 }

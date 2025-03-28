@@ -1,13 +1,14 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 
-
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
+
+
 export class AppComponent {
   @ViewChild('logo') logo!: ElementRef<HTMLInputElement>;
   isDashboardRoute = false;
