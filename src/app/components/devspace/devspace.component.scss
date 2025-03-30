@@ -1,39 +1,39 @@
 .devspace {
 
-    width: 366px;
-    height: 940px;
-    background-color: var(--white-color);
-    padding: 32px 30px 32px 30px;
-    border-radius: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    position: relative;
-    overflow: auto;
-    overflow-x: hidden;    
+  width: 366px;
+  height: 940px;
+  background-color: var(--white-color);
+  padding: 32px 30px 32px 30px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  position: relative;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 .devspace::-webkit-scrollbar-button {
-    display: none;
+  display: none;
 }
 
 .devspace::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 
 .devspace::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 35px;
+  background: #f1f1f1;
+  border-radius: 35px;
 }
 
 .devspace::-webkit-scrollbar-thumb {
-    background: var(--purple-3);
-    border-radius: 35px;
+  background: var(--purple-3);
+  border-radius: 35px;
 }
 
 .devspace::-webkit-scrollbar-thumb:hover {
-    background: var(--light-purple);
-    cursor: pointer;
+  background: var(--light-purple);
+  cursor: pointer;
 
 }
 
@@ -139,12 +139,12 @@
 
 .devspace-channel-title-content:hover {
 
-    cursor: pointer;
+  cursor: pointer;
 
-    .active-Channel-Icon {
-        content: url('/assets/img/arrow_drop_down_right_hover.png');
+  .active-Channel-Icon {
+    content: url('/assets/img/arrow_drop_down_right_hover.png');
 
-    }
+  }
 
 
   .active-Channel-Icon-None {
@@ -206,23 +206,23 @@
     color: black;
   }
 
-    &:hover {
-        background-color: var(--bg-color);
-        border-radius: 20px;
+  &:hover {
+    background-color: var(--bg-color);
+    border-radius: 20px;
 
-        & img {
-            content: url('/assets/img/tagHover.png');
-        }
-
+    & img {
+      content: url('/assets/img/tagHover.png');
     }
+
   }
 }
 
+
 .devspace-channel-list-item-name {
-    width: 130px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .devspace-add-channel-button {
@@ -287,39 +287,30 @@
 
 .devspace-direct-messages-title-content {
 
-    display: flex;
-    gap: 15px;
+  display: flex;
+  gap: 15px;
 
-    & span:nth-of-type(1) {
-        width: 24px;
-        height: 24px;
-        transition: all 125ms ease-in-out;
-    }
+  & span:nth-of-type(1) {
+    width: 24px;
+    height: 24px;
+    transition: all 125ms ease-in-out;
+  }
 
-    & span:nth-of-type(2) {
-        font-size: var(--font-size-l);
-        font-weight: var(--font-weight-extra-bold);
-        line-height: 27.28px;
-        transition: all 125ms ease-in-out;
+  & span:nth-of-type(2) {
+    font-size: var(--font-size-l);
+    font-weight: var(--font-weight-extra-bold);
+    line-height: 27.28px;
+    transition: all 125ms ease-in-out;
 
-    }
+  }
 }
 
 .devspace-direct-messages-title:hover {
-    cursor: pointer;
+  cursor: pointer;
 
-    .active-Message-Icon {
-        content: url('/assets/img/arrow_drop_down_right_hover.png');
-    }
-
-    .active-Message-Icon-None {
-        content: url('/assets/img/arrow_drop_downHover.png');
-    }
-
-    .devspace-direct-messages-title-content {
-        & span:nth-of-type(2) {
-            color: var(--purple-3);
-
+  .active-Message-Icon {
+    content: url('/assets/img/arrow_drop_down_right_hover.png');
+  }
 
   .active-Message-Icon-None {
     content: url('/assets/img/arrow_drop_downHover.png');
@@ -328,65 +319,76 @@
   .devspace-direct-messages-title-content {
     & span:nth-of-type(2) {
       color: var(--purple-3);
+
+
+      .active-Message-Icon-None {
+        content: url('/assets/img/arrow_drop_downHover.png');
+      }
+
+      .devspace-direct-messages-title-content {
+        & span:nth-of-type(2) {
+          color: var(--purple-3);
+        }
+
+        & span:nth-of-type(1) {
+          content: url('/assets/img/account_circle_hover.png');
+        }
+      }
     }
 
-    & span:nth-of-type(1) {
-      content: url('/assets/img/account_circle_hover.png');
+    .devspace-direct-messages-list {
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+      padding-left: 40px;
+      gap: 15px;
     }
-  }
-}
 
-.devspace-direct-messages-list {
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
-  padding-left: 40px;
-  gap: 15px;
-}
+    .devspace-direct-messages-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding-left: 20px;
+      padding-right: 20px;
+      width: fit-content;
+    }
 
-.devspace-direct-messages-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: fit-content;
-}
+    .devspace-direct-messages-item:hover {
+      cursor: pointer;
+      background-color: var(--bg-color);
+      border-radius: 35px;
+    }
 
-.devspace-direct-messages-item:hover {
-  cursor: pointer;
-  background-color: var(--bg-color);
-  border-radius: 35px;
-}
+    .devspace-direct-messages-icon {
 
-.devspace-direct-messages-icon {
+      position: relative;
 
-    position: relative;
-
-    & img {
+      & img {
         width: 50px;
         height: 50px;
+      }
+
     }
 
-}
+    .devspace-direct-messages-name {
+      max-width: 145px;
+      font-size: var(--font-size-m);
+      font-weight: var(--font-weight-normal);
+      line-height: 24.55px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
-.devspace-direct-messages-name {
-    max-width: 145px;
-    font-size: var(--font-size-m);
-    font-weight: var(--font-weight-normal);
-    line-height: 24.55px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    }
 
-}
+    .active-Account {
+      background-color: var(--bg-color);
+      border-radius: 35px;
 
-.active-Account {
-  background-color: var(--bg-color);
-  border-radius: 35px;
-
-  & .devspace-direct-messages-name {
-    color: var(--purple-3);
-    font-weight: var(--font-weight-extra-bold);
+      & .devspace-direct-messages-name {
+        color: var(--purple-3);
+        font-weight: var(--font-weight-extra-bold);
+      }
+    }
   }
 }
