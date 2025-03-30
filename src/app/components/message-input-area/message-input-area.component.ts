@@ -100,6 +100,8 @@ export class MessageInputAreaComponent {
       this.devspaceService.openChannelBar = false;
     }
     this.devspaceService.openSmileyBar = true;
+    this.devspaceService.openContactBar = false;
+    this.devspaceService.openChannelBar = false;
     this.devspaceService.barContext = this.context;
   }
 
@@ -169,6 +171,7 @@ export class MessageInputAreaComponent {
     }
     this.clearInputFieldMessage();
     this.closeBarsAll();
+    
   }
 
   closeBarsAll() {
@@ -251,7 +254,6 @@ export class MessageInputAreaComponent {
       const range = selection.getRangeAt(0);
       const container = range.startContainer;
       let textBeforeCursor = "";
-
       if (container.nodeType === Node.TEXT_NODE) {
         textBeforeCursor = container.textContent?.slice(0, range.startOffset) || "";
       } else if (container.nodeType === Node.ELEMENT_NODE) {
@@ -261,7 +263,7 @@ export class MessageInputAreaComponent {
       if (textBeforeCursor.endsWith("@")) {
         this.devspaceService.openContactBar = true;
         this.devspaceService.openChannelBar = false;
-        this.devspaceService.barContext = this.context; // 👈 Speichert die aktuelle Komponente
+        this.devspaceService.barContext = this.context;
       } else if (this.devspaceService.barContext === this.context) {
         this.devspaceService.openContactBar = false;
       }
@@ -269,7 +271,7 @@ export class MessageInputAreaComponent {
       if (textBeforeCursor.endsWith("#")) {
         this.devspaceService.openChannelBar = true;
         this.devspaceService.openContactBar = false;
-        this.devspaceService.barContext = this.context; // 👈 Speichert die aktuelle Komponente
+        this.devspaceService.barContext = this.context;
       } else if (this.devspaceService.barContext === this.context) {
         this.devspaceService.openChannelBar = false;
       }

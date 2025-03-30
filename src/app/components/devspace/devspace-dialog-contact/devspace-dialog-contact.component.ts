@@ -23,6 +23,7 @@ export class DevspaceDialogContactComponent implements OnInit {
   openSelectContact: boolean = false;
   allContactsChecked: boolean = false;
   selectContactsChecked: boolean = false;
+
   @ViewChild('contactInput') contactInput!: ElementRef<HTMLInputElement>;
 
   constructor(private dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService) {
@@ -117,18 +118,21 @@ export class DevspaceDialogContactComponent implements OnInit {
   }
 
   addChannel() {
+    this.channelDirectMessageCloseSelect();
+    this.devspaceService.closAllMessage();
+    const creater = this.filterMainContact();
 
     if (this.allContactsChecked) {
-      const contactsAll = this.devspaceService.accounts.map(account => account.name);
-      let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelActiveTalk: false, contacts: contactsAll };
+      const contactsAll = this.devspaceService.accounts.map(account => account);
+      let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelCreated: creater, channelActiveTalk: true, contact: contactsAll };
       this.devspaceService.channels.push(channel);
       console.log(contactsAll);
       console.log(this.devspaceService.channels);
     }
 
     if (this.selectContactsChecked) {
-      const contactsSelect = this.accountSelected.map(account => account.name);
-      let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelActiveTalk: false, contacts: contactsSelect };
+      const contactsSelect = this.accountSelected.map(account => account);
+      let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelCreated: creater, channelActiveTalk: true, contact: contactsSelect };
       this.devspaceService.channels.push(channel);
       console.log(contactsSelect);
       console.log(this.devspaceService.channels);
@@ -136,5 +140,23 @@ export class DevspaceDialogContactComponent implements OnInit {
     }
 
     this.dialog.closeAll();
+    setTimeout(() => {
+      this.devspaceService.openChannel = true;
+    }, 100);
+
   }
+  channelDirectMessageCloseSelect() {
+    this.devspaceService.channels.forEach((channel,) => {
+      channel.channelActiveTalk = false;
+    })
+    this.devspaceService.accounts.forEach((account,) => {
+      account.activeMessage = false;
+    })
+  }
+
+  filterMainContact() {
+    const creater = this.devspaceService.accounts.filter(account => account.activeSelf == true);
+    return creater;
+  }
+
 }

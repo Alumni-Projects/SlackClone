@@ -13,7 +13,7 @@ export class DevspaceService {
   openMessage = false;
   openAddMessage = false;
   openChannel = false;
-  openThread = true;
+  openThread = false;
   openDirectMessage = false;
   channelNameInput: string = '';
   openSmileyBar = false;
@@ -23,22 +23,32 @@ export class DevspaceService {
   openChannelBarSearch = false;
   channelArray = new BehaviorSubject<any[]>([]);
   contactArray = new BehaviorSubject<any[]>([]);
-  clearInputMessage = false;  
+  clearInputMessage = false;
   barContext: 'message' | 'channel' | 'thread' | 'directmessage' | null = null;
   constructor() { }
 
   private clearInputMessageSubject = new BehaviorSubject<boolean>(false);
   clearInputMessage$ = this.clearInputMessageSubject.asObservable();
 
- 
+
   setClearInputMessage(status: boolean) {
     this.clearInputMessageSubject.next(status);
   }
 
   channels: Devspace[] = [
     {
-      name: 'Entwicklerteam', description: 'Dieser Channel ist für alle Entwickler zuständig..',
-      channelActiveTalk: false, contact: ["Florian Beck", "Sofia Müller", "Noah Braun"]
+      name: 'Entwicklerteam',
+      description: 'Dieser Channel ist für alle Entwickler zuständig..qdqwqq qwdqw qwdqdw qdq dqwd qwdq dwqd qwdq dq wdq dwq dqd qdwq dwq dq wqd qwdq dwqdq qd qdq dwq dwq dwqd qwd q',
+      channelActiveTalk: false, 
+      contact: [
+        { name: 'Florian Beck', active: true, pic: '/assets/img/Avatar1.png', activeSelf: true, activeMessage: false },
+        { name: 'Sofia Müller', active: false, pic: '/assets/img/Avatar2.png', activeSelf: false, activeMessage: false },
+        { name: 'Noah Braun', active: true, pic: '/assets/img/Avatar3.png', activeSelf: false, activeMessage: false },
+        { name: 'Elias Beumann', active: false, pic: '/assets/img/Avatar5.png', activeSelf: false, activeMessage: false },
+        { name: 'Frederik Beck', active: true, pic: '/assets/img/Avatar6.png', activeSelf: false, activeMessage: false }],
+        channelCreated: [
+          { name: 'Florian Beck', active: true, pic: '/assets/img/Avatar1.png', activeSelf: true, activeMessage: false },
+        ]
     },
   ];
 
@@ -55,6 +65,11 @@ export class DevspaceService {
 
 
   ];
-
+  closAllMessage() {
+    this.openMessage = false;
+    this.openChannel = false;
+    this.openThread = false;
+    this.openDirectMessage = false;
+  }
 
 }

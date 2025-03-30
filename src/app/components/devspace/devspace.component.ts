@@ -27,8 +27,6 @@ export class DevspaceComponent implements OnInit {
 
   }
 
-
-
   imageUrl = '/assets/img/arrow_drop_down.png';
   imageUrlMessage = '/assets/img/arrow_drop_down.png';
 
@@ -79,16 +77,19 @@ export class DevspaceComponent implements OnInit {
   openDialog() {
     this.dialog.open(DevspaceDialogComponent);
   }
-  channelActiveClass(i: number) {
+  channelActiveClass(i: number) {   
+   
     this.devspaceService.channels.forEach((channel,) => {
       channel.channelActiveTalk = false;
     });
     this.devspaceService.accounts.forEach((account,) => {
       account.activeMessage = false;
     });
-    this.devspaceService.channels[i].channelActiveTalk = !this.devspaceService.channels[i].channelActiveTalk;
-
-
+    this.devspaceService.channels[i].channelActiveTalk = true;
+    this.devspaceService.openChannel = false;
+    setTimeout(() => {
+      this.devspaceService.openChannel = true;
+    }, 100);
   }
 
   messageActiveClass(i: number) {
@@ -128,7 +129,7 @@ export class DevspaceComponent implements OnInit {
     });
     this.devspaceService.channels.forEach((channel,) => {
       channel.channelActiveTalk = false;
-    });
+    });    
     this.devspaceService.openChannel = true;
     this.devspaceService.openDirectMessage = false;
 
