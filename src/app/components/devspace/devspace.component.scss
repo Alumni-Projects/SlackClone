@@ -1,4 +1,5 @@
 .devspace {
+
     width: 366px;
     height: 940px;
     background-color: var(--white-color);
@@ -33,113 +34,111 @@
 .devspace::-webkit-scrollbar-thumb:hover {
     background: var(--light-purple);
     cursor: pointer;
+
 }
 
 .devspace-header {
-    display: flex;
-    align-items: center;
-    width: 306px;
-    height: 60px;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 306px;
+  height: 60px;
+  justify-content: space-between;
 }
 
 .devspace-logo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-size: var(--font-size-title-default);
-    font-weight: var(--font-weight-extra-bold);
-    line-height: 32.74px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: var(--font-size-title-default);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 32.74px;
 }
 
 .devspace-edit-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+
+  & img {
+    width: var(--icon-size-m);
+    height: var(--icon-size-m);
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--bg-color);
+    border-radius: 50%;
+    transition: all 0.75ms ease-in-out;
 
     & img {
-        width: var(--icon-size-m);
-        height: var(--icon-size-m);
+      content: url('/assets/img/DevEditHover.png');
     }
-
-    &:hover {
-        cursor: pointer;
-        background-color: var(--bg-color);
-        border-radius: 50%;
-        transition: all 0.75ms ease-in-out;
-
-        & img {
-            content: url('/assets/img/DevEditHover.png');
-
-        }
-    }
+  }
 }
 
 .devspace-edit-logo-mobile {
-    width: 60px;
-    height: 60px;
+  width: 60px;
+  height: 60px;
+  background-color: var(--primary-color);
+  position: absolute;
+  bottom: 57px;
+  right: 16px;
+  padding: 8px 8px 0 10px;
+  border-radius: 50%;
+
+  & img {
+    width: 40px;
+    height: 40px;
+  }
+
+  box-shadow: none;
+  border: none;
+
+  &:hover {
+    background-color: var(--secondary-color);
+    cursor: pointer;
+  }
+
+  &:active {
     background-color: var(--primary-color);
-    position: absolute;
-    bottom: 57px;
-    right: 16px;
-    padding: 8px 8px 0 10px;
-    border-radius: 50%;
-
-    & img {
-        width: 40px;
-        height: 40px;
-    }
-
-    box-shadow: none;
-    border: none;
-
-    &:hover {
-        background-color: var(--secondary-color);
-        cursor: pointer;
-
-    }
-
-    &:active {
-        background-color: var(--primary-color);
-
-    }
+  }
 }
 
 .devspace-channels {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    transition: height 0.75ms ease-in-out;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: height 0.75ms ease-in-out;
 }
 
 .devspace-channel-title {
-    width: 100%;
-    height: 46px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 100%;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .devspace-channel-title-content {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transition: all 0.75ms ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.75ms ease-in-out;
 
-    & div {
-        display: flex;
-        gap: 10px;
-        font-size: var(--font-size-l);
-        font-weight: var(--font-weight-extra-bold);
-        line-height: 27.28px;
-    }
+  & div {
+    display: flex;
+    gap: 10px;
+    font-size: var(--font-size-l);
+    font-weight: var(--font-weight-extra-bold);
+    line-height: 27.28px;
+  }
 }
 
-
 .devspace-channel-title-content:hover {
+
     cursor: pointer;
 
     .active-Channel-Icon {
@@ -147,69 +146,65 @@
 
     }
 
-    .active-Channel-Icon-None {
-        content: url('/assets/img/arrow_drop_downHover.png');
 
+  .active-Channel-Icon-None {
+    content: url('/assets/img/arrow_drop_downHover.png');
+  }
+
+  div {
+    color: var(--primary-color);
+    transition: all 0.75ms ease-in-out;
+
+    img {
+      content: url('/assets/img/workspacesHover.png');
     }
-
-    div {
-        color: var(--primary-color);
-        transition: all 0.75ms ease-in-out;
-
-        img {
-            content: url('/assets/img/workspacesHover.png');
-        }
-    }
+  }
 }
 
 .devspace-add-channel {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    &:hover {
-        cursor: pointer;
-        background-color: var(--bg-color);
-        border-radius: 50%;
-        transition: all 0.75ms ease-in-out;
+  &:hover {
+    cursor: pointer;
+    background-color: var(--bg-color);
+    border-radius: 50%;
+    transition: all 0.75ms ease-in-out;
 
-        & img {
-            content: url('/assets/img/addChannelHover.png');
-        }
+    & img {
+      content: url('/assets/img/addChannelHover.png');
     }
+  }
 }
 
 .devspace-channel-list {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 13px;
-    padding-left: 30px;
-
-
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding-left: 30px;
 }
 
 .devspace-channel-list-item {
-    width: fit-content;
-    height: 33px;
-    display: flex;
-    align-items: center;
-    padding-left: 15px;
-    padding-right: 15px;
-    gap: 12px;
-    transition: all 0.75ms ease-in-out;
-    cursor: pointer;
+  width: fit-content;
+  height: 33px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  gap: 12px;
+  transition: all 0.75ms ease-in-out;
+  cursor: pointer;
 
-    & span {
-        font-size: var(--font-size-m);
-        font-weight: var(--font-weight-normal);
-        line-height: 24.55px;
-        color: black;
-
-
-    }
+  & span {
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-normal);
+    line-height: 24.55px;
+    color: black;
+  }
 
     &:hover {
         background-color: var(--bg-color);
@@ -218,8 +213,9 @@
         & img {
             content: url('/assets/img/tagHover.png');
         }
-    }
 
+    }
+  }
 }
 
 .devspace-channel-list-item-name {
@@ -230,68 +226,67 @@
 }
 
 .devspace-add-channel-button {
-    width: 100%;
-    height: 33px;
-    display: flex;
-    padding-left: 45px;
-    align-items: center;
-    gap: 15px;
-    transition: all 0.75ms ease-in-out;
+  width: 100%;
+  height: 33px;
+  display: flex;
+  padding-left: 45px;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.75ms ease-in-out;
+
+  & p {
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-normal);
+    line-height: 24.55px;
+    color: black;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    & img {
+      content: url('/assets/img/add_circle_hover.png');
+    }
 
     & p {
-        font-size: var(--font-size-m);
-        font-weight: var(--font-weight-normal);
-        line-height: 24.55px;
-        color: black;
+      color: var(--purple-3);
     }
-
-    &:hover {
-        cursor: pointer;
-
-        & img {
-            content: url('/assets/img/add_circle_hover.png');
-        }
-
-        & p {
-            color: var(--purple-3);
-
-        }
-    }
+  }
 }
 
 .activeChannel {
-    background-color: var(--bg-color);
-    border-radius: 20px;
-    transition: all 0.75ms ease-in-out;
+  background-color: var(--bg-color);
+  border-radius: 20px;
+  transition: all 0.75ms ease-in-out;
 
-    & img {
-        content: url('/assets/img/tagHover.png');
-    }
+  & img {
+    content: url('/assets/img/tagHover.png');
+  }
 
-    & span {
-        color: var(--purple-3);
-        font-weight: var(--font-weight-extra-bold);
-
-    }
+  & span {
+    color: var(--purple-3);
+    font-weight: var(--font-weight-extra-bold);
+  }
 }
 
 .devspace-direct-messages {
-    width: 100%;
-    min-height: 162px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+  width: 100%;
+  min-height: 162px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
 
 .devspace-direct-messages-title {
-    width: 254px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  width: 254px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .devspace-direct-messages-title-content {
+
     display: flex;
     gap: 15px;
 
@@ -325,40 +320,47 @@
         & span:nth-of-type(2) {
             color: var(--purple-3);
 
-        }
 
-        & span:nth-of-type(1) {
-            content: url('/assets/img/account_circle_hover.png');
-        }
+  .active-Message-Icon-None {
+    content: url('/assets/img/arrow_drop_downHover.png');
+  }
 
+  .devspace-direct-messages-title-content {
+    & span:nth-of-type(2) {
+      color: var(--purple-3);
     }
+
+    & span:nth-of-type(1) {
+      content: url('/assets/img/account_circle_hover.png');
+    }
+  }
 }
 
 .devspace-direct-messages-list {
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
-    padding-left: 40px;
-    gap: 15px;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  gap: 15px;
 }
 
 .devspace-direct-messages-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding-left: 20px;
-    padding-right: 20px;
-    width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: fit-content;
 }
 
 .devspace-direct-messages-item:hover {
-    cursor: pointer;
-    background-color: var(--bg-color);
-    border-radius: 35px;
+  cursor: pointer;
+  background-color: var(--bg-color);
+  border-radius: 35px;
 }
 
-
 .devspace-direct-messages-icon {
+
     position: relative;
 
     & img {
@@ -376,14 +378,15 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
 }
 
 .active-Account {
-    background-color: var(--bg-color);
-    border-radius: 35px;
+  background-color: var(--bg-color);
+  border-radius: 35px;
 
-    & .devspace-direct-messages-name {
-        color: var(--purple-3);
-        font-weight: var(--font-weight-extra-bold);
-    }
+  & .devspace-direct-messages-name {
+    color: var(--purple-3);
+    font-weight: var(--font-weight-extra-bold);
+  }
 }

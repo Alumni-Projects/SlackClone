@@ -19,6 +19,11 @@
     text-align: left;
     margin-bottom: 15px;
   }
+  .btn-container--center {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
 
   button.close-btn {
     background: none;
@@ -41,10 +46,9 @@
     }
   }
 
-   h2 {
-    font-size:var(--font-size-ml);
+  h2 {
+    font-size: var(--font-size-ml);
     color: var(--black-color);
-
   }
   .status {
     display: flex;
@@ -58,31 +62,30 @@
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      background-color: var(--online-green); 
+      background-color: var(--online-green);
     }
   }
 
   .profile-info {
-
     &-item {
-    display: flex;
-    flex-direction: column;
-    font-size: var(--font-size-m);
-    color: var(--black-color);
-    margin-bottom:45px;
-    &-mail {
       display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-
-    a {
-      color: var( --mail-blue);
-      text-decoration: none;
+      flex-direction: column;
       font-size: var(--font-size-m);
+      color: var(--black-color);
+      margin-bottom: 45px;
+      &-mail {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      a {
+        color: var(--mail-blue);
+        text-decoration: none;
+        font-size: var(--font-size-m);
+      }
     }
-  }
   }
 
   .message-btn {
@@ -90,7 +93,7 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    width: 80%; 
+    width: 80%;
     padding: 10px;
     background: #3b82f6;
     color: white;
@@ -100,11 +103,10 @@
     border: none;
     cursor: pointer;
     transition: background 0.3s ease-in-out;
-    margin: 16px auto 0 auto; 
+    margin: 16px auto 0 auto;
 
     &:hover {
       background: #2563eb;
     }
-
   }
 }

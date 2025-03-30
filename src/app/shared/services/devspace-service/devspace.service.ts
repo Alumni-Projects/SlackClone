@@ -7,14 +7,15 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class DevspaceService {
-  channelsName = "";
-  channelsDescription = "";
+  channelsName = '';
+  channelsDescription = '';
   openDevspace = true;
   openMessage = false;
   openAddMessage = false;
   openChannel = false;
   openThread = false;
   openDirectMessage = false;
+
   channelNameInput: string = '';
   openSmileyBar = false;
   openContactBar = false;
@@ -27,6 +28,7 @@ export class DevspaceService {
   barContext: 'message' | 'channel' | 'thread' | 'directmessage' | null = null;
   constructor() { }
 
+
   private clearInputMessageSubject = new BehaviorSubject<boolean>(false);
   clearInputMessage$ = this.clearInputMessageSubject.asObservable();
 
@@ -38,6 +40,7 @@ export class DevspaceService {
   channels: Devspace[] = [
     {
       name: 'Entwicklerteam',
+
       description: 'Dieser Channel ist für alle Entwickler zuständig..qdqwqq qwdqw qwdqdw qdq dqwd qwdq dwqd qwdq dq wdq dwq dqd qdwq dwq dq wqd qwdq dwqdq qd qdq dwq dwq dwqd qwd q',
       channelActiveTalk: false, 
       contact: [
@@ -62,6 +65,7 @@ export class DevspaceService {
     { name: 'Noah Braun', active: true, pic: '/assets/img/Avatar3.png', activeSelf: false, activeMessage: false },
     { name: 'Elias Beumann', active: false, pic: '/assets/img/Avatar5.png', activeSelf: false, activeMessage: false },
     { name: 'Frederik Beck', active: true, pic: '/assets/img/Avatar6.png', activeSelf: false, activeMessage: false },
+
 
 
   ];

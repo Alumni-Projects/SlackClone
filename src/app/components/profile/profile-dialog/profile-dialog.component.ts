@@ -17,8 +17,8 @@ export class ProfileDialogComponent {
   closeDialog() {
     this.dialogRef.close();
   }
-  Color = Color;
+  IconColor = Color;
   IconSize = IconSize;
   isProfileOpen = false;
-  constructor(private dialogRef: MatDialogRef<ProfileDialogComponent>) { }
+  constructor(private dialogRef: MatDialogRef<ProfileDialogComponent>) {}
 }
