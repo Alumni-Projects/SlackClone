@@ -315,7 +315,7 @@
   .active-Message-Icon-None {
     content: url('/assets/img/arrow_drop_downHover.png');
   }
-
+}
   .devspace-direct-messages-title-content {
     & span:nth-of-type(2) {
       color: var(--purple-3);
@@ -335,7 +335,7 @@
         }
       }
     }
-
+  }
     .devspace-direct-messages-list {
       width: fit-content;
       display: flex;
@@ -390,5 +390,4 @@
         font-weight: var(--font-weight-extra-bold);
       }
     }
-  }
-}
+  

@@ -5,4 +5,5 @@ export interface Devspace {
     channelActiveTalk: boolean;
     contact?: any[];
     channelCreated?: any[];
+    message?: any[];
 }
