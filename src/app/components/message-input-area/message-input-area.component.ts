@@ -50,7 +50,7 @@ export class MessageInputAreaComponent {
   }
   selectContact(i: number) {
     this.devspaceService.openContactBar = false;
-    const contactName = this.devspaceService.accounts[i].name;
+    const contactName = this.devspaceService.accounts[i].displayName;
     const messageDiv = this.messageInput.nativeElement as HTMLDivElement;
     messageDiv.focus();
     const selection = window.getSelection();

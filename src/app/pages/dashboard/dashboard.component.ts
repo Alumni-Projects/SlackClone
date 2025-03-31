@@ -7,6 +7,7 @@ import { HeaderComponent } from '@components/header/header.component';
 import { ThreadComponent } from '@components/thread/thread.component';
 import { WorkspaceOpenCloseComponent } from '@components/workspace-open-close/workspace-open-close.component';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
 
 @Component({
@@ -17,6 +18,20 @@ import { DevspaceService } from '@shared/services/devspace-service/devspace.serv
 })
 export class DashboardComponent {
 
-  constructor(public devspaceService: DevspaceService) { }
+  constructor(public devspaceService: DevspaceService,public Firestore: FirestoreService) {
+    
+   }
+
+  ngOnInit() {
+    this.loadUsers(); 
+  }
+
+   async loadUsers() {
+    const users = await this.Firestore.fetchUserFromFirestoreAll();
+    this.devspaceService.accounts = users;
+    console.log(users);
+    console.log(this.devspaceService.accounts);
+    
+  }
 
 }

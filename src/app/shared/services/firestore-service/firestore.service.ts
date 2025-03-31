@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { User } from 'firebase/auth';
-import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc } from 'firebase/firestore';
+import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc, collection, getDocs } from 'firebase/firestore';
 import { firebaseConfig } from '../../../../environments/environment';
 
 @Injectable({
@@ -95,4 +95,23 @@ export class FirestoreService {
       throw error;
     }
   }
+
+  // test firestore user holen Alex!
+  async fetchUserFromFirestoreAll(): Promise<any> {
+    const userRef = collection(this.firestore, 'users'); // Verweise auf die Collection
+    try {
+      const querySnapshot = await getDocs(userRef);
+      const users = querySnapshot.docs.map(doc => ({        
+        ...doc.data() // User-Daten hinzufügen
+      }));
+  
+      console.log('All users from Firestore:', users);
+      return users;
+    } catch (error) {
+      console.error('Error fetching users from Firestore:', error);
+      throw error;
+    }
+  }
+
+  
 }

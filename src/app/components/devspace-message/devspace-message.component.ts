@@ -121,7 +121,7 @@ export class DevspaceMessageComponent implements  OnDestroy  {
 
   selectContactSearch(i: number) {
     this.devspaceService.openContactBarSearch = false;
-    const contactName = this.devspaceService.accounts[i].name;
+    const contactName = this.devspaceService.accounts[i].displayName;
     const messageDiv = this.addInput.nativeElement as HTMLDivElement;
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) return;

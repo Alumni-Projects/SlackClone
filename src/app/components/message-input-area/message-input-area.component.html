@@ -24,13 +24,13 @@
 
         @if(devspaceService.openContactBar && devspaceService.barContext === context){
             <div class="devspace-message-contact-bar">
-              @for(item of devspaceService.accounts; track item.name; let i = $index){
+              @for(item of devspaceService.accounts; track item.uid; let i = $index){
                 <div class="selected-Contact-Item" (click)="selectContact(i)">
-                  <span><img src="{{item.pic}}" alt="">
+                  <span><img src="/assets/avatar/{{item.profile}}" alt="">
                     @if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>}
                     @else{<span class="active-Account-Icon-None"></span>}
                   </span>
-                  {{item.name}} @if(devspaceService.accounts[i].activeSelf){(Du)}
+                  {{item.displayName}} @if(devspaceService.accounts[i].activeSelf){(Du)}
                 </div>
               }
               @empty {

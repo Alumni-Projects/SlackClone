@@ -1,8 +1,11 @@
 export interface DevspaceAccount {
-    name: string;
-    active: boolean;
-    pic: string;
+    displayName: string;
+    active: boolean;    
     activeSelf: boolean;
     activeMessage: boolean;
     channel?: string [];
+    createdAt?: string;
+    emailVerified?: boolean;
+    profile?: string;
+    uid?: string;
 }
