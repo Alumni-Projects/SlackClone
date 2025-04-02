@@ -1,6 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-channel-dialog',
@@ -9,8 +11,10 @@ import { DevspaceService } from '@shared/services/devspace-service/devspace.serv
   styleUrl: './edit-channel-dialog.component.scss'
 })
 export class EditChannelDialogComponent implements OnInit {
-  constructor(public dialog: MatDialog, public devspaceService: DevspaceService) { }
+  constructor(public dialog: MatDialog, public devspaceService: DevspaceService, public firestore: FirestoreService, private cdr: ChangeDetectorRef) { }
   filterChannel: any[] = [];
+  filterCreator: any[] = [];
+  private subscriptions: Subscription = new Subscription();
   editChannelName: boolean = true;
   editChannelDescription: boolean = true;
   charsLeft: number = 20;
@@ -20,10 +24,30 @@ export class EditChannelDialogComponent implements OnInit {
   @ViewChild('channelInput') channelInput!: ElementRef;
   @ViewChild('channelDescriptionInput') channelDescriptionInput!: ElementRef;
   ngOnInit(): void {
-    this.filterChannel = this.devspaceService.channels.filter(channel => channel.channelActiveTalk == true);
-    console.log(this.filterChannel);
-
+    // Abo für das channels Observable
+    this.subscriptions = this.firestore.channels$.subscribe(channels => {      
+        this.filterChannel = channels.filter(
+          channel => this.devspaceService.selectedChannelId == channel.id
+        );
+      console.log('Aktualisierte Channels:', this.filterChannel);
+      this.updateCreator();
+    }); 
+    
   }
+
+  private updateCreator() {
+    if (this.filterChannel.length > 0) {
+      // Hier wird überprüft, ob der Creator des Channels korrekt ist
+      this.filterCreator = this.devspaceService.accounts.filter(
+        member => member.uid === this.filterChannel[0].creator
+      );
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe(); // Aufräumen der Subscription
+  }
+
   closeDialog() {
     this.dialog.closeAll();
   }
@@ -35,13 +59,19 @@ export class EditChannelDialogComponent implements OnInit {
       this.channelNameInputError = true;
     } else {
       this.editChannelName = true;
-      this.filterChannel[0].name = this.channelInput.nativeElement.value;
+      const channelid = this.filterChannel[0].id;
+      const title = { title: this.channelInput.nativeElement.value }
+      this.firestore.updateChannelEditInFirestore(channelid, title);
     }
+
   }
 
   saveChannelDescription() {
     this.editChannelDescription = true;
-    this.filterChannel[0].description = this.channelDescriptionInput.nativeElement.value;
+    const channelid = this.filterChannel[0].id;
+    const description = { description: this.channelDescriptionInput.nativeElement.value }
+    this.firestore.updateChannelEditInFirestore(channelid, description);
+
   }
 
   chars() {
@@ -52,5 +82,5 @@ export class EditChannelDialogComponent implements OnInit {
     }
   }
 
-  
+
 }

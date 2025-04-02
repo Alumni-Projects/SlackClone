@@ -4,6 +4,8 @@ import { DevspaceService } from '@shared/services/devspace-service/devspace.serv
 import { MatDialog } from '@angular/material/dialog';
 import { EditChannelDialogComponent } from './edit-channel-dialog/edit-channel-dialog.component';
 import { MemberChannelDialogComponent } from './member-channel-dialog/member-channel-dialog.component';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-channel',
@@ -12,10 +14,24 @@ import { MemberChannelDialogComponent } from './member-channel-dialog/member-cha
   styleUrl: './channel.component.scss'
 })
 export class ChannelComponent implements OnInit {
-  constructor(public devspaceService: DevspaceService, public dialog: MatDialog) { }
+  private subscriptions: Subscription = new Subscription();
+  constructor(public devspaceService: DevspaceService, public dialog: MatDialog, public firestore: FirestoreService) { }
   filterChannel: any[] = [];
+  filterContact: any[] = [];
+  
 ngOnInit(): void {  
-  this.filterChannel = this.devspaceService.channels.filter(channel => channel.channelActiveTalk == true);   
+   this.subscriptions = this.firestore.channels$.subscribe(channels => {      
+    this.filterChannel = channels.filter(
+      channel => this.devspaceService.selectedChannelId == channel.id
+    );
+  console.log('Aktualisierte Channels:', this.filterChannel);
+  this.filterContacts();
+}); 
+ 
+}
+
+filterContacts() {
+  this.filterContact = this.devspaceService.accounts.filter(member =>  this.filterChannel[0].member.includes(member.uid));
 }
 
 openEditChannelDialog() {    

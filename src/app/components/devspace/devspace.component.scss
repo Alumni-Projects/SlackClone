@@ -315,79 +315,80 @@
   .active-Message-Icon-None {
     content: url('/assets/img/arrow_drop_downHover.png');
   }
-}
+
   .devspace-direct-messages-title-content {
     & span:nth-of-type(2) {
       color: var(--purple-3);
-
-
-      .active-Message-Icon-None {
-        content: url('/assets/img/arrow_drop_downHover.png');
-      }
-
-      .devspace-direct-messages-title-content {
-        & span:nth-of-type(2) {
-          color: var(--purple-3);
-        }
-
-        & span:nth-of-type(1) {
-          content: url('/assets/img/account_circle_hover.png');
-        }
-      }
     }
   }
-    .devspace-direct-messages-list {
-      width: fit-content;
-      display: flex;
-      flex-direction: column;
-      padding-left: 40px;
-      gap: 15px;
+
+  .active-Message-Icon-None {
+    content: url('/assets/img/arrow_drop_downHover.png');
+  }
+
+  .devspace-direct-messages-title-content {
+    & span:nth-of-type(2) {
+      color: var(--purple-3);
     }
 
-    .devspace-direct-messages-item {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      padding-left: 20px;
-      padding-right: 20px;
-      width: fit-content;
+    & span:nth-of-type(1) {
+      content: url('/assets/img/account_circle_hover.png');
     }
+  }
+}
 
-    .devspace-direct-messages-item:hover {
-      cursor: pointer;
-      background-color: var(--bg-color);
-      border-radius: 35px;
-    }
 
-    .devspace-direct-messages-icon {
+.devspace-direct-messages-list {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  gap: 15px;
+}
 
-      position: relative;
+.devspace-direct-messages-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: fit-content;
+}
 
-      & img {
-        width: 50px;
-        height: 50px;
-      }
+.devspace-direct-messages-item:hover {
+  cursor: pointer;
+  background-color: var(--bg-color);
+  border-radius: 35px;
+}
 
-    }
+.devspace-direct-messages-icon {
 
-    .devspace-direct-messages-name {
-      max-width: 145px;
-      font-size: var(--font-size-m);
-      font-weight: var(--font-weight-normal);
-      line-height: 24.55px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+  position: relative;
 
-    }
+  & img {
+    width: 50px;
+    height: 50px;
+  }
 
-    .active-Account {
-      background-color: var(--bg-color);
-      border-radius: 35px;
+}
 
-      & .devspace-direct-messages-name {
-        color: var(--purple-3);
-        font-weight: var(--font-weight-extra-bold);
-      }
-    }
-  
+.devspace-direct-messages-name {
+  max-width: 145px;
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-normal);
+  line-height: 24.55px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+.active-Account {
+  background-color: var(--bg-color);
+  border-radius: 35px;
+
+  & .devspace-direct-messages-name {
+    color: var(--purple-3);
+    font-weight: var(--font-weight-extra-bold);
+  }
+}

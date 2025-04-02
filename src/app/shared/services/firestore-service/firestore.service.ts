@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { User } from 'firebase/auth';
-import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc, collection, getDocs } from 'firebase/firestore';
+import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc, collection, getDocs, query, where, onSnapshot, addDoc  } from 'firebase/firestore';
 import { firebaseConfig } from '../../../../environments/environment';
+import { Devspace } from '@shared/interface/devspace';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,8 @@ import { firebaseConfig } from '../../../../environments/environment';
 export class FirestoreService {
   private app: FirebaseApp;
   public firestore: Firestore;
+  private channelsSubject = new BehaviorSubject<Devspace[]>([]);
+  channels$ = this.channelsSubject.asObservable();
 
   constructor() {
     this.app = initializeApp(firebaseConfig);
@@ -97,6 +101,8 @@ export class FirestoreService {
   }
 
   // test firestore user holen Alex!
+
+  
   async fetchUserFromFirestoreAll(): Promise<any> {
     const userRef = collection(this.firestore, 'users'); // Verweise auf die Collection
     try {
@@ -113,5 +119,63 @@ export class FirestoreService {
     }
   }
 
+  // async getUserChannels(userId: string): Promise<Devspace[]> {
+  //   try {
+  //     const db = this.firestore; 
+  //     const channelsRef = collection(db, 'channel'); 
+  //     const q = query(channelsRef, where('member', 'array-contains', userId));  
+  //     const querySnapshot = await getDocs(q);  
+  //     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  //   } catch (error) {
+  //     console.error('Fehler beim Abrufen der Channels:', error);
+  //     return [];
+  //   }
+  // }
+
+  async saveChannelToFirestore(channel: Devspace): Promise<void> {
+    const channelCollectionRef = collection(this.firestore, 'channel'); // Referenz zur Sammlung
+    
+    try {
+      await addDoc(channelCollectionRef, channel); // Fügt ein neues Dokument mit Auto-ID hinzu
+      console.log('Channel erfolgreich gespeichert.');
+    } catch (error) {
+      console.error('Fehler beim Speichern des Channels:', error);
+      throw error;
+    }
+  }
+
+  async updateChannelEditInFirestore(uid: string, updatedData: Partial<any>): Promise<void> {
+    const channelRef = doc(this.firestore, 'channel', uid);
+
+    try {
+      const userSnap = await getDoc(channelRef);
+      if (!userSnap.exists()) {
+        throw new Error('Benutzer nicht gefunden. Erstelle zuerst ein Dokument mit saveUserToFirestore.');
+      }
+
+      await updateDoc(channelRef, updatedData);
+      console.log('User data updated in Firestore:', updatedData);
+    } catch (error) {
+      console.error('Error updating user in Firestore:', error);
+      throw error;
+    }
+  }
+
+  
+
+  subscribeToUserChannels(userId: string): void {
+    console.log('Firestore Listener gestartet für User:', userId);
+    const channelsRef = collection(this.firestore, 'channel');
+    const q = query(channelsRef, where('member', 'array-contains', userId));
+  
+    onSnapshot(q, (querySnapshot) => {
+      const channels = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Devspace));
+      console.log('Empfangene Channels:', channels);
+      this.channelsSubject.next(channels);
+    }, (error) => {
+      console.error('Fehler beim Abhören der Channels:', error);
+      this.channelsSubject.next([]);
+    });
+  }
   
 }

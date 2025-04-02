@@ -1,6 +1,6 @@
 export interface DevspaceAccount {
     displayName: string;
-    active: boolean;    
+    online: boolean;    
     activeSelf: boolean;
     activeMessage: boolean;
     channel?: string [];

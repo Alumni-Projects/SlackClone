@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms'; // Importieren!
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
 @Component({
   selector: 'app-devspace-dialog-contact',
@@ -26,7 +27,7 @@ export class DevspaceDialogContactComponent implements OnInit {
 
   @ViewChild('contactInput') contactInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService) {
+  constructor(private dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService, public firestore: FirestoreService) {
     this.accounts = this.devspaceService.accounts;
     this.accountSelected = [];
 
@@ -120,43 +121,49 @@ export class DevspaceDialogContactComponent implements OnInit {
   addChannel() {
     this.channelDirectMessageCloseSelect();
     this.devspaceService.closAllMessage();
-    const creater = this.filterMainContact();
+   
 
     if (this.allContactsChecked) {
-      const contactsAll = this.devspaceService.accounts.map(account => account);
-      let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelCreated: creater, channelActiveTalk: true, contact: contactsAll };
-      this.devspaceService.channels.push(channel);
+      const contactsAll = this.devspaceService.accounts.map(account => account.uid);
+      const time = new Date().toISOString();
+      const channel = { 
+        title: this.devspaceService.channelsName, 
+        description: this.devspaceService.channelsDescription, 
+        creator: '0Yda2KEMxrPCMdtTzfYUpGvuWRB3',  
+        member: contactsAll,
+        createdAt: time,};
+        this.firestore.saveChannelToFirestore(channel);
       console.log(contactsAll);
-      console.log(this.devspaceService.channels);
+      console.log(time);
     }
 
     if (this.selectContactsChecked) {
-      const contactsSelect = this.accountSelected.map(account => account);
-      let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelCreated: creater, channelActiveTalk: true, contact: contactsSelect };
-      this.devspaceService.channels.push(channel);
-      console.log(contactsSelect);
+      const contactsSelect = this.accountSelected.map(account => account.uid);
+      const time = new Date().toISOString();
+      let channel = {
+        title: this.devspaceService.channelsName, 
+        description: this.devspaceService.channelsDescription, 
+        creator: '0Yda2KEMxrPCMdtTzfYUpGvuWRB3',  
+        member: [...contactsSelect, '0Yda2KEMxrPCMdtTzfYUpGvuWRB3'],
+        createdAt: time,
+      }
+
+      this.firestore.saveChannelToFirestore(channel);
+           console.log(contactsSelect);
       console.log(this.devspaceService.channels);
 
     }
 
     this.dialog.closeAll();
-    setTimeout(() => {
-      this.devspaceService.openChannel = true;
-    }, 100);
+    // setTimeout(() => {
+    //   this.devspaceService.openChannel = true;
+    // }, 100);
 
   }
   channelDirectMessageCloseSelect() {
-    this.devspaceService.channels.forEach((channel,) => {
-      channel.channelActiveTalk = false;
-    })
-    this.devspaceService.accounts.forEach((account,) => {
-      account.activeMessage = false;
-    })
+   
   }
 
-  filterMainContact() {
-    const creater = this.devspaceService.accounts.filter(account => account.activeSelf == true);
-    return creater;
-  }
+  
 
 }

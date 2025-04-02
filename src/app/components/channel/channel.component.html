@@ -3,18 +3,18 @@
 
         <div class="devspace-channel-header-name" (click)="openEditChannelDialog()">
             <span><img src="/assets/img/tagChannelName.png" alt=""></span>
-            <span>{{filterChannel[0].name}}</span>
+            <span>{{filterChannel[0].title}}</span>
             <span><img src="/assets/img/keyboard_arrow_down.png" alt=""></span>
         </div>
         <div class="devspace-channel-header-member-area">
             <div class="devspace-channel-header-member">
                 <div class="devspace-channel-header-member-icon" (click)="openContactChannel()">
-                    @for(item of filterChannel[0].contact; track item.name; let i = $index){
-                    @if(i < 3) { <span><img src="{{item.pic}}" alt=""></span>
+                    @for(item of filterContact; track i; let i = $index){
+                    @if(i < 3) { <span><img src="{{item.profile}}" alt=""></span>
                         }
                         }
                 </div>
-                <span>{{filterChannel[0].contact.length}}</span>
+                <span>{{filterChannel[0].member.length}}</span>
             </div>
             <span class="devspace-channel-header-member-add"><img src="/assets/img/person_add.png" alt=""></span>
         </div>

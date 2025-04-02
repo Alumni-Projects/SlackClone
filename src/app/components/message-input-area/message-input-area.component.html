@@ -26,8 +26,8 @@
             <div class="devspace-message-contact-bar">
               @for(item of devspaceService.accounts; track item.uid; let i = $index){
                 <div class="selected-Contact-Item" (click)="selectContact(i)">
-                  <span><img src="/assets/avatar/{{item.profile}}" alt="">
-                    @if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>}
+                  <span><img src="{{item.profile}}" alt="">
+                    @if(devspaceService.accounts[i].online){<span class="active-Account-Icon"></span>}
                     @else{<span class="active-Account-Icon-None"></span>}
                   </span>
                   {{item.displayName}} @if(devspaceService.accounts[i].activeSelf){(Du)}
@@ -42,7 +42,7 @@
           @if(devspaceService.openChannelBar && devspaceService.barContext === context){
             <div class="devspace-message-channel-bar">
               @for(item of devspaceService.channels; track item; let i = $index){
-                <span (click)="selectChannel(i)"><img src="/assets/img/tagChannelName.png" alt=""> {{item.name}} </span>
+                <span (click)="selectChannel(i)"><img src="/assets/img/tagChannelName.png" alt=""> {{item.title}} </span>
               }
             </div>
           }

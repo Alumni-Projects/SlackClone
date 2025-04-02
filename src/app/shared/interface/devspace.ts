@@ -1,9 +1,11 @@
 export interface Devspace {
-    id?: number;
-    name: string;
-    description: string;
-    channelActiveTalk: boolean;
-    contact?: any[];
-    channelCreated?: any[];
+    creator?: string;
+    title?: string;
+    description?: string;
+    channelActiveTalk?: boolean;
+    member?: any[];      
     message?: any[];
+    createdAt?: string;
+    id?: string;
+
 }

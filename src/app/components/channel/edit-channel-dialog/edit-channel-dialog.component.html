@@ -2,7 +2,7 @@
     <div class="edit-channel-header">
         <div class="edit-channel-name">
             <span><img src="/assets/img/tagChannelName.png" alt=""></span>
-            <span>{{filterChannel[0].name}}</span>
+            <span>{{filterChannel[0].title}}</span>
         </div>
         <span (click)="closeDialog()" class="edit-channel-header-close"><img src="/assets/img/dialogClose.png"
                 alt=""></span>
@@ -11,26 +11,28 @@
     <div class="edit-channel-input">
         <div class="edit-channel-description-textarea">
             <div><span>Channel-Name</span><span (click)="editChannelName = false">Bearbeiten</span></div>
-            <div><span><img src="/assets/img/tagChannelName.png" alt=""></span> {{filterChannel[0].name}}</div>
+            <div><span><img src="/assets/img/tagChannelName.png" alt=""></span> {{filterChannel[0].title}}</div>
         </div>
     </div>
     } @else{
     <div class="edit-channel-input-create">
         <div><span>Channel-Name</span><span (click)="saveChannelName()">Speichern</span></div>
-        <div class="edit-channel-input-area" [class.edit-channel-name-input-Error]="channelNameInputError" ><span><img src="/assets/img/tagChannelName.png" alt=""></span>
-            <input type="text" maxlength="20" (input)="chars()" value="{{filterChannel[0].name}}" placeholder="{{filterChannel[0].name}}" #channelInput class="edit-channel-name-input">
+        <div class="edit-channel-input-area" [class.edit-channel-name-input-Error]="channelNameInputError"><span><img
+                    src="/assets/img/tagChannelName.png" alt=""></span>
+            <input type="text" maxlength="20" (input)="chars()" value="{{filterChannel[0].title}}"
+                placeholder="{{filterChannel[0].title}}" #channelInput class="edit-channel-name-input">
             <span>{{charsLeft}}</span>
         </div>
         @if(channelNameInputError){
-            <div class="edit-channel-name-Error">
+        <div class="edit-channel-name-Error">
             @if(charsOver){
-                <span>Channel-Name darf max 20 Zeichen haben!</span>
+            <span>Channel-Name darf max 20 Zeichen haben!</span>
             } @else if(charsEmpty){
-                <span>Channel-Name darf nicht leer sein!</span>
+            <span>Channel-Name darf nicht leer sein!</span>
             }
         </div>
         }
-        
+
     </div>
     }
 
@@ -42,7 +44,7 @@
         </div>
         <div></div>
         <div class="edit-channel-creator"><span>Erstellt von</span>
-            <span>{{filterChannel[0].channelCreated[0].name}}</span>
+            <span>{{filterCreator[0].displayName}}</span>
         </div>
     </div>
 
@@ -50,12 +52,12 @@
     <div class="edit-channel-description-input-create">
         <div class="edit-channel-description-textarea-create">
             <div><span>Beschreibung</span><span (click)="saveChannelDescription()">Speichern</span></div>
-            <textarea value="{{filterChannel[0].description}}" placeholder="Hier dein Text" #channelDescriptionInput></textarea>
-            <!-- <input type="text" value="{{filterChannel[0].description}}" placeholder="Hier dein Text" #channelDescriptionInput> -->
+            <textarea value="{{filterChannel[0].description}}" placeholder="Hier dein Text"
+                #channelDescriptionInput></textarea>
         </div>
         <div></div>
         <div class="edit-channel-creator"><span>Erstellt von</span>
-            <span>{{filterChannel[0].channelCreated[0].name}}</span>
+            <span>{{filterCreator[0].displayName}}</span>
         </div>
     </div>
 

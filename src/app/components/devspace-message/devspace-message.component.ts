@@ -176,7 +176,7 @@ export class DevspaceMessageComponent implements  OnDestroy  {
 
   selectChannelSearch(i: number) {
     this.devspaceService.openChannelBarSearch = false;
-    const channelName = this.devspaceService.channels[i].name;
+    const channelName = this.devspaceService.channels[i].title;
     const messageDiv = this.addInput.nativeElement as HTMLDivElement;
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) return;

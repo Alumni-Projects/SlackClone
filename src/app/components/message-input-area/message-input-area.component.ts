@@ -112,7 +112,7 @@ export class MessageInputAreaComponent {
   }
   selectChannel(i: number) {
     this.devspaceService.openChannelBar = false;
-    const channelsName = this.devspaceService.channels[i].name;
+    const channelsName = this.devspaceService.channels[i].title;
     const messageDiv = this.messageInput.nativeElement as HTMLDivElement;
     messageDiv.focus();
     const selection = window.getSelection();

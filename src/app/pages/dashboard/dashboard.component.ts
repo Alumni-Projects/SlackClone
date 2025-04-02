@@ -18,20 +18,33 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
 })
 export class DashboardComponent {
 
-  constructor(public devspaceService: DevspaceService,public Firestore: FirestoreService) {
-    
-   }
+  constructor(public devspaceService: DevspaceService, public Firestore: FirestoreService) {
+
+  }
 
   ngOnInit() {
-    this.loadUsers(); 
+    this.loadUsers();
+    console.log('DashboardComponent initialisiert.');
+    this.Firestore.subscribeToUserChannels('0Yda2KEMxrPCMdtTzfYUpGvuWRB3');
+
+    this.devspaceService.Firestore.channels$.subscribe(channels => {
+      console.log('DashboardComponent Channels:', channels);
+    });
   }
 
-   async loadUsers() {
+
+  async loadUsers() {
     const users = await this.Firestore.fetchUserFromFirestoreAll();
     this.devspaceService.accounts = users;
-    console.log(users);
-    console.log(this.devspaceService.accounts);
-    
+
   }
+
+  // async loadChannel() {
+  //   const channel = this.Firestore.getUserChannels('0Yda2KEMxrPCMdtTzfYUpGvuWRB3')
+  //     .then(channels =>
+  //       this.devspaceService.channels.push(...channels)
+  //     )
+  //     .catch(error => console.error(error));
+  // }
 
 }

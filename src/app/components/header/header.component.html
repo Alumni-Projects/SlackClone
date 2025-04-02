@@ -12,8 +12,8 @@
       
       <span class="header-username">{{devspaceService.accounts[0].displayName}}</span>
       <span class="header-icon-img">
-        <img src="/assets/avatar/{{ devspaceService.accounts[0].profile}}"
-          alt="" />@if(devspaceService.accounts[0].active){<span class="active-Account-Icon-header"></span>
+        <img src="{{ devspaceService.accounts[0].profile}}"
+          alt="" />@if(devspaceService.accounts[0].online){<span class="active-Account-Icon-header"></span>
         }@else{<span class="active-Account-Icon-None-header"></span>}
       </span>
     
