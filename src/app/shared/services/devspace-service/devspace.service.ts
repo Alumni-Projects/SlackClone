@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Devspace } from '@shared/interface/devspace';
-import { DevspaceAccount } from '@shared/interface/devspace-account';
 
 @Injectable({
   providedIn: 'root'
@@ -14,17 +13,35 @@ export class DevspaceService {
   openChannel = false;
   openThread = false;
   openDirectMessage = false;
+
   constructor() {}
 
   channels: Devspace[] = [
     {
       name: 'Entwicklerteam',
-      description: 'Dieser Channel ist für alle Entwickler zuständig..',
+      description: 'Dieser Channel ist für alle Entwickler zuständig.',
       channelActiveTalk: false
     }
   ];
 
   emojis = ['😊', '😂', '❤️', '👍', '🔥'];
+
+  activeUser: DevspaceAccount | null = null;
+
+  setActiveUser(userData: any) {
+    this.activeUser = {
+      uid: userData.uid,
+      name: userData.displayName,
+      active: true,
+      pic: userData.photoURL || '/assets/avatar/avatar3.svg',
+      activeSelf: true,
+      activeMessage: false
+    };
+  }
+
+  getDisplayName(): string {
+    return this.activeUser?.name || '';
+  }
 
   accounts: DevspaceAccount[] = [
     {
@@ -63,4 +80,13 @@ export class DevspaceService {
       activeMessage: false
     }
   ];
+}
+
+export interface DevspaceAccount {
+  uid?: string;
+  name: string;
+  active: boolean;
+  pic: string;
+  activeSelf: boolean;
+  activeMessage: boolean;
 }
