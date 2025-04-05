@@ -15,7 +15,6 @@ import { DevspaceService } from '@shared/services/devspace-service/devspace.serv
   imports: [CommonModule, MatDialogModule, MatIconModule]
 })
 export class ProfileDialogComponent implements OnInit {
-  displayName = '';
   IconColor = Color;
   IconSize = IconSize;
 
@@ -26,11 +25,10 @@ export class ProfileDialogComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('🔎 activeUser:', this.devspaceService.activeUser);
+  }
 
-    setTimeout(() => {
-      this.displayName = this.devspaceService.getDisplayName();
-      console.log('Displayname im Dialog:', this.displayName);
-    }, 500);
+  get user() {
+    return this.devspaceService.activeUser;
   }
 
   closeDialog(): void {
