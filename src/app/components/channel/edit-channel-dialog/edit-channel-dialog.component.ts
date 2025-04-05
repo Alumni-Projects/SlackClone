@@ -15,29 +15,27 @@ export class EditChannelDialogComponent implements OnInit {
   filterChannel: any[] = [];
   filterCreator: any[] = [];
   private subscriptions: Subscription = new Subscription();
-  editChannelName: boolean = true;
-  editChannelDescription: boolean = true;
-  charsLeft: number = 20;
-  channelNameInputError: boolean = false;
-  charsOver: boolean = false;
-  charsEmpty: boolean = false;
+  editChannelName = true;
+  editChannelDescription = true;
+  charsLeft = 20;
+  channelNameInputError = false;
+  charsOver = false;
+  charsEmpty = false;
   @ViewChild('channelInput') channelInput!: ElementRef;
   @ViewChild('channelDescriptionInput') channelDescriptionInput!: ElementRef;
   ngOnInit(): void {
-    // Abo für das channels Observable
-    this.subscriptions = this.firestore.channels$.subscribe(channels => {      
-        this.filterChannel = channels.filter(
-          channel => this.devspaceService.selectedChannelId == channel.id
-        );
+    this.subscriptions = this.firestore.channels$.subscribe(channels => {
+      this.filterChannel = channels.filter(
+        channel => this.devspaceService.selectedChannelId == channel.id
+      );
       console.log('Aktualisierte Channels:', this.filterChannel);
       this.updateCreator();
-    }); 
-    
+    });
+
   }
 
   private updateCreator() {
     if (this.filterChannel.length > 0) {
-      // Hier wird überprüft, ob der Creator des Channels korrekt ist
       this.filterCreator = this.devspaceService.accounts.filter(
         member => member.uid === this.filterChannel[0].creator
       );
@@ -45,7 +43,7 @@ export class EditChannelDialogComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe(); // Aufräumen der Subscription
+    this.subscriptions.unsubscribe();
   }
 
   closeDialog() {
@@ -74,7 +72,7 @@ export class EditChannelDialogComponent implements OnInit {
 
   }
 
-  chars() {
+  maxCharsInputControll() {
     this.charsLeft = 20 - this.channelInput.nativeElement.value.length;
     this.channelNameInputError = this.channelInput.nativeElement.value.length === 20
     if (this.channelNameInputError) {
@@ -82,5 +80,20 @@ export class EditChannelDialogComponent implements OnInit {
     }
   }
 
+  leaveChannel() {
+    const channelid = this.filterChannel[0].id;
+    if (this.filterChannel[0].creator == this.devspaceService.loggedInUserUid) {
+      this.firestore.deleteChannelFromFirestore(channelid);
+      this.devspaceService.openChannel = false;
+      this.devspaceService.selectedChannelId = '';
+    } else {
+      this.devspaceService.selectedChannelId = '';
+      this.devspaceService.openChannel = false;
+      setTimeout(() => {
+        this.firestore.deleteChannelMemberFromFirestore(channelid, this.devspaceService.loggedInUserUid);
+      }, 100)
+    }
+    this.closeDialog();
+  }
 
 }

@@ -19,7 +19,7 @@
         <div><span>Channel-Name</span><span (click)="saveChannelName()">Speichern</span></div>
         <div class="edit-channel-input-area" [class.edit-channel-name-input-Error]="channelNameInputError"><span><img
                     src="/assets/img/tagChannelName.png" alt=""></span>
-            <input type="text" maxlength="20" (input)="chars()" value="{{filterChannel[0].title}}"
+            <input type="text" maxlength="20" (input)="maxCharsInputControll()" value="{{filterChannel[0].title}}"
                 placeholder="{{filterChannel[0].title}}" #channelInput class="edit-channel-name-input">
             <span>{{charsLeft}}</span>
         </div>
@@ -63,6 +63,6 @@
 
     }
 
-    <div class="edit-channel-leave"><span class="button-primary">Channel verlassen</span></div>
+    <div class="edit-channel-leave" (click)="leaveChannel()"><span class="button-primary">Channel verlassen</span></div>
 
 </section>

@@ -83,7 +83,7 @@ export class DevspaceComponent implements OnInit {
     this.devspaceService.selectedChannelId = channelId;
     this.devspaceService.openChannel = false;
     setTimeout(() => {
-      this.devspaceService.openChannel = true;
+      this.devspaceService.openChannel = true;           
     }, 100);
   }
 

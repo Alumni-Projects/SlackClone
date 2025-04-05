@@ -23,9 +23,10 @@ export class DevspaceService {
   openChannelBar = false;
   openContactBarSearch = false;
   openChannelBarSearch = false;
+  loggedInUserUid:string = '';
   channelArray = new BehaviorSubject<any[]>([]);
-  contactArray = new BehaviorSubject<any[]>([]);
-  clearInputMessage = false;
+  contactArray = new BehaviorSubject<any[]>([]);  
+  clearInputMessage = false;   
   barContext: 'message' | 'channel' | 'thread' | 'directmessage' | null = null;
   private subscription?: Subscription;
   constructor(public Firestore: FirestoreService) { 
@@ -41,7 +42,7 @@ export class DevspaceService {
   
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe(); // Vermeidet Memory-Leaks
+    this.subscription?.unsubscribe();
   }
 
 

@@ -13,11 +13,15 @@
         <input type="text" placeholder=" z.B. Kooperationsprojekte" #channelInput class="devspace-dialog-input"
             [class.devspace-dialog-input-Error]="channelInputError" 
             maxlength="20" 
-            (input)="chars()">
+            (input)="maxCharsInputControll()">
             <span class="devspace-dialog-input-counter" [class.devspace-dialog-input-counter-error]="channelInputError" >{{charsLeft}}</span>
         @if(channelInputError){
         <div class="devspace-dialog-input-Name-Error">
-            <span>Channel-Name darf max 20 Zeichen haben!</span>
+            @if(charsOver){
+                <span>Channel-Name darf max 20 Zeichen haben!</span>
+                } @else if(charsEmpty){
+                <span>Channel-Name darf nicht leer sein!</span>
+                }
         </div>
         }
     </div>

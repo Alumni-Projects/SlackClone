@@ -3,7 +3,6 @@ import { MessageInputAreaComponent } from "../message-input-area/message-input-a
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditChannelDialogComponent } from './edit-channel-dialog/edit-channel-dialog.component';
-import { MemberChannelDialogComponent } from './member-channel-dialog/member-channel-dialog.component';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 import { Subscription } from 'rxjs';
 
@@ -30,8 +29,16 @@ ngOnInit(): void {
  
 }
 
-filterContacts() {
-  this.filterContact = this.devspaceService.accounts.filter(member =>  this.filterChannel[0].member.includes(member.uid));
+filterContacts() {  
+    const channel = this.filterChannel[0];    
+    if (!channel || !Array.isArray(channel.member)) {      
+      this.filterContact = [];
+      return;
+    }  
+    this.filterContact = this.devspaceService.accounts.filter(member =>
+      channel.member.includes(member.uid)
+    );
+  
 }
 
 openEditChannelDialog() {    
@@ -40,8 +47,6 @@ openEditChannelDialog() {
   });
 }
 
-openContactChannel() {
-  this.dialog.open(MemberChannelDialogComponent);
-}
+
 
 }

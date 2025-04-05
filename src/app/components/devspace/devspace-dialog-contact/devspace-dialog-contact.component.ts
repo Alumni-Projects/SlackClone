@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms'; // Importieren!
+import { FormsModule } from '@angular/forms';
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
@@ -15,15 +15,15 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
 })
 export class DevspaceDialogContactComponent implements OnInit {
   lastChannel?: any;
-  isDisabled: boolean = true;
-  openSelect: boolean = false;
+  isDisabled = true;
+  openSelect = false;
   inputValue = '';
   selectedCheckbox: string | null = null;
   accounts;
   accountSelected: DevspaceAccount[] = [];
-  openSelectContact: boolean = false;
-  allContactsChecked: boolean = false;
-  selectContactsChecked: boolean = false;
+  openSelectContact = false;
+  allContactsChecked = false;
+  selectContactsChecked = false;
 
   @ViewChild('contactInput') contactInput!: ElementRef<HTMLInputElement>;
 
@@ -119,51 +119,47 @@ export class DevspaceDialogContactComponent implements OnInit {
   }
 
   addChannel() {
-    this.channelDirectMessageCloseSelect();
     this.devspaceService.closAllMessage();
-   
-
     if (this.allContactsChecked) {
       const contactsAll = this.devspaceService.accounts.map(account => account.uid);
       const time = new Date().toISOString();
-      const channel = { 
-        title: this.devspaceService.channelsName, 
-        description: this.devspaceService.channelsDescription, 
-        creator: '0Yda2KEMxrPCMdtTzfYUpGvuWRB3',  
+      const channel = {
+        title: this.devspaceService.channelsName,
+        description: this.devspaceService.channelsDescription,
+        creator: this.devspaceService.loggedInUserUid,
         member: contactsAll,
-        createdAt: time,};
-        this.firestore.saveChannelToFirestore(channel);
-      console.log(contactsAll);
-      console.log(time);
+        createdAt: time,
+      };
+      this.firestore.saveChannelToFirestore(channel);
+      setTimeout(() => {
+        this.newChannelActiveChannelOpen()
+      }, 100)
     }
 
     if (this.selectContactsChecked) {
       const contactsSelect = this.accountSelected.map(account => account.uid);
       const time = new Date().toISOString();
       let channel = {
-        title: this.devspaceService.channelsName, 
-        description: this.devspaceService.channelsDescription, 
-        creator: '0Yda2KEMxrPCMdtTzfYUpGvuWRB3',  
-        member: [...contactsSelect, '0Yda2KEMxrPCMdtTzfYUpGvuWRB3'],
+        title: this.devspaceService.channelsName,
+        description: this.devspaceService.channelsDescription,
+        creator: this.devspaceService.loggedInUserUid,
+        member: [...contactsSelect, this.devspaceService.loggedInUserUid],
         createdAt: time,
       }
-
       this.firestore.saveChannelToFirestore(channel);
-           console.log(contactsSelect);
-      console.log(this.devspaceService.channels);
+      setTimeout(() => {
+        this.newChannelActiveChannelOpen()
+      }, 100)
 
     }
-
     this.dialog.closeAll();
-    // setTimeout(() => {
-    //   this.devspaceService.openChannel = true;
-    // }, 100);
 
   }
-  channelDirectMessageCloseSelect() {
-   
-  }
 
-  
+  newChannelActiveChannelOpen() {
+    const lastChannel = this.firestore.lastAddedChannel;
+    this.devspaceService.selectedChannelId = lastChannel?.id || '';
+    this.devspaceService.openChannel = true;
+  }
 
 }

@@ -69,7 +69,7 @@
                     }@else{<span class="active-Account-Icon-None"></span>}
                 </span>
                 <span class="devspace-direct-messages-name">{{item.displayName}}
-                    @if(devspaceService.accounts[i].activeSelf){(Du)} </span>
+                    @if(devspaceService.loggedInUserUid === devspaceService.accounts[i].uid){(Du)} </span>
             </div>
             }@empty{
             <div>Keine Kontakte vorhanden</div>

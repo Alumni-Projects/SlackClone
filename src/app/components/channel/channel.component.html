@@ -8,7 +8,7 @@
         </div>
         <div class="devspace-channel-header-member-area">
             <div class="devspace-channel-header-member">
-                <div class="devspace-channel-header-member-icon" (click)="openContactChannel()">
+                <div class="devspace-channel-header-member-icon" >
                     @for(item of filterContact; track i; let i = $index){
                     @if(i < 3) { <span><img src="{{item.profile}}" alt=""></span>
                         }

@@ -174,7 +174,7 @@
   }
 
   & div:nth-of-type(2)::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--white-color);
     border-radius: 35px;
   }
 
@@ -341,7 +341,7 @@
   }
 
   & textarea::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--white-color);
     border-radius: 35px;
   }
 

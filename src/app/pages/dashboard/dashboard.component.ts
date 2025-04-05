@@ -19,32 +19,26 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
 export class DashboardComponent {
 
   constructor(public devspaceService: DevspaceService, public Firestore: FirestoreService) {
-
   }
 
   ngOnInit() {
     this.loadUsers();
+    this.loadLoggedInUser();
     console.log('DashboardComponent initialisiert.');
-    this.Firestore.subscribeToUserChannels('0Yda2KEMxrPCMdtTzfYUpGvuWRB3');
-
+    this.Firestore.subscribeToUserChannels(this.devspaceService.loggedInUserUid);
     this.devspaceService.Firestore.channels$.subscribe(channels => {
       console.log('DashboardComponent Channels:', channels);
     });
   }
 
-
   async loadUsers() {
     const users = await this.Firestore.fetchUserFromFirestoreAll();
     this.devspaceService.accounts = users;
-
   }
 
-  // async loadChannel() {
-  //   const channel = this.Firestore.getUserChannels('0Yda2KEMxrPCMdtTzfYUpGvuWRB3')
-  //     .then(channels =>
-  //       this.devspaceService.channels.push(...channels)
-  //     )
-  //     .catch(error => console.error(error));
-  // }
+  loadLoggedInUser() {
+    this.devspaceService.loggedInUserUid = 'zBAEMISe1FekXRBU0TDSRbdOC6q2';
+    console.log('DashboardComponent loggedInUserUid:', this.devspaceService.loggedInUserUid);
+  }
 
 }
