@@ -46,10 +46,14 @@ export class MessageInputAreaComponent {
   openAt() {
     this.devspaceService.openSmileyBar = false;
     this.devspaceService.openContactBar = true;
+    this.devspaceService.channelMember = false;
+    this.devspaceService.channelMemberAdded = false;
     this.devspaceService.barContext = this.context;
   }
   selectContact(i: number) {
     this.devspaceService.openContactBar = false;
+    this.devspaceService.channelMember = false;
+    this.devspaceService.channelMemberAdded = false;
     const contactName = this.devspaceService.accounts[i].displayName;
     const messageDiv = this.messageInput.nativeElement as HTMLDivElement;
     messageDiv.focus();
@@ -98,10 +102,14 @@ export class MessageInputAreaComponent {
       this.devspaceService.openSmileyBar = false;
       this.devspaceService.openContactBar = false;
       this.devspaceService.openChannelBar = false;
+      this.devspaceService.channelMember = false;
+      this.devspaceService.channelMemberAdded = false;
     }
     this.devspaceService.openSmileyBar = true;
     this.devspaceService.openContactBar = false;
     this.devspaceService.openChannelBar = false;
+    this.devspaceService.channelMember = false;
+    this.devspaceService.channelMemberAdded = false;
     this.devspaceService.barContext = this.context;
   }
 
@@ -109,9 +117,13 @@ export class MessageInputAreaComponent {
     this.devspaceService.openSmileyBar = false;
     this.devspaceService.openContactBar = false;
     this.devspaceService.openChannelBar = false;
+    this.devspaceService.channelMember = false;
+    this.devspaceService.channelMemberAdded = false;
   }
   selectChannel(i: number) {
     this.devspaceService.openChannelBar = false;
+    this.devspaceService.channelMember = false;
+    this.devspaceService.channelMemberAdded = false;
     const channelsName = this.devspaceService.channels[i].title;
     const messageDiv = this.messageInput.nativeElement as HTMLDivElement;
     messageDiv.focus();
@@ -180,6 +192,8 @@ export class MessageInputAreaComponent {
     this.devspaceService.openSmileyBar = false;
     this.devspaceService.openContactBar = false;
     this.devspaceService.openChannelBar = false;
+    this.devspaceService.channelMember = false;
+    this.devspaceService.channelMemberAdded = false;
   }
 
   sortDataFromMessage() {
@@ -261,6 +275,8 @@ export class MessageInputAreaComponent {
       }
 
       if (textBeforeCursor.endsWith("@")) {
+        this.devspaceService.channelMember = false;
+        this.devspaceService.channelMemberAdded = false;
         this.devspaceService.openContactBar = true;
         this.devspaceService.openChannelBar = false;
         this.devspaceService.barContext = this.context;
@@ -269,6 +285,8 @@ export class MessageInputAreaComponent {
       }
 
       if (textBeforeCursor.endsWith("#")) {
+        this.devspaceService.channelMember = false;
+        this.devspaceService.channelMemberAdded = false;
         this.devspaceService.openChannelBar = true;
         this.devspaceService.openContactBar = false;
         this.devspaceService.barContext = this.context;

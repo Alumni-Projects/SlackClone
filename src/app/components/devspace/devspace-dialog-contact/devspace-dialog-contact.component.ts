@@ -50,7 +50,6 @@ export class DevspaceDialogContactComponent implements OnInit {
     const checkboxes = ['allContacts', 'selectedContacts'];
     let isChecked = false;
     let isSelectedContactsChecked = false;
-
     checkboxes.forEach(id => {
       const checkbox = document.getElementById(id) as HTMLInputElement;
       if (checkbox) {
@@ -77,7 +76,6 @@ export class DevspaceDialogContactComponent implements OnInit {
       this.isDisabled = true;
     }
     this.openSelect = isSelectedContactsChecked;
-
   }
 
   selectContact(i: number) {

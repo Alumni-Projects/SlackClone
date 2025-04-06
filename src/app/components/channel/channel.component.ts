@@ -17,36 +17,58 @@ export class ChannelComponent implements OnInit {
   constructor(public devspaceService: DevspaceService, public dialog: MatDialog, public firestore: FirestoreService) { }
   filterChannel: any[] = [];
   filterContact: any[] = [];
-  
-ngOnInit(): void {  
-   this.subscriptions = this.firestore.channels$.subscribe(channels => {      
-    this.filterChannel = channels.filter(
-      channel => this.devspaceService.selectedChannelId == channel.id
-    );
-  console.log('Aktualisierte Channels:', this.filterChannel);
-  this.filterContacts();
-}); 
- 
-}
 
-filterContacts() {  
-    const channel = this.filterChannel[0];    
-    if (!channel || !Array.isArray(channel.member)) {      
+  ngOnInit(): void {
+    this.subscriptions = this.firestore.channels$.subscribe(channels => {
+      this.filterChannel = channels.filter(
+        channel => this.devspaceService.selectedChannelId == channel.id
+      );
+      console.log('Aktualisierte Channels:', this.filterChannel);
+      this.filterContacts();
+    });
+
+  }
+
+  filterContacts() {
+    const channel = this.filterChannel[0];
+    if (!channel || !Array.isArray(channel.member)) {
       this.filterContact = [];
       return;
-    }  
+    }
     this.filterContact = this.devspaceService.accounts.filter(member =>
       channel.member.includes(member.uid)
     );
-  
-}
 
-openEditChannelDialog() {    
-  this.dialog.open(EditChannelDialogComponent, {
-    position: { top: '200px' }
-  });
-}
+  }
 
+  openEditChannelDialog() {
+    this.dialog.open(EditChannelDialogComponent, {
+      position: { top: '200px' }
+    });
+  }
 
+  openMember() {
+    this.devspaceService.channelMember = true;
+    this.devspaceService.channelMemberAdded = false;
+  }
+
+  profile(i: number) {
+    console.log("Profile", i);
+  }
+
+  closeMember() {
+    this.devspaceService.channelMember = false;
+    this.devspaceService.channelMemberAdded = false;
+  }
+
+  openMemberAdd(){
+    this.devspaceService.channelMember = false;
+    this.devspaceService.channelMemberAdded = true;
+  }
+
+  closeMemberAdded(){
+    this.devspaceService.channelMember = false;
+    this.devspaceService.channelMemberAdded = false;
+  }
 
 }

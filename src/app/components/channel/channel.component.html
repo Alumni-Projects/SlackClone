@@ -1,25 +1,64 @@
 <section class="devspace-channel">
-    <div class="devspace-channel-header">
+  <div class="devspace-channel-header">
 
-        <div class="devspace-channel-header-name" (click)="openEditChannelDialog()">
-            <span><img src="/assets/img/tagChannelName.png" alt=""></span>
-            <span>{{filterChannel[0].title}}</span>
-            <span><img src="/assets/img/keyboard_arrow_down.png" alt=""></span>
+    <div class="devspace-channel-header-name" (click)="openEditChannelDialog()">
+      <span><img src="/assets/img/tagChannelName.png" alt=""></span>
+      <span>{{filterChannel[0].title}}</span>
+      <span><img src="/assets/img/keyboard_arrow_down.png" alt=""></span>
+    </div>
+    <div class="devspace-channel-header-member-area">
+      <div class="devspace-channel-header-member">
+        <div class="devspace-channel-header-member-icon" (click)="openMember()">
+          @for(item of filterContact; track i; let i = $index){
+          @if(i < 3) { <span><img src="{{item.profile}}" alt=""></span>
+            }
+            }
         </div>
-        <div class="devspace-channel-header-member-area">
-            <div class="devspace-channel-header-member">
-                <div class="devspace-channel-header-member-icon" >
-                    @for(item of filterContact; track i; let i = $index){
-                    @if(i < 3) { <span><img src="{{item.profile}}" alt=""></span>
-                        }
-                        }
-                </div>
-                <span>{{filterChannel[0].member.length}}</span>
+        <span>{{filterChannel[0].member.length}}</span>
+      </div>
+      <span (click)="openMemberAdd()" class="devspace-channel-header-member-add"><img src="/assets/img/person_add.png" alt=""></span>
+      @if(devspaceService.channelMember){
+      <div class="devspace-channel-header-member-list">
+        <div class="devspace-channel-header-member-list-title">
+          <span>Mitglieder</span>
+          <span (click)="closeMember()"><img src="/assets/img/dialogClose.png" alt=""></span>
+        </div>
+        <div class="devspace-channel-header-member-list-item-Area">
+          <div class="devspace-channel-header-member-list-item">
+            @for(item of filterContact; track item.uid; let i = $index){
+            <div class="selected-Contact-Item" (click)="profile(i)">
+              <span><img src="{{item.profile}}" alt="">
+                @if(filterContact[i].online){<span class="active-Account-Icon"></span>}
+                @else{<span class="active-Account-Icon-None"></span>}
+              </span>
+              {{item.displayName}} @if(devspaceService.loggedInUserUid === filterContact[i].uid){(Du)}
             </div>
-            <span class="devspace-channel-header-member-add"><img src="/assets/img/person_add.png" alt=""></span>
+            }
+            @empty {
+            <div>Keine Kontakte gefunden</div>
+            }
+          </div>
+
         </div>
+        <div class="devspace-channel-header-member-new">
+          <span class="devspace-channel-header-member-add">
+            <img src="/assets/img/person_add.png" alt=""></span>
+          <span>Mitglieder hinzufügen</span>
+        </div>
+      </div>
+      }
+      @if(devspaceService.channelMemberAdded){
+        <div class="devspace-channel-header-member-added">
+          <div><span>Leute hinzufügen</span> <span (click)="closeMemberAdded()"><img src="/assets/img/dialogClose.png" alt=""></span></div>
+          <div> <span><img src="/assets/img/tagHover.png" alt=""></span> <span>{{filterChannel[0].title}}</span></div>
+          <div></div>
+          <div></div>
+        </div>
+      
+      }
     </div>
-    <div class="devspace-channel-app-message-input-area">
-        <app-message-input-area [context]="'channel'"></app-message-input-area>
-    </div>
+  </div>
+  <div class="devspace-channel-app-message-input-area">
+    <app-message-input-area [context]="'channel'"></app-message-input-area>
+  </div>
 </section>

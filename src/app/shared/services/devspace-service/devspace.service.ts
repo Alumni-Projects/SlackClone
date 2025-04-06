@@ -9,6 +9,8 @@ import { FirestoreService } from '../firestore-service/firestore.service';
 })
 export class DevspaceService {
   selectedChannelId: string | null = null;
+  channelMember = false;
+  channelMemberAdded = false;
   channelsName = '';
   channelsDescription = '';
   openDevspace = true;

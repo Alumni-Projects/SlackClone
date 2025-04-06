@@ -82,6 +82,7 @@ export class DevspaceComponent implements OnInit {
     this.devspaceService.openDirectMessage = false;
     this.devspaceService.selectedChannelId = channelId;
     this.devspaceService.openChannel = false;
+    this.devspaceService.channelMember = false;
     setTimeout(() => {
       this.devspaceService.openChannel = true;           
     }, 100);

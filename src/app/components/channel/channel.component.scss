@@ -73,7 +73,8 @@
     justify-content: space-between;     
     gap: 10px;
     width: 192px;
-    height: 46px;    
+    height: 46px; 
+    position: relative;    
 }
 
 .devspace-channel-header-member{
@@ -154,3 +155,193 @@
     padding-left: 45px;
     padding-right: 45px;
 }
+
+.devspace-channel-header-member-list{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 415px;
+    height: 411px;
+    padding: 40px;
+    background-color: var(--white-color);
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius:30px ;
+    box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 60px;
+    right: 0px;
+    z-index: 100;
+}
+
+.devspace-channel-header-member-list-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--font-size-title-default);
+    font-weight: var(--font-weight-extra-bold);
+    color: var(--black-color);
+
+    & span:nth-of-type(2){
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.75ms ease-in-out;
+        &:hover{
+            background-color: var(--bg-color);
+            border-radius: 20px;
+            & img{
+                content: url('/assets/img/closeHover.png');
+            }
+        }
+    }
+   
+}
+
+.selected-Contact-Item {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    gap: 10px;
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-normal);
+    line-height: 100%;
+    color: black;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+
+    & span:nth-of-type(1) {
+        position: relative;
+        & img {
+            width: 50px;
+            height: 50px;
+        }
+
+        & span {
+            position: absolute;
+        }
+    }
+
+    &:hover {
+
+        background-color: var(--bg-color);
+        border-radius: 35px;
+    }
+}
+
+.devspace-channel-header-member-list-item{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow: auto;
+    height: 210px;
+    width: 100%;
+}
+
+.devspace-channel-header-member-list-item::-webkit-scrollbar-button {
+    display: none;
+  }
+  
+  .devspace-channel-header-member-list-item::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .devspace-channel-header-member-list-item::-webkit-scrollbar-track {
+    background: var(--white-color);
+    border-radius: 35px;
+  }
+  
+  .devspace-channel-header-member-list-item::-webkit-scrollbar-thumb {
+    background: var(--purple-3);
+    border-radius: 35px;
+  }
+  
+  .devspace-channel-header-member-list-item::-webkit-scrollbar-thumb:hover {
+    background: var(--light-purple);
+    cursor: pointer;  
+  }
+
+  .devspace-channel-header-member-new{
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    height: 56px;
+    gap: 10px;
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-normal);
+    line-height: 100%;
+    padding-left: 20px; 
+    padding-right: 20px;    
+    &:hover{
+        background-color: var(--bg-color);
+        border-radius: 35px;
+        color: var(--purple-3);
+        cursor: pointer;
+        & img{            
+            content: url('/assets/img/person_add_hover.png');
+        }
+    }
+  }
+
+  .devspace-channel-header-member-added{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 514px;
+    height: 294px;
+    padding: 40px;
+    background-color: var(--white-color);
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius:30px ;
+    box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 60px;
+    right: 0px;
+    z-index: 100;
+
+    & div:nth-of-type(1){
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: var(--font-size-title-default);
+        font-weight: var(--font-weight-extra-bold);
+        color: var(--black-color);
+        & span:nth-of-type(2){
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.75ms ease-in-out;
+            &:hover{
+                background-color: var(--bg-color);
+                border-radius: 20px;
+                & img{
+                    content: url('/assets/img/closeHover.png');
+                }            
+            }
+        }
+    }
+
+    & div:nth-of-type(2){
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 25px;
+        gap: 15px;
+        color: var(--secondary-color);
+        font-size: var(--font-size-m);
+        font-weight: var(--font-weight-normal);
+
+        & span:nth-of-type(1){
+            width: 24px;
+            height: 24px;            
+        }        
+    }
+  }
