@@ -7,4 +7,5 @@ export interface DevspaceAccount {
     emailVerified?: boolean;
     profile?: string;
     uid?: string | null;
+    activeSelf?: boolean;
 }
