@@ -24,7 +24,7 @@
 }
 
 .devspace-channel-header-name {
-    display: flex;    
+    display: flex;
     gap: 10px;
     width: fit-content;
     height: 45px;
@@ -67,74 +67,75 @@
     }
 }
 
-.devspace-channel-header-member-area{
+.devspace-channel-header-member-area {
     display: flex;
     align-items: center;
-    justify-content: space-between;     
+    justify-content: space-between;
     gap: 10px;
     width: 192px;
-    height: 46px; 
-    position: relative;    
+    height: 46px;
+    position: relative;
 }
 
-.devspace-channel-header-member{
+.devspace-channel-header-member {
     display: flex;
-    align-items: center;  
+    align-items: center;
     width: 142px;
-    height: 46px;   
-    font-size:var(--font-size-l);
+    height: 46px;
+    font-size: var(--font-size-l);
     font-weight: 600;
     gap: 10px;
-    position: relative;    
+    position: relative;
     padding-right: 10px;
     padding-left: 10px;
-    
-    
 
-    &:hover{
+
+
+    &:hover {
         cursor: pointer;
         background-color: var(--bg-color);
-        color:var(--purple-3);
+        color: var(--purple-3);
         border-radius: 30px;
     }
-  }
-
-.devspace-channel-header-member-icon{   
-       
-        width:100px;
-        height: 40px; 
-          
-        span{
-            & img{
-                border-radius: 30px;
-                border: 2px solid var(--white-color);
-                width: 40px;
-                height: 40px;
-            }            
-        }
-        & span:nth-of-type(1){
-            position: absolute;
-            left: 10px;
-            top:  6%;
-            
-         }
-        
-
-        & span:nth-of-type(2){
-           position: absolute;
-           left: 40px;
-           top:  6%;
-        }
-
-        & span:nth-of-type(3){
-            position: absolute;
-            left: 70px;
-            top:  6%;
-        }
-    
 }
 
-.devspace-channel-header-member-add{
+.devspace-channel-header-member-icon {
+
+    width: 100px;
+    height: 40px;
+
+    span {
+        & img {
+            border-radius: 30px;
+            border: 2px solid var(--white-color);
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    & span:nth-of-type(1) {
+        position: absolute;
+        left: 10px;
+        top: 6%;
+
+    }
+
+
+    & span:nth-of-type(2) {
+        position: absolute;
+        left: 40px;
+        top: 6%;
+    }
+
+    & span:nth-of-type(3) {
+        position: absolute;
+        left: 70px;
+        top: 6%;
+    }
+
+}
+
+.devspace-channel-header-member-add {
     width: 40px;
     height: 40px;
     border-radius: 30px;
@@ -142,13 +143,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    &:hover{
-        & img{
+
+    &:hover {
+        & img {
             content: url('/assets/img/person_add_hover.png');
         }
-        cursor: pointer;      
 
-    }    
+        cursor: pointer;
+
+    }
 }
 
 .devspace-channel-app-message-input-area {
@@ -156,7 +159,7 @@
     padding-right: 45px;
 }
 
-.devspace-channel-header-member-list{
+.devspace-channel-header-member-list {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -166,7 +169,7 @@
     background-color: var(--white-color);
     border-top-left-radius: 30px;
     border-bottom-right-radius: 30px;
-    border-bottom-left-radius:30px ;
+    border-bottom-left-radius: 30px;
     box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
     position: absolute;
     top: 60px;
@@ -174,7 +177,7 @@
     z-index: 100;
 }
 
-.devspace-channel-header-member-list-title{
+.devspace-channel-header-member-list-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -182,7 +185,7 @@
     font-weight: var(--font-weight-extra-bold);
     color: var(--black-color);
 
-    & span:nth-of-type(2){
+    & span:nth-of-type(2) {
         cursor: pointer;
         width: 40px;
         height: 40px;
@@ -190,15 +193,17 @@
         align-items: center;
         justify-content: center;
         transition: all 0.75ms ease-in-out;
-        &:hover{
+
+        &:hover {
             background-color: var(--bg-color);
             border-radius: 20px;
-            & img{
+
+            & img {
                 content: url('/assets/img/closeHover.png');
             }
         }
     }
-   
+
 }
 
 .selected-Contact-Item {
@@ -216,6 +221,7 @@
 
     & span:nth-of-type(1) {
         position: relative;
+
         & img {
             width: 50px;
             height: 50px;
@@ -233,7 +239,9 @@
     }
 }
 
-.devspace-channel-header-member-list-item{
+
+
+.devspace-channel-header-member-list-item {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -244,28 +252,28 @@
 
 .devspace-channel-header-member-list-item::-webkit-scrollbar-button {
     display: none;
-  }
-  
-  .devspace-channel-header-member-list-item::-webkit-scrollbar {
+}
+
+.devspace-channel-header-member-list-item::-webkit-scrollbar {
     width: 6px;
-  }
-  
-  .devspace-channel-header-member-list-item::-webkit-scrollbar-track {
+}
+
+.devspace-channel-header-member-list-item::-webkit-scrollbar-track {
     background: var(--white-color);
     border-radius: 35px;
-  }
-  
-  .devspace-channel-header-member-list-item::-webkit-scrollbar-thumb {
+}
+
+.devspace-channel-header-member-list-item::-webkit-scrollbar-thumb {
     background: var(--purple-3);
     border-radius: 35px;
-  }
-  
-  .devspace-channel-header-member-list-item::-webkit-scrollbar-thumb:hover {
-    background: var(--light-purple);
-    cursor: pointer;  
-  }
+}
 
-  .devspace-channel-header-member-new{
+.devspace-channel-header-member-list-item::-webkit-scrollbar-thumb:hover {
+    background: var(--light-purple);
+    cursor: pointer;
+}
+
+.devspace-channel-header-member-new {
     display: flex;
     align-items: center;
     width: fit-content;
@@ -274,20 +282,22 @@
     font-size: var(--font-size-m);
     font-weight: var(--font-weight-normal);
     line-height: 100%;
-    padding-left: 20px; 
-    padding-right: 20px;    
-    &:hover{
+    padding-left: 20px;
+    padding-right: 20px;
+
+    &:hover {
         background-color: var(--bg-color);
         border-radius: 35px;
         color: var(--purple-3);
         cursor: pointer;
-        & img{            
+
+        & img {
             content: url('/assets/img/person_add_hover.png');
         }
     }
-  }
+}
 
-  .devspace-channel-header-member-added{
+.devspace-channel-header-member-added {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -297,51 +307,229 @@
     background-color: var(--white-color);
     border-top-left-radius: 30px;
     border-bottom-right-radius: 30px;
-    border-bottom-left-radius:30px ;
+    border-bottom-left-radius: 30px;
     box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
     position: absolute;
     top: 60px;
     right: 0px;
     z-index: 100;
+}
 
-    & div:nth-of-type(1){
+.devspace-channel-header-member-added-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--font-size-title-default);
+    font-weight: var(--font-weight-extra-bold);
+    color: var(--black-color);
+
+    & span:nth-of-type(2) {
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        font-size: var(--font-size-title-default);
-        font-weight: var(--font-weight-extra-bold);
-        color: var(--black-color);
-        & span:nth-of-type(2){
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.75ms ease-in-out;
-            &:hover{
-                background-color: var(--bg-color);
-                border-radius: 20px;
-                & img{
-                    content: url('/assets/img/closeHover.png');
-                }            
+        justify-content: center;
+        transition: all 0.75ms ease-in-out;
+
+        &:hover {
+            background-color: var(--bg-color);
+            border-radius: 20px;
+
+            & img {
+                content: url('/assets/img/closeHover.png');
             }
         }
     }
+}
 
-    & div:nth-of-type(2){
-        display: flex;
-        align-items: center;
+.devspace-channel-header-member-added-Title {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 25px;
+    gap: 15px;
+    color: var(--secondary-color);
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-normal);
+
+    & span:nth-of-type(1) {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+// contact Select for add member
+.devspace-dialog-add-contact-list-selected-contact {
+    width: 100%;
+    height: 55px;
+    padding: 7.5px 20px 7.5px 20px;
+    border: 1px solid var(--light-purple);
+    border-radius: 30px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+
+    &:hover {
+        border: 1px solid var(--primary-color);
+    }
+
+    & input {
         width: 100%;
-        height: 25px;
-        gap: 15px;
-        color: var(--secondary-color);
+        height: 100%;
+        background-color: transparent;
+        border: none;
         font-size: var(--font-size-m);
         font-weight: var(--font-weight-normal);
+        line-height: 100%;
+        color: black;
+        cursor: pointer;
 
-        & span:nth-of-type(1){
-            width: 24px;
-            height: 24px;            
-        }        
+        &:focus {
+            outline: none;
+        }
     }
-  }
+}
+
+.selected-Contacts-add-member {
+    max-width: 335px;
+    width: 100%;
+    min-height: 171px;
+    height: fit-content;
+    padding: 20px 21px 20px 21px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    top: 100%;
+    margin-top: 10px;
+    bottom: auto;
+    left: 20px;
+    z-index: 100;
+    border: 1px solid var(--light-purple);
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: var(--white-color);
+}
+
+.selected-Contact-Item-member {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-normal);
+    line-height: 100%;
+    padding-right: 20px;
+    padding-left: 10px;    
+    color: black;
+    cursor: pointer;
+
+    & span:nth-of-type(1) {
+        position: relative;
+
+        & img {
+            width: 50px;
+            height: 50px;
+        }
+
+        & span {
+            position: absolute;
+        }
+    }
+
+    &:hover {   
+        background-color: var(--bg-color);
+        border-radius: 35px;
+    }
+}
+
+.selected-Contacts-area {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 10px;
+}
+
+.selected-contact-item-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--bg-color);
+    border-radius: 35px;
+    padding: 3px 20px 3px 20px;
+    & img:nth-of-type(1) {
+        width: 34px;
+        height: 34px;
+    }
+
+    & img:nth-of-type(2) {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+
+        &:hover {
+            content: url('/assets/img/closeHover.png');
+        }
+    }
+}
+
+.selected-contact-item-content-selected {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background-color: var(--bg-color);
+    border-radius: 35px;
+    padding: 3px 20px 3px 20px;
+
+    & span {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        & img {
+            width: 34px;
+            height: 34px;
+        }
+
+    }
+
+    .selected-contact-item-content-selected-close {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+
+        &:hover {
+            content: url('/assets/img/closeHover.png');
+        }
+    }
+}
+
+
+.selected-Contact-Count {
+    width: 34px;
+    height: 34px;
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-normal);
+    line-height: 100%;
+    color: black;
+    background-color: var(--bg-color);
+    border-radius: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.devspace-channel-header-member-added-button{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}

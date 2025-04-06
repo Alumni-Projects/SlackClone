@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { User } from 'firebase/auth';
-import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc, collection, getDocs, query, where, onSnapshot, addDoc, deleteDoc, arrayRemove } from 'firebase/firestore';
+import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc, collection, getDocs, query, where, onSnapshot, addDoc, deleteDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
 import { firebaseConfig } from '../../../../environments/environment';
 import { Devspace } from '@shared/interface/devspace';
 import { BehaviorSubject } from 'rxjs';
@@ -157,7 +157,7 @@ export class FirestoreService {
       this.channelsSubject.next(channels);
       querySnapshot.docChanges().forEach(change => {
         if (change.type === 'added') {
-          this.lastAddedChannel = { id: change.doc.id, ...change.doc.data() } as Devspace;          
+          this.lastAddedChannel = { id: change.doc.id, ...change.doc.data() } as Devspace;
         }
       });
     }, (error) => {
@@ -191,6 +191,20 @@ export class FirestoreService {
       console.log(`User ${userId} erfolgreich aus dem Channel ${channelId} entfernt.`);
     } catch (error) {
       console.error('Fehler beim Entfernen des Users aus dem Channel:', error);
+      throw error;
+    }
+  }
+
+  async newChannelMemberToFirestore(channelId: string, userId: string | null): Promise<void> {
+    const channelRef = doc(this.firestore, 'channel', channelId);
+
+    try {
+      await updateDoc(channelRef, {
+        member: arrayUnion(userId)
+      });
+      console.log(`User ${userId} erfolgreich zum Channel ${channelId} hinzugefügt.`);
+    } catch (error) {
+      console.error('Fehler beim Hinzufügen des Users zum Channel:', error);
       throw error;
     }
   }

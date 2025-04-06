@@ -91,7 +91,7 @@ export class DevspaceComponent implements OnInit {
   messageActiveClass(i: number) {
 
     this.devspaceService.selectedChannelId = '';
-    this.devspaceService.accounts[i].activeMessage = !this.devspaceService.accounts[i].activeMessage;
+    // this.devspaceService.accounts[i].activeMessage = !this.devspaceService.accounts[i].activeMessage;
     this.devspaceService.openChannel = false;
     this.devspaceService.openDirectMessage = true;
 

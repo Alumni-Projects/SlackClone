@@ -16,7 +16,8 @@
         </div>
         <span>{{filterChannel[0].member.length}}</span>
       </div>
-      <span (click)="openMemberAdd()" class="devspace-channel-header-member-add"><img src="/assets/img/person_add.png" alt=""></span>
+      <span (click)="openMemberAdd()" class="devspace-channel-header-member-add"><img src="/assets/img/person_add.png"
+          alt=""></span>
       @if(devspaceService.channelMember){
       <div class="devspace-channel-header-member-list">
         <div class="devspace-channel-header-member-list-title">
@@ -43,18 +44,58 @@
         <div class="devspace-channel-header-member-new">
           <span class="devspace-channel-header-member-add">
             <img src="/assets/img/person_add.png" alt=""></span>
-          <span>Mitglieder hinzufügen</span>
+          <span (click)="openMemberAdd()">Mitglieder hinzufügen</span>
         </div>
       </div>
       }
       @if(devspaceService.channelMemberAdded){
-        <div class="devspace-channel-header-member-added">
-          <div><span>Leute hinzufügen</span> <span (click)="closeMemberAdded()"><img src="/assets/img/dialogClose.png" alt=""></span></div>
-          <div> <span><img src="/assets/img/tagHover.png" alt=""></span> <span>{{filterChannel[0].title}}</span></div>
-          <div></div>
-          <div></div>
+      <div class="devspace-channel-header-member-added">
+        <div class="devspace-channel-header-member-added-header"><span>Leute hinzufügen</span>
+          <span (click)="closeMemberAdded()"><img src="/assets/img/dialogClose.png" alt=""></span>
         </div>
-      
+        <div class="devspace-channel-header-member-added-Title"> <span><img src="/assets/img/tagHover.png"
+              alt=""></span>
+          <span>{{filterChannel[0].title}}</span>
+        </div>
+        <div class="devspace-dialog-add-contact-list-selected-contact" (click)="focusInput()">
+          <div class="selected-Contacts-area">
+            @for(item of accountSelected.slice(0,1); track item.displayName; let i = $index){
+
+            <div class="selected-contact-item-content"><img src="{{item.profile}}"
+                alt=""><span>{{item.displayName}}</span>
+              <img (click)="removeContact(i)" src="/assets/img/dialogClose.png" alt="">
+            </div>
+            }
+
+            @if(accountSelected.length > 1){<span class="selected-Contact-Count" (click)="SelectContact()">+
+              {{accountSelected.length -
+              1}}</span>}
+          </div>
+          <input type="text" [(ngModel)]="memberValue" (click)="SelectContactClose()" #contactSelect>
+          @if(memberValue){
+          <div class="selected-Contacts-add-member">
+            @for(item of filteredAccounts; track item.displayName; let i = $index){
+            <div class="selected-Contact-Item-member" (click)="selectContact(i)"><span><img src="{{item.profile}}"
+                  alt="">@if(devspaceService.accounts[i].online){<span class="active-Account-Icon"></span>
+                }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.displayName}}</div>
+            }@empty {
+            <div>Keine Kontakte gefunden</div>
+            }
+          </div>
+          }@else if (openSelectContact) {
+          <div class="selected-Contacts">
+            @for(item of accountSelected; track item.displayName; let i = $index){
+            <div class="selected-contact-item-content-selected">
+              <span><img src="{{item.profile}}" alt="">{{item.displayName}}</span>
+              <img class="selected-contact-item-content-selected-close" (click)="removeContact(i)"
+                src="/assets/img/dialogClose.png" alt="">
+            </div>
+            }
+          </div>
+          }
+        </div>
+        <div class="devspace-channel-header-member-added-button"><input class="button-primary" type="button" value="Hinzufügen" [disabled]="isDisabled" (click)=" addMember()" ></div>
+      </div>
       }
     </div>
   </div>
