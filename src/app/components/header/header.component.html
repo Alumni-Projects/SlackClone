@@ -9,17 +9,16 @@
   </div>
   <div class="header">
     <div class="header-icon" (click)="openProfilePopup()">
-      <span class="header-username">{{
-        devspaceService.accounts[0].name
-      }}</span>
+      @if (user) {
+      <span class="header-username">{{ user.name }}</span>
+      }
       <span class="header-icon-img">
-        <img
-          src="{{ devspaceService.accounts[0].pic }}"
-          alt=""
-        />@if(devspaceService.accounts[0].active){<span
-          class="active-Account-Icon-header"
-        ></span>
-        }@else{<span class="active-Account-Icon-None-header"></span>}
+        <img src="{{ devspaceService.accounts[0].pic }}" alt="" />
+        @if (user?.active) {
+        <span class="active-Account-Icon-header"></span>
+        } @else {
+        <span class="active-Account-Icon-None-header"></span>
+        }
       </span>
       <mat-icon>keyboard_arrow_down</mat-icon>
     </div>

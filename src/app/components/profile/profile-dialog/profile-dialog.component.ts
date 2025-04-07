@@ -26,7 +26,6 @@ export class ProfileDialogComponent implements OnInit {
   ngOnInit(): void {
     console.log('🔎 activeUser:', this.devspaceService.activeUser);
   }
-
   get user() {
     return this.devspaceService.activeUser;
   }

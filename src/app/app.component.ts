@@ -1,15 +1,24 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  HostListener
+} from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { FirestoreService } from './shared/services/firestore-service/firestore.service';
 import { DevspaceService } from './shared/services/devspace-service/devspace.service';
+import { getAuth } from 'firebase/auth';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('logo') logo!: ElementRef<HTMLInputElement>;
   isDashboardRoute = false;
   isSmallDisplay = false;
@@ -20,7 +29,7 @@ export class AppComponent implements OnInit {
     private devspaceService: DevspaceService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.isDashboardRoute = event.urlAfterRedirects === '/dashboard';
@@ -35,5 +44,32 @@ export class AppComponent implements OnInit {
     }, 4500);
 
     this.firestoreService.initUser(this.devspaceService);
+
+    const uid = getAuth().currentUser?.uid;
+    if (uid) {
+      await this.firestoreService.updateUserInFirestore(uid, { online: true });
+    }
+  }
+
+  async ngOnDestroy(): Promise<void> {
+    const uid = getAuth().currentUser?.uid;
+    if (uid) {
+      await this.firestoreService.updateUserInFirestore(uid, { online: false });
+    }
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  handleUnload(event: Event) {
+    const uid = getAuth().currentUser?.uid;
+    if (uid) {
+      navigator.sendBeacon(
+        `https://firestore.googleapis.com/v1/projects/YOUR_PROJECT_ID/databases/(default)/documents/users/${uid}?updateMask.fieldPaths=online`,
+        JSON.stringify({
+          fields: {
+            online: { booleanValue: false }
+          }
+        })
+      );
+    }
   }
 }

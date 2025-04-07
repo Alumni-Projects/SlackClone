@@ -21,7 +21,9 @@
   </div>
 
   <div class="profile-info-item">
-    <h3 *ngIf="user">{{ user.name }}</h3>
+    @if (user) {
+    <h3>{{ user.name }}</h3>
+    }
     <div class="status">
       <div class="status-indicator"></div>
       <div class="status-text">Aktiv</div>
@@ -40,6 +42,7 @@
 
         <strong>E-Mail-Adresse</strong>
       </div>
+
       <a href="mailto:thehoffman@beispiel.com">thehofeispiel.com</a>
     </div>
   </div>
