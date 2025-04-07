@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '@shared/services/auth-service/auth.service';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
+import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfilePopupComponent } from '../profile/profile-popup/profile-popup.component';
 import { MatIcon } from '@angular/material/icon';

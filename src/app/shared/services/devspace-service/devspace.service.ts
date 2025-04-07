@@ -30,10 +30,11 @@ export class DevspaceService {
 
   setActiveUser(userData: any) {
     this.activeUser = {
-      uid: userData.uid,
-      name: userData.displayName,
+      ...userData,
+      name: userData.displayName || userData.name,
+      email: userData.email || 'Email is not available',
+      pic: userData.profile || '/assets/avatar/avatar3.svg',
       active: true,
-      pic: userData.photoURL || '/assets/avatar/avatar3.svg',
       activeSelf: true,
       activeMessage: false
     };
@@ -84,6 +85,7 @@ export class DevspaceService {
 
 export interface DevspaceAccount {
   uid?: string;
+  email?: string;
   name: string;
   active: boolean;
   pic: string;

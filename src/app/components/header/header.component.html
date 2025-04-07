@@ -13,8 +13,9 @@
       <span class="header-username">{{ user.name }}</span>
       }
       <span class="header-icon-img">
-        <img src="{{ devspaceService.accounts[0].pic }}" alt="" />
         @if (user?.active) {
+        <img [src]="user?.pic" alt="" />
+        } @if (user?.active) {
         <span class="active-Account-Icon-header"></span>
         } @else {
         <span class="active-Account-Icon-None-header"></span>
