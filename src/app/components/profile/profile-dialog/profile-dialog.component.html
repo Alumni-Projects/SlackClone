@@ -20,8 +20,15 @@
 
   <div class="profile-info-item">
     @if (user) {
-    <h3>{{ user.name }}</h3>
+    <div class="profile-info-header">
+      <h3>{{ user.name }}</h3>
+      <button (click)="openEditDialog()" class="button-linkstyle">
+        Bearbeiten
+      </button>
+    </div>
+
     }
+
     <div class="status">
       <div class="status-indicator"></div>
       <div class="status-text">Aktiv</div>
@@ -40,13 +47,13 @@
 
         <strong>E-Mail-Adresse</strong>
       </div>
-      @if (user) {
-      <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+      @if (secretData) {
+      <a [href]="'mailto:' + secretData.email">{{ secretData.email }}</a>
       }
     </div>
   </div>
   <div class="btn-container btn-container--center">
-    <button class="button-primary">
+    <button class="button-primary-icon">
       <mat-icon [style.font-size]="IconSize.Medium"> mail_outline </mat-icon
       >Nachricht
     </button>

@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { IconSize } from '@shared/Enums/iconSize';
 import { Color } from '@shared/Enums/color';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 import {
   DevspaceAccount,
   DevspaceService
 } from '@shared/services/devspace-service/devspace.service';
-import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
-import { getAuth, updateEmail } from 'firebase/auth';
-import { doc, updateDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 @Component({
   selector: 'app-profile-dialog',
@@ -28,15 +27,19 @@ export class ProfileDialogComponent implements OnInit {
     Validators.required,
     Validators.email
   ]);
+  secretData!: { email: string };
 
   constructor(
     private dialogRef: MatDialogRef<ProfileDialogComponent>,
-    private devspaceService: DevspaceService
+    private devspaceService: DevspaceService,
+    private firestoreService: FirestoreService
   ) {}
 
-  ngOnInit(): void {
-    const email = this.devspaceService.activeUser?.email;
-    this.emailControl.setValue(email || '');
+  async ngOnInit(): Promise<void> {
+    const user = getAuth().currentUser;
+    if (!user) return;
+
+    this.secretData = await this.firestoreService.fetchSecretData(user.uid);
   }
 
   get user(): DevspaceAccount | null {
@@ -46,4 +49,6 @@ export class ProfileDialogComponent implements OnInit {
   closeDialog(): void {
     this.dialogRef.close();
   }
+
+  openEditDialog(): void {}
 }

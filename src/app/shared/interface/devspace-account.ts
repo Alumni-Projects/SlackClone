@@ -7,3 +7,9 @@ export interface DevspaceAccount {
   activeMessage: boolean;
   channel?: string[];
 }
+interface SecretData {
+  email: string;
+  role: string;
+}
+
+const secretData: SecretData | null = null;

@@ -93,6 +93,21 @@ export class FirestoreService {
     }
   }
 
+  async fetchSecretData(uid: string): Promise<any> {
+    const secretRef = doc(this.firestore, `users/${uid}/secretData/secretData`);
+    try {
+      const secretSnap = await getDoc(secretRef);
+      if (secretSnap.exists()) {
+        return secretSnap.data();
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Fehler beim Abrufen von secretData:', error);
+      return null;
+    }
+  }
+
   async updateUserInFirestore(
     uid: string,
     updatedData: Partial<any>
