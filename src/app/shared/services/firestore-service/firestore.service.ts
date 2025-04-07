@@ -81,14 +81,11 @@ export class FirestoreService {
       const userSnap = await getDoc(userRef);
       if (userSnap.exists()) {
         const userData = userSnap.data();
-        console.log('User data from Firestore:', userData);
         return userData;
       } else {
-        console.log('No user data found in Firestore');
         return null;
       }
     } catch (error) {
-      console.error('Error fetching user from Firestore:', error);
       throw error;
     }
   }
@@ -103,7 +100,6 @@ export class FirestoreService {
         return null;
       }
     } catch (error) {
-      console.error('Fehler beim Abrufen von secretData:', error);
       return null;
     }
   }
@@ -117,9 +113,7 @@ export class FirestoreService {
     try {
       const userSnap = await getDoc(userRef);
       if (!userSnap.exists()) {
-        throw new Error(
-          'Benutzer nicht gefunden. Erstelle zuerst ein Dokument mit saveUserToFirestore.'
-        );
+        throw new Error('User does not exist in Firestore. Cannot update.');
       }
 
       await updateDoc(userRef, updatedData);
@@ -134,10 +128,7 @@ export class FirestoreService {
     const auth = getAuth();
 
     onAuthStateChanged(auth, async (user) => {
-      console.log('Firebase User erkannt:', user);
-
       if (!user) {
-        console.warn('Kein Benutzer eingeloggt.');
         return;
       }
 
@@ -148,19 +139,13 @@ export class FirestoreService {
         if (snapshot.exists()) {
           const userData = snapshot.data() as any;
           devspaceService.setActiveUser(userData);
-          console.log('Realtime update user:', userData.displayName);
         } else if (user.isAnonymous) {
           onSnapshot(fallbackGuestRef, (guestSnap) => {
             if (guestSnap.exists()) {
               const guestData = guestSnap.data() as any;
               devspaceService.setActiveUser(guestData);
-              console.log('Realtime update guest:', guestData.displayName);
-            } else {
-              console.warn('Kein Datensatz gefunden – auch nicht als Gast.');
             }
           });
-        } else {
-          console.warn('Kein Benutzerdatensatz gefunden.');
         }
       });
     });

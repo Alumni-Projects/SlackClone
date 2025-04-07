@@ -3,8 +3,8 @@
     <h2>Profil</h2>
     <button mat-icon-button class="close-btn" (click)="closeDialog()">
       <mat-icon
-        [style.font-size]="'24px'"
-        [style.color]="'black'"
+        [style.font-size]="IconSize.Medium"
+        [style.color]="IconColor.Black"
         class="arrow-icon"
       >
         close
@@ -21,12 +21,22 @@
   <div class="profile-info-item">
     @if (user) {
     <div class="profile-info-header">
+      @if (!isEditing) {
       <h3>{{ user.name }}</h3>
       <button (click)="openEditDialog()" class="button-linkstyle">
         Bearbeiten
       </button>
+      } @else {
+      <input type="text" [formControl]="nameControl" placeholder="new name" />
+      <button
+        class="button-primary"
+        [disabled]="nameControl.invalid"
+        (click)="changeName()"
+      >
+        Speichern
+      </button>
+      }
     </div>
-
     }
 
     <div class="status">
@@ -40,22 +50,22 @@
       <div class="profile-info-item-mail">
         <mat-icon
           [style.font-size]="IconSize.Medium"
-          [style.IconColor]="IconColor.White"
+          [style.color]="IconColor.White"
         >
           mail_outline
         </mat-icon>
-
         <strong>E-Mail-Adresse</strong>
       </div>
-      @if (secretData) {
+      @if (secretData?.email) {
       <a [href]="'mailto:' + secretData.email">{{ secretData.email }}</a>
       }
     </div>
   </div>
+
   <div class="btn-container btn-container--center">
     <button class="button-primary-icon">
-      <mat-icon [style.font-size]="IconSize.Medium"> mail_outline </mat-icon
-      >Nachricht
+      <mat-icon [style.font-size]="IconSize.Medium"> mail_outline </mat-icon>
+      Nachricht
     </button>
   </div>
 </mat-dialog-content>

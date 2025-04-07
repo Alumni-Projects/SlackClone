@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { IconSize } from '@shared/Enums/iconSize';
@@ -23,11 +22,11 @@ import { getAuth } from 'firebase/auth';
 export class ProfileDialogComponent implements OnInit {
   IconColor = Color;
   IconSize = IconSize;
-  emailControl = new FormControl<string | null>('', [
-    Validators.required,
-    Validators.email
-  ]);
+
+  nameControl = new FormControl<string | null>('', [Validators.required]);
   secretData!: { email: string };
+
+  isEditing = false;
 
   constructor(
     private dialogRef: MatDialogRef<ProfileDialogComponent>,
@@ -36,6 +35,9 @@ export class ProfileDialogComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    const name = this.devspaceService.activeUser?.name;
+    this.nameControl.setValue(name || '');
+
     const user = getAuth().currentUser;
     if (!user) return;
 
@@ -50,5 +52,23 @@ export class ProfileDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  openEditDialog(): void {}
+  openEditDialog(): void {
+    this.isEditing = true;
+  }
+
+  async changeName() {
+    const uid = this.devspaceService.activeUser?.uid;
+    const newName = this.nameControl.value;
+
+    if (!uid || !newName) return;
+
+    try {
+      await this.firestoreService.updateUserInFirestore(uid, {
+        displayName: newName
+      });
+      this.isEditing = false;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
