@@ -26,8 +26,6 @@ export class ProfileDialogComponent implements OnInit {
   nameControl = new FormControl<string | null>('', [Validators.required]);
   secretData!: { email: string };
 
-  isEditing = false;
-
   constructor(
     private dialogRef: MatDialogRef<ProfileDialogComponent>,
     private devspaceService: DevspaceService,
@@ -52,10 +50,6 @@ export class ProfileDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  openEditDialog(): void {
-    this.isEditing = true;
-  }
-
   async changeName() {
     const uid = this.devspaceService.activeUser?.uid;
     const newName = this.nameControl.value;
@@ -70,5 +64,14 @@ export class ProfileDialogComponent implements OnInit {
     } catch (error) {
       console.error(error);
     }
+  }
+  isEditing = false;
+
+  openEditDialog(): void {
+    this.isEditing = true;
+  }
+
+  cancelEdit(): void {
+    this.isEditing = false;
   }
 }

@@ -1,6 +1,6 @@
 <mat-dialog-content class="profile-dialog">
   <div class="profile-dialog-title-wrapper">
-    <h2>Profil</h2>
+    <h2>@if (isEditing) { Dein Profil bearbeiten } @else { Profil }</h2>
     <button mat-icon-button class="close-btn" (click)="closeDialog()">
       <mat-icon
         [style.font-size]="IconSize.Medium"
@@ -13,31 +13,17 @@
   </div>
 
   <div class="profile-header">
-    @if (user?.active) {
     <img class="profile-img" [src]="user?.pic" alt="Profile picture" />
-    }
   </div>
 
+  @if (!isEditing) {
   <div class="profile-info-item">
-    @if (user) {
     <div class="profile-info-header">
-      @if (!isEditing) {
-      <h3>{{ user.name }}</h3>
+      <h3>{{ user?.name }}</h3>
       <button (click)="openEditDialog()" class="button-linkstyle">
         Bearbeiten
       </button>
-      } @else {
-      <input type="text" [formControl]="nameControl" placeholder="new name" />
-      <button
-        class="button-primary"
-        [disabled]="nameControl.invalid"
-        (click)="changeName()"
-      >
-        Speichern
-      </button>
-      }
     </div>
-    }
 
     <div class="status">
       <div class="status-indicator"></div>
@@ -56,9 +42,7 @@
         </mat-icon>
         <strong>E-Mail-Adresse</strong>
       </div>
-      @if (secretData?.email) {
       <a [href]="'mailto:' + secretData.email">{{ secretData.email }}</a>
-      }
     </div>
   </div>
 
@@ -68,4 +52,32 @@
       Nachricht
     </button>
   </div>
+  } @else {
+  <div>
+    <div class="profile-edit">
+      <img src="assets/icons/account_circle.svg" alt="user icon" />
+      Vollständiger Name
+    </div>
+
+    <div class="input-bg input-bg--profile">
+      <input
+        id="name"
+        type="text"
+        [formControl]="nameControl"
+        placeholder="Dein Name"
+      />
+    </div>
+  </div>
+
+  <div class="btn-container btn-container--center">
+    <button class="button-secondary" (click)="cancelEdit()">Abbrechen</button>
+    <button
+      class="button-primary"
+      [disabled]="nameControl.invalid"
+      (click)="changeName()"
+    >
+      Speichern
+    </button>
+  </div>
+  }
 </mat-dialog-content>
