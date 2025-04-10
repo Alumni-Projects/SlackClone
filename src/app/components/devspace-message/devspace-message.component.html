@@ -10,8 +10,8 @@
 
             <div class="selected-Contact-Item" (click)=" selectContactSearch(i)"><span><img src="{{item.profile}}"
                         alt="">@if(devspaceService.accounts[i].online){<span class="active-Account-Icon"></span>
-                    }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.displayName}}
-                @if(devspaceService.accounts[i].activeSelf){(Du)}</div>
+                    }@else{<span class="active-Account-Icon-None"></span>}</span> <span class="item-selected-name">{{item.displayName}}
+                        @if(devspaceService.accounts[i].activeSelf){(Du)}</span></div>
             }@empty {
 
             <div>Keine Kontakte gefunden</div>

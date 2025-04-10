@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Devspace } from '@shared/interface/devspace';
 
 
 @Component({
@@ -17,12 +18,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './channel.component.scss'
 })
 export class ChannelComponent implements OnInit {
-  private subscriptions: Subscription = new Subscription();
   @ViewChild('contactSelect') contactSelect!: ElementRef<HTMLInputElement>;
-  constructor(public devspaceService: DevspaceService, public dialog: MatDialog, public firestore: FirestoreService) {
-    this.accounts = this.devspaceService.accounts;
-    this.accountSelected = [];
-  }
+  private subscriptions: Subscription = new Subscription();
   filterChannel: any[] = [];
   filterContact: any[] = [];
   accountSelected: DevspaceAccount[] = [];
@@ -32,18 +29,23 @@ export class ChannelComponent implements OnInit {
   isDisabled = true;
   openSelect = false;
   memberValue = '';
+  constructor(public devspaceService: DevspaceService, public dialog: MatDialog, public firestore: FirestoreService) {
+    this.accounts = this.devspaceService.accounts;
+    this.accountSelected = [];
+  }
+  
 
   ngOnInit(): void {
     this.subscriptions = this.firestore.channels$.subscribe(channels => {
       this.filterChannel = channels.filter(
         channel => this.devspaceService.selectedChannelId == channel.id
-      );
-      console.log('Aktualisierte Channels:', this.filterChannel);
+      );      
       this.filterContacts();
       this.filterContactForAddInput();
     });
 
   }
+
   get filteredAccounts(): DevspaceAccount[] {
     return this.filtedContacts
       .filter(account => account.displayName.toLowerCase().startsWith(this.memberValue.toLowerCase()));
@@ -62,8 +64,9 @@ export class ChannelComponent implements OnInit {
 
   filterContactForAddInput() {
     const channel = this.filterChannel[0];
+  
     this.filtedContacts = this.accounts.filter(member =>
-      !channel.member.includes(member.uid)
+      !channel?.member?.includes(member.uid)
     );
   }
 
@@ -125,7 +128,7 @@ export class ChannelComponent implements OnInit {
   }
 
   SelectContact() {
-    this.openSelectContact = true;
+    this.openSelectContact = !this.openSelectContact;
     this.memberValue = '';
   }
 
@@ -139,21 +142,16 @@ export class ChannelComponent implements OnInit {
 
   async addMember() {
     const channel = this.filterChannel;
-    const channelId = channel[0].id;    
-  
-    console.log("addMember", this.accountSelected);
-    console.log("addMember", channelId);
-  
+    const channelId = channel[0].id;     
     const promises = this.accountSelected.map(user =>
       this.firestore.newChannelMemberToFirestore(channelId, user.uid ?? null)
     );
   
     try {
-      await Promise.all(promises);
-      console.log("Alle Mitglieder wurden erfolgreich hinzugefügt.");
+      await Promise.all(promises);      
       this.closeMemberAdded();
     } catch (error) {
-      console.error("Fehler beim Hinzufügen der Mitglieder:", error);
+      console.error("Error when adding members:", error);
     }
   }
 

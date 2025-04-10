@@ -11,7 +11,8 @@ import { Subscription } from 'rxjs';
   styleUrl: './edit-channel-dialog.component.scss'
 })
 export class EditChannelDialogComponent implements OnInit {
-  constructor(public dialog: MatDialog, public devspaceService: DevspaceService, public firestore: FirestoreService, private cdr: ChangeDetectorRef) { }
+  @ViewChild('channelInput') channelInput!: ElementRef;
+  @ViewChild('channelDescriptionInput') channelDescriptionInput!: ElementRef;
   filterChannel: any[] = [];
   filterCreator: any[] = [];
   private subscriptions: Subscription = new Subscription();
@@ -21,14 +22,12 @@ export class EditChannelDialogComponent implements OnInit {
   channelNameInputError = false;
   charsOver = false;
   charsEmpty = false;
-  @ViewChild('channelInput') channelInput!: ElementRef;
-  @ViewChild('channelDescriptionInput') channelDescriptionInput!: ElementRef;
+  constructor(public dialog: MatDialog, public devspaceService: DevspaceService, public firestore: FirestoreService, private cdr: ChangeDetectorRef) { }
   ngOnInit(): void {
     this.subscriptions = this.firestore.channels$.subscribe(channels => {
       this.filterChannel = channels.filter(
         channel => this.devspaceService.selectedChannelId == channel.id
-      );
-      console.log('Aktualisierte Channels:', this.filterChannel);
+      );      
       this.updateCreator();
     });
 

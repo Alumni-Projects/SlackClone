@@ -304,7 +304,39 @@ body {
     margin: 0;
 }
 
-
+// Dialog width
 .cdk-overlay-pane.mat-mdc-dialog-panel {
     max-width: none !important;
 }
+
+// select contact name
+.item-selected-name{
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// scrollbar
+::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--white-color);
+    border-radius: 35px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--purple-3);
+    border-radius: 35px;
+  }
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--light-purple);
+    cursor: pointer;
+  }

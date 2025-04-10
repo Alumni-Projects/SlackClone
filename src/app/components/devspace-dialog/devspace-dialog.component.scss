@@ -153,31 +153,7 @@
             border: 1px solid var(--mail-blue);
             cursor: pointer;
         }
-    }
-
-    & textarea::-webkit-scrollbar-button {
-        display: none;
-    }
-
-    & textarea::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    & textarea::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 35px;
-    }
-
-    & textarea::-webkit-scrollbar-thumb {
-        background: var(--purple-3);
-        border-radius: 35px;
-    }
-
-    & textarea::-webkit-scrollbar-thumb:hover {
-        background: var(--light-purple);
-        cursor: pointer;
-    }
-
+    }  
 }
 
 .devspace-dialog-create {

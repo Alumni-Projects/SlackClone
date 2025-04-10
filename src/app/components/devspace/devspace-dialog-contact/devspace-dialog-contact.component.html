@@ -26,7 +26,8 @@
             <div class="selected-Contacts-area">
                 @for(item of accountSelected.slice(0,1); track item.displayName; let i = $index){
 
-                <div class="selected-contact-item-content"><img src="{{item.profile}}" alt=""><span>{{item.displayName}}</span>
+                <div class="selected-contact-item-content"><img src="{{item.profile}}" alt="">
+                    <span class="item-selected-name">{{item.displayName}}</span>
                     <img (click)="removeContact(i)" src="/assets/img/dialogClose.png" alt="">
                 </div>
                 }
@@ -41,7 +42,7 @@
                 @for(item of filteredAccounts; track item.displayName; let i = $index){
                 <div class="selected-Contact-Item" (click)="selectContact(i)"><span><img src="{{item.profile}}"
                             alt="">@if(devspaceService.accounts[i].online){<span class="active-Account-Icon"></span>
-                        }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.displayName}}</div>
+                        }@else{<span class="active-Account-Icon-None"></span>}</span><span class="item-selected-name">{{item.displayName}}</span></div>
                 }@empty {
 
                 <div>Keine Kontakte gefunden</div>
@@ -52,7 +53,7 @@
             <div class="selected-Contacts">
                 @for(item of accountSelected; track item.displayName; let i = $index){
                 <div class="selected-contact-item-content-selected">
-                    <span><img src="{{item.profile}}" alt="">{{item.displayName}}</span>
+                    <span><img src="{{item.profile}}" alt=""><span class="item-selected-name">{{item.displayName}}</span></span>
                     <img class="selected-contact-item-content-selected-close" (click)="removeContact(i)"
                         src="/assets/img/dialogClose.png" alt="">
                 </div>

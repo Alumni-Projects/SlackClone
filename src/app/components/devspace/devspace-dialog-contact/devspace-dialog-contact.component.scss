@@ -217,6 +217,11 @@
             position: absolute;
         }
     }
+
+    &:hover{        
+        background-color: var(--bg-color);
+        border-radius: 20px;
+    }
 }
 
 .selected-Contacts-area {
@@ -264,7 +269,7 @@
     & span {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 10px;        
 
         & img {
             width: 34px;

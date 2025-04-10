@@ -9,11 +9,10 @@ import { DevspaceService } from '@shared/services/devspace-service/devspace.serv
   styleUrl: './message-input-area.component.scss'
 })
 export class MessageInputAreaComponent {
-  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef) {
-
-  }
   @ViewChild('messageInput') messageInput!: ElementRef;
   @Input() context!: 'message' | 'channel' | 'thread' | 'directmessage';
+  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef) {
+  }
 
 
   ngAfterViewInit(): void {
@@ -202,11 +201,11 @@ export class MessageInputAreaComponent {
     const contacts = this.contactNameMessage();
     console.log("Neue Message text", channels, contacts, message);
     this.devspaceService.contactArray.subscribe((contacts) => {
-      console.log("Aktuelle Kontakte:", contacts);
+      
     });
 
     this.devspaceService.channelArray.subscribe((channels) => {
-      console.log("Aktuelle Kanäle:", channels);
+      
     });
   }
 

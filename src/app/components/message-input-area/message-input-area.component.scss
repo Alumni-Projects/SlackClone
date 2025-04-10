@@ -17,29 +17,6 @@
     position: relative;
 }
 
-.devspace-message-write-area-input::-webkit-scrollbar-button {
-    display: none;
-}
-
-.devspace-message-write-area-input::-webkit-scrollbar {
-    width: 6px;
-}
-
-.devspace-message-write-area-input::-webkit-scrollbar-track {
-    background: var(--white-color);
-    border-radius: 35px;
-}
-
-.devspace-message-write-area-input::-webkit-scrollbar-thumb {
-    background: var(--purple-3);
-    border-radius: 35px;
-}
-
-.devspace-message-write-area-input::-webkit-scrollbar-thumb:hover {
-    background: var(--light-purple);
-    cursor: pointer;
-}
-
 .devspace-message-write-area-input {
     width: 100%;
     height: 80%;

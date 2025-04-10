@@ -10,7 +10,7 @@
     @if(editChannelName){
     <div class="edit-channel-input">
         <div class="edit-channel-description-textarea">
-            <div><span>Channel-Name</span><span (click)="editChannelName = false">Bearbeiten</span></div>
+            <div><span>Channel-Name</span>@if(filterChannel[0].creator == devspaceService.loggedInUserUid){<span (click)="editChannelName = false">Bearbeiten</span>} </div>
             <div><span><img src="/assets/img/tagChannelName.png" alt=""></span> {{filterChannel[0].title}}</div>
         </div>
     </div>
@@ -39,7 +39,7 @@
     @if(editChannelDescription){
     <div class="edit-channel-description-input">
         <div class="edit-channel-description-textarea">
-            <div><span>Beschreibung</span><span (click)="editChannelDescription = false">Bearbeiten</span></div>
+            <div><span>Beschreibung</span> @if(filterChannel[0].creator == devspaceService.loggedInUserUid){<span (click)="editChannelDescription = false">Bearbeiten</span>}</div>
             <div>{{filterChannel[0].description}}</div>
         </div>
         <div></div>

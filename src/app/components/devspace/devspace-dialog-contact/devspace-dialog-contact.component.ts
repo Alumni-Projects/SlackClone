@@ -39,10 +39,13 @@ export class DevspaceDialogContactComponent implements OnInit {
 
   get filteredAccounts(): DevspaceAccount[] {
     return this.accounts
-      .filter(account => account.displayName.toLowerCase().startsWith(this.inputValue.toLowerCase()));
+      .filter(account =>
+        account.uid !== this.devspaceService.loggedInUserUid &&
+        account.displayName.toLowerCase().startsWith(this.inputValue.toLowerCase())
+      );
   }
   closeDialog() {
-    this.dialog.closeAll();
+    this.dialog.closeAll(); 
   }
 
 
@@ -104,7 +107,7 @@ export class DevspaceDialogContactComponent implements OnInit {
   }
 
   SelectContact() {
-    this.openSelectContact = true;
+    this.openSelectContact =  !this.openSelectContact;
     this.inputValue = '';
   }
 

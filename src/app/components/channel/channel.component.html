@@ -16,8 +16,11 @@
         </div>
         <span>{{filterChannel[0].member.length}}</span>
       </div>
+      @if(filterChannel[0].creator == devspaceService.loggedInUserUid){
       <span (click)="openMemberAdd()" class="devspace-channel-header-member-add"><img src="/assets/img/person_add.png"
           alt=""></span>
+      }
+
       @if(devspaceService.channelMember){
       <div class="devspace-channel-header-member-list">
         <div class="devspace-channel-header-member-list-title">
@@ -27,12 +30,23 @@
         <div class="devspace-channel-header-member-list-item-Area">
           <div class="devspace-channel-header-member-list-item">
             @for(item of filterContact; track item.uid; let i = $index){
-            <div class="selected-Contact-Item" (click)="profile(i)">
-              <span><img src="{{item.profile}}" alt="">
+            <div class="selected-Contact-Item">
+              <span><img src="{{item.profile}}" alt="" (click)="profile(i)">
                 @if(filterContact[i].online){<span class="active-Account-Icon"></span>}
                 @else{<span class="active-Account-Icon-None"></span>}
               </span>
-              {{item.displayName}} @if(devspaceService.loggedInUserUid === filterContact[i].uid){(Du)}
+              @if(devspaceService.loggedInUserUid === filterContact[i].uid){
+              <span (click)="profile(i)" class="item-selected-name">{{item.displayName}} (Du)</span>
+
+              }@else {
+              <span (click)="profile(i)" class="item-selected-name">{{item.displayName}}</span>
+
+              @if(filterChannel[0].creator === devspaceService.loggedInUserUid){
+              <span class="member-delete"
+                (click)="firestore.deleteChannelMemberFromFirestore(filterChannel[0].id,filterContact[i].uid)">
+                <img src="assets/img/dialogClose.png" alt=""></span>
+              }
+              }
             </div>
             }
             @empty {
@@ -41,11 +55,13 @@
           </div>
 
         </div>
+        @if(filterChannel[0].creator == devspaceService.loggedInUserUid){
         <div class="devspace-channel-header-member-new">
           <span class="devspace-channel-header-member-add">
             <img src="/assets/img/person_add.png" alt=""></span>
           <span (click)="openMemberAdd()">Mitglieder hinzufügen</span>
         </div>
+        }
       </div>
       }
       @if(devspaceService.channelMemberAdded){
@@ -62,7 +78,7 @@
             @for(item of accountSelected.slice(0,1); track item.displayName; let i = $index){
 
             <div class="selected-contact-item-content"><img src="{{item.profile}}"
-                alt=""><span>{{item.displayName}}</span>
+                alt=""><span class="item-selected-name">{{item.displayName}}</span>
               <img (click)="removeContact(i)" src="/assets/img/dialogClose.png" alt="">
             </div>
             }
@@ -77,7 +93,7 @@
             @for(item of filteredAccounts; track item.displayName; let i = $index){
             <div class="selected-Contact-Item-member" (click)="selectContact(i)"><span><img src="{{item.profile}}"
                   alt="">@if(devspaceService.accounts[i].online){<span class="active-Account-Icon"></span>
-                }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.displayName}}</div>
+                }@else{<span class="active-Account-Icon-None"></span>}</span> <span class="item-selected-name">{{item.displayName}}</span></div>
             }@empty {
             <div>Keine Kontakte gefunden</div>
             }
@@ -86,7 +102,7 @@
           <div class="selected-Contacts">
             @for(item of accountSelected; track item.displayName; let i = $index){
             <div class="selected-contact-item-content-selected">
-              <span><img src="{{item.profile}}" alt="">{{item.displayName}}</span>
+              <span><img src="{{item.profile}}" alt=""> <span class="item-selected-name">{{item.displayName}}</span></span>
               <img class="selected-contact-item-content-selected-close" (click)="removeContact(i)"
                 src="/assets/img/dialogClose.png" alt="">
             </div>
@@ -94,7 +110,8 @@
           </div>
           }
         </div>
-        <div class="devspace-channel-header-member-added-button"><input class="button-primary" type="button" value="Hinzufügen" [disabled]="isDisabled" (click)=" addMember()" ></div>
+        <div class="devspace-channel-header-member-added-button"><input class="button-primary" type="button"
+            value="Hinzufügen" [disabled]="isDisabled" (click)=" addMember()"></div>
       </div>
       }
     </div>

@@ -30,18 +30,16 @@ export class DevspaceService {
   contactArray = new BehaviorSubject<any[]>([]);  
   clearInputMessage = false;   
   barContext: 'message' | 'channel' | 'thread' | 'directmessage' | null = null;
-  private subscription?: Subscription;
-  constructor(public Firestore: FirestoreService) { 
-    this.subscription = this.Firestore.channels$.subscribe(channels => {
-      this.channels = channels;
-      console.log('Aktualisierte Channels:', this.channels);
-    });  
-  }
-
-
+  private subscription?: Subscription;   
   private clearInputMessageSubject = new BehaviorSubject<boolean>(false);
   clearInputMessage$ = this.clearInputMessageSubject.asObservable();
   
+  constructor(public Firestore: FirestoreService) { 
+    this.subscription = this.Firestore.channels$.subscribe(channels => {
+      this.channels = channels;
+      console.log('Updated channels:', this.channels);
+    });  
+  }
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();

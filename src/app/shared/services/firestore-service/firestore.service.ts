@@ -5,7 +5,6 @@ import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc, collection, ge
 import { firebaseConfig } from '../../../../environments/environment';
 import { Devspace } from '@shared/interface/devspace';
 import { BehaviorSubject } from 'rxjs';
-import { DevspaceService } from '../devspace-service/devspace.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +26,7 @@ export class FirestoreService {
 
     const userSnap = await getDoc(userRef);
     if (userSnap.exists()) {
-      console.log('Dokument existiert bereits, keine Änderungen vorgenommen.');
+      console.log('Document already exists, no changes made.');
       return;
     }
 
@@ -91,7 +90,7 @@ export class FirestoreService {
     try {
       const userSnap = await getDoc(userRef);
       if (!userSnap.exists()) {
-        throw new Error('Benutzer nicht gefunden. Erstelle zuerst ein Dokument mit saveUserToFirestore.');
+        throw new Error('User not found. First create a document with saveUserToFirestore.');
       }
 
       await updateDoc(userRef, updatedData);
@@ -101,9 +100,6 @@ export class FirestoreService {
       throw error;
     }
   }
-
-  // test firestore user holen Alex!
-
 
   async fetchUserFromFirestoreAll(): Promise<any> {
     const userRef = collection(this.firestore, 'users');
@@ -124,10 +120,9 @@ export class FirestoreService {
   async saveChannelToFirestore(channel: Devspace): Promise<void> {
     const channelCollectionRef = collection(this.firestore, 'channel');
     try {
-      await addDoc(channelCollectionRef, channel);
-      console.log('Channel erfolgreich gespeichert.');
+      await addDoc(channelCollectionRef, channel);      
     } catch (error) {
-      console.error('Fehler beim Speichern des Channels:', error);
+      
       throw error;
     }
   }
@@ -137,7 +132,7 @@ export class FirestoreService {
     try {
       const userSnap = await getDoc(channelRef);
       if (!userSnap.exists()) {
-        throw new Error('Benutzer nicht gefunden. Erstelle zuerst ein Dokument mit saveUserToFirestore.');
+        throw new Error('User not found. First create a document with saveUserToFirestore.');
       }
       await updateDoc(channelRef, updatedData);
       console.log('User data updated in Firestore:', updatedData);
@@ -153,15 +148,14 @@ export class FirestoreService {
     const q = query(channelsRef, where('member', 'array-contains', userId));
     onSnapshot(q, (querySnapshot) => {
       const channels = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Devspace));
-      console.log('Empfangene Channels:', channels);
+      console.log('loading Channels:', channels);
       this.channelsSubject.next(channels);
       querySnapshot.docChanges().forEach(change => {
         if (change.type === 'added') {
           this.lastAddedChannel = { id: change.doc.id, ...change.doc.data() } as Devspace;
         }
       });
-    }, (error) => {
-      console.error('Fehler beim Abhören der Channels:', error);
+    }, (error) => {      
       this.channelsSubject.next([]);
     });
   }
@@ -171,12 +165,11 @@ export class FirestoreService {
     try {
       const channelSnap = await getDoc(channelRef);
       if (!channelSnap.exists()) {
-        throw new Error('Channel nicht gefunden.');
+        throw new Error('Channel not found.');
       }
-      await deleteDoc(channelRef);
-      console.log('Channel erfolgreich aus Firestore gelöscht:', channeluid);
+      await deleteDoc(channelRef);      
     } catch (error) {
-      console.error('Fehler beim Löschen des Channels in Firestore:', error);
+      console.error('error with deleting Channels in Firestore:', error);
       throw error;
     }
   }
@@ -188,23 +181,22 @@ export class FirestoreService {
       await updateDoc(channelRef, {
         member: arrayRemove(userId)
       });
-      console.log(`User ${userId} erfolgreich aus dem Channel ${channelId} entfernt.`);
+      
     } catch (error) {
-      console.error('Fehler beim Entfernen des Users aus dem Channel:', error);
+      console.error('error with removing the Users from the Channel:', error);
       throw error;
     }
   }
 
   async newChannelMemberToFirestore(channelId: string, userId: string | null): Promise<void> {
     const channelRef = doc(this.firestore, 'channel', channelId);
-
     try {
       await updateDoc(channelRef, {
         member: arrayUnion(userId)
       });
-      console.log(`User ${userId} erfolgreich zum Channel ${channelId} hinzugefügt.`);
+      console.log(`User ${userId} successfully added to channel ${channelId}.`);
     } catch (error) {
-      console.error('Fehler beim Hinzufügen des Users zum Channel:', error);
+      console.error('Error when adding the user to the channel:', error);
       throw error;
     }
   }

@@ -165,29 +165,6 @@
     white-space: pre-wrap;
   }
 
-  & div:nth-of-type(2)::-webkit-scrollbar-button {
-    display: none;
-  }
-
-  & div:nth-of-type(2)::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  & div:nth-of-type(2)::-webkit-scrollbar-track {
-    background: var(--white-color);
-    border-radius: 35px;
-  }
-
-  & div:nth-of-type(2)::-webkit-scrollbar-thumb {
-    background: var(--purple-3);
-    border-radius: 35px;
-  }
-
-  & div:nth-of-type(2)::-webkit-scrollbar-thumb:hover {
-    background: var(--light-purple);
-    cursor: pointer;
-  }
-
 }
 
 .edit-channel-creator{
@@ -332,26 +309,5 @@
     }
   }
 
-  & textarea::-webkit-scrollbar-button {
-    display: none;
-  }
-
-  & textarea::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  & textarea::-webkit-scrollbar-track {
-    background: var(--white-color);
-    border-radius: 35px;
-  }
-
-  & textarea::-webkit-scrollbar-thumb {
-    background: var(--purple-3);
-    border-radius: 35px;
-  }
-
-  & textarea::-webkit-scrollbar-thumb:hover {
-    background: var(--light-purple);
-    cursor: pointer;
-  }
+  
 }
