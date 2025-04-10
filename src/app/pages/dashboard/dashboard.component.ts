@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ChannelComponent } from '@components/channel/channel.component';
-import { DevspaceMessageDirectComponent } from '@components/devspace-message/devspace-message-direct/devspace-message-direct.component';
-import { DevspaceMessageComponent } from '@components/devspace-message/devspace-message.component';
+import { DevspaceMessageDirectComponent } from '@components/devspace-message-direct/devspace-message-direct.component';
+import { DevspaceMessageComponent } from '@components/devspace-message-new/devspace-message.component';
 import { DevspaceComponent } from '@components/devspace/devspace.component';
 import { HeaderComponent } from '@components/header/header.component';
 import { ThreadComponent } from '@components/thread/thread.component';
@@ -38,7 +38,7 @@ export class DashboardComponent {
 
   loadLoggedInUser() {
     this.devspaceService.loggedInUserUid = 'zBAEMISe1FekXRBU0TDSRbdOC6q2';
-    console.log('DashboardComponent loggedInUserUid:', this.devspaceService.loggedInUserUid);
+    
   }
 
 }

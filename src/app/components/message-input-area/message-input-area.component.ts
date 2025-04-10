@@ -213,7 +213,8 @@ export class MessageInputAreaComponent {
     const message = this.messageInput.nativeElement.textContent;
     const channels = this.channelNameMessage();
     const contacts = this.contactNameMessage();
-    console.log("Channel text", channels, contacts, message);
+    const channelName = this.devspaceService.selectedChannelId;
+    console.log("Channel text", channels, contacts, message, channelName);
   }
 
   sortDataFromThread() {

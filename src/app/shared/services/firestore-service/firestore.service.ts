@@ -108,8 +108,7 @@ export class FirestoreService {
       const users = querySnapshot.docs.map(doc => ({
         ...doc.data()
       }));
-
-      console.log('All users from Firestore:', users);
+      
       return users;
     } catch (error) {
       console.error('Error fetching users from Firestore:', error);
@@ -142,8 +141,7 @@ export class FirestoreService {
     }
   }
 
-  subscribeToUserChannels(userId: string): void {
-    console.log('Firestore Listener gestartet für User:', userId);
+  subscribeToUserChannels(userId: string): void {    
     const channelsRef = collection(this.firestore, 'channel');
     const q = query(channelsRef, where('member', 'array-contains', userId));
     onSnapshot(q, (querySnapshot) => {

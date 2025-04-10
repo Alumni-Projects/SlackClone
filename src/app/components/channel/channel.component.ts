@@ -9,11 +9,12 @@ import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Devspace } from '@shared/interface/devspace';
+import { MessageAreaComponent } from '@components/message-area/message-area.component';
 
 
 @Component({
   selector: 'app-channel',
-  imports: [MessageInputAreaComponent, CommonModule, FormsModule],
+  imports: [MessageInputAreaComponent, CommonModule, FormsModule,MessageAreaComponent],
   templateUrl: './channel.component.html',
   styleUrl: './channel.component.scss'
 })
