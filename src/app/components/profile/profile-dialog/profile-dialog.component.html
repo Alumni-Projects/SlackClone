@@ -23,6 +23,7 @@
       <button (click)="openEditDialog()" class="button-linkstyle">
         Bearbeiten
       </button>
+
       }
     </div>
 
@@ -48,7 +49,7 @@
       }
     </div>
   </div>
-
+  @if (!isOwnProfile) {
   <div class="btn-container btn-container--center">
     <button class="button-primary-icon">
       <mat-icon
@@ -60,8 +61,7 @@
       Nachricht
     </button>
   </div>
-
-  } @else {
+  } } @else {
   <div>
     <div class="profile-edit">
       <img src="assets/icons/account_circle.svg" alt="user icon" />
