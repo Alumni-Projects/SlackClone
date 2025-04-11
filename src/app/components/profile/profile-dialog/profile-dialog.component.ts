@@ -1,16 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import {
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DATA
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
+
 import { IconSize } from '@shared/Enums/iconSize';
 import { Color } from '@shared/Enums/color';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
+
 import {
   DevspaceAccount,
   DevspaceService
 } from '@shared/services/devspace-service/devspace.service';
-import { getAuth } from 'firebase/auth';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
 @Component({
   selector: 'app-profile-dialog',
@@ -25,21 +30,32 @@ export class ProfileDialogComponent implements OnInit {
 
   nameControl = new FormControl<string | null>('', [Validators.required]);
   secretData!: { email: string };
+  isEditing = false;
+  isOwnProfile = false;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { uid?: string },
     private dialogRef: MatDialogRef<ProfileDialogComponent>,
     private devspaceService: DevspaceService,
     private firestoreService: FirestoreService
   ) {}
 
   async ngOnInit(): Promise<void> {
-    const name = this.devspaceService.activeUser?.name;
-    this.nameControl.setValue(name || '');
+    const activeUser = this.devspaceService.activeUser;
+    const fallbackUid = activeUser?.uid;
+    const uid = this.data?.uid || fallbackUid;
 
-    const user = getAuth().currentUser;
-    if (!user) return;
+    if (!uid) return;
 
-    this.secretData = await this.firestoreService.fetchSecretData(user.uid);
+    this.isOwnProfile = !this.data?.uid || this.data.uid === activeUser?.uid;
+
+    try {
+      this.secretData = await this.firestoreService.fetchSecretData(uid);
+    } catch {}
+
+    if (this.isOwnProfile && activeUser) {
+      this.nameControl.setValue(activeUser.name);
+    }
   }
 
   get user(): DevspaceAccount | null {
@@ -50,9 +66,17 @@ export class ProfileDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  async changeName() {
-    const uid = this.devspaceService.activeUser?.uid;
-    const newName = this.nameControl.value;
+  openEditDialog(): void {
+    this.isEditing = true;
+  }
+
+  cancelEdit(): void {
+    this.isEditing = false;
+  }
+
+  async changeName(): Promise<void> {
+    const uid = this.user?.uid;
+    const newName = this.nameControl.value?.trim();
 
     if (!uid || !newName) return;
 
@@ -61,17 +85,6 @@ export class ProfileDialogComponent implements OnInit {
         displayName: newName
       });
       this.isEditing = false;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  isEditing = false;
-
-  openEditDialog(): void {
-    this.isEditing = true;
-  }
-
-  cancelEdit(): void {
-    this.isEditing = false;
+    } catch {}
   }
 }

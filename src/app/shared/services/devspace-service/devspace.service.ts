@@ -13,6 +13,7 @@ export class DevspaceService {
   openChannel = false;
   openThread = false;
   openDirectMessage = false;
+  currentUserUid: string | null = null;
 
   constructor() {}
 
