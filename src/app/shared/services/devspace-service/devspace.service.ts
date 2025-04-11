@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Devspace } from '@shared/interface/devspace';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { FirestoreService } from '../firestore-service/firestore.service';
+import { ChatMessage } from '@shared/interface/chat-message';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DevspaceService {
+  selectedChannelId: string | null = null;
+  channelMember = false;
+  channelMemberAdded = false;
   channelsName = '';
   channelsDescription = '';
   openDevspace = true;
@@ -14,53 +20,51 @@ export class DevspaceService {
   openChannel = false;
   openThread = false;
   openDirectMessage = false;
-  constructor() {}
+  channelNameInput: string = '';
+  openSmileyBar = false;
+  openContactBar = false;
+  openChannelBar = false;
+  openContactBarSearch = false;
+  openChannelBarSearch = false;
+  loggedInUserUid:string = '';
+  channelArray = new BehaviorSubject<any[]>([]);
+  contactArray = new BehaviorSubject<any[]>([]);  
+  clearInputMessage = false;   
+  barContext: 'message' | 'channel' | 'thread' | 'directmessage' | null = null;
+  private subscription?: Subscription;   
+  private clearInputMessageSubject = new BehaviorSubject<boolean>(false);
+  clearInputMessage$ = this.clearInputMessageSubject.asObservable();  
+  
+  constructor(public Firestore: FirestoreService) { 
+    this.subscription = this.Firestore.channels$.subscribe(channels => {
+      this.channels = channels;
+      console.log('Updated channels:', this.channels);
+    });  
+  }
 
-  channels: Devspace[] = [
-    {
-      name: 'Entwicklerteam',
-      description: 'Dieser Channel ist für alle Entwickler zuständig..',
-      channelActiveTalk: false
-    }
-  ];
+ 
 
-  emojis = ['😊', '😂', '❤️', '👍', '🔥'];
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
 
-  accounts: DevspaceAccount[] = [
-    {
-      name: 'Florian Beck',
-      active: true,
-      pic: '/assets/avatar/avatar1.svg',
-      activeSelf: true,
-      activeMessage: false
-    },
-    {
-      name: 'Sofia Müller',
-      active: false,
-      pic: '/assets/avatar/avatar2.svg',
-      activeSelf: false,
-      activeMessage: false
-    },
-    {
-      name: 'Noah Braun',
-      active: true,
-      pic: '/assets/avatar/avatar3.svg',
-      activeSelf: false,
-      activeMessage: false
-    },
-    {
-      name: 'Elias Beumann',
-      active: false,
-      pic: '/assets/avatar/avatar5.svg',
-      activeSelf: false,
-      activeMessage: false
-    },
-    {
-      name: 'Frederik Beck',
-      active: true,
-      pic: '/assets/avatar/avatar6.svg',
-      activeSelf: false,
-      activeMessage: false
-    }
-  ];
+
+  setClearInputMessage(status: boolean) {
+    this.clearInputMessageSubject.next(status);
+  }
+
+  channels: Devspace[] = [];
+
+
+
+  emojis = ['😊', '😂', '❤️', '👍', '🔥', '🎉', '💡', '😎', '🚀', '✨', '🙌', '🎶', '🥳', '💪', '🧐', '🌟', '🤩', '🍀', '🏆', '🤖', '👀', '💯', '🤗', '🤔', '😜', '😇', '😅', '🤝', '🎯', '🦾', '🕶️', '🐱', '🎨', '🏅', '💰', '🛠️', '📚', '📝', '📢', '🎤', '🌍', '🔑', '💌', '🕹️', '🔮', '🎭', '🛸', '👨‍💻', '👩‍💻', '🧠', '⚡', '🛤️', '⏳', '🌀', '💎', '🥇', '📈', '🗝️', '🃏', '🎲', '💥'];
+
+  accounts: DevspaceAccount[] = [];
+  closAllMessage() {
+    this.openMessage = false;
+    this.openChannel = false;
+    this.openThread = false;
+    this.openDirectMessage = false;
+  }
+
 }

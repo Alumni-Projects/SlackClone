@@ -1,16 +1,14 @@
 <section class="devspace-dialog-Add-Contact">
-    <div class="devspace-dialog-Add-Contact-Header" ><span>Leute hinzufügen</span>
+    <div class="devspace-dialog-Add-Contact-Header"><span>Leute hinzufügen</span>
         <span (click)="closeDialog()"><img src="/assets/img/dialogClose.png" alt=""></span>
     </div>
-    <div class="devspace-dialog-Add-Contact-List" >
+    <div class="devspace-dialog-Add-Contact-List">
         <div>
             <label class="checkbox">
                 <input type="checkbox" id="allContacts" (change)="onCheckboxChange('allContacts')">
                 <span class="check-btn"></span>
                 <div class="devspace-dialog-Add-Contact-List-All-Contact">
-                    <span>Alle Mitglieder von <span>{{ lastChannel.name }}</span> hinzufügen</span>
-
-
+                    <span>Alle Mitglieder von <span>{{ lastChannel}}</span> hinzufügen</span>
                 </div>
             </label>
         </div>
@@ -26,9 +24,10 @@
         @if(openSelect){
         <div class="devspace-dialog-add-contact-list-selected-contact" (click)="focusInput()">
             <div class="selected-Contacts-area">
-                @for(item of accountSelected.slice(0,1); track item.name; let i = $index){
+                @for(item of accountSelected.slice(0,1); track item.displayName; let i = $index){
 
-                <div class="selected-contact-item-content"><img src="{{item.pic}}" alt=""><span>{{item.name}}</span>
+                <div class="selected-contact-item-content"><img src="{{item.profile}}" alt="">
+                    <span class="item-selected-name">{{item.displayName}}</span>
                     <img (click)="removeContact(i)" src="/assets/img/dialogClose.png" alt="">
                 </div>
                 }
@@ -37,14 +36,13 @@
                     {{accountSelected.length -
                     1}}</span>}
             </div>
-            <input type="text" [(ngModel)]="inputValue"  (click)="SelectContactClose()" #contactInput>
+            <input type="text" [(ngModel)]="inputValue" (click)="SelectContactClose()" #contactInput>
             @if(inputValue){
             <div class="selected-Contacts">
-                @for(item of filteredAccounts; track item.name; let i = $index){
-
-                <div class="selected-Contact-Item" (click)="selectContact(i)"><span><img src="{{item.pic}}"
-                            alt="">@if(devspaceService.accounts[i].active){<span class="active-Account-Icon"></span>
-                        }@else{<span class="active-Account-Icon-None"></span>}</span>{{item.name}}</div>
+                @for(item of filteredAccounts; track item.displayName; let i = $index){
+                <div class="selected-Contact-Item" (click)="selectContact(i)"><span><img src="{{item.profile}}"
+                            alt="">@if(devspaceService.accounts[i].online){<span class="active-Account-Icon"></span>
+                        }@else{<span class="active-Account-Icon-None"></span>}</span><span class="item-selected-name">{{item.displayName}}</span></div>
                 }@empty {
 
                 <div>Keine Kontakte gefunden</div>
@@ -53,10 +51,11 @@
             </div>
             }@else if (openSelectContact) {
             <div class="selected-Contacts">
-                @for(item of accountSelected; track item.name; let i = $index){
+                @for(item of accountSelected; track item.displayName; let i = $index){
                 <div class="selected-contact-item-content-selected">
-                    <span><img src="{{item.pic}}" alt="">{{item.name}}</span>
-                    <img class="selected-contact-item-content-selected-close" (click)="removeContact(i)" src="/assets/img/dialogClose.png" alt="">
+                    <span><img src="{{item.profile}}" alt=""><span class="item-selected-name">{{item.displayName}}</span></span>
+                    <img class="selected-contact-item-content-selected-close" (click)="removeContact(i)"
+                        src="/assets/img/dialogClose.png" alt="">
                 </div>
                 }
             </div>
@@ -65,7 +64,7 @@
         }
     </div>
     <div class="devspace-dialog-add-contact-create">
-        <input type="button" value="Erstellen" [disabled]="isDisabled" (click)=" addChannel()" >
+        <input type="button" value="Erstellen" [disabled]="isDisabled" (click)=" addChannel()">
 
 
     </div>

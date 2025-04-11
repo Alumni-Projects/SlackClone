@@ -1,6 +1,11 @@
-export interface Devspace {    
-    name: string;
-    description: string;
-    channelActiveTalk: boolean;
-    contact?: string [];
+export interface Devspace {
+    creator?: string;
+    title?: string;
+    description?: string;
+    channelActiveTalk?: boolean;
+    member?: any[];      
+    message?: any[];
+    createdAt?: string;
+    id?: string;   
+
 }
