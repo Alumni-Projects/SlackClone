@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { Devspace } from '@shared/interface/devspace';
 import { MessageAreaComponent } from '@components/message-area/message-area.component';
 import { DialogDeleteMemberChannelComponent } from './dialog-delete-member-channel/dialog-delete-member-channel.component';
+import { ChatMessage } from '@shared/interface/chat-message';
 
 
 
@@ -23,8 +24,8 @@ import { DialogDeleteMemberChannelComponent } from './dialog-delete-member-chann
 export class ChannelComponent implements OnInit {
   @ViewChild('contactSelect') contactSelect!: ElementRef<HTMLInputElement>;
   private subscriptions: Subscription = new Subscription();
-  filterChannel: any[] = [];
-  filterContact: any[] = [];
+  filterChannel: Devspace[] = [];
+  filterContact: DevspaceAccount[] = [];
   accountSelected: DevspaceAccount[] = [];
   openSelectContact = false;
   accounts;
@@ -32,7 +33,7 @@ export class ChannelComponent implements OnInit {
   isDisabled = true;
   openSelect = false;
   memberValue = '';
-  messages: any[] = [];
+  messages: ChatMessage[] = [];
   constructor(public devspaceService: DevspaceService, public dialog: MatDialog, public firestore: FirestoreService) {
     this.accounts = this.devspaceService.accounts;
     this.accountSelected = [];
@@ -70,7 +71,7 @@ export class ChannelComponent implements OnInit {
       return;
     }
     this.filterContact = this.devspaceService.accounts.filter(member =>
-      channel.member.includes(member.uid)
+      channel.member?.includes(member.uid)
     );
   }
 
@@ -166,14 +167,14 @@ export class ChannelComponent implements OnInit {
     this.contactSelect.nativeElement.focus();
   }
 
-  async addMember() {
-    const channel = this.filterChannel;
-    const channelId = channel[0].id;     
+  async addMember() { 
+    const memberChange = true;   
+    const channelId = this.filterChannel[0].id;     
     const promises = this.accountSelected.map(user => {
-      if (!user.uid) {
-        throw new Error("user.uid darf nicht null oder undefined sein");
+      if (!user.uid || !channelId) {
+        throw new Error("user.uid not null or undifined");
       }
-      return this.firestore.newChannelMemberToFirestore(channelId, user.uid);
+      return this.firestore.changeChannelMembers(channelId, user.uid, memberChange);
     });
   
     try {

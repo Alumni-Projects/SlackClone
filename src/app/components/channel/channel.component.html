@@ -14,7 +14,7 @@
             }
             }
         </div>
-        <span>{{filterChannel[0].member.length}}</span>
+        <span>{{filterChannel[0].member?.length}}</span>
       </div>
       @if(filterChannel[0].creator == devspaceService.loggedInUserUid){
       <span (click)="openMemberAdd()" class="devspace-channel-header-member-add"><img src="/assets/img/person_add.png"

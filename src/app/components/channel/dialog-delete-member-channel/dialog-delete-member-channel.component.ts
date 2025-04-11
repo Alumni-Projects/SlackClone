@@ -18,7 +18,8 @@ close() {
 }
 
 deleteMember(){
-  this.firestore.deleteChannelMemberFromFirestore(this.data.channelId, this.data.userId);
+  const memberChange = false;
+  this.firestore.changeChannelMembers(this.data.channelId, this.data.userId, memberChange);
   this.dialog.closeAll();
 }
 

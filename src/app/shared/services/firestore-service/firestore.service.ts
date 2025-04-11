@@ -173,34 +173,27 @@ export class FirestoreService {
       console.error('error with deleting Channels in Firestore:', error);
       throw error;
     }
-  }
+  } 
 
-  async deleteChannelMemberFromFirestore(channelId: string, userId: string): Promise<void> {
+  async changeChannelMembers(channelId:string, userId:string, memberChange: boolean ): Promise<void> {
     const channelRef = doc(this.firestore, 'channel', channelId);
-
     try {
-      await updateDoc(channelRef, {
-        member: arrayRemove(userId)
-      });
+      if (memberChange) {
+        await updateDoc(channelRef, {
+          member: arrayUnion(userId)
+        });
+      } else {
+        await updateDoc(channelRef, {
+          member: arrayRemove(userId)
+        });
+      }
       
-    } catch (error) {
-      console.error('error with removing the Users from the Channel:', error);
-      throw error;
-    }
-  }
-
-  async newChannelMemberToFirestore(channelId: string, userId: string | null): Promise<void> {
-    const channelRef = doc(this.firestore, 'channel', channelId);
-    try {
-      await updateDoc(channelRef, {
-        member: arrayUnion(userId)
-      });
-      console.log(`User ${userId} successfully added to channel ${channelId}.`);
+      console.log(`member change added or quit channel.`);
     } catch (error) {
       console.error('Error when adding the user to the channel:', error);
       throw error;
     }
-  }
+}
   subscribeToMessages(channelId: string): void {
     const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
     onSnapshot(messagesRef, (querySnapshot) => {

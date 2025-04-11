@@ -89,7 +89,8 @@ export class EditChannelDialogComponent implements OnInit {
       this.devspaceService.selectedChannelId = '';
       this.devspaceService.openChannel = false;
       setTimeout(() => {
-        this.firestore.deleteChannelMemberFromFirestore(channelid, this.devspaceService.loggedInUserUid);
+        const memberChange = false;
+        this.firestore.changeChannelMembers(channelid, this.devspaceService.loggedInUserUid, memberChange);
       }, 100)
     }
     this.closeDialog();
