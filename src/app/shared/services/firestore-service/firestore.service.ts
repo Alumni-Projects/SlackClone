@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { User } from 'firebase/auth';
-import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc, collection, getDocs, query, where, onSnapshot, addDoc, deleteDoc, arrayRemove, arrayUnion } from 'firebase/firestore';
+import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc, collection, getDocs, query, where, onSnapshot, addDoc, deleteDoc, arrayRemove, arrayUnion, serverTimestamp } from 'firebase/firestore';
 import { firebaseConfig } from '../../../../environments/environment';
 import { Devspace } from '@shared/interface/devspace';
 import { BehaviorSubject } from 'rxjs';
+import { ChatMessage } from '@shared/interface/chat-message';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,8 @@ export class FirestoreService {
   private channelsSubject = new BehaviorSubject<Devspace[]>([]);
   channels$ = this.channelsSubject.asObservable();
   lastAddedChannel: Devspace | null = null;
+  private messagesSubject = new BehaviorSubject<ChatMessage[]>([]);
+  messages$ = this.messagesSubject.asObservable();
 
   constructor() {
     this.app = initializeApp(firebaseConfig);
@@ -198,4 +201,32 @@ export class FirestoreService {
       throw error;
     }
   }
+  subscribeToMessages(channelId: string): void {
+    const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
+    onSnapshot(messagesRef, (querySnapshot) => {
+      const messages = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as ChatMessage));
+      console.log('Messages loaded:', messages);      
+      this.messagesSubject.next(messages);
+    });
+  }
+
+  async addMessageToChannel(channelId: string, message: string, creatorId: string): Promise<void> {
+    const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
+    try {
+      await addDoc(messagesRef, {
+        message,
+        creator: creatorId,
+        createdAt: serverTimestamp(), 
+        isThread: false,
+        reactions: [] 
+      });
+      console.log('Message added to channel');
+    } catch (error) {
+      console.error('Error adding message:', error);
+      throw error;
+    }
+  }
+
+
+ 
 }

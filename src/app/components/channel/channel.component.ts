@@ -10,11 +10,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Devspace } from '@shared/interface/devspace';
 import { MessageAreaComponent } from '@components/message-area/message-area.component';
+import { DialogDeleteMemberChannelComponent } from './dialog-delete-member-channel/dialog-delete-member-channel.component';
+
 
 
 @Component({
   selector: 'app-channel',
-  imports: [MessageInputAreaComponent, CommonModule, FormsModule,MessageAreaComponent],
+  imports: [MessageInputAreaComponent, CommonModule, FormsModule,MessageAreaComponent, ],
   templateUrl: './channel.component.html',
   styleUrl: './channel.component.scss'
 })
@@ -30,6 +32,7 @@ export class ChannelComponent implements OnInit {
   isDisabled = true;
   openSelect = false;
   memberValue = '';
+  messages: any[] = [];
   constructor(public devspaceService: DevspaceService, public dialog: MatDialog, public firestore: FirestoreService) {
     this.accounts = this.devspaceService.accounts;
     this.accountSelected = [];
@@ -44,7 +47,15 @@ export class ChannelComponent implements OnInit {
       this.filterContacts();
       this.filterContactForAddInput();
     });
-
+    if (this.devspaceService.selectedChannelId) {
+      this.firestore.subscribeToMessages(this.devspaceService.selectedChannelId);      
+      this.firestore.messages$.subscribe(messages => {
+        this.messages = messages;
+        console.log('Loaded messages:', this.messages);
+      });
+    } else {
+      console.error('No selected channel ID found');
+    }
   }
 
   get filteredAccounts(): DevspaceAccount[] {
@@ -77,8 +88,22 @@ export class ChannelComponent implements OnInit {
     });
   }
 
+  openDeleteMemberDialog(i:number) {
+    this.dialog.open(DialogDeleteMemberChannelComponent, {
+      data: {
+        index: i,
+        channelId: this.devspaceService.selectedChannelId,
+        userId: this.filterContact[i].uid,
+        userName: this.filterContact[i].displayName
+      }      
+    });
+    
+  }
+
+  
+
   openMember() {
-    this.devspaceService.channelMember = true;
+    this.devspaceService.channelMember = !this.devspaceService.channelMember;
     this.devspaceService.channelMemberAdded = false;
   }
 
@@ -93,7 +118,7 @@ export class ChannelComponent implements OnInit {
 
   openMemberAdd() {
     this.devspaceService.channelMember = false;
-    this.devspaceService.channelMemberAdded = true;
+    this.devspaceService.channelMemberAdded = !this.devspaceService.channelMemberAdded;
     
   }
 
@@ -144,9 +169,12 @@ export class ChannelComponent implements OnInit {
   async addMember() {
     const channel = this.filterChannel;
     const channelId = channel[0].id;     
-    const promises = this.accountSelected.map(user =>
-      this.firestore.newChannelMemberToFirestore(channelId, user.uid ?? null)
-    );
+    const promises = this.accountSelected.map(user => {
+      if (!user.uid) {
+        throw new Error("user.uid darf nicht null oder undefined sein");
+      }
+      return this.firestore.newChannelMemberToFirestore(channelId, user.uid);
+    });
   
     try {
       await Promise.all(promises);      

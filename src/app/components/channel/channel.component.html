@@ -1,4 +1,4 @@
-<section class="devspace-channel">
+<section class="devspace-channel" >
   <div class="devspace-channel-header">
 
     <div class="devspace-channel-header-name" (click)="openEditChannelDialog()">
@@ -7,8 +7,8 @@
       <span><img src="/assets/img/keyboard_arrow_down.png" alt=""></span>
     </div>
     <div class="devspace-channel-header-member-area">
-      <div class="devspace-channel-header-member">
-        <div class="devspace-channel-header-member-icon" (click)="openMember()">
+      <div class="devspace-channel-header-member" (click)="openMember()">
+        <div class="devspace-channel-header-member-icon" >
           @for(item of filterContact; track i; let i = $index){
           @if(i < 3) { <span><img src="{{item.profile}}" alt=""></span>
             }
@@ -43,7 +43,7 @@
 
               @if(filterChannel[0].creator === devspaceService.loggedInUserUid){
               <span class="member-delete"
-                (click)="firestore.deleteChannelMemberFromFirestore(filterChannel[0].id,filterContact[i].uid)">
+                (click)="openDeleteMemberDialog(i)">
                 <img src="assets/img/dialogClose.png" alt=""></span>
               }
               }
@@ -117,7 +117,7 @@
     </div>
   </div>
   <div class="message-area">
-    <app-message-area [messageSection]="'channel'"></app-message-area>
+    <app-message-area [messageSection]="'channel'" (click)="closeMember()"></app-message-area>
   </div>
   <div class="devspace-channel-app-message-input-area">
     <app-message-input-area [context]="'channel'"></app-message-input-area>

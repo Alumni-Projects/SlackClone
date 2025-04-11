@@ -3,6 +3,7 @@ import { Devspace } from '@shared/interface/devspace';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { FirestoreService } from '../firestore-service/firestore.service';
+import { ChatMessage } from '@shared/interface/chat-message';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class DevspaceService {
   barContext: 'message' | 'channel' | 'thread' | 'directmessage' | null = null;
   private subscription?: Subscription;   
   private clearInputMessageSubject = new BehaviorSubject<boolean>(false);
-  clearInputMessage$ = this.clearInputMessageSubject.asObservable();
+  clearInputMessage$ = this.clearInputMessageSubject.asObservable();  
   
   constructor(public Firestore: FirestoreService) { 
     this.subscription = this.Firestore.channels$.subscribe(channels => {
@@ -40,6 +41,8 @@ export class DevspaceService {
       console.log('Updated channels:', this.channels);
     });  
   }
+
+ 
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();

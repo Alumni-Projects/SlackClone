@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { DevspaceService } from '@shared/services/devspace-service/devspace.serv
 export class MessageInputAreaComponent {
   @ViewChild('messageInput') messageInput!: ElementRef;
   @Input() context!: 'message' | 'channel' | 'thread' | 'directmessage';
-  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef) {
+  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef , public firestore: FirestoreService) {
   }
 
 
@@ -211,10 +212,12 @@ export class MessageInputAreaComponent {
 
   sortDataFromChannel() {
     const message = this.messageInput.nativeElement.textContent;
-    const channels = this.channelNameMessage();
-    const contacts = this.contactNameMessage();
-    const channelName = this.devspaceService.selectedChannelId;
-    console.log("Channel text", channels, contacts, message, channelName);
+    // const channels = this.channelNameMessage();
+    // const contacts = this.contactNameMessage();
+    const channelId = this.devspaceService.selectedChannelId!;
+    const creatorId = this.devspaceService.loggedInUserUid;   
+    this.firestore.addMessageToChannel(channelId, message, creatorId);
+    console.log("Channel text", channelId,  message, creatorId);
   }
 
   sortDataFromThread() {
