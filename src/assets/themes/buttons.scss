@@ -75,6 +75,36 @@
       color: var(--grey-dark);
       text-decoration: none;
     }
+  } @else if $variant == 'icon-only' {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    height: auto;
+    color: var(--black-color);
+    text-decoration: none;
+    font-size: var(--font-size-m);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background-color: var(--bg-color);
+      color: var(--primary-color);
+    }
+
+    &:active {
+      background-color: var(--bg-color);
+      color: var(--primary-color);
+    }
+
+    &:disabled {
+      color: var(--grey-dark);
+      text-decoration: none;
+      background-color: transparent;
+    }
   }
 }
 
@@ -92,4 +122,8 @@
 
 .button-linkstyle {
   @include button-style('linkstyle');
+}
+
+.button-icon-only {
+  @include button-style('icon-only', true);
 }

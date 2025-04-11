@@ -1,14 +1,12 @@
 <mat-dialog-content class="profile-dialog">
   <div class="profile-dialog-title-wrapper">
     <h2>@if (isEditing) { Dein Profil bearbeiten } @else { Profil }</h2>
-    <button mat-icon-button class="close-btn" (click)="closeDialog()">
+    <button class="button-icon-only" (click)="closeDialog()">
       <mat-icon
         [style.font-size]="IconSize.Medium"
         [style.color]="IconColor.Black"
-        class="arrow-icon"
+        >close</mat-icon
       >
-        close
-      </mat-icon>
     </button>
   </div>
 
