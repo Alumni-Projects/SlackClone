@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms'; // Importieren!
+import { FormsModule } from '@angular/forms';
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
 @Component({
   selector: 'app-devspace-dialog-contact',
@@ -14,33 +15,37 @@ import { DevspaceAccount } from '@shared/interface/devspace-account';
 })
 export class DevspaceDialogContactComponent implements OnInit {
   lastChannel?: any;
-  isDisabled: boolean = true;
-  openSelect: boolean = false;
+  isDisabled = true;
+  openSelect = false;
   inputValue = '';
   selectedCheckbox: string | null = null;
   accounts;
   accountSelected: DevspaceAccount[] = [];
-  openSelectContact: boolean = false;
+  openSelectContact = false;
+  allContactsChecked = false;
+  selectContactsChecked = false;
+
   @ViewChild('contactInput') contactInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService) {
+  constructor(private dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService, public firestore: FirestoreService) {
     this.accounts = this.devspaceService.accounts;
     this.accountSelected = [];
-    console.log(this.accountSelected);
 
   }
 
   ngOnInit(): void {
-    this.lastChannel = this.devspaceService.channels[this.devspaceService.channels.length - 1];
-
+    this.lastChannel = this.devspaceService.channelsName;
   }
 
   get filteredAccounts(): DevspaceAccount[] {
     return this.accounts
-      .filter(account => account.name.toLowerCase().startsWith(this.inputValue.toLowerCase()));  // Filtert das ganze Objekt basierend auf der Eingabe
+      .filter(account =>
+        account.uid !== this.devspaceService.loggedInUserUid &&
+        account.displayName.toLowerCase().startsWith(this.inputValue.toLowerCase())
+      );
   }
   closeDialog() {
-    this.dialog.closeAll();
+    this.dialog.closeAll(); 
   }
 
 
@@ -48,7 +53,6 @@ export class DevspaceDialogContactComponent implements OnInit {
     const checkboxes = ['allContacts', 'selectedContacts'];
     let isChecked = false;
     let isSelectedContactsChecked = false;
-
     checkboxes.forEach(id => {
       const checkbox = document.getElementById(id) as HTMLInputElement;
       if (checkbox) {
@@ -64,6 +68,7 @@ export class DevspaceDialogContactComponent implements OnInit {
           }
           if (id === 'allContacts') {
             this.isDisabled = false;
+            this.allContactsChecked = true;
           }
         }
       }
@@ -73,27 +78,20 @@ export class DevspaceDialogContactComponent implements OnInit {
       this.selectedCheckbox = null;
       this.isDisabled = true;
     }
-
-
-
     this.openSelect = isSelectedContactsChecked;
-
   }
 
-
-
   selectContact(i: number) {
-
-    if (!this.accountSelected?.some(item => item.name === this.filteredAccounts[i].name)) {
+    if (!this.accountSelected?.some(item => item.displayName === this.filteredAccounts[i].displayName)) {
       this.accountSelected!.push(this.filteredAccounts[i]);
       this.inputValue = '';
-
     }
-
     if (this.accountSelected.length > 0) {
       this.isDisabled = false;
+      this.selectContactsChecked = true;
     } else {
       this.isDisabled = true;
+
     }
 
   }
@@ -109,13 +107,12 @@ export class DevspaceDialogContactComponent implements OnInit {
   }
 
   SelectContact() {
-    this.openSelectContact = true;
+    this.openSelectContact =  !this.openSelectContact;
     this.inputValue = '';
   }
 
   SelectContactClose() {
     this.openSelectContact = false;
-
   }
 
   focusInput() {
@@ -123,8 +120,47 @@ export class DevspaceDialogContactComponent implements OnInit {
   }
 
   addChannel() {
-    let channel = { name: this.devspaceService.channelsName, description: this.devspaceService.channelsDescription, channelActiveTalk: false };
-    this.devspaceService.channels.push(channel);
+    this.devspaceService.closAllMessage();
+    if (this.allContactsChecked) {
+      const contactsAll = this.devspaceService.accounts.map(account => account.uid);
+      const time = new Date().toISOString();
+      const channel = {
+        title: this.devspaceService.channelsName,
+        description: this.devspaceService.channelsDescription,
+        creator: this.devspaceService.loggedInUserUid,
+        member: contactsAll,
+        createdAt: time,
+      };
+      this.firestore.saveChannelToFirestore(channel);
+      setTimeout(() => {
+        this.newChannelActiveChannelOpen()
+      }, 100)
+    }
+
+    if (this.selectContactsChecked) {
+      const contactsSelect = this.accountSelected.map(account => account.uid);
+      const time = new Date().toISOString();
+      let channel = {
+        title: this.devspaceService.channelsName,
+        description: this.devspaceService.channelsDescription,
+        creator: this.devspaceService.loggedInUserUid,
+        member: [...contactsSelect, this.devspaceService.loggedInUserUid],
+        createdAt: time,
+      }
+      this.firestore.saveChannelToFirestore(channel);
+      setTimeout(() => {
+        this.newChannelActiveChannelOpen()
+      }, 100)
+
+    }
     this.dialog.closeAll();
+
   }
+
+  newChannelActiveChannelOpen() {
+    const lastChannel = this.firestore.lastAddedChannel;
+    this.devspaceService.selectedChannelId = lastChannel?.id || '';
+    this.devspaceService.openChannel = true;
+  }
+
 }

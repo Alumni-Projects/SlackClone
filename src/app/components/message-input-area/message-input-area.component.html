@@ -1,0 +1,50 @@
+<div class="devspace-message-write">
+    <div class="devspace-message-write-area">
+        <div #messageInput contenteditable="true" class="devspace-message-write-area-input" (click)="closeBars()" (input)="inputSearchMessages()">
+
+        </div>
+
+        <div class="devspace-message-write-area-icons">
+            <div class="devspace-message-write-area-icons-bars">
+                <span (click)="openSmiley()"><img src="/assets/img/smiley.png" alt=""></span>
+                <span (click)="openAt()"> <img src="/assets/img/at.png" alt=""></span>
+
+            </div>
+            <span class="devspace-message-write-area-icons-bars-send" (click)="addMessage()"><img
+                    src="/assets/img/send.png" alt=""></span>
+        </div>
+
+        @if(devspaceService.openSmileyBar && devspaceService.barContext === context){
+        <div class="devspace-message-smiley-bar">
+            @for(item of devspaceService.emojis; track item; let i = $index){
+            <span (click)="selectSmiley(i)">{{item}}</span>
+            }
+        </div>
+        }
+
+        @if(devspaceService.openContactBar && devspaceService.barContext === context){
+            <div class="devspace-message-contact-bar">
+              @for(item of devspaceService.accounts; track item.uid; let i = $index){
+                <div class="selected-Contact-Item" (click)="selectContact(i)">
+                  <span><img src="{{item.profile}}" alt="">
+                    @if(devspaceService.accounts[i].online){<span class="active-Account-Icon"></span>}
+                    @else{<span class="active-Account-Icon-None"></span>}
+                  </span >
+                 <span class="item-selected-name">{{item.displayName}} @if(devspaceService.accounts[i].activeSelf){(Du)}</span> 
+                </div>
+              }
+              @empty {
+                <div>Keine Kontakte gefunden</div>
+              }
+            </div>
+          }
+          
+          @if(devspaceService.openChannelBar && devspaceService.barContext === context){
+            <div class="devspace-message-channel-bar">
+              @for(item of devspaceService.channels; track item; let i = $index){
+                <span (click)="selectChannel(i)"><img src="/assets/img/tagChannelName.png" alt=""> {{item.title}} </span>
+              }
+            </div>
+          }
+    </div>
+</div>

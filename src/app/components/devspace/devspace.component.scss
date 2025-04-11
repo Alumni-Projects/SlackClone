@@ -1,4 +1,5 @@
 .devspace {
+
   width: 366px;
   height: 940px;
   background-color: var(--white-color);
@@ -8,6 +9,8 @@
   flex-direction: column;
   gap: 25px;
   position: relative;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 .devspace-header {
@@ -111,10 +114,14 @@
 }
 
 .devspace-channel-title-content:hover {
+
   cursor: pointer;
+
   .active-Channel-Icon {
     content: url('/assets/img/arrow_drop_down_right_hover.png');
+
   }
+
 
   .active-Channel-Icon-None {
     content: url('/assets/img/arrow_drop_downHover.png');
@@ -178,10 +185,20 @@
   &:hover {
     background-color: var(--bg-color);
     border-radius: 20px;
+
     & img {
       content: url('/assets/img/tagHover.png');
     }
+
   }
+}
+
+
+.devspace-channel-list-item-name {
+  width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .devspace-add-channel-button {
@@ -245,8 +262,10 @@
 }
 
 .devspace-direct-messages-title-content {
+
   display: flex;
   gap: 15px;
+
   & span:nth-of-type(1) {
     width: 24px;
     height: 24px;
@@ -258,13 +277,25 @@
     font-weight: var(--font-weight-extra-bold);
     line-height: 27.28px;
     transition: all 125ms ease-in-out;
+
   }
 }
 
 .devspace-direct-messages-title:hover {
   cursor: pointer;
+
   .active-Message-Icon {
     content: url('/assets/img/arrow_drop_down_right_hover.png');
+  }
+
+  .active-Message-Icon-None {
+    content: url('/assets/img/arrow_drop_downHover.png');
+  }
+
+  .devspace-direct-messages-title-content {
+    & span:nth-of-type(2) {
+      color: var(--purple-3);
+    }
   }
 
   .active-Message-Icon-None {
@@ -281,6 +312,7 @@
     }
   }
 }
+
 
 .devspace-direct-messages-list {
   width: fit-content;
@@ -306,17 +338,25 @@
 }
 
 .devspace-direct-messages-icon {
+
   position: relative;
+
   & img {
     width: 50px;
     height: 50px;
   }
+
 }
 
 .devspace-direct-messages-name {
+  max-width: 145px;
   font-size: var(--font-size-m);
   font-weight: var(--font-weight-normal);
   line-height: 24.55px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 }
 
 .active-Account {

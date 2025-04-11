@@ -1,0 +1,35 @@
+@if(devspaceService.openMessage){
+<Section class="devspace-message-area">
+    <div class="devspace-message-title">
+        <span>Neue Nachricht</span>
+        <div #addInput contenteditable="true" class="devspace-message-add-area-input" (input)="checkPlaceholder()">
+        </div>
+        @if(devspaceService.openContactBarSearch){
+        <div class="devspace-message-contact-search">
+            @for(item of devspaceService.accounts; track item.displayName; let i = $index){
+
+            <div class="selected-Contact-Item" (click)=" selectContactSearch(i)"><span><img src="{{item.profile}}"
+                        alt="">@if(devspaceService.accounts[i].online){<span class="active-Account-Icon"></span>
+                    }@else{<span class="active-Account-Icon-None"></span>}</span> <span class="item-selected-name">{{item.displayName}}
+                        @if(devspaceService.accounts[i].activeSelf){(Du)}</span></div>
+            }@empty {
+
+            <div>Keine Kontakte gefunden</div>
+
+            }
+        </div>
+        }
+        @if(devspaceService.openChannelBarSearch){
+        <div class="devspace-message-channel-search">
+            @for(item of devspaceService.channels; track item; let i = $index){
+            <span (click)="selectChannelSearch(i)"><img src="/assets/img/tagChannelName.png" alt="">
+                {{item.title}}</span>
+            }
+        </div>
+        }
+    </div>
+<div class="app-message-input-area">
+    <app-message-input-area [context]="'message'"></app-message-input-area>
+</div>
+</Section>
+}

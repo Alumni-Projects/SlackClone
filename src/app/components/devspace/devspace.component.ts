@@ -19,6 +19,7 @@ import { BreakpointsService } from '@shared/services/breakpoints-service/breakpo
 export class DevspaceComponent implements OnInit {
   activeChannel: boolean = false
   directMessages: boolean = false
+  
   imagesLoaded = false;
   channelActiveTalk: boolean = false;
   breankpointHeader: boolean = false
@@ -26,8 +27,6 @@ export class DevspaceComponent implements OnInit {
   constructor(public dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService) {
 
   }
-
-
 
   imageUrl = '/assets/img/arrow_drop_down.png';
   imageUrlMessage = '/assets/img/arrow_drop_down.png';
@@ -79,39 +78,27 @@ export class DevspaceComponent implements OnInit {
   openDialog() {
     this.dialog.open(DevspaceDialogComponent);
   }
-  channelActiveClass(i: number) {
-    this.devspaceService.channels.forEach((channel,) => {
-      channel.channelActiveTalk = false;
-    });
-    this.devspaceService.accounts.forEach((account,) => {
-      account.activeMessage = false;
-    });
-    this.devspaceService.channels[i].channelActiveTalk = !this.devspaceService.channels[i].channelActiveTalk;
-
-
+  channelActiveClass(channelId: string) {
+    this.devspaceService.openDirectMessage = false;
+    this.devspaceService.selectedChannelId = channelId;
+    this.devspaceService.openChannel = false;
+    this.devspaceService.channelMember = false;
+    setTimeout(() => {
+      this.devspaceService.openChannel = true;           
+    }, 100);
   }
 
   messageActiveClass(i: number) {
 
-    this.devspaceService.accounts.forEach((account,) => {
-      account.activeMessage = false;
-    });
-    this.devspaceService.channels.forEach((channel,) => {
-      channel.channelActiveTalk = false;
-    });
-    this.devspaceService.accounts[i].activeMessage = !this.devspaceService.accounts[i].activeMessage;
+    this.devspaceService.selectedChannelId = '';
+    // this.devspaceService.accounts[i].activeMessage = !this.devspaceService.accounts[i].activeMessage;
     this.devspaceService.openChannel = false;
     this.devspaceService.openDirectMessage = true;
 
 
   }
   openMessage() {
-    this.devspaceService.accounts.forEach((account,) => {
-      account.activeMessage = false;
-    });
-    this.devspaceService.channels.forEach((channel,) => {
-      channel.channelActiveTalk = false;
-    });
+    this.devspaceService.selectedChannelId = '';
     this.devspaceService.openMessage = true;
     this.devspaceService.openChannel = false;
     this.devspaceService.openDirectMessage = false;
@@ -120,17 +107,8 @@ export class DevspaceComponent implements OnInit {
 
   closeMessage() {
     this.devspaceService.openMessage = false;
+    this.devspaceService.openThread = false;
   }
 
-  openChannel(i: number) {
-    this.devspaceService.accounts.forEach((account,) => {
-      account.activeMessage = false;
-    });
-    this.devspaceService.channels.forEach((channel,) => {
-      channel.channelActiveTalk = false;
-    });
-    this.devspaceService.openChannel = true;
-    this.devspaceService.openDirectMessage = false;
 
-  }
 }

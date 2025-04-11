@@ -1,7 +1,7 @@
 <section class="devspace-dialog">
     <div class="devspace-dialog-header">
         <span>Channel erstellen</span>
-        <span (click)="closeDialog()"><img src="/assets/img/dialogClose.png" alt="" ></span>
+        <span (click)="closeDialog()"><img src="/assets/img/dialogClose.png" alt=""></span>
     </div>
     <div class="devspace-dialog-title">
         <p>Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #marketing zum
@@ -9,13 +9,32 @@
     </div>
     <div class="devspace-dialog-input-Name">
         <span>Channel-Name</span>
-        <input type="text" placeholder=" z.B. Kooperationsprojekte" #channelInput>
+        <div class="devspace-dialog-input-area" >
+        <input type="text" placeholder=" z.B. Kooperationsprojekte" #channelInput class="devspace-dialog-input"
+            [class.devspace-dialog-input-Error]="channelInputError" 
+            maxlength="20" 
+            (input)="maxCharsInputControll()">
+            <span class="devspace-dialog-input-counter" [class.devspace-dialog-input-counter-error]="channelInputError" >{{charsLeft}}</span>
+        @if(channelInputError){
+        <div class="devspace-dialog-input-Name-Error">
+            @if(charsOver){
+                <span>Channel-Name darf max 20 Zeichen haben!</span>
+                } @else if(charsEmpty){
+                <span>Channel-Name darf nicht leer sein!</span>
+                }
+        </div>
+        }
+    </div>
     </div>
 
-<div class="devspace-dialog-input-Description">
-    <span><p>Beschreibung</p> <p>(optional)</p></span>
-    <input type="text" placeholder="Dein Text hier"  #channelDescription>
-</div>
+    <div class="devspace-dialog-input-Description">
+        <span>
+            <p>Beschreibung</p>
+            <p>(optional)</p>
+        </span>
+        <textarea placeholder="Dein Text hier" #channelDescription></textarea>
+        
+    </div>
 
-<div class="devspace-dialog-create" (click)="createChannel()"><span>Erstellen</span></div>
+    <div class="devspace-dialog-create" (click)="createChannel()"><span>Erstellen</span></div>
 </section>
