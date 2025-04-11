@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
-import { User } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { DevspaceService } from '../devspace-service/devspace.service';
 import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc, collection, getDocs, query, where, onSnapshot, addDoc, deleteDoc, arrayRemove, arrayUnion, serverTimestamp } from 'firebase/firestore';
 import { firebaseConfig } from '../../../../environments/environment';
 import { Devspace } from '@shared/interface/devspace';
@@ -26,8 +27,8 @@ export class FirestoreService {
 
   async saveUserToFirestore(user: User, profile: string): Promise<void> {
     const userRef = doc(this.firestore, 'users', user.uid);
-
     const userSnap = await getDoc(userRef);
+
     if (userSnap.exists()) {
       console.log('Document already exists, no changes made.');
       return;
@@ -35,12 +36,13 @@ export class FirestoreService {
 
     const userData = {
       uid: user.uid,
-      profile: profile,
+      profile,
       email: user.email,
       displayName: user.displayName,
       emailVerified: user.emailVerified,
       createdAt: new Date().toISOString()
     };
+
     try {
       await setDoc(userRef, userData);
       console.log('User data saved to Firestore');
@@ -54,12 +56,15 @@ export class FirestoreService {
     const guestRef = doc(this.firestore, 'guests', user.uid);
     const guestData = {
       uid: user.uid,
-      ip: await fetch("https://checkip.amazonaws.com/").then(res => res.text()),
-      profile: profile,
+      ip: await fetch('https://checkip.amazonaws.com/').then((res) =>
+        res.text()
+      ),
+      profile,
       displayName: `Guest_${user.uid.slice(0, 5)}`,
       isAnonymous: true,
       createdAt: new Date().toISOString()
     };
+
     try {
       await setDoc(guestRef, guestData, { merge: true });
       console.log('Guest data saved to Firestore');
@@ -71,29 +76,44 @@ export class FirestoreService {
 
   async fetchUserFromFirestore(uid: string): Promise<any> {
     const userRef = doc(this.firestore, 'users', uid);
+
     try {
       const userSnap = await getDoc(userRef);
       if (userSnap.exists()) {
         const userData = userSnap.data();
-        console.log('User data from Firestore:', userData);
         return userData;
       } else {
-        console.log('No user data found in Firestore');
         return null;
       }
     } catch (error) {
-      console.error('Error fetching user from Firestore:', error);
       throw error;
     }
   }
 
-  async updateUserInFirestore(uid: string, updatedData: Partial<any>): Promise<void> {
+  async fetchSecretData(uid: string): Promise<any> {
+    const secretRef = doc(this.firestore, `users/${uid}/secretData/secretData`);
+    try {
+      const secretSnap = await getDoc(secretRef);
+      if (secretSnap.exists()) {
+        return secretSnap.data();
+      } else {
+        return null;
+      }
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async updateUserInFirestore(
+    uid: string,
+    updatedData: Partial<any>
+  ): Promise<void> {
     const userRef = doc(this.firestore, 'users', uid);
 
     try {
       const userSnap = await getDoc(userRef);
       if (!userSnap.exists()) {
-        throw new Error('User not found. First create a document with saveUserToFirestore.');
+        throw new Error('User does not exist in Firestore. Cannot update.');
       }
 
       await updateDoc(userRef, updatedData);
@@ -102,6 +122,33 @@ export class FirestoreService {
       console.error('Error updating user in Firestore:', error);
       throw error;
     }
+  }
+
+  async initUser(devspaceService: DevspaceService): Promise<void> {
+    const auth = getAuth();
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        return;
+      }
+
+      const userRef = doc(this.firestore, 'users', user.uid);
+      const fallbackGuestRef = doc(this.firestore, 'guests', user.uid);
+
+      onSnapshot(userRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.data() as any;
+          devspaceService.setActiveUser(userData);
+        } else if (user.isAnonymous) {
+          onSnapshot(fallbackGuestRef, (guestSnap) => {
+            if (guestSnap.exists()) {
+              const guestData = guestSnap.data() as any;
+              devspaceService.setActiveUser(guestData);
+            }
+          });
+        }
+      });
+    });
   }
 
   async fetchUserFromFirestoreAll(): Promise<any> {
@@ -219,7 +266,4 @@ export class FirestoreService {
       throw error;
     }
   }
-
-
- 
 }

@@ -11,6 +11,7 @@ import { Color } from '@shared/Enums/color';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.component';
+import { AuthService } from '@shared/services/auth-service/auth.service';
 
 @Component({
   selector: 'app-profile-popup',
@@ -25,7 +26,7 @@ export class ProfilePopupComponent {
   @Output() close = new EventEmitter<void>();
   isClosing = false;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private authService: AuthService) {}
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
@@ -52,5 +53,9 @@ export class ProfilePopupComponent {
       this.isClosing = false;
       this.close.emit();
     }, 200);
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

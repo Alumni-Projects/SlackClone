@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '@shared/services/auth-service/auth.service';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
+import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfilePopupComponent } from '../profile/profile-popup/profile-popup.component';
 import { MatIcon } from '@angular/material/icon';
@@ -11,7 +12,7 @@ import { Color } from '@shared/Enums/color';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [ProfilePopupComponent, MatIcon], // nur wenn standalone: true!
+  imports: [ProfilePopupComponent, MatIcon],
   standalone: true
 })
 export class HeaderComponent {
@@ -27,6 +28,9 @@ export class HeaderComponent {
 
   placeholder(): string {
     return window.innerWidth > 768 ? 'Devspace durchsuchen' : 'Gehe zu..';
+  }
+  get user() {
+    return this.devspaceService.activeUser;
   }
 
   openProfilePopup(): void {

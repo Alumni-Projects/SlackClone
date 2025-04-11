@@ -20,6 +20,7 @@ export class DevspaceService {
   openChannel = false;
   openThread = false;
   openDirectMessage = false;
+  currentUserUid: string | null = null;
   channelNameInput: string = '';
   openSmileyBar = false;
   openContactBar = false;
@@ -41,8 +42,6 @@ export class DevspaceService {
       console.log('Updated channels:', this.channels);
     });  
   }
-
- 
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
@@ -67,4 +66,17 @@ export class DevspaceService {
     this.openDirectMessage = false;
   }
 
+  activeUser: DevspaceAccount | null = null;
+
+  
+}
+
+export interface DevspaceAccount {
+  uid?: string;
+  email?: string;
+  name: string;
+  active: boolean;
+  pic: string;
+  activeSelf: boolean;
+  activeMessage: boolean;
 }

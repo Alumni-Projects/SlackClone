@@ -1,27 +1,32 @@
 <mat-dialog-content class="profile-dialog">
   <div class="profile-dialog-title-wrapper">
-    <h2>Profil</h2>
-    <button mat-icon-button class="close-btn" (click)="closeDialog()">
+    <h2>@if (isEditing) { Dein Profil bearbeiten } @else { Profil }</h2>
+    <div class="button-icon-only" (click)="closeDialog()">
       <mat-icon
-        [style.font-size]="'24px'"
-        [style.color]="'black'"
-        class="arrow-icon"
+        [style.font-size]="IconSize.Medium"
+        [style.color]="IconColor.Black"
+        >close</mat-icon
       >
-        close
-      </mat-icon>
-    </button>
+    </div>
   </div>
 
   <div class="profile-header">
-    <img
-      class="profile-img"
-      src="assets/avatar/avatar3.svg"
-      alt="Profile picture"
-    />
+    <img class="profile-img" [src]="user?.pic" alt="Profile picture" />
   </div>
 
+  @if (!isEditing) {
   <div class="profile-info-item">
-    <h3>Steffen Hoffmann</h3>
+    <div class="profile-info-header">
+      <h3>{{ user?.name }}</h3>
+
+      @if (isOwnProfile) {
+      <button (click)="openEditDialog()" class="button-linkstyle">
+        Bearbeiten
+      </button>
+
+      }
+    </div>
+
     <div class="status">
       <div class="status-indicator"></div>
       <div class="status-text">Aktiv</div>
@@ -37,16 +42,51 @@
         >
           mail_outline
         </mat-icon>
-
         <strong>E-Mail-Adresse</strong>
       </div>
-      <a href="mailto:thehoffman@beispiel.com">thehofeispiel.com</a>
+      @if (secretData) {
+      <a [href]="'mailto:' + secretData.email">{{ secretData.email }}</a>
+      }
     </div>
   </div>
+  @if (!isOwnProfile) {
   <div class="btn-container btn-container--center">
-    <button class="button-primary">
-      <mat-icon [style.font-size]="IconSize.Medium"> mail_outline </mat-icon
-      >Nachricht
+    <button class="button-primary-icon">
+      <mat-icon
+        [style.font-size]="IconSize.Medium"
+        [style.color]="IconColor.White"
+      >
+        mail_outline
+      </mat-icon>
+      Nachricht
     </button>
   </div>
+  } } @else {
+  <div>
+    <div class="profile-edit">
+      <img src="assets/icons/account_circle.svg" alt="user icon" />
+      Vollständiger Name
+    </div>
+
+    <div class="input-bg input-bg--profile">
+      <input
+        id="name"
+        type="text"
+        [formControl]="nameControl"
+        placeholder="Dein Name"
+      />
+    </div>
+  </div>
+
+  <div class="btn-container btn-container--center">
+    <button class="button-secondary" (click)="cancelEdit()">Abbrechen</button>
+    <button
+      class="button-primary"
+      [disabled]="nameControl.invalid"
+      (click)="changeName()"
+    >
+      Speichern
+    </button>
+  </div>
+  }
 </mat-dialog-content>

@@ -1,8 +1,4 @@
-<div
-  class="profile-popup"
-  *ngIf="isOpen"
-  (click)="startCloseAnimation()"
->
+<div class="profile-popup" *ngIf="isOpen" (click)="startCloseAnimation()">
   <div
     class="profile-popup-content"
     [class.slide-in]="isOpen && !isClosing"
@@ -19,7 +15,10 @@
       Profil
     </div>
 
-    <div class="profile-popup-content-title logout" (click)="startCloseAnimation()">
+    <div
+      class="profile-popup-content-title logout"
+      (click)="startCloseAnimation(); logout()"
+    >
       <mat-icon [style.font-size]="IconSize.Medium" [style.color]="Color.Black">
         logout
       </mat-icon>
