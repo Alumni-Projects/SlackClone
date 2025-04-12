@@ -3,7 +3,7 @@
 
     @for(item of messages ; track item.id; let i = $index){        
             <div class="message-area-item">            
-                <span>{{ item.message }} </span>
+                <span>{{ item.message }} {{item.createdAt}} </span>
             </div>
        
        
