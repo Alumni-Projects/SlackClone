@@ -6,6 +6,7 @@ import { firebaseConfig } from '../../../../environments/environment';
 import { Devspace } from '@shared/interface/devspace';
 import { BehaviorSubject } from 'rxjs';
 import { ChatMessage } from '@shared/interface/chat-message';
+import { ChatReaction } from '@shared/interface/chat-reactions';
 
 @Injectable({
   providedIn: 'root'
@@ -111,7 +112,7 @@ export class FirestoreService {
       const users = querySnapshot.docs.map(doc => ({
         ...doc.data()
       }));
-      
+
       return users;
     } catch (error) {
       console.error('Error fetching users from Firestore:', error);
@@ -122,9 +123,9 @@ export class FirestoreService {
   async saveChannelToFirestore(channel: Devspace): Promise<void> {
     const channelCollectionRef = collection(this.firestore, 'channel');
     try {
-      await addDoc(channelCollectionRef, channel);      
+      await addDoc(channelCollectionRef, channel);
     } catch (error) {
-      
+
       throw error;
     }
   }
@@ -144,7 +145,7 @@ export class FirestoreService {
     }
   }
 
-  subscribeToUserChannels(userId: string): void {    
+  subscribeToUserChannels(userId: string): void {
     const channelsRef = collection(this.firestore, 'channel');
     const q = query(channelsRef, where('member', 'array-contains', userId));
     onSnapshot(q, (querySnapshot) => {
@@ -156,7 +157,7 @@ export class FirestoreService {
           this.lastAddedChannel = { id: change.doc.id, ...change.doc.data() } as Devspace;
         }
       });
-    }, (error) => {      
+    }, (error) => {
       this.channelsSubject.next([]);
     });
   }
@@ -168,14 +169,14 @@ export class FirestoreService {
       if (!channelSnap.exists()) {
         throw new Error('Channel not found.');
       }
-      await deleteDoc(channelRef);      
+      await deleteDoc(channelRef);
     } catch (error) {
       console.error('error with deleting Channels in Firestore:', error);
       throw error;
     }
-  } 
+  }
 
-  async changeChannelMembers(channelId:string, userId:string, memberChange: boolean ): Promise<void> {
+  async changeChannelMembers(channelId: string, userId: string, memberChange: boolean): Promise<void> {
     const channelRef = doc(this.firestore, 'channel', channelId);
     try {
       if (memberChange) {
@@ -187,31 +188,59 @@ export class FirestoreService {
           member: arrayRemove(userId)
         });
       }
-      
+
       console.log(`member change added or quit channel.`);
     } catch (error) {
       console.error('Error when adding the user to the channel:', error);
       throw error;
     }
-}
+  } 
   subscribeToMessages(channelId: string): void {
     const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
-    onSnapshot(messagesRef, (querySnapshot) => {
-      const messages = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as ChatMessage));
-      console.log('Messages loaded:', messages);      
+    onSnapshot(messagesRef, async (querySnapshot) => {
+      if (querySnapshot.empty) {
+        console.log('No messages found');
+        this.messagesSubject.next([]);
+        return;
+      }
+      const messages: ChatMessage[] = [];
+      for (const doc of querySnapshot.docs) {
+        const message = { id: doc.id, ...doc.data(), creator: doc.data()['creator'] } as ChatMessage;
+        const creatorData = await this.getUserData(message.creator);
+        message.creatorData = creatorData;
+        messages.push(message);
+      }
+      messages.sort((a, b) => {
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      });
+      console.log('Messages loaded:', messages);
       this.messagesSubject.next(messages);
     });
   }
 
+  private async getUserData(uid: string): Promise<any> {
+    if (!uid) {
+      console.log('No UID provided');
+      return null;
+    }
+    const userRef = doc(this.firestore, `users/${uid}`);
+    const userSnapshot = await getDoc(userRef);
+    if (userSnapshot.exists()) {
+      return userSnapshot.data();
+    } else {
+      console.log('User not found');
+      return null;
+    }
+  }
   async addMessageToChannel(channelId: string, message: string, creatorId: string): Promise<void> {
     const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
     try {
       await addDoc(messagesRef, {
         message,
         creator: creatorId,
-        createdAt: serverTimestamp(), 
+        createdAt: new Date().toISOString(),
         isThread: false,
-        reactions: [] 
+        reactions: []
       });
       console.log('Message added to channel');
     } catch (error) {
@@ -220,6 +249,19 @@ export class FirestoreService {
     }
   }
 
+  async addReactionToMessage(channelId: string, messageId: string, reaction:ChatReaction): Promise<void> {
+    const messagesRef = doc(this.firestore, `channel/${channelId}/messages/${messageId}`);
+    try {
+      await updateDoc(messagesRef, {
+        reactions: arrayUnion(reaction)
+      });
+      console.log('Reaction added to message');
+    } catch (error) {
+      console.error('Error adding reaction:', error);
+      throw error;
+    }
+  }
 
- 
+
+
 }

@@ -4,18 +4,21 @@ import { ChatMessage } from '@shared/interface/chat-message';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
-import { combineLatest, map, Subject, takeUntil } from 'rxjs';
+import { FormatMessageDatePipe } from '@shared/services/TimeFormat/format-message-date.pipe';
 
 @Component({
   selector: 'app-message-area',
-  imports: [CommonModule],
+  imports: [CommonModule, FormatMessageDatePipe],
   templateUrl: './message-area.component.html',
   styleUrl: './message-area.component.scss'
 })
 export class MessageAreaComponent {
   @Input() messageSection!: 'channel' | 'thread' | 'directmessage';
-  
-
+  hoveredIndexCreator: number | null = null;
+  hoveredIndexMember: number | null = null;
+  isHoveredAnswer: boolean = false;
+  isHoveredReaction: boolean = false;
+  isHoveredEdit: boolean = false;
   messages: ChatMessage[] = [];
   accounts: DevspaceAccount[] = [];
   filterMessageAccounts: DevspaceAccount[] = [];
@@ -28,9 +31,10 @@ export class MessageAreaComponent {
     switch (this.messageSection) {
       case 'channel':
         console.log("channel ist ausgewählt ");
-
-
-
+        this.firestore.subscribeToMessages(this.devspaceService.selectedChannelId!);
+        this.firestore.messages$.subscribe(messages => {
+          this.messages = messages;
+        });
         break;
       case 'thread':
         console.log("thread ist ausgewählt ");
@@ -46,16 +50,24 @@ export class MessageAreaComponent {
         break;
     }
 
-    this.firestore.subscribeToMessages(this.devspaceService.selectedChannelId!);
-    this.firestore.messages$.subscribe(messages => {
-      this.messages = messages;      
-    });
+
 
   }
 
- 
-  filteraccounts() {
 
+  checkMessage(i: number, pic: string) {
+    const message = this.messages[i];
+    const reactionsExists = message.reactions?.some(r => r.emoji === pic);
+    console.log(message, this.devspaceService.selectedChannelId);
+    
+
+    if (!reactionsExists) {
+      const reactionsText = {
+        emoji: pic,
+        uids: [message.creator],
+
+      };
+      this.firestore.addReactionToMessage(this.devspaceService.selectedChannelId!, message.id!, reactionsText);
+    }
   }
-
 }

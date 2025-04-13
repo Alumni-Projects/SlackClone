@@ -85,7 +85,7 @@ export class DevspaceComponent implements OnInit {
     this.devspaceService.channelMember = false;
     setTimeout(() => {
       this.devspaceService.openChannel = true;           
-    }, 100);
+    }, 200);
   }
 
   messageActiveClass(i: number) {
