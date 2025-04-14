@@ -2,7 +2,24 @@ import { Injectable } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { DevspaceService } from '../devspace-service/devspace.service';
-import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc, collection, getDocs, query, where, onSnapshot, addDoc, deleteDoc, arrayRemove, arrayUnion, serverTimestamp } from 'firebase/firestore';
+import {
+  Firestore,
+  doc,
+  setDoc,
+  getDoc,
+  getFirestore,
+  updateDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+  onSnapshot,
+  addDoc,
+  deleteDoc,
+  arrayRemove,
+  arrayUnion,
+  serverTimestamp
+} from 'firebase/firestore';
 import { firebaseConfig } from '../../../../environments/environment';
 import { Devspace } from '@shared/interface/devspace';
 import { BehaviorSubject } from 'rxjs';
@@ -135,9 +152,15 @@ export class FirestoreService {
       const userRef = doc(this.firestore, 'users', user.uid);
       const fallbackGuestRef = doc(this.firestore, 'guests', user.uid);
 
-      onSnapshot(userRef, (snapshot) => {
+      onSnapshot(userRef, async (snapshot) => {
         if (snapshot.exists()) {
           const userData = snapshot.data() as any;
+
+          if (!userData.email && user.email) {
+            await updateDoc(userRef, { email: user.email });
+            userData.email = user.email;
+          }
+
           devspaceService.setActiveUser(userData);
         } else if (user.isAnonymous) {
           onSnapshot(fallbackGuestRef, (guestSnap) => {
@@ -155,10 +178,10 @@ export class FirestoreService {
     const userRef = collection(this.firestore, 'users');
     try {
       const querySnapshot = await getDocs(userRef);
-      const users = querySnapshot.docs.map(doc => ({
+      const users = querySnapshot.docs.map((doc) => ({
         ...doc.data()
       }));
-      
+
       return users;
     } catch (error) {
       console.error('Error fetching users from Firestore:', error);
@@ -169,19 +192,23 @@ export class FirestoreService {
   async saveChannelToFirestore(channel: Devspace): Promise<void> {
     const channelCollectionRef = collection(this.firestore, 'channel');
     try {
-      await addDoc(channelCollectionRef, channel);      
+      await addDoc(channelCollectionRef, channel);
     } catch (error) {
-      
       throw error;
     }
   }
 
-  async updateChannelEditInFirestore(uid: string, updatedData: Partial<any>): Promise<void> {
+  async updateChannelEditInFirestore(
+    uid: string,
+    updatedData: Partial<any>
+  ): Promise<void> {
     const channelRef = doc(this.firestore, 'channel', uid);
     try {
       const userSnap = await getDoc(channelRef);
       if (!userSnap.exists()) {
-        throw new Error('User not found. First create a document with saveUserToFirestore.');
+        throw new Error(
+          'User not found. First create a document with saveUserToFirestore.'
+        );
       }
       await updateDoc(channelRef, updatedData);
       console.log('User data updated in Firestore:', updatedData);
@@ -191,21 +218,30 @@ export class FirestoreService {
     }
   }
 
-  subscribeToUserChannels(userId: string): void {    
+  subscribeToUserChannels(userId: string): void {
     const channelsRef = collection(this.firestore, 'channel');
     const q = query(channelsRef, where('member', 'array-contains', userId));
-    onSnapshot(q, (querySnapshot) => {
-      const channels = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Devspace));
-      console.log('loading Channels:', channels);
-      this.channelsSubject.next(channels);
-      querySnapshot.docChanges().forEach(change => {
-        if (change.type === 'added') {
-          this.lastAddedChannel = { id: change.doc.id, ...change.doc.data() } as Devspace;
-        }
-      });
-    }, (error) => {      
-      this.channelsSubject.next([]);
-    });
+    onSnapshot(
+      q,
+      (querySnapshot) => {
+        const channels = querySnapshot.docs.map(
+          (doc) => ({ id: doc.id, ...doc.data() } as Devspace)
+        );
+        console.log('loading Channels:', channels);
+        this.channelsSubject.next(channels);
+        querySnapshot.docChanges().forEach((change) => {
+          if (change.type === 'added') {
+            this.lastAddedChannel = {
+              id: change.doc.id,
+              ...change.doc.data()
+            } as Devspace;
+          }
+        });
+      },
+      (error) => {
+        this.channelsSubject.next([]);
+      }
+    );
   }
 
   async deleteChannelFromFirestore(channeluid: string): Promise<void> {
@@ -215,14 +251,18 @@ export class FirestoreService {
       if (!channelSnap.exists()) {
         throw new Error('Channel not found.');
       }
-      await deleteDoc(channelRef);      
+      await deleteDoc(channelRef);
     } catch (error) {
       console.error('error with deleting Channels in Firestore:', error);
       throw error;
     }
-  } 
+  }
 
-  async changeChannelMembers(channelId:string, userId:string, memberChange: boolean ): Promise<void> {
+  async changeChannelMembers(
+    channelId: string,
+    userId: string,
+    memberChange: boolean
+  ): Promise<void> {
     const channelRef = doc(this.firestore, 'channel', channelId);
     try {
       if (memberChange) {
@@ -234,31 +274,43 @@ export class FirestoreService {
           member: arrayRemove(userId)
         });
       }
-      
+
       console.log(`member change added or quit channel.`);
     } catch (error) {
       console.error('Error when adding the user to the channel:', error);
       throw error;
     }
-}
+  }
   subscribeToMessages(channelId: string): void {
-    const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
+    const messagesRef = collection(
+      this.firestore,
+      `channel/${channelId}/messages`
+    );
     onSnapshot(messagesRef, (querySnapshot) => {
-      const messages = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as ChatMessage));
-      console.log('Messages loaded:', messages);      
+      const messages = querySnapshot.docs.map(
+        (doc) => ({ id: doc.id, ...doc.data() } as ChatMessage)
+      );
+      console.log('Messages loaded:', messages);
       this.messagesSubject.next(messages);
     });
   }
 
-  async addMessageToChannel(channelId: string, message: string, creatorId: string): Promise<void> {
-    const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
+  async addMessageToChannel(
+    channelId: string,
+    message: string,
+    creatorId: string
+  ): Promise<void> {
+    const messagesRef = collection(
+      this.firestore,
+      `channel/${channelId}/messages`
+    );
     try {
       await addDoc(messagesRef, {
         message,
         creator: creatorId,
-        createdAt: serverTimestamp(), 
+        createdAt: serverTimestamp(),
         isThread: false,
-        reactions: [] 
+        reactions: []
       });
       console.log('Message added to channel');
     } catch (error) {

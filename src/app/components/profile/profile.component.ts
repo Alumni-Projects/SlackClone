@@ -6,6 +6,7 @@ import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
 import { CommonModule } from '@angular/common';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { ProfileDialogComponent } from './profile-dialog/profile-dialog.component';
+import { DevspaceAccount } from '@shared/interface/devspace-account';
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,9 @@ import { ProfileDialogComponent } from './profile-dialog/profile-dialog.componen
   imports: [MatIconModule, MatMenuModule, ProfilePopupComponent, CommonModule]
 })
 export class ProfileComponent {
+  openProfilePopup() {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     private dialog: MatDialog,
     private devspaceService: DevspaceService
@@ -23,7 +27,9 @@ export class ProfileComponent {
   isProfileOpen = false;
 
   logout() {}
-
+  get user(): DevspaceAccount | null {
+    return this.devspaceService.activeUser;
+  }
   openProfileDialog() {
     if (this.devspaceService.activeUser) {
       this.dialog.open(ProfileDialogComponent, {

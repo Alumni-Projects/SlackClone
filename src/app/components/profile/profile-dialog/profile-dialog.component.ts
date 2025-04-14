@@ -11,10 +11,8 @@ import { ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { IconSize } from '@shared/Enums/iconSize';
 import { Color } from '@shared/Enums/color';
 
-import {
-  DevspaceAccount,
-  DevspaceService
-} from '@shared/services/devspace-service/devspace.service';
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
+import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
 @Component({
@@ -29,7 +27,6 @@ export class ProfileDialogComponent implements OnInit {
   IconSize = IconSize;
 
   nameControl = new FormControl<string | null>('', [Validators.required]);
-  secretData!: { email: string };
   isEditing = false;
   isOwnProfile = false;
 
@@ -49,12 +46,8 @@ export class ProfileDialogComponent implements OnInit {
 
     this.isOwnProfile = !this.data?.uid || this.data.uid === activeUser?.uid;
 
-    try {
-      this.secretData = await this.firestoreService.fetchSecretData(uid);
-    } catch {}
-
     if (this.isOwnProfile && activeUser) {
-      this.nameControl.setValue(activeUser.name);
+      this.nameControl.setValue(activeUser.displayName);
     }
   }
 

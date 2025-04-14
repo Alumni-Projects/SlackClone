@@ -11,13 +11,13 @@
   </div>
 
   <div class="profile-header">
-    <img class="profile-img" [src]="user?.pic" alt="Profile picture" />
+    <img class="profile-img" [src]="user?.profile" alt="Profile picture" />
   </div>
 
   @if (!isEditing) {
   <div class="profile-info-item">
     <div class="profile-info-header">
-      <h3>{{ user?.name }}</h3>
+      <h3>{{ user?.displayName }}</h3>
 
       @if (isOwnProfile) {
       <button (click)="openEditDialog()" class="button-linkstyle">
@@ -26,10 +26,14 @@
 
       }
     </div>
-
     <div class="status">
-      <div class="status-indicator"></div>
+      @if (user?.online) {
+      <div class="status-indicator online"></div>
       <div class="status-text">Aktiv</div>
+      } @else {
+      <div class="status-indicator offline"></div>
+      <div class="status-text">Offline</div>
+      }
     </div>
   </div>
 
@@ -44,8 +48,8 @@
         </mat-icon>
         <strong>E-Mail-Adresse</strong>
       </div>
-      @if (secretData) {
-      <a [href]="'mailto:' + secretData.email">{{ secretData.email }}</a>
+      @if (user?.email) {
+      <a [href]="'mailto:' + user?.email">{{ user?.email }}</a>
       }
     </div>
   </div>

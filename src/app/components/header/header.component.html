@@ -3,27 +3,43 @@
     <img src="assets/logo.svg" alt="Logo" />
     <span class="logo-text">DABubble</span>
   </div>
+
   <div class="search">
     <input type="text" [placeholder]="placeholder()" />
     <img src="/assets/img/search_lupe.png" alt="" />
   </div>
+
   <div class="header">
     <div class="header-icon" (click)="openProfilePopup()">
       @if (user) {
-      <span class="header-username">{{ user.name }}</span>
+      <span class="header-username">{{ user.displayName }}</span>
       }
       <span class="header-icon-img">
-        @if (user?.active) {
-        <img [src]="user?.pic" alt="" />
-        } @if (user?.active) {
+        <img
+          [src]="user?.profile || '/assets/avatar/avatar3.svg'"
+          alt="Profilbild"
+        />
+
+        @if (user?.online) {
         <span class="active-Account-Icon-header"></span>
         } @else {
         <span class="active-Account-Icon-None-header"></span>
         }
-
       </span>
-      <mat-icon>keyboard_arrow_down</mat-icon>
+
+      <div class="button-icon-only">
+        <mat-icon
+          [style.font-size]="IconSize.Medium"
+          [style.color]="Color.Black"
+        >
+          keyboard_arrow_down
+        </mat-icon>
+      </div>
     </div>
   </div>
+
+  <app-profile-popup
+    [isOpen]="isProfileOpen"
+    (close)="isProfileOpen = false"
+  ></app-profile-popup>
 </div>
-<app-profile-popup [isOpen]="isProfileOpen" (close)="isProfileOpen = false"></app-profile-popup>
