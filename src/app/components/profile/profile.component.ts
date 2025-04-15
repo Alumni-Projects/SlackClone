@@ -26,7 +26,6 @@ export class ProfileComponent {
 
   isProfileOpen = false;
 
-  logout() {}
   get user(): DevspaceAccount | null {
     return this.devspaceService.activeUser;
   }

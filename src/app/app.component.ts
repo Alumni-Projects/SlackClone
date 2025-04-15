@@ -3,8 +3,7 @@ import {
   ElementRef,
   OnInit,
   OnDestroy,
-  ViewChild,
-  HostListener
+  ViewChild
 } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { FirestoreService } from './shared/services/firestore-service/firestore.service';
@@ -54,20 +53,6 @@ export class AppComponent implements OnInit, OnDestroy {
     const uid = getAuth().currentUser?.uid;
     if (uid) {
       await this.firestoreService.updateUserInFirestore(uid, { online: false });
-    }
-  }
-
-  handleUnload(event: Event) {
-    const uid = getAuth().currentUser?.uid;
-    if (uid) {
-      navigator.sendBeacon(
-        `https://firestore.googleapis.com/v1/projects/YOUR_PROJECT_ID/databases/(default)/documents/users/${uid}?updateMask.fieldPaths=online`,
-        JSON.stringify({
-          fields: {
-            online: { booleanValue: false }
-          }
-        })
-      );
     }
   }
 }

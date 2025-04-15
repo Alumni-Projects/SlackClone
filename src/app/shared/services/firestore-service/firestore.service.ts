@@ -150,7 +150,6 @@ export class FirestoreService {
       }
 
       const userRef = doc(this.firestore, 'users', user.uid);
-      const fallbackGuestRef = doc(this.firestore, 'guests', user.uid);
 
       onSnapshot(userRef, async (snapshot) => {
         if (snapshot.exists()) {
@@ -162,13 +161,6 @@ export class FirestoreService {
           }
 
           devspaceService.setActiveUser(userData);
-        } else if (user.isAnonymous) {
-          onSnapshot(fallbackGuestRef, (guestSnap) => {
-            if (guestSnap.exists()) {
-              const guestData = guestSnap.data() as any;
-              devspaceService.setActiveUser(guestData);
-            }
-          });
         }
       });
     });
