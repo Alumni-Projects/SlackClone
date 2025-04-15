@@ -11,7 +11,7 @@ import { Color } from '@shared/Enums/color';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [ProfilePopupComponent, MatIcon], // nur wenn standalone: true!
+  imports: [ProfilePopupComponent, MatIcon],
   standalone: true
 })
 export class HeaderComponent {
