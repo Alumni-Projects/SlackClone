@@ -1,5 +1,6 @@
+@use '@themes/mixins.scss' as *;
+@use '@themes/inputs.scss' as *;
 .devspace {
-
   width: 366px;
   height: 940px;
   background-color: var(--white-color);
@@ -28,6 +29,17 @@
   font-size: var(--font-size-title-default);
   font-weight: var(--font-weight-extra-bold);
   line-height: 32.74px;
+}
+.mobile-search {
+  border: 1px var(--light-purple) solid;
+  width: 100%;
+  padding: 8px 24px;
+  @include search-style;
+  display: flex;
+
+  @include respond(m) {
+    display: none;
+  }
 }
 
 .devspace-edit-logo {
@@ -114,14 +126,11 @@
 }
 
 .devspace-channel-title-content:hover {
-
   cursor: pointer;
 
   .active-Channel-Icon {
     content: url('/assets/img/arrow_drop_down_right_hover.png');
-
   }
-
 
   .active-Channel-Icon-None {
     content: url('/assets/img/arrow_drop_downHover.png');
@@ -189,10 +198,8 @@
     & img {
       content: url('/assets/img/tagHover.png');
     }
-
   }
 }
-
 
 .devspace-channel-list-item-name {
   width: 130px;
@@ -262,7 +269,6 @@
 }
 
 .devspace-direct-messages-title-content {
-
   display: flex;
   gap: 15px;
 
@@ -277,7 +283,6 @@
     font-weight: var(--font-weight-extra-bold);
     line-height: 27.28px;
     transition: all 125ms ease-in-out;
-
   }
 }
 
@@ -313,7 +318,6 @@
   }
 }
 
-
 .devspace-direct-messages-list {
   width: fit-content;
   display: flex;
@@ -338,14 +342,12 @@
 }
 
 .devspace-direct-messages-icon {
-
   position: relative;
 
   & img {
     width: 50px;
     height: 50px;
   }
-
 }
 
 .devspace-direct-messages-name {
@@ -356,7 +358,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
 }
 
 .active-Account {

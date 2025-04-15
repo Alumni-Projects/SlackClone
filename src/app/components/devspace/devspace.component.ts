@@ -5,28 +5,25 @@ import { MatDialog } from '@angular/material/dialog';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 
-
-
-
-
 @Component({
   selector: 'app-devspace',
-  imports: [
-    CommonModule,],
+  imports: [CommonModule],
   templateUrl: './devspace.component.html',
   styleUrl: './devspace.component.scss'
 })
 export class DevspaceComponent implements OnInit {
-  activeChannel: boolean = false
-  directMessages: boolean = false
-  
+  activeChannel: boolean = false;
+  directMessages: boolean = false;
+
   imagesLoaded = false;
   channelActiveTalk: boolean = false;
-  breankpointHeader: boolean = false
+  breankpointHeader: boolean = false;
 
-  constructor(public dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService) {
-
-  }
+  constructor(
+    public dialog: MatDialog,
+    public devspaceService: DevspaceService,
+    public breakpoints: BreakpointsService
+  ) {}
 
   imageUrl = '/assets/img/arrow_drop_down.png';
   imageUrlMessage = '/assets/img/arrow_drop_down.png';
@@ -60,11 +57,12 @@ export class DevspaceComponent implements OnInit {
       '/assets/img/account_circle.png',
       '/assets/img/account_circle_hover.png',
       '/assets/img/workspaces.png',
-      '/assets/img/workspacesHover.png',
-
+      '/assets/img/workspacesHover.png'
     ];
 
-    return Promise.all(imageUrls.map(url => this.loadImage(url))).then(() => { });
+    return Promise.all(imageUrls.map((url) => this.loadImage(url))).then(
+      () => {}
+    );
   }
 
   loadImage(url: string): Promise<void> {
@@ -84,18 +82,15 @@ export class DevspaceComponent implements OnInit {
     this.devspaceService.openChannel = false;
     this.devspaceService.channelMember = false;
     setTimeout(() => {
-      this.devspaceService.openChannel = true;           
+      this.devspaceService.openChannel = true;
     }, 100);
   }
 
   messageActiveClass(i: number) {
-
     this.devspaceService.selectedChannelId = '';
     // this.devspaceService.accounts[i].activeMessage = !this.devspaceService.accounts[i].activeMessage;
     this.devspaceService.openChannel = false;
     this.devspaceService.openDirectMessage = true;
-
-
   }
   openMessage() {
     this.devspaceService.selectedChannelId = '';
@@ -109,6 +104,7 @@ export class DevspaceComponent implements OnInit {
     this.devspaceService.openMessage = false;
     this.devspaceService.openThread = false;
   }
-
-
+  placeholder(): string {
+    return window.innerWidth > 768 ? 'Devspace durchsuchen' : 'Gehe zu..';
+  }
 }

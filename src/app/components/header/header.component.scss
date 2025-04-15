@@ -1,4 +1,5 @@
 @use '@themes/mixins.scss' as *;
+@use '@themes/inputs.scss' as *;
 
 .chat-topbar {
   display: flex;
@@ -57,40 +58,15 @@
     }
   }
 }
-
 .search {
-  width: 50vw;
+  @include search-style;
+  padding: 17px 45px;
+
   display: none;
-  align-items: center;
-  justify-content: space-between;
-  background-color: var(--white-color);
-  border-radius: 42px;
-  padding: 17.5px 45px 17.5px 45px;
-  gap: 0 149px 0 114px;
 
   @include respond(m) {
     display: flex;
-  }
-
-  & input {
-    width: 90%;
-    height: 33px;
-    border: none;
-    font-size: var(--font-size-title-default);
-    font-weight: var(--font-weight-normal);
-    line-height: 24.55px;
-    cursor: pointer;
-
-    &:focus {
-      outline: none;
-    }
-
-    &::placeholder {
-      font-size: var(--font-size-title-default);
-      font-weight: var(--font-weight-normal);
-      line-height: 100%;
-      color: var(--grey-dark);
-    }
+    width: 50vw;
   }
 }
 
