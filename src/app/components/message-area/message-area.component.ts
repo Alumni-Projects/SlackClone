@@ -19,6 +19,8 @@ export class MessageAreaComponent {
   isHoveredAnswer: boolean = false;
   isHoveredReaction: boolean = false;
   isHoveredEdit: boolean = false;
+  isHoveredReactionMessage: number | null = null;
+  isHoveredReactionMessageMember: number | null = null;
   messages: ChatMessage[] = [];
   accounts: DevspaceAccount[] = [];
   filterMessageAccounts: DevspaceAccount[] = [];
@@ -57,17 +59,45 @@ export class MessageAreaComponent {
 
   checkMessage(i: number, pic: string) {
     const message = this.messages[i];
-    const reactionsExists = message.reactions?.some(r => r.emoji === pic);
-    console.log(message, this.devspaceService.selectedChannelId);
-    
+    const reactionsExists = message.reactions?.some(r => r.emoji === pic);   
 
     if (!reactionsExists) {
       const reactionsText = {
         emoji: pic,
-        uids: [message.creator],
+        uids: [this.devspaceService.loggedInUserUid],
+        creator: this.devspaceService.loggedInUserUid,
+        createdAt: new Date().toISOString(),
 
       };
       this.firestore.addReactionToMessage(this.devspaceService.selectedChannelId!, message.id!, reactionsText);
     }
   }
+
+
+  logHoverIn(i: number, member: string): void {
+    if (member == 'member') {
+      this.isHoveredReactionMessageMember = i;
+    } else {
+      this.isHoveredReactionMessage = i;
+    }
+
+  }
+
+  logHoverOut(member: string): void {
+    if (member == 'member') {
+      this.isHoveredReactionMessageMember = null;
+    } else {
+      this.isHoveredReactionMessage = null;
+    }
+
+  }
+
+  changeReaction(i: number, j: number) {
+    console.log("haubt message", i, "reactions", j);  
+    const message = this.messages[i];
+    const userId = this.devspaceService.loggedInUserUid;
+    const channelId = this.devspaceService.selectedChannelId!;  
+    this.firestore.changeReactionToMessage(i, j, message, userId, channelId);
+  }
+
 }

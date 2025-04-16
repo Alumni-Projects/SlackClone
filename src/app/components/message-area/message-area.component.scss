@@ -250,12 +250,13 @@
 
 .reaction-item{    
     display: flex;   
-    width:70px;
+    width:80px;
     height: 40px;
     align-items: center;
     border: 1px solid var(--light-purple);
     border-radius: 30px;
     padding: 2px;
+    cursor: pointer;
      
 }
 
@@ -267,4 +268,8 @@
     width: 50px;
     object-fit: cover;
     }
+}
+
+.member-reaction{
+    flex-direction: row-reverse;
 }

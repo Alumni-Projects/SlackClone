@@ -262,6 +262,50 @@ export class FirestoreService {
     }
   }
 
-
+  async changeReactionToMessage(
+    i: number,
+    j: number,
+    message: ChatMessage,
+    userId: string,
+    channelId: string
+  ): Promise<void> {
+    const reaction = message.reactions![j];
+    const messagesRef = doc(this.firestore, `channel/${channelId}/messages/${message.id}`);
+  
+    if (reaction.creator === userId) {
+      console.log("reaction vom creator – is deleted");
+  
+      const newReactions = message.reactions!.filter((_, index) => index !== j);
+      try {
+        await updateDoc(messagesRef, {
+          reactions: newReactions
+        });
+      } catch (error) {
+        console.error("error with deleting Reaktion:", error);
+      }
+  
+    } else {
+      console.log("reaction from member");
+  
+      const uidIndex = reaction.uids.indexOf(userId);
+      if (uidIndex === -1) {
+        reaction.uids.push(userId);
+      } else {
+        reaction.uids.splice(uidIndex, 1);
+      }
+  
+      const updatedReactions = [...message.reactions!];
+      updatedReactions[j] = reaction;
+  
+      try {
+        await updateDoc(messagesRef, {
+          reactions: updatedReactions
+        });
+      } catch (error) {
+        console.error("error with adding Reaktion:", error);
+      }
+    }
+  }
+  
 
 }

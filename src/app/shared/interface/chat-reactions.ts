@@ -1,5 +1,7 @@
 export interface ChatReaction {
     emoji: string;
-    uids: string[];   
+    uids: string[]; 
+    creator: string;
+    createdAt: string;  
     
   }
