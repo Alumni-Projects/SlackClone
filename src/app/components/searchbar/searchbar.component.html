@@ -1,14 +1,53 @@
-<div
-  class="search-style"
-  [class.search-desktop]="variant === 'desktop'"
-  [class.search-mobile]="variant === 'mobile'"
->
-  <mat-icon [style.fontSize]="IconSize.Medium" [style.color]="Color.Black">
-    search
-  </mat-icon>
+<!-- Nur eine Variante wird angezeigt, je nach Input -->
+<div *ngIf="variant === 'desktop'" class="search-style search-desktop">
+  <mat-icon [style.fontSize]="IconSize.Medium" [style.color]="Color.Black"
+    >search</mat-icon
+  >
   <input
     type="text"
     [formControl]="searchControl"
     [placeholder]="placeholder"
   />
+</div>
+
+<div *ngIf="variant === 'mobile'" class="search-style search-mobile">
+  <mat-icon [style.fontSize]="IconSize.Medium" [style.color]="Color.Black"
+    >search</mat-icon
+  >
+  <input
+    type="text"
+    [formControl]="searchControl"
+    [placeholder]="placeholder"
+  />
+</div>
+
+<!-- Ergebnisanzeige (optional) -->
+<div
+  class="search-results"
+  *ngIf="
+    searchResults.channels.length ||
+    searchResults.users.length ||
+    searchResults.messages.length
+  "
+>
+  <div *ngIf="searchResults.channels.length">
+    <strong>📁 Channels</strong>
+    <ul>
+      <li *ngFor="let ch of searchResults.channels">{{ ch.title }}</li>
+    </ul>
+  </div>
+
+  <div *ngIf="searchResults.users.length">
+    <strong>👤 Nutzer</strong>
+    <ul>
+      <li *ngFor="let user of searchResults.users">{{ user.displayName }}</li>
+    </ul>
+  </div>
+
+  <div *ngIf="searchResults.messages.length">
+    <strong>💬 Nachrichten</strong>
+    <ul>
+      <li *ngFor="let msg of searchResults.messages">{{ msg.message }}</li>
+    </ul>
+  </div>
 </div>
