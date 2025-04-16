@@ -1,10 +1,8 @@
 @if(devspaceService.openDevspace){
 
 <section class="devspace">
-  <div class="mobile-search">
-    <input type="text" [placeholder]="placeholder()" />
-    <img src="/assets/img/search_lupe.png" alt="Suche" />
-  </div>
+  <app-searchbar variant="mobile"></app-searchbar>
+
   @if(!breakpoints.breankpointMain){
   <div class="devspace-header">
     <div class="devspace-logo">

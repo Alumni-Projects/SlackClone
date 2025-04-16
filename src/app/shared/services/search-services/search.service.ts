@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SearchService {
-
-  constructor() { }
+  constructor() {}
+  placeholder(): string {
+    return window.innerWidth > 768 ? 'Devspace durchsuchen' : 'Gehe zu..';
+  }
 }

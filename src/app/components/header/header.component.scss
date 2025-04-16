@@ -1,5 +1,4 @@
 @use '@themes/mixins.scss' as *;
-@use '@themes/inputs.scss' as *;
 
 .chat-topbar {
   display: flex;
@@ -56,17 +55,6 @@
     @include respond(l) {
       display: block;
     }
-  }
-}
-.search {
-  @include search-style;
-  padding: 17px 45px;
-
-  display: none;
-
-  @include respond(m) {
-    display: flex;
-    width: 50vw;
   }
 }
 

@@ -6,12 +6,13 @@ import { ProfilePopupComponent } from '../profile/profile-popup/profile-popup.co
 import { MatIcon } from '@angular/material/icon';
 import { IconSize } from '@shared/Enums/iconSize';
 import { Color } from '@shared/Enums/color';
+import { SearchbarComponent } from '@components/searchbar/searchbar.component';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [ProfilePopupComponent, MatIcon],
+  imports: [ProfilePopupComponent, MatIcon, SearchbarComponent],
   standalone: true
 })
 export class HeaderComponent {
@@ -24,10 +25,6 @@ export class HeaderComponent {
     private authService: AuthService,
     private dialog: MatDialog
   ) {}
-
-  placeholder(): string {
-    return window.innerWidth > 768 ? 'Devspace durchsuchen' : 'Gehe zu..';
-  }
 
   openProfilePopup(): void {
     this.isProfileOpen = !this.isProfileOpen;

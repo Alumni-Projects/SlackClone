@@ -4,10 +4,11 @@ import { DevspaceDialogComponent } from '../devspace-dialog/devspace-dialog.comp
 import { MatDialog } from '@angular/material/dialog';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
+import { SearchbarComponent } from '../searchbar/searchbar.component';
 
 @Component({
   selector: 'app-devspace',
-  imports: [CommonModule],
+  imports: [CommonModule, SearchbarComponent],
   templateUrl: './devspace.component.html',
   styleUrl: './devspace.component.scss'
 })

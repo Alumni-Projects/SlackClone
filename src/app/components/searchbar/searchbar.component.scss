@@ -1,0 +1,25 @@
+@use '@themes/mixins.scss' as *;
+@use '@themes/inputs.scss' as *;
+
+.search-desktop {
+  @include search-style;
+  padding: 17px 45px;
+  justify-content: space-evenly;
+  display: none;
+
+  @include respond(m) {
+    display: flex;
+    min-width: 50vw;
+  }
+}
+
+.search-mobile {
+  @include search-style;
+  padding: 8px 24px;
+
+  display: flex;
+  border: 1px var(--light-purple) solid;
+  @include respond(m) {
+    display: none;
+  }
+}
