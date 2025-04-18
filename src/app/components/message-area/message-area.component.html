@@ -2,6 +2,7 @@
 
     @for(item of messages ; track item.id; let i = $index){
     @if(item.creator == devspaceService.loggedInUserUid){
+
     <div class="message">
         <div class="message-time">
             <div></div>
@@ -9,14 +10,22 @@
             <div></div>
         </div>
         <div class="message-area-creator " (mouseenter)="hoveredIndexCreator = i"
-            (mouseleave)="hoveredIndexCreator = null">
+            (mouseleave)="onLeaveMessageArea('creator')">
             @if(hoveredIndexCreator == i){
             <div class="message-icon-bar icon-bar-Style">
+                @if(activeEmojiBarIndex === i && emojibar){
+                <div class="emoji-bar-icon-creator emoji-bar-icon-style">
+                    @for(emoji of devspaceService.emojisRections; track a; let a = $index){
+                    <span class="emoji-area" (click)="checkMessage(i,emoji.emoji)"><img  src="{{emoji.emoji}}" alt=""></span>
+                    }
+                </div>
+
+                }
                 <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/checkmark.png')"><img
                         src="/assets/img/checkmark.png" alt=""></span>
                 <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/ThumbsUp.png')"><img
                         src="/assets/img/ThumbsUp.png" alt=""></span>
-                <span class="message-icon-hover" (mouseenter)="isHoveredReaction = true"
+                <span class="message-icon-hover" (click)="obenEmojibar(i)" (mouseenter)="isHoveredReaction = true"
                     (mouseleave)="isHoveredReaction = false">
                     <img
                         [src]="isHoveredReaction ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
@@ -44,11 +53,10 @@
                         <span>{{item.reactions![j].uids.length}}</span>
                     </div>
                     }
-                    <span class="message-icon-hover" (mouseenter)="logHoverIn(i, 'creator')"
+                    <span (click)="obenEmojibar(i)" class="message-icon-hover" (mouseenter)="logHoverIn(i, 'creator')"
                         (mouseleave)="logHoverOut('creator')">
                         <img
                             [src]="isHoveredReactionMessage == i ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
-
 
                 </div>
 
@@ -65,14 +73,22 @@
             <div></div>
         </div>
         <div class="message-area-member" (mouseenter)=" hoveredIndexMember = i"
-            (mouseleave)="hoveredIndexMember = null">
+            (mouseleave)="onLeaveMessageArea('member')">
             @if(hoveredIndexMember == i){
             <div class="message-icon-bar-member icon-bar-Style">
+                @if(activeEmojiBarIndex === i && emojibar){
+                <div class="emoji-bar-icon-member emoji-bar-icon-style">
+                    @for(emoji of devspaceService.emojisRections; track a; let a = $index){
+                    <span class="emoji-area" (click)="checkMessage(i,emoji.emoji)"><img  src="{{emoji.emoji}}" alt=""></span>
+                    }
+                </div>
+
+                }
                 <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/checkmark.png')"><img
                         src="/assets/img/checkmark.png" alt=""></span>
                 <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/ThumbsUp.png')"><img
                         src="/assets/img/ThumbsUp.png" alt=""></span>
-                <span class="message-icon-hover" (mouseenter)="isHoveredReaction = true"
+                <span class="message-icon-hover" (click)="obenEmojibar(i)" (mouseenter)="isHoveredReaction = true"
                     (mouseleave)="isHoveredReaction = false">
                     <img
                         [src]="isHoveredReaction ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
@@ -96,7 +112,7 @@
                         <span>{{item.reactions![j].uids.length}}</span>
                     </div>
                     }
-                    <span class="message-icon-hover" (mouseenter)="logHoverIn(i, 'member')"
+                    <span (click)="obenEmojibar(i)" class="message-icon-hover" (mouseenter)="logHoverIn(i, 'member')"
                         (mouseleave)="logHoverOut('member')">
                         <img
                             [src]="isHoveredReactionMessageMember === i ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>

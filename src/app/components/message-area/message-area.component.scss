@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    position: relative;
 }
 
 .message {
@@ -19,6 +20,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 35px;
+
     & div:nth-of-type(odd) {
         flex-grow: 1;
         border: 1px solid var(--light-purple);
@@ -54,6 +56,7 @@
     position: relative;
     gap: 30px;
     cursor: default;
+
     &:hover {
         background-color: var(--bg-color);
 
@@ -185,7 +188,7 @@
     top: -10px;
     z-index: 100;
     gap: 5px;
-   
+
 }
 
 .icon-bar-Style {
@@ -195,9 +198,9 @@
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
     background-color: var(--white-color);
-    border: 1px solid var(--light-purple);    
+    border: 1px solid var(--light-purple);
     padding: 3px 15px 3px 20px;
-   
+
 }
 
 .message-icon-hover {
@@ -207,69 +210,119 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-  
+
     img {
-      width: 40px;
-      height: 40px;
-     
+        width: 40px;
+        height: 40px;
+
     }
-  
-    &:hover img {      
-      width: 24px;
-      height: 24px;
+
+    &:hover img {
+        width: 24px;
+        height: 24px;
     }
 
     &:hover {
         cursor: pointer;
         background-color: var(--bg-color);
-        border-radius: 50%;        
+        border-radius: 50%;
     }
-  }
+}
 
 .message-icon-hover-check {
-    &:hover{
+    &:hover {
         background-color: var(--bg-color);
-        border-radius: 50%;        
+        border-radius: 50%;
         cursor: pointer;
     }
 }
 
-.message-reactions{
+.message-reactions {
     width: 100%;
     height: 40px;
     display: flex;
     justify-content: end;
 }
 
-.message-reactions-member{
+.message-reactions-member {
     width: 100%;
     height: 40px;
     display: flex;
     justify-content: start;
 }
 
-.reaction-item{    
-    display: flex;   
-    width:80px;
+.reaction-item {
+    display: flex;
+    width: 80px;
     height: 40px;
     align-items: center;
     border: 1px solid var(--light-purple);
     border-radius: 30px;
     padding: 2px;
     cursor: pointer;
-     
+
 }
 
-.reaction-img{    
-    display: flex; 
-    font-size: var(--font-size-ml);   
-    & img{
-    width:50px;
-    width: 50px;
-    object-fit: cover;
+.reaction-img {
+    display: flex;
+    font-size: var(--font-size-ml);
+    & img {
+        width: 40px;
+        width: 40px;
+        object-fit: cover;
     }
 }
 
-.member-reaction{
+.member-reaction {
     flex-direction: row-reverse;
+}
+
+.emoji-bar-icon-member {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    bottom: -100px;
+    z-index: 100;
+    gap: 5px;
+    left: 0;
+    background-color: var(--white-color);
+
+}
+
+.emoji-bar-icon-creator {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    bottom: -100px;
+    z-index: 100;
+    gap: 5px;
+    left: 0px;
+    background-color: var(--white-color);
+
+}
+
+.emoji-bar-icon-style {
+    width: 255px;
+    height: fit-content;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
+    background-color: var(--white-color);
+    border: 1px solid var(--light-purple);
+    padding: 3px 5px 3px 20px;
+    & img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        cursor: pointer;
+    }
+}
+
+.emoji-area{
+    width: 40px;
+    height: 40px;
+    &:hover{
+        background-color: var(--bg-color);
+        border-radius: 50%;
+    }
 }

@@ -15,12 +15,14 @@ import { FormatMessageDatePipe } from '@shared/services/TimeFormat/format-messag
 export class MessageAreaComponent {
   @Input() messageSection!: 'channel' | 'thread' | 'directmessage';
   hoveredIndexCreator: number | null = null;
-  hoveredIndexMember: number | null = null;
-  isHoveredAnswer: boolean = false;
-  isHoveredReaction: boolean = false;
-  isHoveredEdit: boolean = false;
+  hoveredIndexMember: number | null = null; 
+  activeEmojiBarIndex: number | null = null; 
+  isHoveredAnswer = false;
+  isHoveredReaction = false;
+  isHoveredEdit = false;
   isHoveredReactionMessage: number | null = null;
   isHoveredReactionMessageMember: number | null = null;
+  emojibar = false;
   messages: ChatMessage[] = [];
   accounts: DevspaceAccount[] = [];
   filterMessageAccounts: DevspaceAccount[] = [];
@@ -53,7 +55,6 @@ export class MessageAreaComponent {
     }
 
 
-
   }
 
 
@@ -72,6 +73,8 @@ export class MessageAreaComponent {
       this.firestore.addReactionToMessage(this.devspaceService.selectedChannelId!, message.id!, reactionsText);
     }
   }
+
+  
 
 
   logHoverIn(i: number, member: string): void {
@@ -100,4 +103,18 @@ export class MessageAreaComponent {
     this.firestore.changeReactionToMessage(i, j, message, userId, channelId);
   }
 
+  obenEmojibar(i: number) {    
+    this.emojibar = !this.emojibar;
+    this.activeEmojiBarIndex = this.activeEmojiBarIndex === i ? null : i;
+  }
+  onLeaveMessageArea(type: 'member' | 'creator',) {    
+    if (type === 'member') {
+      this.hoveredIndexMember = null;
+    } else {
+      this.hoveredIndexCreator = null;
+    }
+    this.activeEmojiBarIndex = null;
+    this.emojibar = false;
+    
+  }
 }

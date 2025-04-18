@@ -26,23 +26,23 @@ export class DevspaceService {
   openChannelBar = false;
   openContactBarSearch = false;
   openChannelBarSearch = false;
-  loggedInUserUid:string = '';
+  loggedInUserUid: string = '';
   channelArray = new BehaviorSubject<any[]>([]);
-  contactArray = new BehaviorSubject<any[]>([]);  
-  clearInputMessage = false;   
+  contactArray = new BehaviorSubject<any[]>([]);
+  clearInputMessage = false;
   barContext: 'message' | 'channel' | 'thread' | 'directmessage' | null = null;
-  private subscription?: Subscription;   
+  private subscription?: Subscription;
   private clearInputMessageSubject = new BehaviorSubject<boolean>(false);
-  clearInputMessage$ = this.clearInputMessageSubject.asObservable();  
-  
-  constructor(public Firestore: FirestoreService) { 
+  clearInputMessage$ = this.clearInputMessageSubject.asObservable();
+
+  constructor(public Firestore: FirestoreService) {
     this.subscription = this.Firestore.channels$.subscribe(channels => {
       this.channels = channels;
       console.log('Updated channels:', this.channels);
-    });  
+    });
   }
 
- 
+
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
@@ -57,8 +57,20 @@ export class DevspaceService {
 
 
 
-  emojis = ['✅','😊', '😂', '❤️', '👍', '🔥', '🎉', '💡', '😎', '🚀', '✨', '🙌', '🎶', '🥳', '💪', '🧐', '🌟', '🤩', '🍀', '🏆', '🤖', '👀', '💯', '🤗', '🤔', '😜', '😇', '😅', '🤝', '🎯', '🦾', '🕶️', '🐱', '🎨', '🏅', '💰', '🛠️', '📚', '📝', '📢', '🎤', '🌍', '🔑', '💌', '🕹️', '🔮', '🎭', '🛸', '👨‍💻', '👩‍💻', '🧠', '⚡', '🛤️', '⏳', '🌀', '💎', '🥇', '📈', '🗝️', '🃏', '🎲', '💥'];
+  emojis = ['✅', '😊', '😂', '❤️', '👍', '🔥', '🎉', '💡', '😎', '🚀', '✨', '🙌', '🎶', '🥳', '💪', '🧐', '🌟', '🤩', '🍀', '🏆', '🤖', '👀', '💯', '🤗', '🤔', '😜', '😇', '😅', '🤝', '🎯', '🦾', '🕶️', '🐱', '🎨', '🏅', '💰', '🛠️', '📚', '📝', '📢', '🎤', '🌍', '🔑', '💌', '🕹️', '🔮', '🎭', '🛸', '👨‍💻', '👩‍💻', '🧠', '⚡', '🛤️', '⏳', '🌀', '💎', '🥇', '📈', '🗝️', '🃏', '🎲', '💥'];
+  emojisRections = [
+    { emoji: '/assets/img/emojis/icon1.png' },
+    { emoji: '/assets/img/emojis/icon2.png' },
+    { emoji: '/assets/img/emojis/icon3.png' },
+    { emoji: '/assets/img/emojis/icon4.png' },
+    { emoji: '/assets/img/emojis/icon5.png' },
+    { emoji: '/assets/img/emojis/icon6.png' },
+    { emoji: '/assets/img/emojis/icon7.png' },
+    { emoji: '/assets/img/emojis/icon8.png' },
+    { emoji: '/assets/img/emojis/icon9.png' },
+    { emoji: '/assets/img/emojis/icon10.png' },   
 
+  ]
   accounts: DevspaceAccount[] = [];
   closAllMessage() {
     this.openMessage = false;
