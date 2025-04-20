@@ -207,7 +207,7 @@ export class FirestoreService {
       for (const doc of querySnapshot.docs) {
         const message = { id: doc.id, ...doc.data(), creator: doc.data()['creator'] } as ChatMessage;
         const creatorData = await this.getUserData(message.creator);
-        message.creatorData = creatorData;
+        message.creatorData = creatorData;        
         messages.push(message);
       }
       messages.sort((a, b) => {
@@ -232,19 +232,74 @@ export class FirestoreService {
       return null;
     }
   }
-  async addMessageToChannel(channelId: string, message: string, creatorId: string): Promise<void> {
+  async addMessageToChannel(
+    channelId: string, 
+    message: string, 
+    creatorId: string,     
+  ): Promise<void> {
     const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
+  
+    // Erstelle eine neue Nachricht
+    const newMessage = {
+      message,
+      creator: creatorId,
+      createdAt: new Date().toISOString(),      
+      reactions: [],
+      thread: [] 
+    };
+  
     try {
-      await addDoc(messagesRef, {
-        message,
-        creator: creatorId,
-        createdAt: new Date().toISOString(),
-        isThread: false,
-        reactions: []
-      });
+     
+      await addDoc(messagesRef, newMessage);
       console.log('Message added to channel');
     } catch (error) {
       console.error('Error adding message:', error);
+      throw error;
+    }
+  }
+
+  
+   
+
+  async addThreadMessage(
+    channelId: string,
+    parentId: string,  // ID der Parent-Nachricht
+    message: string,   // Die Thread-Nachricht
+    creatorId: string  // Der Creator der Thread-Nachricht
+  ): Promise<void> {
+    const parentMessageRef = doc(this.firestore, `channel/${channelId}/messages/${parentId}`);
+    
+    // Erstelle die neue Thread-Nachricht
+    const newThreadMessage = {
+      message,
+      creator: creatorId,
+      createdAt: new Date().toISOString(),
+      isThread: true,
+      parentId,  // Verweist auf die Parent-Nachricht
+      reactions: [],
+    };
+  
+    try {
+      // Hole die Parent-Nachricht
+      const parentMessageSnapshot = await getDoc(parentMessageRef);
+      
+      if (parentMessageSnapshot.exists()) {
+        const parentMessage = parentMessageSnapshot.data();
+        
+        // Hole das bestehende Thread-Array oder initialisiere es als leeres Array
+        const threadMessages = parentMessage?.['thread'] || [];
+        
+        // Füge die neue Nachricht zum Thread hinzu
+        threadMessages.push(newThreadMessage);
+  
+        // Aktualisiere das Thread-Array in der Parent-Nachricht
+        await updateDoc(parentMessageRef, { thread: threadMessages });
+        console.log('Thread message added to parent message');
+      } else {
+        console.error('Parent message not found');
+      }
+    } catch (error) {
+      console.error('Error adding thread message:', error);
       throw error;
     }
   }

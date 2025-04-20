@@ -15,8 +15,8 @@ import { FormatMessageDatePipe } from '@shared/services/TimeFormat/format-messag
 export class MessageAreaComponent {
   @Input() messageSection!: 'channel' | 'thread' | 'directmessage';
   hoveredIndexCreator: number | null = null;
-  hoveredIndexMember: number | null = null; 
-  activeEmojiBarIndex: number | null = null; 
+  hoveredIndexMember: number | null = null;
+  activeEmojiBarIndex: number | null = null;
   isHoveredAnswer = false;
   isHoveredReaction = false;
   isHoveredEdit = false;
@@ -38,29 +38,38 @@ export class MessageAreaComponent {
         this.firestore.subscribeToMessages(this.devspaceService.selectedChannelId!);
         this.firestore.messages$.subscribe(messages => {
           this.messages = messages;
+          console.log("Nachrichten aus dem Channel:", this.messages);
         });
         break;
       case 'thread':
-        console.log("thread ist ausgewählt ");
-
-
+        console.log("thread ist ausgewählt ");
+        this.firestore.messages$.subscribe(messages => {
+          const threadRootId = this.devspaceService.selectedThreadMessage?.id;
+          const threadMessages = messages
+            .filter(message => message.thread && message.thread.some(threadMessage => threadMessage.parentId === threadRootId))
+            .map(message => message.thread)
+            .flat()
+            .filter((message): message is ChatMessage => message !== undefined);
+          this.messages = threadMessages;
+          console.log("Thread-Nachrichten:", this.messages);
+        });
         break;
+
       case 'directmessage':
         console.log("directmessage ist ausgewählt ");
         break;
-      default:
-        console.log("keine MessageSection ausgewählt");
 
+      default:
+        console.log("keine MessageSection ausgewählt");
         break;
     }
-
-
   }
+
 
 
   checkMessage(i: number, pic: string) {
     const message = this.messages[i];
-    const reactionsExists = message.reactions?.some(r => r.emoji === pic);   
+    const reactionsExists = message.reactions?.some(r => r.emoji === pic);
 
     if (!reactionsExists) {
       const reactionsText = {
@@ -74,7 +83,7 @@ export class MessageAreaComponent {
     }
   }
 
-  
+
 
 
   logHoverIn(i: number, member: string): void {
@@ -96,18 +105,18 @@ export class MessageAreaComponent {
   }
 
   changeReaction(i: number, j: number) {
-    console.log("haubt message", i, "reactions", j);  
+    console.log("haubt message", i, "reactions", j);
     const message = this.messages[i];
     const userId = this.devspaceService.loggedInUserUid;
-    const channelId = this.devspaceService.selectedChannelId!;  
+    const channelId = this.devspaceService.selectedChannelId!;
     this.firestore.changeReactionToMessage(i, j, message, userId, channelId);
   }
 
-  obenEmojibar(i: number) {    
+  obenEmojibar(i: number) {
     this.emojibar = !this.emojibar;
     this.activeEmojiBarIndex = this.activeEmojiBarIndex === i ? null : i;
   }
-  onLeaveMessageArea(type: 'member' | 'creator',) {    
+  onLeaveMessageArea(type: 'member' | 'creator',) {
     if (type === 'member') {
       this.hoveredIndexMember = null;
     } else {
@@ -115,6 +124,16 @@ export class MessageAreaComponent {
     }
     this.activeEmojiBarIndex = null;
     this.emojibar = false;
-    
+
+  }
+
+  openThread(i: number) {
+    this.devspaceService.openThread = false;
+    setTimeout(() => {
+      const threadMessage = this.messages[i];
+      this.devspaceService.selectedThreadMessage = threadMessage;
+      this.devspaceService.openThread = true;
+    }, 100);
+
   }
 }

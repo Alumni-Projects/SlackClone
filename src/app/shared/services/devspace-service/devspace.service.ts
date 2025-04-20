@@ -10,6 +10,7 @@ import { ChatMessage } from '@shared/interface/chat-message';
 })
 export class DevspaceService {
   selectedChannelId: string | null = null;
+  selectedThreadMessage: ChatMessage | null = null;
   channelMember = false;
   channelMemberAdded = false;
   channelsName = '';

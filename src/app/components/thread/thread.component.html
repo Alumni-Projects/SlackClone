@@ -1,4 +1,32 @@
 <section class="thread">
-    <div><app-message-area [messageSection]="'thread'"></app-message-area></div>
-<app-message-input-area [context]="'thread'"></app-message-input-area>
+    <div class="thread-header">
+        <div class="thread-header-title">
+            <span>Thread</span>
+            <span><img src="/assets/img/tagHover.png" alt=""></span>
+            <span></span>
+        </div>
+        <div (click)="closeThread()" class="thread-header-close"><img src="/assets/img/dialogClose.png" alt=""></div>
+    </div>
+    <!-- <div class="message-header">
+        <div></div>
+        <div></div>
+    </div> -->
+    
+    @if (userMainMessage) {
+        <div class="message">
+          <div class="message-area-text">
+            <div class="message-name">
+              <span class="member-name">{{ userMainMessage.creatorData?.displayName }}</span>
+              <span class="create-time">{{ userMainMessage.createdAt | formatMessageDate:'time' }} Uhr</span>
+            </div>
+            <div class="message-text">
+              {{ userMainMessage.message }}
+            </div>
+          </div>
+        </div>
+      }
+    <div class="message-area"><app-message-area [messageSection]="'thread'"></app-message-area></div>
+    <div class="message-input">
+        <app-message-input-area [context]="'thread'"></app-message-input-area>
+    </div>
 </section>

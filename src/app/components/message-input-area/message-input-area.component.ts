@@ -220,11 +220,20 @@ export class MessageInputAreaComponent {
     console.log("Channel text", channelId,  message, creatorId);
   }
 
-  sortDataFromThread() {
+  sortDataFromThread(): void {
     const message = this.messageInput.nativeElement.textContent;
-    const channels = this.channelNameMessage();
-    const contacts = this.contactNameMessage();
-    console.log("thread text", channels, contacts, message);
+    const channelId = this.devspaceService.selectedChannelId!;
+    const parentId = this.devspaceService.selectedThreadMessage?.id; // Hole die Parent-Nachricht (Thread Root)
+    const creatorId = this.devspaceService.loggedInUserUid!; // Der Ersteller der Nachricht
+    
+    console.log("Thread text", channelId, parentId, message, creatorId);
+  
+    if (parentId) {
+      // Füge die Nachricht als Thread-Nachricht hinzu
+      this.firestore.addThreadMessage(channelId, parentId, message, creatorId);
+    } else {
+      console.error('No parentId found. Cannot add thread message.');
+    }
   }
 
   sortDataFromDirectMessage() {

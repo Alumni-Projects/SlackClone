@@ -4,10 +4,12 @@ import { DevspaceAccount } from "./devspace-account";
 
 export interface ChatMessage {
     id?: string;
-    createdAt: any; 
+    createdAt: any;
     creator: string;
     message: string;
     isThread?: boolean;
     reactions?: ChatReaction[];
-    creatorData?: DevspaceAccount;
-}
+    creatorData?: DevspaceAccount;    
+    thread?: ChatMessage[];
+    parentId?: string;
+  }
