@@ -30,9 +30,8 @@
 
 .message-area-creator {
     width: 100%;
-    min-height: 141px;
-    max-height: 200px;
-    padding: 10px 45px 10px 146px;
+    min-height: 141px;    
+    padding: 10px 45px 10px 45px;
     display: flex;
     justify-content: end;
     position: relative;
@@ -47,9 +46,8 @@
 
 .message-area-member {
     width: 100%;
-    min-height: 141px;
-    max-height: 200px;
-    padding: 10px 146px 10px 45px;
+    min-height: 141px;    
+    padding: 10px 45px 10px 45px;
     display: flex;
     justify-content: start;
     flex-direction: row-reverse;
@@ -68,15 +66,19 @@
 
 .message-name-creator {
     display: flex;
+    align-items: center;
     height: 25px;
     gap: 20px;
+    min-width: 0;
 }
 
 .message-name-member {
     display: flex;
+    align-items: center;
     height: 25px;
     flex-direction: row-reverse;
     gap: 20px;
+    min-width: 0;
 
 }
 
@@ -97,15 +99,24 @@
     color: var(--grey-dark);
 }
 
-.member-name {
+.member-name-area {
     display: flex;
     align-items: center;
+}
+
+.member-name {
+
     font-size: var(--font-size-m);
     font-weight: var(--font-weight-extra-bold);
     line-height: 100%;
     letter-spacing: 0;
     color: var(--black-color);
     height: 100%;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 
 
@@ -124,7 +135,7 @@
     flex-direction: column;
     gap: 10px;
     align-items: flex-end;
-
+    flex-grow: 1;
 }
 
 .message-area-text-member {
@@ -132,13 +143,13 @@
     flex-direction: column;
     gap: 10px;
     align-items: start;
+    flex-grow: 1;
 }
 
 .message-creator {
     display: flex;
     width: fit-content;
-    max-width: 698px;
-    height: 105px;
+    max-height: 120px;
     height: fit-content;
     overflow: auto;
     background-color: var(--secondary-color);
@@ -155,9 +166,8 @@
 
 .message-member {
     width: fit-content;
-    max-width: 698px;
-    height: 105px;
     height: fit-content;
+    max-height: 120px;
     overflow: auto;
     padding: 15px;
     background-color: var(--bg-color);
@@ -192,7 +202,8 @@
 }
 
 .icon-bar-Style {
-    width: 255px;
+    width: fit-content;
+    max-width: 255px;
     height: 46px;
     border-bottom-left-radius: 25px;
     border-top-right-radius: 25px;
@@ -200,7 +211,6 @@
     background-color: var(--white-color);
     border: 1px solid var(--light-purple);
     padding: 3px 15px 3px 20px;
-
 }
 
 .message-icon-hover {
@@ -208,8 +218,8 @@
     height: 40px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    overflow: hidden;
+    justify-content: center;    
+    flex-shrink: 0;
 
     img {
         width: 40px;
@@ -238,17 +248,16 @@
 }
 
 .message-reactions {
-    width: 100%;
-    height: 40px;
-    display: flex;
-    justify-content: end;
+    max-width: 400px; 
+    height: auto;   
+    display: flex;    
+    overflow: auto;
 }
 
 .message-reactions-member {
-    width: 100%;
-    height: 40px;
-    display: flex;
-    justify-content: start;
+    max-width: 400px;    
+    display: flex;    
+    overflow: auto;
 }
 
 .reaction-item {
@@ -260,12 +269,14 @@
     border-radius: 30px;
     padding: 2px;
     cursor: pointer;
+    flex-shrink: 0;
 
 }
 
 .reaction-img {
     display: flex;
     font-size: var(--font-size-ml);
+
     & img {
         width: 40px;
         width: 40px;
@@ -284,9 +295,15 @@
     bottom: -100px;
     z-index: 100;
     gap: 5px;
-    left: 0;
+    left: 0px;
     background-color: var(--white-color);
 
+}
+
+.thread{
+    position: absolute;
+    left: -90px;
+    bottom: -100px;
 }
 
 .emoji-bar-icon-creator {
@@ -310,6 +327,7 @@
     background-color: var(--white-color);
     border: 1px solid var(--light-purple);
     padding: 3px 5px 3px 20px;
+
     & img {
         width: 40px;
         height: 40px;
@@ -318,11 +336,30 @@
     }
 }
 
-.emoji-area{
+.emoji-area {
     width: 40px;
     height: 40px;
-    &:hover{
+
+    &:hover {
         background-color: var(--bg-color);
         border-radius: 50%;
     }
+}
+
+.thread-count {
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-m);
+    color: var(--purple-3);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--primary-color);
+        font-weight: var(--font-weight-extra-bold);
+    }
+}
+
+.thread-reactions{
+    max-width: 289px;
+    overflow:auto;
+    justify-content: normal;
 }

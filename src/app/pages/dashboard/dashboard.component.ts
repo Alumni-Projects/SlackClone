@@ -23,11 +23,9 @@ export class DashboardComponent {
 
   ngOnInit() {
     this.loadUsers();
-    this.loadLoggedInUser();
-    console.log('DashboardComponent initialisiert.');
+    this.loadLoggedInUser();    
     this.Firestore.subscribeToUserChannels(this.devspaceService.loggedInUserUid);
-    this.devspaceService.Firestore.channels$.subscribe(channels => {
-      console.log('DashboardComponent Channels:', channels);
+    this.devspaceService.Firestore.channels$.subscribe(channels => {      
     });
   }
 
@@ -37,8 +35,7 @@ export class DashboardComponent {
   }
 
   loadLoggedInUser() {
-    this.devspaceService.loggedInUserUid = 'zBAEMISe1FekXRBU0TDSRbdOC6q2';
-    
+    this.devspaceService.loggedInUserUid = 'zBAEMISe1FekXRBU0TDSRbdOC6q2';    
   }
 
 }

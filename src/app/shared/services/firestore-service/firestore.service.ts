@@ -19,6 +19,10 @@ export class FirestoreService {
   lastAddedChannel: Devspace | null = null;
   private messagesSubject = new BehaviorSubject<ChatMessage[]>([]);
   messages$ = this.messagesSubject.asObservable();
+  private threadMessagesSubject = new BehaviorSubject<ChatMessage[]>([]);
+  threadMessages$ = this.threadMessagesSubject.asObservable();
+  selectedThreadMessage: ChatMessage | null = null;
+
 
   constructor() {
     this.app = initializeApp(firebaseConfig);
@@ -137,8 +141,7 @@ export class FirestoreService {
       if (!userSnap.exists()) {
         throw new Error('User not found. First create a document with saveUserToFirestore.');
       }
-      await updateDoc(channelRef, updatedData);
-      console.log('User data updated in Firestore:', updatedData);
+      await updateDoc(channelRef, updatedData);      
     } catch (error) {
       console.error('Error updating user in Firestore:', error);
       throw error;
@@ -149,8 +152,7 @@ export class FirestoreService {
     const channelsRef = collection(this.firestore, 'channel');
     const q = query(channelsRef, where('member', 'array-contains', userId));
     onSnapshot(q, (querySnapshot) => {
-      const channels = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Devspace));
-      console.log('loading Channels:', channels);
+      const channels = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Devspace));      
       this.channelsSubject.next(channels);
       querySnapshot.docChanges().forEach(change => {
         if (change.type === 'added') {
@@ -187,19 +189,16 @@ export class FirestoreService {
         await updateDoc(channelRef, {
           member: arrayRemove(userId)
         });
-      }
-
-      console.log(`member change added or quit channel.`);
+      }      
     } catch (error) {
       console.error('Error when adding the user to the channel:', error);
       throw error;
     }
-  } 
+  }
   subscribeToMessages(channelId: string): void {
     const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
     onSnapshot(messagesRef, async (querySnapshot) => {
-      if (querySnapshot.empty) {
-        console.log('No messages found');
+      if (querySnapshot.empty) {        
         this.messagesSubject.next([]);
         return;
       }
@@ -207,14 +206,27 @@ export class FirestoreService {
       for (const doc of querySnapshot.docs) {
         const message = { id: doc.id, ...doc.data(), creator: doc.data()['creator'] } as ChatMessage;
         const creatorData = await this.getUserData(message.creator);
-        message.creatorData = creatorData;        
+        message.creatorData = creatorData;
         messages.push(message);
       }
       messages.sort((a, b) => {
         return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-      });
-      console.log('Messages loaded:', messages);
+      });      
       this.messagesSubject.next(messages);
+    });
+  }
+
+  subscribeToThreadMessages(channelId: string, parentMessageId: string): void {
+    const threadRef = collection(this.firestore, `channel/${channelId}/messages/${parentMessageId}/threads`);
+    onSnapshot(threadRef, async (querySnapshot) => {
+      const threadMessages: ChatMessage[] = [];
+      for (const doc of querySnapshot.docs) {
+        const data = doc.data() as ChatMessage;
+        const creatorData = await this.getUserData(data.creator);
+        threadMessages.push({ id: doc.id, ...data, creatorData });
+      }
+      threadMessages.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+      this.threadMessagesSubject.next(threadMessages);
     });
   }
 
@@ -233,70 +245,53 @@ export class FirestoreService {
     }
   }
   async addMessageToChannel(
-    channelId: string, 
-    message: string, 
-    creatorId: string,     
+    channelId: string,
+    message: string,
+    creatorId: string,
   ): Promise<void> {
     const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
-  
-    // Erstelle eine neue Nachricht
     const newMessage = {
       message,
       creator: creatorId,
-      createdAt: new Date().toISOString(),      
+      createdAt: new Date().toISOString(),
       reactions: [],
-      thread: [] 
+      threadCount: 0,
     };
-  
     try {
-     
-      await addDoc(messagesRef, newMessage);
-      console.log('Message added to channel');
+
+      await addDoc(messagesRef, newMessage);      
     } catch (error) {
       console.error('Error adding message:', error);
       throw error;
     }
   }
 
-  
-   
+
+
 
   async addThreadMessage(
     channelId: string,
-    parentId: string,  // ID der Parent-Nachricht
-    message: string,   // Die Thread-Nachricht
-    creatorId: string  // Der Creator der Thread-Nachricht
+    parentMessageId: string,
+    message: string,
+    creatorId: string
   ): Promise<void> {
-    const parentMessageRef = doc(this.firestore, `channel/${channelId}/messages/${parentId}`);
-    
-    // Erstelle die neue Thread-Nachricht
+    const threadRef = collection(this.firestore, `channel/${channelId}/messages/${parentMessageId}/threads`);
+
     const newThreadMessage = {
       message,
       creator: creatorId,
       createdAt: new Date().toISOString(),
       isThread: true,
-      parentId,  // Verweist auf die Parent-Nachricht
+      parentId: parentMessageId,
       reactions: [],
     };
-  
+
     try {
-      // Hole die Parent-Nachricht
-      const parentMessageSnapshot = await getDoc(parentMessageRef);
-      
-      if (parentMessageSnapshot.exists()) {
-        const parentMessage = parentMessageSnapshot.data();
-        
-        // Hole das bestehende Thread-Array oder initialisiere es als leeres Array
-        const threadMessages = parentMessage?.['thread'] || [];
-        
-        // Füge die neue Nachricht zum Thread hinzu
-        threadMessages.push(newThreadMessage);
-  
-        // Aktualisiere das Thread-Array in der Parent-Nachricht
-        await updateDoc(parentMessageRef, { thread: threadMessages });
-        console.log('Thread message added to parent message');
-      } else {
-        console.error('Parent message not found');
+      await addDoc(threadRef, newThreadMessage);      
+      await this.updateThreadCount(channelId, parentMessageId);
+      if (this.selectedThreadMessage?.id === parentMessageId) {
+        this.selectedThreadMessage.threadCount! += 1;
+        this.selectedThreadMessage = { ...this.selectedThreadMessage }; // force change detection
       }
     } catch (error) {
       console.error('Error adding thread message:', error);
@@ -304,13 +299,34 @@ export class FirestoreService {
     }
   }
 
-  async addReactionToMessage(channelId: string, messageId: string, reaction:ChatReaction): Promise<void> {
-    const messagesRef = doc(this.firestore, `channel/${channelId}/messages/${messageId}`);
+  async updateThreadCount(channelId: string, messageId: string): Promise<void> {
+    const threadRef = collection(this.firestore, `channel/${channelId}/messages/${messageId}/threads`);
+    const threadSnapshot = await getDocs(threadRef);
+    const threadCount = threadSnapshot.size;
+    const messageRef = doc(this.firestore, `channel/${channelId}/messages/${messageId}`);
+    await updateDoc(messageRef, { threadCount: threadCount });    
+  }
+
+
+  async addReactionToMessage(
+    channelId: string,
+    messageId: string,
+    reaction: ChatReaction,
+    parentMessageId?: string,
+    threadId?: string
+  ): Promise<void> {
     try {
-      await updateDoc(messagesRef, {
-        reactions: arrayUnion(reaction)
-      });
-      console.log('Reaction added to message');
+      if (parentMessageId && threadId) {
+        const threadRef = doc(this.firestore, `channel/${channelId}/messages/${parentMessageId}/threads/${threadId}`);
+        await updateDoc(threadRef, {
+          reactions: arrayUnion(reaction)
+        });        
+      } else {
+        const messagesRef = doc(this.firestore, `channel/${channelId}/messages/${messageId}`);
+        await updateDoc(messagesRef, {
+          reactions: arrayUnion(reaction)
+        });        
+      }
     } catch (error) {
       console.error('Error adding reaction:', error);
       throw error;
@@ -322,38 +338,44 @@ export class FirestoreService {
     j: number,
     message: ChatMessage,
     userId: string,
-    channelId: string
+    channelId: string,
+    parentMessageId?: string,
+    threadId?: string
   ): Promise<void> {
     const reaction = message.reactions![j];
-    const messagesRef = doc(this.firestore, `channel/${channelId}/messages/${message.id}`);  
-    if (reaction.creator === userId) {
-      console.log("reaction vom creator – is deleted");  
+    let messageRef;
+    if (parentMessageId && threadId) {      
+      messageRef = doc(this.firestore, `channel/${channelId}/messages/${parentMessageId}/threads/${threadId}`);
+    } else {     
+      messageRef = doc(this.firestore, `channel/${channelId}/messages/${message.id}`);
+    }
+
+    if (reaction.creator === userId) {      
       const newReactions = message.reactions!.filter((_, index) => index !== j);
       try {
-        await updateDoc(messagesRef, {
+        await updateDoc(messageRef, {
           reactions: newReactions
         });
       } catch (error) {
         console.error("error with deleting Reaktion:", error);
-      }  
-    } else {
-      console.log("reaction from member");  
+      }
+    } else {      
       const uidIndex = reaction.uids.indexOf(userId);
       if (uidIndex === -1) {
         reaction.uids.push(userId);
       } else {
         reaction.uids.splice(uidIndex, 1);
-      }  
+      }
       const updatedReactions = [...message.reactions!];
-      updatedReactions[j] = reaction;  
+      updatedReactions[j] = reaction;
       try {
-        await updateDoc(messagesRef, {
+        await updateDoc(messageRef, {
           reactions: updatedReactions
         });
       } catch (error) {
         console.error("error with adding Reaktion:", error);
       }
     }
-  }  
+  }
 
 }

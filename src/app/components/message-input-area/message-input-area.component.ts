@@ -12,7 +12,7 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
 export class MessageInputAreaComponent {
   @ViewChild('messageInput') messageInput!: ElementRef;
   @Input() context!: 'message' | 'channel' | 'thread' | 'directmessage';
-  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef , public firestore: FirestoreService) {
+  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef, public firestore: FirestoreService) {
   }
 
 
@@ -183,7 +183,7 @@ export class MessageInputAreaComponent {
     }
     this.clearInputFieldMessage();
     this.closeBarsAll();
-    
+
   }
 
   closeBarsAll() {
@@ -200,13 +200,12 @@ export class MessageInputAreaComponent {
     const message = this.messageInput.nativeElement.textContent;
     const channels = this.channelNameMessage();
     const contacts = this.contactNameMessage();
-    console.log("Neue Message text", channels, contacts, message);
     this.devspaceService.contactArray.subscribe((contacts) => {
-      
+
     });
 
     this.devspaceService.channelArray.subscribe((channels) => {
-      
+
     });
   }
 
@@ -215,21 +214,17 @@ export class MessageInputAreaComponent {
     // const channels = this.channelNameMessage();
     // const contacts = this.contactNameMessage();
     const channelId = this.devspaceService.selectedChannelId!;
-    const creatorId = this.devspaceService.loggedInUserUid;   
+    const creatorId = this.devspaceService.loggedInUserUid;
     this.firestore.addMessageToChannel(channelId, message, creatorId);
-    console.log("Channel text", channelId,  message, creatorId);
   }
 
   sortDataFromThread(): void {
     const message = this.messageInput.nativeElement.textContent;
     const channelId = this.devspaceService.selectedChannelId!;
-    const parentId = this.devspaceService.selectedThreadMessage?.id; // Hole die Parent-Nachricht (Thread Root)
-    const creatorId = this.devspaceService.loggedInUserUid!; // Der Ersteller der Nachricht
-    
-    console.log("Thread text", channelId, parentId, message, creatorId);
-  
+    const parentId = this.firestore.selectedThreadMessage?.id;
+    const creatorId = this.devspaceService.loggedInUserUid!;
+
     if (parentId) {
-      // Füge die Nachricht als Thread-Nachricht hinzu
       this.firestore.addThreadMessage(channelId, parentId, message, creatorId);
     } else {
       console.error('No parentId found. Cannot add thread message.');
@@ -240,7 +235,7 @@ export class MessageInputAreaComponent {
     const message = this.messageInput.nativeElement.textContent;
     const channels = this.channelNameMessage();
     const contacts = this.contactNameMessage();
-    console.log("direkt Message text", channels, contacts, message);
+
   }
 
   clearInputFieldMessage() {

@@ -10,7 +10,7 @@ import { ChatMessage } from '@shared/interface/chat-message';
 })
 export class DevspaceService {
   selectedChannelId: string | null = null;
-  selectedThreadMessage: ChatMessage | null = null;
+  
   channelMember = false;
   channelMemberAdded = false;
   channelsName = '';
@@ -31,6 +31,8 @@ export class DevspaceService {
   channelArray = new BehaviorSubject<any[]>([]);
   contactArray = new BehaviorSubject<any[]>([]);
   clearInputMessage = false;
+  channelNameforThread: string = '';
+  threadCount: number = 0;
   barContext: 'message' | 'channel' | 'thread' | 'directmessage' | null = null;
   private subscription?: Subscription;
   private clearInputMessageSubject = new BehaviorSubject<boolean>(false);
@@ -38,8 +40,7 @@ export class DevspaceService {
 
   constructor(public Firestore: FirestoreService) {
     this.subscription = this.Firestore.channels$.subscribe(channels => {
-      this.channels = channels;
-      console.log('Updated channels:', this.channels);
+      this.channels = channels;      
     });
   }
 

@@ -24,6 +24,7 @@ export class MessageAreaComponent {
   isHoveredReactionMessageMember: number | null = null;
   emojibar = false;
   messages: ChatMessage[] = [];
+  threadMessages: ChatMessage[] = [];
   accounts: DevspaceAccount[] = [];
   filterMessageAccounts: DevspaceAccount[] = [];
 
@@ -31,28 +32,34 @@ export class MessageAreaComponent {
 
   }
 
+  get activeMessages(): ChatMessage[] {
+    switch (this.messageSection) {
+      case 'channel': return this.messages;
+      case 'thread': return this.threadMessages;
+      // case 'directmessage': return this.directMessages; 
+      default: return [];
+    }
+  }
+
   ngOnInit(): void {
     switch (this.messageSection) {
-      case 'channel':
-        console.log("channel ist ausgewählt ");
+      case 'channel':        
         this.firestore.subscribeToMessages(this.devspaceService.selectedChannelId!);
         this.firestore.messages$.subscribe(messages => {
-          this.messages = messages;
-          console.log("Nachrichten aus dem Channel:", this.messages);
+          this.messages = messages;          
         });
         break;
-      case 'thread':
-        console.log("thread ist ausgewählt ");
-        this.firestore.messages$.subscribe(messages => {
-          const threadRootId = this.devspaceService.selectedThreadMessage?.id;
-          const threadMessages = messages
-            .filter(message => message.thread && message.thread.some(threadMessage => threadMessage.parentId === threadRootId))
-            .map(message => message.thread)
-            .flat()
-            .filter((message): message is ChatMessage => message !== undefined);
-          this.messages = threadMessages;
-          console.log("Thread-Nachrichten:", this.messages);
-        });
+      case 'thread':        
+        const channelId = this.devspaceService.selectedChannelId;
+        const selectedThread = this.firestore.selectedThreadMessage;
+        if (channelId && selectedThread?.id) {
+          this.firestore.subscribeToThreadMessages(channelId, selectedThread.id);
+          this.firestore.threadMessages$.subscribe(messages => {
+            this.threadMessages = messages;            
+          });
+        } else {
+          console.warn("Thread oder Channel ID fehlt.");
+        }
         break;
 
       case 'directmessage':
@@ -68,31 +75,49 @@ export class MessageAreaComponent {
 
 
   checkMessage(i: number, pic: string) {
-    const message = this.messages[i];
-    const reactionsExists = message.reactions?.some(r => r.emoji === pic);
 
-    if (!reactionsExists) {
-      const reactionsText = {
-        emoji: pic,
-        uids: [this.devspaceService.loggedInUserUid],
-        creator: this.devspaceService.loggedInUserUid,
-        createdAt: new Date().toISOString(),
+    if (this.messageSection === 'channel') {
+      const message = this.messages[i];
+      const reactionsExists = message.reactions?.some(r => r.emoji === pic);
+      if (!reactionsExists) {
+        const reactionsText = {
+          emoji: pic,
+          uids: [this.devspaceService.loggedInUserUid],
+          creator: this.devspaceService.loggedInUserUid,
+          createdAt: new Date().toISOString(),
 
-      };
-      this.firestore.addReactionToMessage(this.devspaceService.selectedChannelId!, message.id!, reactionsText);
+        };
+        this.firestore.addReactionToMessage(this.devspaceService.selectedChannelId!, message.id!, reactionsText);
+      }
+    } else if (this.messageSection === 'thread') {
+      const threadId = this.threadMessages[i];
+      const parentmessageid = threadId.parentId;
+      const threadid = threadId.id;
+      const reactionsExists = threadId.reactions?.some(r => r.emoji === pic);
+      if (!reactionsExists) {
+        const reactionsText = {
+          emoji: pic,
+          uids: [this.devspaceService.loggedInUserUid],
+          creator: this.devspaceService.loggedInUserUid,
+          createdAt: new Date().toISOString(),
+
+        };
+        this.firestore.addReactionToMessage(
+          this.devspaceService.selectedChannelId!,
+          threadid!,
+          reactionsText,
+          parentmessageid!,
+          threadid!
+        );
+      }
     }
   }
-
-
-
-
   logHoverIn(i: number, member: string): void {
     if (member == 'member') {
       this.isHoveredReactionMessageMember = i;
     } else {
       this.isHoveredReactionMessage = i;
     }
-
   }
 
   logHoverOut(member: string): void {
@@ -101,15 +126,21 @@ export class MessageAreaComponent {
     } else {
       this.isHoveredReactionMessage = null;
     }
-
   }
 
   changeReaction(i: number, j: number) {
-    console.log("haubt message", i, "reactions", j);
-    const message = this.messages[i];
     const userId = this.devspaceService.loggedInUserUid;
     const channelId = this.devspaceService.selectedChannelId!;
-    this.firestore.changeReactionToMessage(i, j, message, userId, channelId);
+
+    if (this.messageSection === 'channel') {
+      const message = this.messages[i];
+      this.firestore.changeReactionToMessage(i, j, message, userId, channelId);
+    } else if (this.messageSection === 'thread') {
+      const threadMessage = this.threadMessages[i];
+      const parentMessageId = threadMessage.parentId!;
+      const threadId = threadMessage.id!;
+      this.firestore.changeReactionToMessage(i, j, threadMessage, userId, channelId, parentMessageId, threadId);
+    }
   }
 
   obenEmojibar(i: number) {
@@ -131,7 +162,7 @@ export class MessageAreaComponent {
     this.devspaceService.openThread = false;
     setTimeout(() => {
       const threadMessage = this.messages[i];
-      this.devspaceService.selectedThreadMessage = threadMessage;
+      this.firestore.selectedThreadMessage = threadMessage;
       this.devspaceService.openThread = true;
     }, 100);
 

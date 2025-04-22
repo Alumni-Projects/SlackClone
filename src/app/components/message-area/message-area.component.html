@@ -1,138 +1,149 @@
 <section class="message-areas">
-    @for(item of messages ; track i; let i = $index){
-        @if(item.creator == devspaceService.loggedInUserUid){
-    
-        <div class="message">
-            <div class="message-time">
-                <div></div>
-                <div class="time">{{item.createdAt | formatMessageDate}}</div>
-                <div></div>
-            </div>
-            <div class="message-area-creator " (mouseenter)="hoveredIndexCreator = i"
-                (mouseleave)="onLeaveMessageArea('creator')">
-                @if(hoveredIndexCreator == i){
-                <div class="message-icon-bar icon-bar-Style">
-                    @if(activeEmojiBarIndex === i && emojibar){
-                    <div class="emoji-bar-icon-creator emoji-bar-icon-style">
-                        @for(emoji of devspaceService.emojisRections; track a; let a = $index){
-                        <span class="emoji-area" (click)="checkMessage(i,emoji.emoji)"><img src="{{emoji.emoji}}"
-                                alt=""></span>
-                        }
-                    </div>
-    
+
+    @for(item of activeMessages ; track i; let i = $index){
+    @if(item.creator == devspaceService.loggedInUserUid){
+    <div class="message">
+        <div class="message-time">
+            <div></div>
+            <div class="time">{{item.createdAt | formatMessageDate}}</div>
+            <div></div>
+        </div>
+        <div class="message-area-creator " (mouseenter)="hoveredIndexCreator = i"
+            (mouseleave)="onLeaveMessageArea('creator')">
+            @if(hoveredIndexCreator == i){
+            <div class="message-icon-bar icon-bar-Style">
+                @if(activeEmojiBarIndex === i && emojibar){
+                <div class="emoji-bar-icon-creator emoji-bar-icon-style" >
+                    @for(emoji of devspaceService.emojisRections; track a; let a = $index){
+                    <span class="emoji-area" (click)="checkMessage(i,emoji.emoji)"><img src="{{emoji.emoji}}"
+                            alt=""></span>
                     }
-                    <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/checkmark.png')"><img
-                            src="/assets/img/checkmark.png" alt=""></span>
-                    <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/ThumbsUp.png')"><img
-                            src="/assets/img/ThumbsUp.png" alt=""></span>
-                    <span class="message-icon-hover" (click)="obenEmojibar(i)" (mouseenter)="isHoveredReaction = true"
-                        (mouseleave)="isHoveredReaction = false">
+                </div>
+
+                }
+                <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/checkmark.png')"><img
+                        src="/assets/img/checkmark.png" alt=""></span>
+                <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/ThumbsUp.png')"><img
+                        src="/assets/img/ThumbsUp.png" alt=""></span>
+                <span class="message-icon-hover" (click)="obenEmojibar(i)" (mouseenter)="isHoveredReaction = true"
+                    (mouseleave)="isHoveredReaction = false">
+                    <img
+                        [src]="isHoveredReaction ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
+                @if(this.messageSection === 'channel'){
+                <span (click)="openThread(i)" class="message-icon-hover" (mouseenter)="isHoveredAnswer = true"
+                    (mouseleave)="isHoveredAnswer = false">
+                    <img [src]="isHoveredAnswer ? '/assets/img/answer_hover.png' : '/assets/img/Answer.png'"></span>
+                }
+                <span class="message-icon-hover" (mouseenter)="isHoveredEdit = true"
+                    (mouseleave)="isHoveredEdit = false">
+                    <img [src]="isHoveredEdit ? '/assets/img/more_vert.png' : '/assets/img/edit.png'"></span>
+            </div>
+            }
+
+            <div class="message-area-text-creator ">
+                <div class="message-name-creator">
+                    <span class="create-time">{{item.createdAt | formatMessageDate:'time'}} Uhr</span>
+                    <div class="member-name-area"><span class="member-name">{{item.creatorData?.displayName}}</span>
+                    </div>
+                </div>
+                <div class="message-creator"><span>{{ item.message }}</span></div>
+                @if(item.threadCount! > 0){
+                <div (click)="openThread(i)"><span class="thread-count"> {{item.threadCount}} Antworten</span></div>
+                }
+
+
+                @if(item.reactions!.length > 0){
+                <div class="message-reactions" [class.thread-reactions]="messageSection === 'thread'">
+                    @for(reaction of item.reactions; track j; let j = $index){
+                    <div class="reaction-item" (click)="changeReaction(i,j)">
+                        <span class="reaction-img">@if(item.reactions![j].emoji.startsWith('/assets')){<img
+                                src="{{item.reactions![j].emoji}}" alt="">}@else{{{item.reactions![j].emoji}}}</span>
+                        <span>{{item.reactions![j].uids.length}}</span>
+                    </div>
+                    }
+                    <span (click)="obenEmojibar(i)" class="message-icon-hover" (mouseenter)="logHoverIn(i, 'creator')"
+                        (mouseleave)="logHoverOut('creator')">
                         <img
-                            [src]="isHoveredReaction ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
-                    <span (click)="openThread(i)" class="message-icon-hover" (mouseenter)="isHoveredAnswer = true"
-                        (mouseleave)="isHoveredAnswer = false">
-                        <img [src]="isHoveredAnswer ? '/assets/img/answer_hover.png' : '/assets/img/Answer.png'"></span>
-                    <span class="message-icon-hover" (mouseenter)="isHoveredEdit = true"
-                        (mouseleave)="isHoveredEdit = false">
-                        <img [src]="isHoveredEdit ? '/assets/img/more_vert.png' : '/assets/img/edit.png'"></span>
+                            [src]="isHoveredReactionMessage == i ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
+
+                </div>
+
+                }
+            </div>
+            <div class="profile-pic"><img src="{{item.creatorData?.profile}}" alt=""></div>
+        </div>
+    </div>
+    }@else{
+    <div class="message">
+        <div class="message-time">
+            <div></div>
+            <div class="time">{{item.createdAt | formatMessageDate}}</div>
+            <div></div>
+        </div>
+        <div class="message-area-member" (mouseenter)=" hoveredIndexMember = i"
+            (mouseleave)="onLeaveMessageArea('member')">
+            @if(hoveredIndexMember == i){
+            <div class="message-icon-bar-member icon-bar-Style">
+                @if(activeEmojiBarIndex === i && emojibar){
+                <div class="emoji-bar-icon-member emoji-bar-icon-style" [class.thread]="messageSection === 'thread'">
+                    @for(emoji of devspaceService.emojisRections; track a; let a = $index){
+                    <span class="emoji-area" (click)="checkMessage(i,emoji.emoji)"><img src="{{emoji.emoji}}"
+                            alt=""></span>
+                    }
                 </div>
                 }
-    
-                <div class="message-area-text-creator ">
-                    <div class="message-name-creator">
-                        <span class="create-time">{{item.createdAt | formatMessageDate:'time'}} Uhr</span>
-                        <span class="member-name">{{item.creatorData?.displayName}}</span>
-                    </div>
-                    <div class="message-creator"><span>{{ item.message }}</span></div>
-                    @if(item.reactions!.length > 0){
-                    <div class="message-reactions">
-                        @for(reaction of item.reactions; track j; let j = $index){
-                        <div class="reaction-item" (click)="changeReaction(i,j)">
-                            <span class="reaction-img">@if(item.reactions![j].emoji.startsWith('/assets')){<img
-                                    src="{{item.reactions![j].emoji}}" alt="">}@else{{{item.reactions![j].emoji}}}</span>
-                            <span>{{item.reactions![j].uids.length}}</span>
-                        </div>
-                        }
-                        <span (click)="obenEmojibar(i)" class="message-icon-hover" (mouseenter)="logHoverIn(i, 'creator')"
-                            (mouseleave)="logHoverOut('creator')">
-                            <img
-                                [src]="isHoveredReactionMessage == i ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
-    
-                    </div>
-    
-                    }
-                </div>
-                <div class="profile-pic"><img src="{{item.creatorData?.profile}}" alt=""></div>
-            </div>
-        </div>
-        }@else{
-        <div class="message">
-            <div class="message-time">
-                <div></div>
-                <div class="time">{{item.createdAt | formatMessageDate}}</div>
-                <div></div>
-            </div>
-            <div class="message-area-member" (mouseenter)=" hoveredIndexMember = i"
-                (mouseleave)="onLeaveMessageArea('member')">
-                @if(hoveredIndexMember == i){
-                <div class="message-icon-bar-member icon-bar-Style">
-                    @if(activeEmojiBarIndex === i && emojibar){
-                    <div class="emoji-bar-icon-member emoji-bar-icon-style">
-                        @for(emoji of devspaceService.emojisRections; track a; let a = $index){
-                        <span class="emoji-area" (click)="checkMessage(i,emoji.emoji)"><img src="{{emoji.emoji}}"
-                                alt=""></span>
-                        }
-                    </div>
-    
-                    }
-                    <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/checkmark.png')"><img
-                            src="/assets/img/checkmark.png" alt=""></span>
-                    <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/ThumbsUp.png')"><img
-                            src="/assets/img/ThumbsUp.png" alt=""></span>
-                    <span class="message-icon-hover" (click)="obenEmojibar(i)" (mouseenter)="isHoveredReaction = true"
-                        (mouseleave)="isHoveredReaction = false">
-                        <img
-                            [src]="isHoveredReaction ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
-                    <span (click)="openThread(i)" class="message-icon-hover" (mouseenter)="isHoveredAnswer = true"
-                        (mouseleave)="isHoveredAnswer = false">
-                        <img [src]="isHoveredAnswer ? '/assets/img/answer_hover.png' : '/assets/img/Answer.png'"></span>
-                </div>
+                <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/checkmark.png')"><img
+                        src="/assets/img/checkmark.png" alt=""></span>
+                <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/ThumbsUp.png')"><img
+                        src="/assets/img/ThumbsUp.png" alt=""></span>
+                <span class="message-icon-hover" (click)="obenEmojibar(i)" (mouseenter)="isHoveredReaction = true"
+                    (mouseleave)="isHoveredReaction = false">
+                    <img
+                        [src]="isHoveredReaction ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
+                @if(this.messageSection === 'channel'){
+                <span (click)="openThread(i)" class="message-icon-hover" (mouseenter)="isHoveredAnswer = true"
+                    (mouseleave)="isHoveredAnswer = false">
+                    <img [src]="isHoveredAnswer ? '/assets/img/answer_hover.png' : '/assets/img/Answer.png'"></span>
                 }
-                <div class="message-area-text-member ">
-                    <div class="message-name-member">
-                        <span class="create-time">{{item.createdAt | formatMessageDate:'time'}} Uhr</span>
-                        <span class="member-name">{{item.creatorData?.displayName}}</span>
-                    </div>
-                    <div class="message-member"><span>{{ item.message }} </span></div>
-                    @if(item.reactions!.length > 0){
-                    <div class="message-reactions-member member-reaction">
-                        @for(reaction of item.reactions; track j; let j = $index){
-                        <div (click)="changeReaction(i,j)" class="reaction-item member-reaction ">
-                            <span class="reaction-img ">@if(item.reactions![j].emoji.startsWith('/assets')){<img
-                                    src="{{item.reactions![j].emoji}}" alt="">}@else{{{item.reactions![j].emoji}}}</span>
-                            <span>{{item.reactions![j].uids.length}}</span>
-                        </div>
-                        }
-                        <span (click)="obenEmojibar(i)" class="message-icon-hover" (mouseenter)="logHoverIn(i, 'member')"
-                            (mouseleave)="logHoverOut('member')">
-                            <img
-                                [src]="isHoveredReactionMessageMember === i ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
-    
-                    </div>
-    
-                    }
-    
-                </div>
-                <div class="profile-pic"><img src="{{item.creatorData?.profile}}" alt=""></div>
+
             </div>
+            }
+            <div class="message-area-text-member ">
+                <div class="message-name-member">
+                    <span class="create-time">{{item.createdAt | formatMessageDate:'time'}} Uhr</span>
+                    <div class="member-name-area"><span class="member-name">{{item.creatorData?.displayName}}</span>
+                    </div>
+                </div>
+                <div class="message-member"><span>{{ item.message }} </span></div>
+                @if(item.threadCount! > 0){
+                <div (click)="openThread(i)"><span class="thread-count"> {{item.threadCount}} Antworten</span></div>
+                }
+                @if(item.reactions!.length > 0){
+                <div class="message-reactions-member member-reaction" [class.thread-reactions]="messageSection === 'thread'">
+                    @for(reaction of item.reactions; track j; let j = $index){
+                    <div (click)="changeReaction(i,j)" class="reaction-item member-reaction ">
+                        <span class="reaction-img ">@if(item.reactions![j].emoji.startsWith('/assets')){<img
+                                src="{{item.reactions![j].emoji}}" alt="">}@else{{{item.reactions![j].emoji}}}</span>
+                        <span>{{item.reactions![j].uids.length}}</span>
+                    </div>
+                    }
+                    <span (click)="obenEmojibar(i)" class="message-icon-hover" (mouseenter)="logHoverIn(i, 'member')"
+                        (mouseleave)="logHoverOut('member')">
+                        <img
+                            [src]="isHoveredReactionMessageMember === i ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
+
+                </div>
+
+                }
+
+            </div>
+            <div class="profile-pic"><img src="{{item.creatorData?.profile}}" alt=""></div>
         </div>
-        }
-    
-    
-    
-    
-        }
-    
+    </div>
+    }
+
+    }
+
 
 
 </section>

@@ -16,8 +16,12 @@ export class ThreadComponent {
   constructor(public devspaceService: DevspaceService, public firestore: FirestoreService) { }
 
   get userMainMessage() {
-    return this.devspaceService.selectedThreadMessage;
+    if (!this.firestore.selectedThreadMessage) {
+      throw new Error('selectedThreadMessage is null or undefined');
+    }
+    return this.firestore.selectedThreadMessage;
   }
+
   closeThread() {
 
     this.devspaceService.openThread = false;

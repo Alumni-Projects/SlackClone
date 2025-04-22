@@ -12,4 +12,6 @@ export interface ChatMessage {
     creatorData?: DevspaceAccount;    
     thread?: ChatMessage[];
     parentId?: string;
+    threadCount?: number;
+    
   }

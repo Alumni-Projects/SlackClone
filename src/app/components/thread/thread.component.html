@@ -1,32 +1,66 @@
 <section class="thread">
-    <div class="thread-header">
-        <div class="thread-header-title">
-            <span>Thread</span>
-            <span><img src="/assets/img/tagHover.png" alt=""></span>
-            <span></span>
-        </div>
-        <div (click)="closeThread()" class="thread-header-close"><img src="/assets/img/dialogClose.png" alt=""></div>
+  <div class="thread-header">
+    <div class="thread-header-title">
+      <span>Thread</span>
+      <span><img src="/assets/img/tagHover.png" alt=""></span>
+      <span class="thread-header-title-name">{{this.devspaceService.channelNameforThread}}</span>
     </div>
-    <!-- <div class="message-header">
-        <div></div>
-        <div></div>
-    </div> -->
-    
-    @if (userMainMessage) {
-        <div class="message">
-          <div class="message-area-text">
-            <div class="message-name">
-              <span class="member-name">{{ userMainMessage.creatorData?.displayName }}</span>
-              <span class="create-time">{{ userMainMessage.createdAt | formatMessageDate:'time' }} Uhr</span>
-            </div>
-            <div class="message-text">
-              {{ userMainMessage.message }}
-            </div>
-          </div>
+    <div (click)="closeThread()" class="thread-header-close"><img src="/assets/img/dialogClose.png" alt=""></div>
+  </div>
+<div class="message-area-wrapper">
+  @if (this.devspaceService.loggedInUserUid == userMainMessage.creator) {
+  <div class="message-area">
+    <div class="message-creator">
+      <div><span class="member-icon"><img src="{{ userMainMessage.creatorData?.profile }}" alt=""></span></div>
+      <div class="message-name">
+        <div class="member-name-area">
+          <span class="member-name">{{ userMainMessage.creatorData?.displayName }}</span>
+          <span class="create-time">{{ userMainMessage.createdAt | formatMessageDate:'time' }} Uhr</span>
         </div>
-      }
-    <div class="message-area"><app-message-area [messageSection]="'thread'"></app-message-area></div>
-    <div class="message-input">
-        <app-message-input-area [context]="'thread'"></app-message-input-area>
+        <div class="message-text message-text-creator">
+          <span>{{ userMainMessage.message }}</span>
+        </div>
+      </div>      
     </div>
+    @if(this.userMainMessage.threadCount! > 0){
+      <div class="thread-count-area">
+        <div class="thread-count">
+          <span>{{userMainMessage.threadCount}}</span>
+          <span> Antworten</span>
+        </div>
+        <div class="thread-count-stripes"></div>
+      </div>
+    }
+  </div>
+  }@else {
+    <div class="message-area"> 
+  <div class="message-member">
+    <div><span class="member-icon"><img src="{{ userMainMessage.creatorData?.profile }}" alt=""></span></div>
+    <div class="message-name">
+      <div class="member-name-area">
+        <span class="member-name">{{ userMainMessage.creatorData?.displayName }}</span>
+        <span class="create-time">{{ userMainMessage.createdAt | formatMessageDate:'time' }} Uhr</span>
+      </div>
+      <div class="message-text message-text-member">
+        <span>{{ userMainMessage.message }}</span>
+      </div>
+    </div>    
+  </div>
+  @if(this.userMainMessage.threadCount! > 0){
+    <div class="thread-count-area">
+      <div class="thread-count">
+        <span>{{userMainMessage.threadCount}}</span>
+        <span> Antworten</span>
+      </div>
+      <div class="thread-count-stripes"></div>
+    </div>
+  }
+  
+</div>
+  }
+  <div class="message-area"><app-message-area [messageSection]="'thread'"></app-message-area></div>
+</div>
+  <div class="message-input">
+    <app-message-input-area [context]="'thread'"></app-message-input-area>
+  </div>
 </section>
