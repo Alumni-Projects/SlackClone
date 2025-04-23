@@ -4,6 +4,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { ElementRef, HostListener } from '@angular/core';
+import { UserListItemComponent } from '@components/user-list-item/user-list-item.component';
 
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { IconSize } from '@shared/Enums/iconSize';
@@ -17,7 +18,13 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-searchbar',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, CommonModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    UserListItemComponent
+  ],
+
   templateUrl: './searchbar.component.html',
   styleUrls: ['./searchbar.component.scss']
 })

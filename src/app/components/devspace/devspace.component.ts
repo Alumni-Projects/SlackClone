@@ -5,10 +5,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 import { SearchbarComponent } from '../searchbar/searchbar.component';
-
+import { UserListItemComponent } from '../user-list-item/user-list-item.component';
 @Component({
   selector: 'app-devspace',
-  imports: [CommonModule, SearchbarComponent],
+  imports: [CommonModule, SearchbarComponent, UserListItemComponent],
   templateUrl: './devspace.component.html',
   styleUrl: './devspace.component.scss'
 })
@@ -87,12 +87,13 @@ export class DevspaceComponent implements OnInit {
     }, 100);
   }
 
-  messageActiveClass(i: number) {
+  messageActiveClass(index: number): void {
+    this.selectedUserIndex = index;
     this.devspaceService.selectedChannelId = '';
-    // this.devspaceService.accounts[i].activeMessage = !this.devspaceService.accounts[i].activeMessage;
     this.devspaceService.openChannel = false;
     this.devspaceService.openDirectMessage = true;
   }
+
   openMessage() {
     this.devspaceService.selectedChannelId = '';
     this.devspaceService.openMessage = true;
@@ -108,4 +109,5 @@ export class DevspaceComponent implements OnInit {
   placeholder(): string {
     return window.innerWidth > 768 ? 'Devspace durchsuchen' : 'Gehe zu..';
   }
+  selectedUserIndex: number | null = null;
 }

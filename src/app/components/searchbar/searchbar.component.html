@@ -33,8 +33,15 @@
         </span>
       </div>
     </div>
+    <app-user-list-item
+      class="search-item"
+      *ngFor="let user of searchResults.users"
+      [user]="user"
+      [currentUserUid]="devspaceService.loggedInUserUid"
+    ></app-user-list-item>
 
-    <div *ngIf="searchResults.users.length > 0">
+    <!-- test -->
+    <!-- <div *ngIf="searchResults.users.length > 0">
       <strong>👤 Nutzer</strong>
       <div>
         <span
@@ -63,7 +70,7 @@
           </div>
         </span>
       </div>
-    </div>
+    </div> -->
 
     <div *ngIf="searchResults.messages.length > 0">
       <strong>💬 Nachrichten</strong>
@@ -83,8 +90,9 @@
     <div
       *ngIf="
         !searchResults.channels.length &&
-        !searchResults.users.length &&
-        !searchResults.messages.length
+          !searchResults.users.length &&
+          !searchResults.messages.l;
+        ength
       "
     >
       <em>Keine Treffer gefunden.</em>
