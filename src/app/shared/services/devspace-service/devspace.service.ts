@@ -26,28 +26,25 @@ export class DevspaceService {
   openChannelBar = false;
   openContactBarSearch = false;
   openChannelBarSearch = false;
-  loggedInUserUid:string = '';
+  loggedInUserUid: string = '';
   channelArray = new BehaviorSubject<any[]>([]);
-  contactArray = new BehaviorSubject<any[]>([]);  
-  clearInputMessage = false;   
+  contactArray = new BehaviorSubject<any[]>([]);
+  clearInputMessage = false;
   barContext: 'message' | 'channel' | 'thread' | 'directmessage' | null = null;
-  private subscription?: Subscription;   
+  private subscription?: Subscription;
   private clearInputMessageSubject = new BehaviorSubject<boolean>(false);
-  clearInputMessage$ = this.clearInputMessageSubject.asObservable();  
-  
-  constructor(public Firestore: FirestoreService) { 
-    this.subscription = this.Firestore.channels$.subscribe(channels => {
+  clearInputMessage$ = this.clearInputMessageSubject.asObservable();
+
+  constructor(public Firestore: FirestoreService) {
+    this.subscription = this.Firestore.channels$.subscribe((channels) => {
       this.channels = channels;
       console.log('Updated channels:', this.channels);
-    });  
+    });
   }
-
- 
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
-
 
   setClearInputMessage(status: boolean) {
     this.clearInputMessageSubject.next(status);
@@ -55,9 +52,69 @@ export class DevspaceService {
 
   channels: Devspace[] = [];
 
-
-
-  emojis = ['😊', '😂', '❤️', '👍', '🔥', '🎉', '💡', '😎', '🚀', '✨', '🙌', '🎶', '🥳', '💪', '🧐', '🌟', '🤩', '🍀', '🏆', '🤖', '👀', '💯', '🤗', '🤔', '😜', '😇', '😅', '🤝', '🎯', '🦾', '🕶️', '🐱', '🎨', '🏅', '💰', '🛠️', '📚', '📝', '📢', '🎤', '🌍', '🔑', '💌', '🕹️', '🔮', '🎭', '🛸', '👨‍💻', '👩‍💻', '🧠', '⚡', '🛤️', '⏳', '🌀', '💎', '🥇', '📈', '🗝️', '🃏', '🎲', '💥'];
+  emojis = [
+    '😊',
+    '😂',
+    '❤️',
+    '👍',
+    '🔥',
+    '🎉',
+    '💡',
+    '😎',
+    '🚀',
+    '✨',
+    '🙌',
+    '🎶',
+    '🥳',
+    '💪',
+    '🧐',
+    '🌟',
+    '🤩',
+    '🍀',
+    '🏆',
+    '🤖',
+    '👀',
+    '💯',
+    '🤗',
+    '🤔',
+    '😜',
+    '😇',
+    '😅',
+    '🤝',
+    '🎯',
+    '🦾',
+    '🕶️',
+    '🐱',
+    '🎨',
+    '🏅',
+    '💰',
+    '🛠️',
+    '📚',
+    '📝',
+    '📢',
+    '🎤',
+    '🌍',
+    '🔑',
+    '💌',
+    '🕹️',
+    '🔮',
+    '🎭',
+    '🛸',
+    '👨‍💻',
+    '👩‍💻',
+    '🧠',
+    '⚡',
+    '🛤️',
+    '⏳',
+    '🌀',
+    '💎',
+    '🥇',
+    '📈',
+    '🗝️',
+    '🃏',
+    '🎲',
+    '💥'
+  ];
 
   accounts: DevspaceAccount[] = [];
   closAllMessage() {
@@ -66,5 +123,4 @@ export class DevspaceService {
     this.openThread = false;
     this.openDirectMessage = false;
   }
-
 }

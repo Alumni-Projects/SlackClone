@@ -1,53 +1,93 @@
-<!-- Nur eine Variante wird angezeigt, je nach Input -->
-<div *ngIf="variant === 'desktop'" class="search-style search-desktop">
-  <mat-icon [style.fontSize]="IconSize.Medium" [style.color]="Color.Black"
-    >search</mat-icon
-  >
-  <input
-    type="text"
-    [formControl]="searchControl"
-    [placeholder]="placeholder"
-  />
-</div>
-
-<div *ngIf="variant === 'mobile'" class="search-style search-mobile">
-  <mat-icon [style.fontSize]="IconSize.Medium" [style.color]="Color.Black"
-    >search</mat-icon
-  >
-  <input
-    type="text"
-    [formControl]="searchControl"
-    [placeholder]="placeholder"
-  />
-</div>
-
-<!-- Ergebnisanzeige (optional) -->
+<!-- Suchfeld -->
 <div
-  class="search-results"
-  *ngIf="
-    searchResults.channels.length ||
-    searchResults.users.length ||
-    searchResults.messages.length
-  "
+  [ngClass]="{
+    'search-style': true,
+    'search-desktop': variant === 'desktop',
+    'search-mobile': variant === 'mobile'
+  }"
 >
-  <div *ngIf="searchResults.channels.length">
-    <strong>📁 Channels</strong>
-    <ul>
-      <li *ngFor="let ch of searchResults.channels">{{ ch.title }}</li>
-    </ul>
-  </div>
+  <mat-icon [style.fontSize]="IconSize.Medium" [style.color]="Color.Black">
+    search
+  </mat-icon>
+  <input
+    type="text"
+    [formControl]="searchControl"
+    (focus)="showResults = true"
+    [placeholder]="placeholder"
+  />
 
-  <div *ngIf="searchResults.users.length">
-    <strong>👤 Nutzer</strong>
-    <ul>
-      <li *ngFor="let user of searchResults.users">{{ user.displayName }}</li>
-    </ul>
-  </div>
+  <div class="search-results" *ngIf="showResults">
+    <div *ngIf="searchResults.channels.length > 0">
+      <strong>📁 Channels</strong>
+      <div>
+        <span
+          *ngFor="let ch of searchResults.channels"
+          class="search-item"
+          (click)="(ch.id)"
+        >
+          <mat-icon>folder</mat-icon>
+          <div>
+            <div class="title">{{ ch.title }}</div>
+            <div class="description">{{ ch.description }}</div>
+          </div>
+        </span>
+      </div>
+    </div>
 
-  <div *ngIf="searchResults.messages.length">
-    <strong>💬 Nachrichten</strong>
-    <ul>
-      <li *ngFor="let msg of searchResults.messages">{{ msg.message }}</li>
-    </ul>
+    <div *ngIf="searchResults.users.length > 0">
+      <strong>👤 Nutzer</strong>
+      <div>
+        <span
+          *ngFor="let user of searchResults.users"
+          class="search-item"
+          (click)="user.uid ? goToUser(user.uid) : null"
+        >
+          <img [src]="user.profile" alt="Avatar" class="avatar" />
+          <div>
+            <div class="name">
+              {{ user.displayName }}
+              <span *ngIf="user.uid === devspaceService.loggedInUserUid"
+                >(Du)</span
+              >
+            </div>
+            <div class="status">
+              <span
+                class="status-dot"
+                [ngClass]="{
+                  online: user.online,
+                  offline: !user.online
+                }"
+              ></span>
+              {{ user.online ? 'Online' : 'Offline' }}
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <div *ngIf="searchResults.messages.length > 0">
+      <strong>💬 Nachrichten</strong>
+      <div>
+        <span *ngFor="let msg of searchResults.messages" class="search-item">
+          <mat-icon>chat</mat-icon>
+          <div>
+            <div class="message">{{ msg.message }}</div>
+            <div class="meta">
+              von {{ msg.creator }} (Channel: {{ msg.channelId }})
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        !searchResults.channels.length &&
+        !searchResults.users.length &&
+        !searchResults.messages.length
+      "
+    >
+      <em>Keine Treffer gefunden.</em>
+    </div>
   </div>
 </div>

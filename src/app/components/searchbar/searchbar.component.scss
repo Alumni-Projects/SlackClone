@@ -1,25 +1,100 @@
 @use '@themes/mixins.scss' as *;
 @use '@themes/inputs.scss' as *;
 
-.search-desktop {
-  @include search-style;
-  padding: 17px 45px;
-  justify-content: space-evenly;
-  display: none;
+.search {
+  &-style {
+    position: relative;
+  }
+  &-desktop {
+    @include search-style;
+    padding: 17px 45px;
+    justify-content: space-evenly;
+    display: none;
 
-  @include respond(m) {
+    @include respond(m) {
+      display: flex;
+      min-width: 50vw;
+    }
+  }
+  &-mobile {
+    @include search-style;
+    padding: 8px 24px;
+
     display: flex;
-    min-width: 50vw;
+    border: 1px var(--light-purple) solid;
+    @include respond(m) {
+      display: none;
+    }
+  }
+  &-results {
+    position: absolute;
+    width: 50%;
+    z-index: 1;
+    top: 100%;
+    left: 45px;
+    right: 0;
+    background-color: var(--white-color);
+    border-radius: var(--search-radius);
+    border: 1px solid var(--light-purple);
+    padding: 20px 21px;
+
+    max-height: 200px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--grey-light) transparent;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--grey-light);
+      border-radius: 10px;
+    }
   }
 }
-
-.search-mobile {
-  @include search-style;
-  padding: 8px 24px;
-
+.search-item {
   display: flex;
-  border: 1px var(--light-purple) solid;
-  @include respond(m) {
-    display: none;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background-color: var(--grey-light);
   }
+
+  .title,
+  .name {
+    font-weight: bold;
+  }
+
+  .description,
+  .email,
+  .meta {
+    font-size: 0.85rem;
+    color: var(--grey-dark);
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 50%;
+}
+
+.online {
+  background-color: var(--green);
+}
+
+.offline {
+  background-color: var(--grey-light);
 }
