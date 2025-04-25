@@ -465,4 +465,8 @@ export class FirestoreService {
     }
   }
 
+  sendMessageToChannelFromNewMessage(message: string, channelId: string): void {
+    
+  }
+
 }

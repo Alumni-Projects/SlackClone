@@ -1,4 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Devspace } from '@shared/interface/devspace';
+import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
@@ -18,6 +20,10 @@ export class MessageInputAreaComponent {
 
   ngAfterViewInit(): void {
     this.inputSearchMessages();
+    this.devspaceService.contactArray.subscribe((contacts) => {
+    });
+    this.devspaceService.channelArray.subscribe((channels) => {
+    });
   }
 
   selectSmiley(i: number) {
@@ -169,16 +175,16 @@ export class MessageInputAreaComponent {
   addMessage() {
     switch (this.context) {
       case 'message':
-        this.sortDataFromMessage();
+        this.SendMessageFromNewMessage();
         break;
       case 'channel':
-        this.sortDataFromChannel();
+        this.SendMessageFromChannel();
         break;
       case 'thread':
-        this.sortDataFromThread();
+        this.SendMessageFromThread();
         break;
       case 'directmessage':
-        this.sortDataFromDirectMessage();
+        this.SendMessageFromDirectMessage();
         break;
     }
     this.clearInputFieldMessage();
@@ -196,29 +202,53 @@ export class MessageInputAreaComponent {
     this.devspaceService.channelMemberAdded = false;
   }
 
-  sortDataFromMessage() {
+  SendMessageFromNewMessage() {
     const message = this.messageInput.nativeElement.textContent;
-    const channels = this.channelNameMessage();
-    const contacts = this.contactNameMessage();
-    this.devspaceService.contactArray.subscribe((contacts) => {
+    const channel = this.filterChannelFromNewMessage(this.devspaceService.channelArray.value);
+    const contact = this.filterContactFromNewMessage(this.devspaceService.contactArray.value);
+    const creatorId = this.devspaceService.loggedInUserUid;
+    if (channel.length > 0) {
+      for (let i = 0; i < channel.length; i++) {
+        this.firestore.addMessageToChannel(channel[i]!.id!, message, creatorId);
+      }
+    }
 
-    });
+    if (contact.length > 0) {
+      for (let i = 0; i < contact.length; i++) {
+        // this.firestore.addMessageToDirectMessage(contact[i]!.id!, message, creatorId);
+      }
+    }
 
-    this.devspaceService.channelArray.subscribe((channels) => {
 
-    });
+
   }
 
-  sortDataFromChannel() {
+  filterChannelFromNewMessage(channelSelected: Devspace[]) {
+    const selectChannel = [];
+    for (let i = 0; i < channelSelected.length; i++) {
+      const channel = this.devspaceService.channels.find(channel => channel.title == channelSelected[i]);
+      selectChannel.push(channel);
+    }
+    return selectChannel;
+  }
+
+  filterContactFromNewMessage(contactSelected: string[]) {
+    const selectcontact = [];
+    for (let i = 0; i < contactSelected.length; i++) {
+      const contact = this.devspaceService.accounts.find(contact => contact.displayName == contactSelected[i]);
+      selectcontact.push(contact);
+    }
+    return selectcontact;
+  }
+
+  SendMessageFromChannel() {
     const message = this.messageInput.nativeElement.textContent;
-    // const channels = this.channelNameMessage();
-    // const contacts = this.contactNameMessage();
     const channelId = this.devspaceService.selectedChannelId!;
     const creatorId = this.devspaceService.loggedInUserUid;
     this.firestore.addMessageToChannel(channelId, message, creatorId);
   }
 
-  sortDataFromThread(): void {
+  SendMessageFromThread(): void {
     const message = this.messageInput.nativeElement.textContent;
     const channelId = this.devspaceService.selectedChannelId!;
     const parentId = this.firestore.selectedThreadMessage?.id;
@@ -231,7 +261,7 @@ export class MessageInputAreaComponent {
     }
   }
 
-  sortDataFromDirectMessage() {
+  SendMessageFromDirectMessage() {
     const message = this.messageInput.nativeElement.textContent;
     const channels = this.channelNameMessage();
     const contacts = this.contactNameMessage();
