@@ -70,7 +70,6 @@ export class SearchbarComponent implements OnInit, OnDestroy {
     this.channelSubscription =
       this.devspaceService.Firestore.channels$.subscribe((channels) => {
         this.allChannels = channels;
-        console.log('Channels in Searchbar geladen:', channels);
       });
 
     this.allUsers = this.devspaceService.accounts;
@@ -88,7 +87,9 @@ export class SearchbarComponent implements OnInit, OnDestroy {
   }
 
   filterResults(term: string): void {
+    this.hasSearched = true;
     this.showResults = true;
+
     if (!term) {
       this.searchResults = { channels: [], users: [], messages: [] };
       return;

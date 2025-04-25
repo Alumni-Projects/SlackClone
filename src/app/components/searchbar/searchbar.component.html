@@ -1,4 +1,3 @@
-<!-- Suchfeld -->
 <div
   [ngClass]="{
     'search-style': true,
@@ -20,7 +19,6 @@
     class="search-results search-results-channels"
     *ngIf="showResults && (hasSearched || searchControl.value?.trim())"
   >
-    <!-- Treffer: Channels -->
     <div *ngIf="searchResults.channels.length > 0">
       <div>
         <span
@@ -36,7 +34,6 @@
       </div>
     </div>
 
-    <!-- Treffer: Nutzer -->
     <app-user-list-item
       class="search-item"
       *ngFor="let user of searchResults.users"
@@ -44,7 +41,6 @@
       [currentUserUid]="devspaceService.loggedInUserUid"
     ></app-user-list-item>
 
-    <!-- Treffer: Nachrichten -->
     <div *ngIf="searchResults.messages.length > 0">
       <div>
         <span
@@ -61,10 +57,10 @@
       </div>
     </div>
 
-    <!-- Keine Treffer -->
     <div
       *ngIf="
         hasSearched &&
+        searchControl.value?.trim() &&
         searchResults.channels.length === 0 &&
         searchResults.users.length === 0 &&
         searchResults.messages.length === 0
