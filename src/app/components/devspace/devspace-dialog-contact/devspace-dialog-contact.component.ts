@@ -10,7 +10,6 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
 
 @Component({
   selector: 'app-devspace-dialog-contact',
-  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './devspace-dialog-contact.component.html',
   styleUrl: './devspace-dialog-contact.component.scss'
