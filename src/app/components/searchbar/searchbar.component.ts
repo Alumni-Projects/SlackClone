@@ -41,6 +41,8 @@ export class SearchbarComponent implements OnInit, OnDestroy {
   IconSize = IconSize;
   Color = Color;
   showResults = false;
+  resultClicked = false;
+  hasSearched = false;
 
   searchResults: {
     channels: Devspace[];
@@ -138,6 +140,7 @@ export class SearchbarComponent implements OnInit, OnDestroy {
 
     this.searchControl.setValue('');
     this.showResults = false;
+    this.hasSearched = false;
   }
 
   goToUser(userId: string): void {
@@ -157,7 +160,10 @@ export class SearchbarComponent implements OnInit, OnDestroy {
   }
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
-    if (!this.eRef.nativeElement.contains(event.target)) {
+    if (
+      !this.eRef.nativeElement.contains(event.target) &&
+      !this.resultClicked
+    ) {
       this.showResults = false;
     }
   }

@@ -16,8 +16,12 @@
     [placeholder]="placeholder"
   />
 
-  <div class="search-results search-results-channels" *ngIf="showResults">
-    <div class="" *ngIf="searchResults.channels.length > 0">
+  <div
+    class="search-results search-results-channels"
+    *ngIf="showResults && (hasSearched || searchControl.value?.trim())"
+  >
+    <!-- Treffer: Channels -->
+    <div *ngIf="searchResults.channels.length > 0">
       <div>
         <span
           *ngFor="let ch of searchResults.channels"
@@ -32,6 +36,7 @@
       </div>
     </div>
 
+    <!-- Treffer: Nutzer -->
     <app-user-list-item
       class="search-item"
       *ngFor="let user of searchResults.users"
@@ -39,15 +44,16 @@
       [currentUserUid]="devspaceService.loggedInUserUid"
     ></app-user-list-item>
 
+    <!-- Treffer: Nachrichten -->
     <div *ngIf="searchResults.messages.length > 0">
       <div>
         <span
           *ngFor="let msg of searchResults.messages"
           class="search-item-message"
         >
-          <span class="message-icon"
-            ><mat-icon>chat_bubble_outline</mat-icon></span
-          >
+          <span class="message-icon">
+            <mat-icon>chat_bubble_outline</mat-icon>
+          </span>
           <div>
             <div class="message">{{ msg.message }}</div>
           </div>
@@ -55,13 +61,13 @@
       </div>
     </div>
 
+    <!-- Keine Treffer -->
     <div
       *ngIf="
-        showResults &&
+        hasSearched &&
         searchResults.channels.length === 0 &&
         searchResults.users.length === 0 &&
-        searchResults.messages.length === 0 &&
-        searchControl.value?.trim()
+        searchResults.messages.length === 0
       "
     >
       <em>Keine Treffer gefunden.</em>
