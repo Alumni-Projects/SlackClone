@@ -4,6 +4,7 @@
 .search {
   &-style {
     position: relative;
+    flex-direction: row-reverse;
   }
 
   &-desktop {
@@ -11,7 +12,6 @@
     padding: 17px 45px;
     justify-content: space-evenly;
     display: none;
-
     @include respond(m) {
       display: flex;
       min-width: 50vw;
