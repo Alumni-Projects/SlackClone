@@ -50,16 +50,41 @@
       background-color: var(--grey-light);
       border-radius: 10px;
     }
+
+    &-channels {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        cursor: pointer;
+        transition: background 0.2s ease;
+
+        span {
+          display: flex;
+          align-items: center;
+          padding: 8px 16px 8px 8px;
+          &:hover {
+            cursor: pointer;
+            background-color: var(--bg-color);
+            border-radius: 35px;
+          }
+        }
+      }
+    }
   }
 }
 
 .search-item {
   display: flex;
-  gap: 12px;
+  //   gap: 12px;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease;
-  padding-bottom: 19px;
+  //   padding-bottom: 19px;
 
   &:last-child {
     padding-bottom: 0px;
@@ -69,18 +94,15 @@
     background-color: var(--grey-light);
   }
 
-  .title,
-  .name {
-    font-weight: bold;
-  }
-
   .description,
   .email,
   .meta {
     font-size: 0.85rem;
     color: var(--grey-dark);
   }
-
+  &-message {
+    display: flex;
+  }
   .avatar {
     width: 32px;
     height: 32px;

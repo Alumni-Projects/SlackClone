@@ -16,23 +16,22 @@
     [placeholder]="placeholder"
   />
 
-  <div class="search-results" *ngIf="showResults">
-    <div *ngIf="searchResults.channels.length > 0">
-      <strong>📁 Channels</strong>
+  <div class="search-results search-results-channels" *ngIf="showResults">
+    <div class="" *ngIf="searchResults.channels.length > 0">
       <div>
         <span
           *ngFor="let ch of searchResults.channels"
           class="search-item"
-          (click)="(ch.id)"
+          (click)="goToChannel(ch.id!)"
         >
-          <mat-icon>folder</mat-icon>
+          <span><img src="/assets/img/tagChannelName.png" alt="" /></span>
           <div>
             <div class="title">{{ ch.title }}</div>
-            <div class="description">{{ ch.description }}</div>
           </div>
         </span>
       </div>
     </div>
+
     <app-user-list-item
       class="search-item"
       *ngFor="let user of searchResults.users"
@@ -40,48 +39,17 @@
       [currentUserUid]="devspaceService.loggedInUserUid"
     ></app-user-list-item>
 
-    <!-- test -->
-    <!-- <div *ngIf="searchResults.users.length > 0">
-      <strong>👤 Nutzer</strong>
+    <div *ngIf="searchResults.messages.length > 0">
       <div>
         <span
-          *ngFor="let user of searchResults.users"
-          class="search-item"
-          (click)="user.uid ? goToUser(user.uid) : null"
+          *ngFor="let msg of searchResults.messages"
+          class="search-item-message"
         >
-          <img [src]="user.profile" alt="Avatar" class="avatar" />
-          <div>
-            <div class="name">
-              {{ user.displayName }}
-              <span *ngIf="user.uid === devspaceService.loggedInUserUid"
-                >(Du)</span
-              >
-            </div>
-            <div class="status">
-              <span
-                class="status-dot"
-                [ngClass]="{
-                  online: user.online,
-                  offline: !user.online
-                }"
-              ></span>
-              {{ user.online ? 'Online' : 'Offline' }}
-            </div>
-          </div>
-        </span>
-      </div>
-    </div> -->
-
-    <div *ngIf="searchResults.messages.length > 0">
-      <strong>💬 Nachrichten</strong>
-      <div>
-        <span *ngFor="let msg of searchResults.messages" class="search-item">
-          <mat-icon>chat</mat-icon>
+          <span class="message-icon"
+            ><mat-icon>chat_bubble_outline</mat-icon></span
+          >
           <div>
             <div class="message">{{ msg.message }}</div>
-            <div class="meta">
-              von {{ msg.creator }} (Channel: {{ msg.channelId }})
-            </div>
           </div>
         </span>
       </div>
@@ -89,10 +57,11 @@
 
     <div
       *ngIf="
-        !searchResults.channels.length &&
-          !searchResults.users.length &&
-          !searchResults.messages.l;
-        ength
+        showResults &&
+        searchResults.channels.length === 0 &&
+        searchResults.users.length === 0 &&
+        searchResults.messages.length === 0 &&
+        searchControl.value?.trim()
       "
     >
       <em>Keine Treffer gefunden.</em>

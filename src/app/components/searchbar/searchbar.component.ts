@@ -1,11 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnDestroy,
+  ElementRef,
+  HostListener
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { ElementRef, HostListener } from '@angular/core';
-import { UserListItemComponent } from '@components/user-list-item/user-list-item.component';
+import { Router } from '@angular/router';
 
+import { UserListItemComponent } from '@components/user-list-item/user-list-item.component';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { IconSize } from '@shared/Enums/iconSize';
 import { Color } from '@shared/Enums/color';
@@ -13,7 +20,6 @@ import { Devspace } from '@shared/interface/devspace';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { ChatMessage } from '@shared/interface/chat-message';
 import { collection, getDocs } from 'firebase/firestore';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-searchbar',
@@ -24,11 +30,10 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     UserListItemComponent
   ],
-
   templateUrl: './searchbar.component.html',
   styleUrls: ['./searchbar.component.scss']
 })
-export class SearchbarComponent implements OnInit {
+export class SearchbarComponent implements OnInit, OnDestroy {
   @Input() variant: 'desktop' | 'mobile' = 'desktop';
 
   searchControl = new FormControl('');
@@ -51,15 +56,22 @@ export class SearchbarComponent implements OnInit {
   allUsers: DevspaceAccount[] = [];
   allMessages: ChatMessage[] = [];
 
+  private channelSubscription?: Subscription;
+
   constructor(
     public devspaceService: DevspaceService,
     private eRef: ElementRef,
     private router: Router
   ) {}
-  async ngOnInit(): Promise<void> {
-    this.allChannels = this.devspaceService.channels;
-    this.allUsers = this.devspaceService.accounts;
 
+  async ngOnInit(): Promise<void> {
+    this.channelSubscription =
+      this.devspaceService.Firestore.channels$.subscribe((channels) => {
+        this.allChannels = channels;
+        console.log('Channels in Searchbar geladen:', channels);
+      });
+
+    this.allUsers = this.devspaceService.accounts;
     this.allMessages = await this.loadAllMessages();
 
     this.searchControl.valueChanges
@@ -67,6 +79,10 @@ export class SearchbarComponent implements OnInit {
       .subscribe((term: string | null) => {
         this.filterResults(term?.trim().toLowerCase() || '');
       });
+  }
+
+  ngOnDestroy(): void {
+    this.channelSubscription?.unsubscribe();
   }
 
   filterResults(term: string): void {
@@ -93,7 +109,6 @@ export class SearchbarComponent implements OnInit {
 
   async loadAllMessages(): Promise<ChatMessage[]> {
     const messages: ChatMessage[] = [];
-
     const channelSnapshot = await getDocs(
       collection(this.devspaceService.Firestore.firestore, 'channel')
     );
@@ -114,28 +129,36 @@ export class SearchbarComponent implements OnInit {
 
     return messages;
   }
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent) {
-    if (!this.eRef.nativeElement.contains(event.target)) {
-      this.showResults = false;
-    }
-  }
+
   goToChannel(channelId: string): void {
+    this.devspaceService.selectedChannelId = channelId;
+    this.devspaceService.openMessage = false;
+    this.devspaceService.openDirectMessage = false;
+    this.devspaceService.openChannel = true;
+
+    this.searchControl.setValue('');
     this.showResults = false;
-    this.router.navigate(['/channel', channelId]);
   }
 
   goToUser(userId: string): void {
-    this.showResults = false;
     this.router.navigate(['/profile', userId]);
+    this.searchControl.setValue('');
+    this.showResults = false;
   }
 
   goToMessage(msg: ChatMessage): void {
-    this.showResults = false;
     if (msg.channelId) {
       this.router.navigate(['/channel', msg.channelId], {
         queryParams: { highlight: msg.id }
       });
+    }
+    this.searchControl.setValue('');
+    this.showResults = false;
+  }
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (!this.eRef.nativeElement.contains(event.target)) {
+      this.showResults = false;
     }
   }
 }
