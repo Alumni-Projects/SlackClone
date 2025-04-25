@@ -33,6 +33,14 @@ export class DevspaceService {
   clearInputMessage = false;
   channelNameforThread: string = '';
   threadCount: number = 0;
+  creatorMessageOn: { [key: string]: boolean } = {
+    channel: false,
+    thread: false
+  };
+  selectedCreatorMessageIndex: { [key: string]: number | null } = {
+    channel: null,
+    thread: null
+  }
   barContext: 'message' | 'channel' | 'thread' | 'directmessage' | null = null;
   private subscription?: Subscription;
   private clearInputMessageSubject = new BehaviorSubject<boolean>(false);
@@ -44,7 +52,10 @@ export class DevspaceService {
     });
   }
 
-
+  editCreatorMessage(section: "channel" | "thread" | "directmessage", index: number): void {
+    this.creatorMessageOn[section] = true;
+    this.selectedCreatorMessageIndex[section] = index;
+  }
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();

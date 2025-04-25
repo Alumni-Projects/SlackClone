@@ -133,7 +133,7 @@
 }
 
 .member-name {
-    width: 200px;
+    max-width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -146,6 +146,8 @@
     line-height: 100%;
     letter-spacing: 0;
     color: var(--grey-dark);
+    display: flex;
+    align-items: center;
 }
 
 .message-text-member {
@@ -165,8 +167,8 @@
 }
 
 .message-text {
-    width: 315px;
-    height: 80px;
+    max-width: 315px;
+    max-height: 80px;
     overflow: auto;
     padding: 15px;
     font-size: var(--font-size-m);

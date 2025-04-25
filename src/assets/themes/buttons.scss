@@ -35,10 +35,34 @@
         }
     }
 
+    @if $variant =='secondary-message' {        
+        color: var(--primary-color);
+        background-color: var(--white-color);
+        border: 1px solid var(--primary-color);
+
+        &:hover {
+            color: var(--white-color);
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        &:active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--white-color);
+        }
+
+        &:disabled {
+            background-color: var(--white-color);
+            border-color: var(--grey-dark);
+            color: var(--grey-dark);
+        }
+    }
+
     @else if $variant =='secondary' {
         color: var(--primary-color);
         background-color: var(--white-color);
-        border-color: var(--primary-color);
+        border-color: var(--primary-color);        
 
         &:hover {
             color: var(--white-color);
@@ -66,6 +90,10 @@
 
 .button-secondary {
     @include button-style('secondary');
+}
+
+.button-secondary-message {
+    @include button-style('secondary-message');
 }
 
 .button-primary-icon {

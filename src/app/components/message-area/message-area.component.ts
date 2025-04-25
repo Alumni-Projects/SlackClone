@@ -1,25 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ChatMessage } from '@shared/interface/chat-message';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 import { FormatMessageDatePipe } from '@shared/services/TimeFormat/format-message-date.pipe';
+import { EditMessageComponent } from './edit-message/edit-message.component';
 
 @Component({
   selector: 'app-message-area',
-  imports: [CommonModule, FormatMessageDatePipe],
+  imports: [CommonModule, FormatMessageDatePipe, FormsModule],
   templateUrl: './message-area.component.html',
   styleUrl: './message-area.component.scss'
 })
 export class MessageAreaComponent {
   @Input() messageSection!: 'channel' | 'thread' | 'directmessage';
+  @ViewChild('editMessage') editMessages!: ElementRef<HTMLDivElement>;
   hoveredIndexCreator: number | null = null;
   hoveredIndexMember: number | null = null;
+  editIndex: number | null = null;
   activeEmojiBarIndex: number | null = null;
+  activeEmojiBarIndexEdit: number | null = null;
   isHoveredAnswer = false;
   isHoveredReaction = false;
   isHoveredEdit = false;
+  isHoveredEditSmile = false;
+  editEmoji = false;
   isHoveredReactionMessage: number | null = null;
   isHoveredReactionMessageMember: number | null = null;
   emojibar = false;
@@ -28,7 +36,9 @@ export class MessageAreaComponent {
   accounts: DevspaceAccount[] = [];
   filterMessageAccounts: DevspaceAccount[] = [];
 
-  constructor(public devspaceService: DevspaceService, public firestore: FirestoreService) {
+
+
+  constructor(public devspaceService: DevspaceService, public firestore: FirestoreService, public dialog: MatDialog, private cdRef: ChangeDetectorRef) {
 
   }
 
@@ -43,19 +53,19 @@ export class MessageAreaComponent {
 
   ngOnInit(): void {
     switch (this.messageSection) {
-      case 'channel':        
+      case 'channel':
         this.firestore.subscribeToMessages(this.devspaceService.selectedChannelId!);
         this.firestore.messages$.subscribe(messages => {
-          this.messages = messages;          
+          this.messages = messages;
         });
         break;
-      case 'thread':        
+      case 'thread':
         const channelId = this.devspaceService.selectedChannelId;
         const selectedThread = this.firestore.selectedThreadMessage;
         if (channelId && selectedThread?.id) {
           this.firestore.subscribeToThreadMessages(channelId, selectedThread.id);
           this.firestore.threadMessages$.subscribe(messages => {
-            this.threadMessages = messages;            
+            this.threadMessages = messages;
           });
         } else {
           console.warn("Thread oder Channel ID fehlt.");
@@ -111,6 +121,7 @@ export class MessageAreaComponent {
         );
       }
     }
+    this.emojibar = false;
   }
   logHoverIn(i: number, member: string): void {
     if (member == 'member') {
@@ -125,13 +136,13 @@ export class MessageAreaComponent {
       this.isHoveredReactionMessageMember = null;
     } else {
       this.isHoveredReactionMessage = null;
+
     }
   }
 
   changeReaction(i: number, j: number) {
     const userId = this.devspaceService.loggedInUserUid;
     const channelId = this.devspaceService.selectedChannelId!;
-
     if (this.messageSection === 'channel') {
       const message = this.messages[i];
       this.firestore.changeReactionToMessage(i, j, message, userId, channelId);
@@ -141,21 +152,73 @@ export class MessageAreaComponent {
       const threadId = threadMessage.id!;
       this.firestore.changeReactionToMessage(i, j, threadMessage, userId, channelId, parentMessageId, threadId);
     }
+
   }
 
-  obenEmojibar(i: number) {
+  editMessageCreator(i: number) {
+    this.isHoveredEdit = false;
+    const editMessage = this.editMessages.nativeElement.innerText.trim();  
+    const userId = this.devspaceService.loggedInUserUid;
+    const channelId = this.devspaceService.selectedChannelId!;
+    if (this.messageSection === 'channel') {
+      const message = this.messages[i];
+      this.editDialog({
+        index: i,
+        message,
+        userId,
+        channelId,
+        editMessage
+      });
+
+    } else if (this.messageSection === 'thread') {
+      const threadMessage = this.threadMessages[i];
+      const parentMessageId = threadMessage.parentId!;
+      const threadId = threadMessage.id!;
+      this.editDialog({
+        index: i,
+        message: threadMessage,
+        userId,
+        channelId,
+        parentMessageId,
+        threadId,
+        editMessage
+      });
+    }
+  }
+
+
+
+  openEmojibar(i: number) {
     this.emojibar = !this.emojibar;
     this.activeEmojiBarIndex = this.activeEmojiBarIndex === i ? null : i;
   }
+
+  openEditMessageEmoji(i: number) {
+    this.editEmoji = !this.editEmoji;
+    this.activeEmojiBarIndexEdit = this.activeEmojiBarIndexEdit === i ? null : i;
+  }
+
+
   onLeaveMessageArea(type: 'member' | 'creator',) {
     if (type === 'member') {
-      this.hoveredIndexMember = null;
+      this.hoveredIndexMember = null;     
+
     } else {
-      this.hoveredIndexCreator = null;
-    }
+      this.hoveredIndexCreator = null;    
+      
+    }    
     this.activeEmojiBarIndex = null;
     this.emojibar = false;
 
+  }
+
+  leaveEditArea(){
+    this.isHoveredEdit = false;
+    this.devspaceService.editCreatorMessage(this.messageSection, -1);
+    this.hoveredIndexCreator = null;
+    this.editEmoji = false;
+    this.activeEmojiBarIndexEdit = null;
+    
   }
 
   openThread(i: number) {
@@ -167,4 +230,77 @@ export class MessageAreaComponent {
     }, 100);
 
   }
+
+  editMessageOpen(i: number) {
+    this.devspaceService.editCreatorMessage(this.messageSection, i);
+    this.isHoveredAnswer = false;
+  }
+
+  cancelEditMessage() {
+    this.isHoveredEdit = false;
+    this.devspaceService.editCreatorMessage(this.messageSection, -1);
+  }
+
+  editDialog({
+    index,
+    message,
+    userId,
+    channelId,
+    parentMessageId,
+    threadId,
+    editMessage
+  }: {
+    index: number;
+    message: ChatMessage;
+    userId: string;
+    channelId: string;
+    parentMessageId?: string;
+    threadId?: string;
+    editMessage?: string;
+  }): void {
+    this.dialog.open(EditMessageComponent, {
+      data: {
+        index,
+        message,
+        userId,
+        channelId,
+        parentMessageId,
+        threadId,
+        editMessage,
+        section: this.messageSection
+      }
+    });
+  }
+
+
+  editcheckMessage(i: number) {
+    const emoji = this.devspaceService.emojis[i];
+    const messageDiv  = this.editMessages.nativeElement as HTMLDivElement;  
+    messageDiv.focus();
+    const selection = window.getSelection();
+    const range = document.createRange();
+    if (!messageDiv.textContent?.trim()) {
+      messageDiv.innerHTML = "";
+    }
+    range.selectNodeContents(messageDiv);
+    range.collapse(false);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+    const textNode = document.createTextNode(emoji);
+    range.insertNode(textNode);
+    range.setStartAfter(textNode);
+    range.collapse(true);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+    this.cdRef.detectChanges();
+    this.editEmoji = false;
+    this.activeEmojiBarIndexEdit = null;
+  }
+
+  closeSmileyBar(){
+    this.editEmoji = false;
+    this.activeEmojiBarIndexEdit = null;
+  }
+
 }
+

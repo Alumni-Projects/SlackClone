@@ -334,7 +334,7 @@ export class FirestoreService {
   }
 
   async changeReactionToMessage(
-    i: number,
+    i: number,    
     j: number,
     message: ChatMessage,
     userId: string,
@@ -375,6 +375,93 @@ export class FirestoreService {
       } catch (error) {
         console.error("error with adding Reaktion:", error);
       }
+    }
+  }
+
+  async editMessage({
+    index,
+    message,
+    userId,
+    channelId,
+    parentMessageId,
+    threadId,
+    editMessage
+  }: {
+    index: number;
+    message: ChatMessage;
+    userId: string;
+    channelId: string;
+    parentMessageId?: string;
+    threadId?: string;
+    editMessage?: string;
+  }): Promise<void> {
+    let messageRef;  
+    if (parentMessageId && threadId) {
+      messageRef = doc(
+        this.firestore,
+        `channel/${channelId}/messages/${parentMessageId}/threads/${threadId}`
+      );
+    } else {
+      messageRef = doc(
+        this.firestore,
+        `channel/${channelId}/messages/${message.id}`
+      );
+    }
+  
+    try {
+      await updateDoc(messageRef, {
+        message: editMessage
+      });
+    } catch (error) {
+      console.error("error with editing Message:", error);
+    }
+  }
+
+  async deleteMessage({
+    message,
+    channelId,
+    parentMessageId,
+    threadId
+  }: {
+    message: ChatMessage;
+    channelId: string;
+    parentMessageId?: string;
+    threadId?: string;
+  }): Promise<void> {
+    let messageRef;
+  
+    const isThread = !!(parentMessageId && threadId);
+  
+    if (isThread) {
+      messageRef = doc(
+        this.firestore,
+        `channel/${channelId}/messages/${parentMessageId}/threads/${threadId}`
+      );
+    } else {
+      messageRef = doc(
+        this.firestore,
+        `channel/${channelId}/messages/${message.id}`
+      );
+    }
+  
+    try {
+      await deleteDoc(messageRef);
+      console.log("Deleted message:", messageRef.path); 
+      
+      if (isThread) {
+        await this.updateThreadCount(channelId, parentMessageId!);
+  
+        if (this.selectedThreadMessage?.id === parentMessageId) {
+          this.selectedThreadMessage.threadCount = Math.max(
+            (this.selectedThreadMessage.threadCount || 1) - 1,
+            0
+          );
+          this.selectedThreadMessage = { ...this.selectedThreadMessage };
+        }
+      }
+  
+    } catch (error) {
+      console.error("Error deleting message:", error);
     }
   }
 
