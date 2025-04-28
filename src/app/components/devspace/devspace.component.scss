@@ -42,30 +42,6 @@
       line-height: 32.74px;
     }
 
-    .devspace-edit-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-
-      img {
-        width: var(--icon-size-m);
-        height: var(--icon-size-m);
-      }
-
-      &:hover {
-        cursor: pointer;
-        background-color: var(--bg-color);
-        border-radius: 50%;
-        transition: all 0.75ms ease-in-out;
-
-        img {
-          content: url('/assets/img/DevEditHover.png');
-        }
-      }
-    }
-
     .devspace-edit-logo-mobile {
       width: 60px;
       height: 60px;

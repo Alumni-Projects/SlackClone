@@ -1,7 +1,11 @@
 <mat-dialog-content class="profile-dialog">
   <div class="profile-dialog-title-wrapper">
     <h2>Profil</h2>
-    <button mat-icon-button class="close-btn" (click)="closeDialog()">
+    <div
+      mat-icon-button
+      class="close-btn button-secondary-icon"
+      (click)="closeDialog()"
+    >
       <mat-icon
         [style.font-size]="'24px'"
         [style.color]="'black'"
@@ -9,7 +13,7 @@
       >
         close
       </mat-icon>
-    </button>
+    </div>
   </div>
 
   <div class="profile-header">

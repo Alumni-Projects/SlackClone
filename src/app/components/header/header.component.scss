@@ -69,9 +69,14 @@
     font-weight: var(--font-weight-extra-bold);
     line-height: 100%;
     color: var(--black-color);
-
     @include respond(m) {
       display: block;
+      max-width: 100px;
+    }
+
+    @include respond(xl) {
+      display: block;
+      max-width: 200px;
     }
   }
 
