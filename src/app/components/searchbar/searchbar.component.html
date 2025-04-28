@@ -1,0 +1,71 @@
+<div
+  [ngClass]="{
+    'search-style': true,
+    'search-desktop': variant === 'desktop',
+    'search-mobile': variant === 'mobile'
+  }"
+>
+  <mat-icon [style.fontSize]="IconSize.Medium" [style.color]="Color.GreyDark">
+    search
+  </mat-icon>
+  <input
+    type="text"
+    [formControl]="searchControl"
+    (focus)="showResults = true"
+    [placeholder]="placeholder"
+  />
+
+  <div
+    class="search-results search-results-channels"
+    *ngIf="showResults && (hasSearched || searchControl.value?.trim())"
+  >
+    <div *ngIf="searchResults.channels.length > 0">
+      <div>
+        <span
+          *ngFor="let ch of searchResults.channels"
+          class="search-item"
+          (click)="goToChannel(ch.id!)"
+        >
+          <span><img src="/assets/img/tagChannelName.png" alt="" /></span>
+          <div>
+            <div class="title">{{ ch.title }}</div>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <app-user-list-item
+      class="search-item"
+      *ngFor="let user of searchResults.users"
+      [user]="user"
+      [currentUserUid]="devspaceService.loggedInUserUid"
+    ></app-user-list-item>
+
+    <div *ngIf="searchResults.messages.length > 0">
+      <div>
+        <span
+          *ngFor="let msg of searchResults.messages"
+          class="search-item-message"
+        >
+          <span class="message-icon">
+            <mat-icon>chat_bubble_outline</mat-icon>
+          </span>
+          <div>
+            <div class="message">{{ msg.message }}</div>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        hasSearched &&
+        searchResults.channels.length === 0 &&
+        searchResults.users.length === 0 &&
+        searchResults.messages.length === 0
+      "
+    >
+      <em>Keine Treffer gefunden.</em>
+    </div>
+  </div>
+</div>

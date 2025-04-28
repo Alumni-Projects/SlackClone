@@ -9,24 +9,34 @@ import { WorkspaceOpenCloseComponent } from '@components/workspace-open-close/wo
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
-
 @Component({
   selector: 'app-dashboard',
-  imports: [DevspaceComponent, WorkspaceOpenCloseComponent, DevspaceMessageComponent, DevspaceMessageDirectComponent, ThreadComponent, HeaderComponent, ChannelComponent],
+  imports: [
+    DevspaceComponent,
+    WorkspaceOpenCloseComponent,
+    DevspaceMessageComponent,
+    DevspaceMessageDirectComponent,
+    ThreadComponent,
+    HeaderComponent,
+    ChannelComponent
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-
-  constructor(public devspaceService: DevspaceService, public Firestore: FirestoreService) {
-  }
+  constructor(
+    public devspaceService: DevspaceService,
+    public Firestore: FirestoreService
+  ) {}
 
   ngOnInit() {
     this.loadUsers();
     this.loadLoggedInUser();
     console.log('DashboardComponent initialisiert.');
-    this.Firestore.subscribeToUserChannels(this.devspaceService.loggedInUserUid);
-    this.devspaceService.Firestore.channels$.subscribe(channels => {
+    this.Firestore.subscribeToUserChannels(
+      this.devspaceService.loggedInUserUid
+    );
+    this.devspaceService.Firestore.channels$.subscribe((channels) => {
       console.log('DashboardComponent Channels:', channels);
     });
   }
@@ -38,7 +48,5 @@ export class DashboardComponent {
 
   loadLoggedInUser() {
     this.devspaceService.loggedInUserUid = 'zBAEMISe1FekXRBU0TDSRbdOC6q2';
-    
   }
-
 }

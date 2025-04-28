@@ -1,0 +1,45 @@
+.devspace-direct-messages-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 0 20px;
+  width: fit-content;
+  transition: background 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--bg-color);
+    border-radius: 35px;
+  }
+
+  .devspace-direct-messages-icon {
+    position: relative;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  .devspace-direct-messages-name {
+    max-width: 145px;
+    font-size: var(--font-size-m);
+    font-weight: var(--font-weight-normal);
+    line-height: 24.55px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &.active-Account {
+    background-color: var(--bg-color);
+    border-radius: 35px;
+
+    .devspace-direct-messages-name {
+      color: var(--purple-3);
+      font-weight: var(--font-weight-extra-bold);
+    }
+  }
+}
