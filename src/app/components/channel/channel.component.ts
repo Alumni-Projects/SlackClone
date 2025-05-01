@@ -57,6 +57,8 @@ export class ChannelComponent implements OnInit {
       console.error('No selected channel ID found');
     }
     this.devspaceService.channelNameforThread = this.filterChannel[0].title!;
+
+    this.devspaceService.channelNameForEmtpyMessage = this.filterChannel[0].title!;
   }
 
   get filteredAccounts(): DevspaceAccount[] {

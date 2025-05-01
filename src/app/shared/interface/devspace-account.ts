@@ -10,4 +10,5 @@ export interface DevspaceAccount {
     uid?: string | null;
     activeSelf?: boolean;
     id?: string;
+    
 }

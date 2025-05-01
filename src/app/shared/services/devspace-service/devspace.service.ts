@@ -3,14 +3,16 @@ import { Devspace } from '@shared/interface/devspace';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { FirestoreService } from '../firestore-service/firestore.service';
-import { ChatMessage } from '@shared/interface/chat-message';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DevspaceService {
   selectedChannelId: string | null = null;
-  
+  contactDmId: string | null = null;
+  activeDMContact: number | null = null;
+  selectContactDmId: string | null = null;
+  selectContactData: any | null = null;
   channelMember = false;
   channelMemberAdded = false;
   channelsName = '';
@@ -33,6 +35,7 @@ export class DevspaceService {
   clearInputMessage = false;
   channelNameforThread: string = '';
   threadCount: number = 0;
+  channelNameForEmtpyMessage: string = '';
   creatorMessageOn: { [key: string]: boolean } = {
     channel: false,
     thread: false
@@ -48,7 +51,7 @@ export class DevspaceService {
 
   constructor(public Firestore: FirestoreService) {
     this.subscription = this.Firestore.channels$.subscribe(channels => {
-      this.channels = channels;      
+      this.channels = channels;
     });
   }
 
@@ -81,10 +84,12 @@ export class DevspaceService {
     { emoji: '/assets/img/emojis/icon7.png' },
     { emoji: '/assets/img/emojis/icon8.png' },
     { emoji: '/assets/img/emojis/icon9.png' },
-    { emoji: '/assets/img/emojis/icon10.png' },   
+    { emoji: '/assets/img/emojis/icon10.png' },
 
   ]
   accounts: DevspaceAccount[] = [];
+
+  dmAccounts: any[] = [];
   closAllMessage() {
     this.openMessage = false;
     this.openChannel = false;

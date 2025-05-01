@@ -33,6 +33,7 @@ export class MessageAreaComponent {
   emojibar = false;
   messages: ChatMessage[] = [];
   threadMessages: ChatMessage[] = [];
+  directMessages: ChatMessage[] = [];
   accounts: DevspaceAccount[] = [];
   filterMessageAccounts: DevspaceAccount[] = [];
 
@@ -42,14 +43,7 @@ export class MessageAreaComponent {
 
   }
 
-  get activeMessages(): ChatMessage[] {
-    switch (this.messageSection) {
-      case 'channel': return this.messages;
-      case 'thread': return this.threadMessages;
-      // case 'directmessage': return this.directMessages; 
-      default: return [];
-    }
-  }
+
 
   ngOnInit(): void {
     switch (this.messageSection) {
@@ -68,21 +62,30 @@ export class MessageAreaComponent {
             this.threadMessages = messages;
           });
         } else {
-          console.warn("Thread oder Channel ID fehlt.");
+          console.warn("Thread oder Channel ID failed.");
         }
         break;
 
       case 'directmessage':
-        console.log("directmessage ist ausgewählt ");
+        this.firestore.directMessages$.subscribe((messages: ChatMessage[]) => {
+          this.directMessages = messages;
+        });
         break;
 
       default:
-        console.log("keine MessageSection ausgewählt");
+        console.log("no message section");
         break;
     }
   }
 
-
+  get activeMessages(): ChatMessage[] {
+    switch (this.messageSection) {
+      case 'channel': return this.messages;
+      case 'thread': return this.threadMessages;
+      case 'directmessage': return this.directMessages;
+      default: return [];
+    }
+  }
 
   checkMessage(i: number, pic: string) {
 
@@ -95,7 +98,6 @@ export class MessageAreaComponent {
           uids: [this.devspaceService.loggedInUserUid],
           creator: this.devspaceService.loggedInUserUid,
           createdAt: new Date().toISOString(),
-
         };
         this.firestore.addReactionToMessage(this.devspaceService.selectedChannelId!, message.id!, reactionsText);
       }
@@ -110,7 +112,6 @@ export class MessageAreaComponent {
           uids: [this.devspaceService.loggedInUserUid],
           creator: this.devspaceService.loggedInUserUid,
           createdAt: new Date().toISOString(),
-
         };
         this.firestore.addReactionToMessage(
           this.devspaceService.selectedChannelId!,
@@ -120,8 +121,24 @@ export class MessageAreaComponent {
           threadid!
         );
       }
+    } else if (this.messageSection === 'directmessage') {
+      const message = this.directMessages[i];
+
+      const reactionsExists = message.reactions?.some(r => r.emoji === pic);
+      const dmId = this.devspaceService.contactDmId;
+      if (!reactionsExists) {
+        const reactionsText = {
+          emoji: pic,
+          uids: [this.devspaceService.loggedInUserUid],
+          creator: this.devspaceService.loggedInUserUid,
+          createdAt: new Date().toISOString(),
+        };
+        this.firestore.addReactionToDm(dmId!, message.id!, reactionsText);
+      }
+
     }
     this.emojibar = false;
+    this.activeEmojiBarIndex = null;
   }
   logHoverIn(i: number, member: string): void {
     if (member == 'member') {
@@ -151,37 +168,53 @@ export class MessageAreaComponent {
       const parentMessageId = threadMessage.parentId!;
       const threadId = threadMessage.id!;
       this.firestore.changeReactionToMessage(i, j, threadMessage, userId, channelId, parentMessageId, threadId);
+    } else if (this.messageSection === 'directmessage') {
+      const message = this.directMessages[i];
+      const dmId = this.devspaceService.contactDmId;
+      this.firestore.changeReactionToDM(i, j, message, userId, dmId!);
     }
-
   }
 
   editMessageCreator(i: number) {
     this.isHoveredEdit = false;
-    const editMessage = this.editMessages.nativeElement.innerText.trim();  
+    const editMessage = this.editMessages.nativeElement.innerText.trim();
     const userId = this.devspaceService.loggedInUserUid;
     const channelId = this.devspaceService.selectedChannelId!;
+    const dmId = this.devspaceService.contactDmId ?? undefined;
+  
     if (this.messageSection === 'channel') {
       const message = this.messages[i];
       this.editDialog({
-        index: i,
+        i,
         message,
         userId,
         channelId,
         editMessage
       });
-
+  
     } else if (this.messageSection === 'thread') {
       const threadMessage = this.threadMessages[i];
       const parentMessageId = threadMessage.parentId!;
       const threadId = threadMessage.id!;
       this.editDialog({
-        index: i,
+        i,
         message: threadMessage,
         userId,
         channelId,
         parentMessageId,
         threadId,
         editMessage
+      });
+  
+    } else if (this.messageSection === 'directmessage') {
+      const message = this.directMessages[i];
+      this.editDialog({
+        i,
+        message,
+        userId,
+        channelId,
+        editMessage,
+        dmId
       });
     }
   }
@@ -201,24 +234,24 @@ export class MessageAreaComponent {
 
   onLeaveMessageArea(type: 'member' | 'creator',) {
     if (type === 'member') {
-      this.hoveredIndexMember = null;     
+      this.hoveredIndexMember = null;
 
     } else {
-      this.hoveredIndexCreator = null;    
-      
-    }    
+      this.hoveredIndexCreator = null;
+
+    }
     this.activeEmojiBarIndex = null;
     this.emojibar = false;
 
   }
 
-  leaveEditArea(){
+  leaveEditArea() {
     this.isHoveredEdit = false;
     this.devspaceService.editCreatorMessage(this.messageSection, -1);
     this.hoveredIndexCreator = null;
     this.editEmoji = false;
     this.activeEmojiBarIndexEdit = null;
-    
+
   }
 
   openThread(i: number) {
@@ -242,31 +275,34 @@ export class MessageAreaComponent {
   }
 
   editDialog({
-    index,
+    i,
     message,
     userId,
     channelId,
     parentMessageId,
     threadId,
-    editMessage
+    editMessage,
+    dmId
   }: {
-    index: number;
+    i: number;
     message: ChatMessage;
     userId: string;
     channelId: string;
     parentMessageId?: string;
     threadId?: string;
     editMessage?: string;
+    dmId?: string;
   }): void {
     this.dialog.open(EditMessageComponent, {
       data: {
-        index,
+        i,
         message,
         userId,
         channelId,
         parentMessageId,
         threadId,
         editMessage,
+        dmId,
         section: this.messageSection
       }
     });
@@ -275,7 +311,7 @@ export class MessageAreaComponent {
 
   editcheckMessage(i: number) {
     const emoji = this.devspaceService.emojis[i];
-    const messageDiv  = this.editMessages.nativeElement as HTMLDivElement;  
+    const messageDiv = this.editMessages.nativeElement as HTMLDivElement;
     messageDiv.focus();
     const selection = window.getSelection();
     const range = document.createRange();
@@ -297,7 +333,7 @@ export class MessageAreaComponent {
     this.activeEmojiBarIndexEdit = null;
   }
 
-  closeSmileyBar(){
+  closeSmileyBar() {
     this.editEmoji = false;
     this.activeEmojiBarIndexEdit = null;
   }

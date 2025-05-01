@@ -31,7 +31,7 @@
         <div class="devspace-channel-list">
 
             @for(item of devspaceService.channels; track i; let i = $index){
-            <div  [class.activeChannel]="item.id === devspaceService.selectedChannelId"
+            <div [class.activeChannel]="item.id === devspaceService.selectedChannelId"
                 class="devspace-channel-list-item" (click)="channelActiveClass(item.id ?? ''); closeMessage()">
                 <span><img src="/assets/img/tagChannelName.png" alt=""></span>
                 <div class="devspace-channel-list-item-name">
@@ -61,15 +61,18 @@
         </div>
         @if(!directMessages){
         <div class="devspace-direct-messages-list">
-            @for(item of devspaceService.accounts; track item.displayName; let i = $index){
+            @for(item of devspaceService.dmAccounts; track i; let i = $index){
             <div class="devspace-direct-messages-item" (click)="messageActiveClass(i);closeMessage()"
-                [class.active-Account]="">
-                <span class="devspace-direct-messages-icon"><img src="{{item.profile}}" alt="">
-                    @if(devspaceService.accounts[i].online){<span class="active-Account-Icon"></span>
+                [class.active-Account]="devspaceService.activeDMContact === i">
+                <span class="devspace-direct-messages-icon"><img src="{{item.userData.profile}}" alt="">
+                    @if(devspaceService.dmAccounts[i].userData.online){<span class="active-Account-Icon"></span>
                     }@else{<span class="active-Account-Icon-None"></span>}
                 </span>
-                <span class="devspace-direct-messages-name">{{item.displayName}}
-                    @if(devspaceService.loggedInUserUid === devspaceService.accounts[i].uid){(Du)} </span>
+                <div class="devspace-direct-messages-name-area">
+                    <span class="devspace-direct-messages-name">{{item.userData.displayName}}</span>
+                    <span>@if(devspaceService.loggedInUserUid === devspaceService.dmAccounts[i].userData.uid){(Du)}
+                    </span>
+                </div>
             </div>
             }@empty{
             <div>Keine Kontakte vorhanden</div>

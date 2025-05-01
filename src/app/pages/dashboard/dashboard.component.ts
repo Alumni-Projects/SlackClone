@@ -10,6 +10,7 @@ import { DevspaceService } from '@shared/services/devspace-service/devspace.serv
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
 
+
 @Component({
   selector: 'app-dashboard',
   imports: [DevspaceComponent, WorkspaceOpenCloseComponent, DevspaceMessageComponent, DevspaceMessageDirectComponent, ThreadComponent, HeaderComponent, ChannelComponent],
@@ -18,24 +19,31 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
 })
 export class DashboardComponent {
 
-  constructor(public devspaceService: DevspaceService, public Firestore: FirestoreService) {
+  constructor(public devspaceService: DevspaceService, public firestore: FirestoreService) {
   }
 
   ngOnInit() {
     this.loadUsers();
-    this.loadLoggedInUser();    
-    this.Firestore.subscribeToUserChannels(this.devspaceService.loggedInUserUid);
-    this.devspaceService.Firestore.channels$.subscribe(channels => {      
+    this.loadLoggedInUser();
+    this.loadDmUsers();
+    this.firestore.subscribeToUserChannels(this.devspaceService.loggedInUserUid);
+    this.devspaceService.Firestore.channels$.subscribe(channels => {
     });
   }
 
   async loadUsers() {
-    const users = await this.Firestore.fetchUserFromFirestoreAll();
+    const users = await this.firestore.fetchUserFromFirestoreAll();
     this.devspaceService.accounts = users;
   }
 
   loadLoggedInUser() {
-    this.devspaceService.loggedInUserUid = 'zBAEMISe1FekXRBU0TDSRbdOC6q2';    
+    this.devspaceService.loggedInUserUid = '0Yda2KEMxrPCMdtTzfYUpGvuWRB3';
   }
+
+  async loadDmUsers() {
+    this.devspaceService.dmAccounts = await this.firestore.findDmUsers(this.devspaceService.loggedInUserUid);    
+  }
+
+
 
 }

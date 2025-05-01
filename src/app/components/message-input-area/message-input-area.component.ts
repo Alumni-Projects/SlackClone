@@ -202,8 +202,9 @@ export class MessageInputAreaComponent {
     this.devspaceService.channelMemberAdded = false;
   }
 
-  SendMessageFromNewMessage() {
-    const message = this.messageInput.nativeElement.textContent;
+  async SendMessageFromNewMessage() {
+    const message = this.messageInput.nativeElement.textContent.trim();
+    if (!message) return;
     const channel = this.filterChannelFromNewMessage(this.devspaceService.channelArray.value);
     const contact = this.filterContactFromNewMessage(this.devspaceService.contactArray.value);
     const creatorId = this.devspaceService.loggedInUserUid;
@@ -215,11 +216,10 @@ export class MessageInputAreaComponent {
 
     if (contact.length > 0) {
       for (let i = 0; i < contact.length; i++) {
-        // this.firestore.addMessageToDirectMessage(contact[i]!.id!, message, creatorId);
+        const dmId = await this.firestore.checkAndCreateDirectMessage(contact[i]!.uid!, creatorId);
+        this.firestore.addMessageToDirectMessage(dmId, message, creatorId);
       }
     }
-
-
 
   }
 
@@ -262,9 +262,13 @@ export class MessageInputAreaComponent {
   }
 
   SendMessageFromDirectMessage() {
+   
     const message = this.messageInput.nativeElement.textContent;
-    const channels = this.channelNameMessage();
-    const contacts = this.contactNameMessage();
+    const creatorId = this.devspaceService.loggedInUserUid!;
+    const contactId = this.devspaceService.selectContactDmId!;    
+    const dmId = this.devspaceService.contactDmId;
+    this.firestore.addMessageToDM(dmId!, message, creatorId);
+    
 
   }
 

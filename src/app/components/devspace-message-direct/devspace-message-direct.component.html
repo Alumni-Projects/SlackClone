@@ -1,5 +1,17 @@
 <section class="devspace-direct-message">
-    <div><app-message-area [messageSection]="'directmessage'"></app-message-area></div>
+    <div class="devspace-direct-message-header">
+
+        <div class="devspace-direct-account">
+            <span class="devspace-direct-messages-icon"><img src="{{devspaceService.selectContactData.userData?.profile}}" alt="">
+                @if(devspaceService.selectContactData.userData?.online){<span class="active-Account-Icon"></span>
+                }@else{<span class="active-Account-Icon-None"></span>}
+            </span>
+            <span class="devspace-direct-messages-name"> {{devspaceService.selectContactData.userData?.displayName}}</span>            
+        </div>
+    </div>
+
+    <div class="message-area"><app-message-area [messageSection]="'directmessage'"></app-message-area></div>
+
     <div class="devspace-direct-message-app-message-input-area">
         <app-message-input-area [context]="'directmessage'"></app-message-input-area>
     </div>

@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { DeleteMessage } from '@shared/interface/delete-message';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
@@ -11,7 +12,7 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
 })
 export class DeleteAreaComponent {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: DeleteMessage,
     private dialog: MatDialog,
     private firestore: FirestoreService,
     private dialogRef: MatDialogRef<DeleteAreaComponent>,
@@ -44,6 +45,14 @@ export class DeleteAreaComponent {
         channelId,
         parentMessageId,
         threadId
+      });
+    }else if (this.data.section === 'directmessage') {
+      console.log('directmessage');      
+      const message = this.data.message;
+      const dmId = this.data.dmId;
+      this.firestore.deleteMessage({
+        message,
+        dmId
       });
     }
     this.devspaceService.editCreatorMessage(this.data.section, -1);

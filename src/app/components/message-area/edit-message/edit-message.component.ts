@@ -18,19 +18,21 @@ export class EditMessageComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      index: number;
+      i: number;
       message: ChatMessage;
       userId: string;
       channelId: string;
       parentMessageId?: string;
       threadId?: string;
       editMessage?: string;
+      dmId?: string;
       section: 'channel' | 'thread';
     },
     private dialog: MatDialog,
     private firestore: FirestoreService,
     private devspaceService: DevspaceService
   ) {
+
 
   }
 
@@ -41,13 +43,14 @@ export class EditMessageComponent {
   async saveMessage() {
     try {
       await this.firestore.editMessage({
-        index: this.data.index,
+        index: this.data.i,
         message: this.data.message,
         userId: this.data.userId,
         channelId: this.data.channelId,
         parentMessageId: this.data.parentMessageId,
         threadId: this.data.threadId,
-        editMessage: this.data.editMessage
+        editMessage: this.data.editMessage,
+        dmId: this.data.dmId        
       });
 
       this.dialog.closeAll();

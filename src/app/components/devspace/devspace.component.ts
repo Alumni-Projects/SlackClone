@@ -4,6 +4,7 @@ import { DevspaceDialogComponent } from '../devspace-dialog/devspace-dialog.comp
 import { MatDialog } from '@angular/material/dialog';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
 
 
@@ -19,12 +20,13 @@ import { BreakpointsService } from '@shared/services/breakpoints-service/breakpo
 export class DevspaceComponent implements OnInit {
   activeChannel: boolean = false
   directMessages: boolean = false
-  
   imagesLoaded = false;
   channelActiveTalk: boolean = false;
-  breankpointHeader: boolean = false
+  breankpointHeader: boolean = false;
+  activeDMContact: number | null = null;
 
-  constructor(public dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService) {
+
+  constructor(public dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService, public firestore: FirestoreService) {
 
   }
 
@@ -83,18 +85,25 @@ export class DevspaceComponent implements OnInit {
     this.devspaceService.selectedChannelId = channelId;
     this.devspaceService.openChannel = false;
     this.devspaceService.channelMember = false;
+    this.devspaceService.activeDMContact = null;
     setTimeout(() => {
-      this.devspaceService.openChannel = true;           
+      this.devspaceService.openChannel = true;
     }, 200);
   }
 
   messageActiveClass(i: number) {
-
     this.devspaceService.selectedChannelId = '';
-    // this.devspaceService.accounts[i].activeMessage = !this.devspaceService.accounts[i].activeMessage;
+    this.devspaceService.activeDMContact = i;
     this.devspaceService.openChannel = false;
-    this.devspaceService.openDirectMessage = true;
-
+    this.devspaceService.openDirectMessage = false;
+    this.devspaceService.selectContactDmId = this.devspaceService.dmAccounts[i].userData.uid;
+    this.devspaceService.contactDmId = this.devspaceService.dmAccounts[i].dmId;    
+    this.devspaceService.selectContactData = this.devspaceService.dmAccounts[i];
+       
+    this.firestore.subscribeToDirectMessage(this.devspaceService.loggedInUserUid, this.devspaceService.selectContactDmId!);
+    setTimeout(() => {
+      this.devspaceService.openDirectMessage = true;
+    }, 200);
 
   }
   openMessage() {

@@ -10,13 +10,12 @@
         </div>
         @if(devspaceService.creatorMessageOn[messageSection] &&
         devspaceService.selectedCreatorMessageIndex[messageSection] === i){
-        <div class="edit-message" (mouseenter)="editIndex = i"
-        (mouseleave)="leaveEditArea()">
+        <div class="edit-message" (mouseenter)="editIndex = i" (mouseleave)="leaveEditArea()">
             <div class="edit-message-area">
                 <div class="edit-message-area-text">
-                    <div class="edit-text" contenteditable="true" #editMessage (focus)="closeSmileyBar()" >
+                    <div class="edit-text" contenteditable="true" #editMessage (focus)="closeSmileyBar()">
                         {{ item.message }}
-                      </div>
+                    </div>
                     <div class="edit-message-area-button">
                         <div>
                             <span class="message-icon-hover" (click)="openEditMessageEmoji(i)"
@@ -117,7 +116,8 @@
             @if(hoveredIndexMember == i){
             <div class="message-icon-bar-member icon-bar-Style">
                 @if(activeEmojiBarIndex === i && emojibar){
-                <div class="emoji-bar-icon-member emoji-bar-icon-style" [class.thread]="messageSection === 'thread'">
+                <div class="emoji-bar-icon-member emoji-bar-icon-style" [class.thread]="messageSection === 'thread'"
+                    [class.dm]="messageSection === 'directmessage'">
                     @for(emoji of devspaceService.emojisRections; track a; let a = $index){
                     <span class="emoji-area" (click)="checkMessage(i,emoji.emoji)"><img src="{{emoji.emoji}}"
                             alt=""></span>
@@ -175,6 +175,37 @@
     </div>
     }
 
+    }@empty {
+    @if(this.messageSection === 'channel'){
+    <div class="no-message">
+        <div class="no-message-title">
+            <div ><img src="/assets/img/tagChannelName.png" alt=""></div>
+            <div class="no-message-title-name">{{this.devspaceService.channelNameForEmtpyMessage}}</div>
+        </div>
+
+        <div class="no-message-text">
+            <div>Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels</div>
+            <div class="no-message-text-channel">
+                <span><img src="/assets/img/tagHover.png"
+                        alt=""></span><span class="no-message-text-channel-title">{{this.devspaceService.channelNameForEmtpyMessage}}</span></div>
+        </div>
+    </div>
+    }
+    @if(this.messageSection === 'directmessage'){
+        <div class="no-message-dm">
+            <div class="no-message-title-dm">
+                <div ><img src="{{devspaceService.selectContactData.userData?.profile}}" alt=""></div>
+                <div class="no-message-title-name">{{devspaceService.selectContactData.userData?.displayName}}</div>
+            </div>
+    
+            <div class="no-message-text-dm">
+                <span>Diese Unterhaltung findet nur zwischen</span>
+                <span> <img src="/assets/img/at_hover.png" alt="">{{devspaceService.selectContactData.userData?.displayName}}</span>
+                <span>und dir statt</span>
+            </div>
+        </div>
+    }
+    
     }
 
 

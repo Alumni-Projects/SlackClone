@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MessageInputAreaComponent } from '@components/message-input-area/message-input-area.component';
 import { MessageAreaComponent } from "../message-area/message-area.component";
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 
 
 @Component({
@@ -10,5 +11,7 @@ import { MessageAreaComponent } from "../message-area/message-area.component";
   styleUrl: './devspace-message-direct.component.scss'
 })
 export class DevspaceMessageDirectComponent {
+
+  constructor(public devspaceService: DevspaceService) { }
 
 }
