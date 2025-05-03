@@ -8,9 +8,6 @@ import { ThreadComponent } from '@components/thread/thread.component';
 import { WorkspaceOpenCloseComponent } from '@components/workspace-open-close/workspace-open-close.component';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
-
-
-
 @Component({
   selector: 'app-dashboard',
   imports: [DevspaceComponent, WorkspaceOpenCloseComponent, DevspaceMessageComponent, DevspaceMessageDirectComponent, ThreadComponent, HeaderComponent, ChannelComponent],
@@ -43,7 +40,5 @@ export class DashboardComponent {
   async loadDmUsers() {
     this.devspaceService.dmAccounts = await this.firestore.findDmUsers(this.devspaceService.loggedInUserUid);    
   }
-
-
 
 }
