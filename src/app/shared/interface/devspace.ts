@@ -6,6 +6,6 @@ export interface Devspace {
     member?: any[];      
     message?: any[];
     createdAt?: string;
-    id?: string;   
-
+    id?: string;  
+    
 }

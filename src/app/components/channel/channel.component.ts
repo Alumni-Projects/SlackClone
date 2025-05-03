@@ -51,12 +51,14 @@ export class ChannelComponent implements OnInit {
     if (this.devspaceService.selectedChannelId) {
       this.firestore.subscribeToMessages(this.devspaceService.selectedChannelId);      
       this.firestore.messages$.subscribe(messages => {
-        this.messages = messages;
-        console.log('Loaded messages:', this.messages);
+        this.messages = messages;        
       });
     } else {
       console.error('No selected channel ID found');
     }
+    this.devspaceService.channelNameforThread = this.filterChannel[0].title!;
+
+    this.devspaceService.channelNameForEmtpyMessage = this.filterChannel[0].title!;
   }
 
   get filteredAccounts(): DevspaceAccount[] {

@@ -320,25 +320,26 @@ body {
 }
 
 // scrollbar
-::-webkit-scrollbar-button {
-    display: none;
+::-webkit-scrollbar {
+    width: 6px;   /* Vertikale Scrollbar-Breite */
+    height: 6px;  /* Horizontale Scrollbar-Höhe */
   }
-
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
+  
   ::-webkit-scrollbar-track {
     background: var(--white-color);
     border-radius: 35px;
   }
-
+  
   ::-webkit-scrollbar-thumb {
     background: var(--purple-3);
     border-radius: 35px;
   }
-
-::-webkit-scrollbar-thumb:hover {
+  
+  ::-webkit-scrollbar-thumb:hover {
     background: var(--light-purple);
     cursor: pointer;
+  }
+  
+  ::-webkit-scrollbar-button {
+    display: none;
   }

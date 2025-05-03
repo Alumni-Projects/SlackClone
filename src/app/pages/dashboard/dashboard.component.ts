@@ -24,29 +24,30 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-  constructor(
-    public devspaceService: DevspaceService,
-    public Firestore: FirestoreService
-  ) {}
-
-  ngOnInit() {
+ constructor(public devspaceService: DevspaceService, public firestore: FirestoreService) {}
+  
+   ngOnInit() {
     this.loadUsers();
     this.loadLoggedInUser();
-    console.log('DashboardComponent initialisiert.');
-    this.Firestore.subscribeToUserChannels(
-      this.devspaceService.loggedInUserUid
-    );
-    this.devspaceService.Firestore.channels$.subscribe((channels) => {
-      console.log('DashboardComponent Channels:', channels);
+    this.loadDmUsers();
+    this.firestore.subscribeToUserChannels(this.devspaceService.loggedInUserUid);
+    this.devspaceService.Firestore.channels$.subscribe(channels => {
     });
   }
 
   async loadUsers() {
-    const users = await this.Firestore.fetchUserFromFirestoreAll();
+    const users = await this.firestore.fetchUserFromFirestoreAll();
     this.devspaceService.accounts = users;
   }
 
-  loadLoggedInUser() {
-    this.devspaceService.loggedInUserUid = 'zBAEMISe1FekXRBU0TDSRbdOC6q2';
+loadLoggedInUser() {
+    this.devspaceService.loggedInUserUid = '0Yda2KEMxrPCMdtTzfYUpGvuWRB3';
   }
+
+  async loadDmUsers() {
+    this.devspaceService.dmAccounts = await this.firestore.findDmUsers(this.devspaceService.loggedInUserUid);    
+  }
+
+
+
 }

@@ -4,27 +4,27 @@ import { DevspaceDialogComponent } from '../devspace-dialog/devspace-dialog.comp
 import { MatDialog } from '@angular/material/dialog';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
-import { SearchbarComponent } from '../searchbar/searchbar.component';
-import { UserListItemComponent } from '../user-list-item/user-list-item.component';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
+
 @Component({
   selector: 'app-devspace',
-  imports: [CommonModule, SearchbarComponent, UserListItemComponent],
+  imports: [
+    CommonModule,],
   templateUrl: './devspace.component.html',
   styleUrl: './devspace.component.scss'
 })
 export class DevspaceComponent implements OnInit {
-  activeChannel: boolean = false;
-  directMessages: boolean = false;
-
+  activeChannel: boolean = false
+  directMessages: boolean = false
   imagesLoaded = false;
   channelActiveTalk: boolean = false;
   breankpointHeader: boolean = false;
+  activeDMContact: number | null = null;
 
-  constructor(
-    public dialog: MatDialog,
-    public devspaceService: DevspaceService,
-    public breakpoints: BreakpointsService
-  ) {}
+
+  constructor(public dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService, public firestore: FirestoreService) {
+
+  }
 
   imageUrl = '/assets/img/arrow_drop_down.png';
   imageUrlMessage = '/assets/img/arrow_drop_down.png';
@@ -58,12 +58,11 @@ export class DevspaceComponent implements OnInit {
       '/assets/img/account_circle.png',
       '/assets/img/account_circle_hover.png',
       '/assets/img/workspaces.png',
-      '/assets/img/workspacesHover.png'
+      '/assets/img/workspacesHover.png',
+
     ];
 
-    return Promise.all(imageUrls.map((url) => this.loadImage(url))).then(
-      () => {}
-    );
+    return Promise.all(imageUrls.map(url => this.loadImage(url))).then(() => { });
   }
 
   loadImage(url: string): Promise<void> {
@@ -82,18 +81,26 @@ export class DevspaceComponent implements OnInit {
     this.devspaceService.selectedChannelId = channelId;
     this.devspaceService.openChannel = false;
     this.devspaceService.channelMember = false;
+    this.devspaceService.activeDMContact = null;
     setTimeout(() => {
       this.devspaceService.openChannel = true;
-    }, 100);
+    }, 200);
   }
 
-  messageActiveClass(index: number): void {
-    this.selectedUserIndex = index;
+  messageActiveClass(i: number) {
     this.devspaceService.selectedChannelId = '';
+    this.devspaceService.activeDMContact = i;
     this.devspaceService.openChannel = false;
-    this.devspaceService.openDirectMessage = true;
-  }
+    this.devspaceService.openDirectMessage = false;
+    this.devspaceService.selectContactDmId = this.devspaceService.dmAccounts[i].userData.uid;
+    this.devspaceService.contactDmId = this.devspaceService.dmAccounts[i].dmId;    
+    this.devspaceService.selectContactData = this.devspaceService.dmAccounts[i];       
+    this.firestore.subscribeToDirectMessage(this.devspaceService.loggedInUserUid, this.devspaceService.selectContactDmId!);
+    setTimeout(() => {
+      this.devspaceService.openDirectMessage = true;
+    }, 200);
 
+  }
   openMessage() {
     this.devspaceService.selectedChannelId = '';
     this.devspaceService.openMessage = true;
@@ -106,8 +113,6 @@ export class DevspaceComponent implements OnInit {
     this.devspaceService.openMessage = false;
     this.devspaceService.openThread = false;
   }
-  placeholder(): string {
-    return window.innerWidth > 768 ? 'Devspace durchsuchen' : 'Gehe zu..';
-  }
-  selectedUserIndex: number | null = null;
+
+
 }

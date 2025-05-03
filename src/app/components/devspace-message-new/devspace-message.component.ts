@@ -169,7 +169,6 @@ export class DevspaceMessageComponent implements  OnDestroy  {
     newRange.setEndAfter(span);
     selection.removeAllRanges();
     selection.addRange(newRange);
-
     this.cdRef.detectChanges();
 
   }
