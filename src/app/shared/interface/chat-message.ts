@@ -13,5 +13,6 @@ export interface ChatMessage {
     thread?: ChatMessage[];
     parentId?: string;
     threadCount?: number;
-    channelId?: string;    
+    channelId?: string;
+      
   }
