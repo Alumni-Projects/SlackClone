@@ -14,5 +14,5 @@ export interface ChatMessage {
     parentId?: string;
     threadCount?: number;
     channelId?: string;
-      
+          
   }
