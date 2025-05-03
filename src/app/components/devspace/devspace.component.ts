@@ -6,10 +6,6 @@ import { DevspaceService } from '@shared/services/devspace-service/devspace.serv
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
-
-
-
-
 @Component({
   selector: 'app-devspace',
   imports: [
@@ -98,8 +94,7 @@ export class DevspaceComponent implements OnInit {
     this.devspaceService.openDirectMessage = false;
     this.devspaceService.selectContactDmId = this.devspaceService.dmAccounts[i].userData.uid;
     this.devspaceService.contactDmId = this.devspaceService.dmAccounts[i].dmId;    
-    this.devspaceService.selectContactData = this.devspaceService.dmAccounts[i];
-       
+    this.devspaceService.selectContactData = this.devspaceService.dmAccounts[i];       
     this.firestore.subscribeToDirectMessage(this.devspaceService.loggedInUserUid, this.devspaceService.selectContactDmId!);
     setTimeout(() => {
       this.devspaceService.openDirectMessage = true;
