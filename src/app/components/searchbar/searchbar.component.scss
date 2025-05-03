@@ -1,0 +1,154 @@
+@use '@themes/mixins.scss' as *;
+@use '@themes/inputs.scss' as *;
+
+.search {
+  &-style {
+    position: relative;
+    flex-direction: row-reverse;
+  }
+
+  &-desktop {
+    @include search-style;
+    padding: 17px 45px;
+    justify-content: space-evenly;
+    display: none;
+    @include respond(m) {
+      display: flex;
+      min-width: 50vw;
+    }
+  }
+
+  &-mobile {
+    @include search-style;
+    padding: 8px 24px;
+    display: flex;
+    border: 1px var(--light-purple) solid;
+
+    @include respond(m) {
+      display: none;
+    }
+  }
+
+  &-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    background-color: var(--white-color);
+    border-radius: var(--search-radius);
+    border: 1px solid var(--light-purple);
+    max-height: 200px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    padding: 20px 24px 20px 21px;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: var(--purple-3) transparent;
+    @include respond(m) {
+      left: 45px;
+      width: calc(100% - 45px);
+    }
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--purple-3);
+      border-radius: 10px;
+      border: 2px solid var(--white-color);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: var(--primary-color);
+    }
+
+    &-channels {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+
+        span {
+          display: flex;
+          align-items: center;
+          padding: 8px 16px 8px 8px;
+          border-radius: 35px;
+          transition: background-color 0.2s ease;
+
+          &:hover {
+            background-color: var(--bg-color);
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--grey-light);
+  }
+
+  .description,
+  .email,
+  .meta {
+    font-size: 0.85rem;
+    color: var(--grey-dark);
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .message-icon {
+      display: flex;
+      align-items: center;
+    }
+
+    .message {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 50%;
+}
+
+.online {
+  background-color: var(--green);
+}
+
+.offline {
+  background-color: var(--grey-light);
+}

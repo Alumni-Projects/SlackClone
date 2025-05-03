@@ -8,18 +8,25 @@ import { ThreadComponent } from '@components/thread/thread.component';
 import { WorkspaceOpenCloseComponent } from '@components/workspace-open-close/workspace-open-close.component';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
+
 @Component({
   selector: 'app-dashboard',
-  imports: [DevspaceComponent, WorkspaceOpenCloseComponent, DevspaceMessageComponent, DevspaceMessageDirectComponent, ThreadComponent, HeaderComponent, ChannelComponent],
+  imports: [
+    DevspaceComponent,
+    WorkspaceOpenCloseComponent,
+    DevspaceMessageComponent,
+    DevspaceMessageDirectComponent,
+    ThreadComponent,
+    HeaderComponent,
+    ChannelComponent
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-
-  constructor(public devspaceService: DevspaceService, public firestore: FirestoreService) {
-  }
-
-  ngOnInit() {
+ constructor(public devspaceService: DevspaceService, public firestore: FirestoreService) {}
+  
+   ngOnInit() {
     this.loadUsers();
     this.loadLoggedInUser();
     this.loadDmUsers();
@@ -33,12 +40,14 @@ export class DashboardComponent {
     this.devspaceService.accounts = users;
   }
 
-  loadLoggedInUser() {
+loadLoggedInUser() {
     this.devspaceService.loggedInUserUid = '0Yda2KEMxrPCMdtTzfYUpGvuWRB3';
   }
 
   async loadDmUsers() {
     this.devspaceService.dmAccounts = await this.firestore.findDmUsers(this.devspaceService.loggedInUserUid);    
   }
+
+
 
 }

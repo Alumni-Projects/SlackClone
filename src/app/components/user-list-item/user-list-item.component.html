@@ -1,0 +1,19 @@
+<div
+  class="devspace-direct-messages-item"
+  [class.active-Account]="isActive"
+  (click)="handleClick()"
+>
+  <span class="devspace-direct-messages-icon">
+    <img [src]="user.profile" alt="" />
+    <span
+      [ngClass]="{
+        'active-Account-Icon': user.online,
+        'active-Account-Icon-None': !user.online
+      }"
+    ></span>
+  </span>
+  <span class="devspace-direct-messages-name">
+    {{ user.displayName }}
+    <span *ngIf="user.uid === currentUserUid">(Du)</span>
+  </span>
+</div>
