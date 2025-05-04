@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
@@ -23,7 +23,6 @@ export class DevspaceDialogContactComponent implements OnInit {
   allContactsChecked = false;
   inputValue = '';
   selectedCheckbox: string | null = null;
-
   accounts: DevspaceAccount[] = [];
   accountSelected: DevspaceAccount[] = [];
 
@@ -33,7 +32,8 @@ export class DevspaceDialogContactComponent implements OnInit {
     private dialog: MatDialog,
     public devspaceService: DevspaceService,
     public breakpoints: BreakpointsService,
-    public firestore: FirestoreService
+    public firestore: FirestoreService,
+    
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class DevspaceDialogContactComponent implements OnInit {
   }
 
   get filteredAccounts(): DevspaceAccount[] {
-    return this.accounts.filter(
+    return this.devspaceService.accounts.filter(
       (acc) =>
         acc.uid !== this.devspaceService.loggedInUserUid &&
         acc.displayName.toLowerCase().startsWith(this.inputValue.toLowerCase())
@@ -112,7 +112,6 @@ export class DevspaceDialogContactComponent implements OnInit {
 
   addChannel(): void {
     const timestamp = new Date().toISOString();
-
     const baseChannel = {
       title: this.devspaceService.channelsName,
       description: this.devspaceService.channelsDescription,
@@ -121,12 +120,12 @@ export class DevspaceDialogContactComponent implements OnInit {
     };
 
     if (this.allContactsChecked) {
-      const members = this.accounts.map((a) => a.uid);
+      const members = this.devspaceService.accounts.map((a) => a.uid);
       this.firestore.saveChannelToFirestore({
         ...baseChannel,
         member: members
       });
-    } else if (this.selectContactsChecked) {
+    } else if (this.selectContactsChecked) {      
       const selectedUids = this.accountSelected.map((a) => a.uid);
       this.firestore.saveChannelToFirestore({
         ...baseChannel,

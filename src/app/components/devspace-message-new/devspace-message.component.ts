@@ -18,7 +18,7 @@ export class DevspaceMessageComponent implements  OnDestroy  {
   clearInputMessageSubscription!: Subscription;
   
 
-  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef, private zone: NgZone) {
+  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef, private zone: NgZone, ) {
     
   }  
 

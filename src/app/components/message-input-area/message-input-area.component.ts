@@ -1,4 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DevspaceDialogComponent } from '@components/devspace-dialog/devspace-dialog.component';
 import { Devspace } from '@shared/interface/devspace';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
@@ -14,7 +16,7 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
 export class MessageInputAreaComponent {
   @ViewChild('messageInput') messageInput!: ElementRef;
   @Input() context!: 'message' | 'channel' | 'thread' | 'directmessage';
-  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef, public firestore: FirestoreService) {
+  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef, public firestore: FirestoreService, public dialog: MatDialog) {
   }
 
 
@@ -213,13 +215,22 @@ export class MessageInputAreaComponent {
         this.firestore.addMessageToChannel(channel[i]!.id!, message, creatorId);
       }
     }
-
-    if (contact.length > 0) {
+    if (contact.length == 1) {
       for (let i = 0; i < contact.length; i++) {
         const dmId = await this.firestore.checkAndCreateDirectMessage(contact[i]!.uid!, creatorId);
         this.firestore.addMessageToDirectMessage(dmId, message, creatorId);
       }
+    } else if (contact.length > 1) {
+      this.devspaceService.createNewChannel= false;
+      this.devspaceService.createNewChannelFromNewMessage = true;
+      this.dialog.open(DevspaceDialogComponent, {
+        data: {
+          contact: contact,
+          message: message
+        }
+      })
     }
+    this.devspaceService.openMessage = false;
 
   }
 
@@ -262,13 +273,12 @@ export class MessageInputAreaComponent {
   }
 
   SendMessageFromDirectMessage() {
-   
     const message = this.messageInput.nativeElement.textContent;
     const creatorId = this.devspaceService.loggedInUserUid!;
-    const contactId = this.devspaceService.selectContactDmId!;    
+    const contactId = this.devspaceService.selectContactDmId!;
     const dmId = this.devspaceService.contactDmId;
     this.firestore.addMessageToDM(dmId!, message, creatorId);
-    
+
 
   }
 

@@ -36,6 +36,8 @@ export class DevspaceService {
   channelNameforThread: string = '';
   threadCount: number = 0;
   channelNameForEmtpyMessage: string = '';
+  createNewChannel = false;
+  createNewChannelFromNewMessage = false;
   creatorMessageOn: { [key: string]: boolean } = {
     channel: false,
     thread: false

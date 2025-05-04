@@ -74,6 +74,8 @@ export class DevspaceComponent implements OnInit {
   }
 
   openDialog() {
+    this.devspaceService.createNewChannel= true;
+    this.devspaceService.createNewChannelFromNewMessage = false;
     this.dialog.open(DevspaceDialogComponent);
   }
   channelActiveClass(channelId: string) {
@@ -107,6 +109,7 @@ export class DevspaceComponent implements OnInit {
     this.devspaceService.openChannel = false;
     this.devspaceService.openDirectMessage = false;
     this.devspaceService.openThread = false;
+    this.devspaceService.activeDMContact = null;
   }
 
   closeMessage() {
