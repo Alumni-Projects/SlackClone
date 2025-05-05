@@ -6,12 +6,12 @@
 
         <div class="devspace-message-write-area-icons">
             <div class="devspace-message-write-area-icons-bars">
-                <span (click)="openSmiley()"><img src="/assets/img/smiley.png" alt=""></span>
-                <span (click)="openAt()"> <img src="/assets/img/at.png" alt=""></span>
+                <span (click)="openSmiley()"><img src="assets/img/smiley.png" alt=""></span>
+                <span (click)="openAt()"> <img src="assets/img/at.png" alt=""></span>
 
             </div>
             <span class="devspace-message-write-area-icons-bars-send" (click)="addMessage()"><img
-                    src="/assets/img/send.png" alt=""></span>
+                    src="assets/img/send.png" alt=""></span>
         </div>
 
         @if(devspaceService.openSmileyBar && devspaceService.barContext === context){
@@ -42,7 +42,7 @@
           @if(devspaceService.openChannelBar && devspaceService.barContext === context){
             <div class="devspace-message-channel-bar">
               @for(item of devspaceService.channels; track item; let i = $index){
-                <span (click)="selectChannel(i)"><img src="/assets/img/tagChannelName.png" alt=""> {{item.title}} </span>
+                <span (click)="selectChannel(i)"><img src="assets/img/tagChannelName.png" alt=""> {{item.title}} </span>
               }
             </div>
           }

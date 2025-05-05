@@ -2,9 +2,9 @@
   <div class="devspace-channel-header">
 
     <div class="devspace-channel-header-name" (click)="openEditChannelDialog()">
-      <span><img src="/assets/img/tagChannelName.png" alt=""></span>
+      <span><img src="assets/img/tagChannelName.png" alt=""></span>
       <span>{{filterChannel[0].title}}</span>
-      <span><img src="/assets/img/keyboard_arrow_down.png" alt=""></span>
+      <span><img src="assets/img/keyboard_arrow_down.png" alt=""></span>
     </div>
     <div class="devspace-channel-header-member-area">
       <div class="devspace-channel-header-member" (click)="openMember()">
@@ -17,7 +17,7 @@
         <span>{{filterChannel[0].member?.length}}</span>
       </div>
       @if(filterChannel[0].creator == devspaceService.loggedInUserUid){
-      <span (click)="openMemberAdd()" class="devspace-channel-header-member-add"><img src="/assets/img/person_add.png"
+      <span (click)="openMemberAdd()" class="devspace-channel-header-member-add"><img src="assets/img/person_add.png"
           alt=""></span>
       }
 
@@ -25,7 +25,7 @@
       <div class="devspace-channel-header-member-list">
         <div class="devspace-channel-header-member-list-title">
           <span>Mitglieder</span>
-          <span (click)="closeMember()"><img src="/assets/img/dialogClose.png" alt=""></span>
+          <span (click)="closeMember()"><img src="assets/img/dialogClose.png" alt=""></span>
         </div>
         <div class="devspace-channel-header-member-list-item-Area">
           <div class="devspace-channel-header-member-list-item">
@@ -58,7 +58,7 @@
         @if(filterChannel[0].creator == devspaceService.loggedInUserUid){
         <div class="devspace-channel-header-member-new">
           <span class="devspace-channel-header-member-add">
-            <img src="/assets/img/person_add.png" alt=""></span>
+            <img src="assets/img/person_add.png" alt=""></span>
           <span (click)="openMemberAdd()">Mitglieder hinzufügen</span>
         </div>
         }
@@ -67,9 +67,9 @@
       @if(devspaceService.channelMemberAdded){
       <div class="devspace-channel-header-member-added">
         <div class="devspace-channel-header-member-added-header"><span>Leute hinzufügen</span>
-          <span (click)="closeMemberAdded()"><img src="/assets/img/dialogClose.png" alt=""></span>
+          <span (click)="closeMemberAdded()"><img src="assets/img/dialogClose.png" alt=""></span>
         </div>
-        <div class="devspace-channel-header-member-added-Title"> <span><img src="/assets/img/tagHover.png"
+        <div class="devspace-channel-header-member-added-Title"> <span><img src="assets/img/tagHover.png"
               alt=""></span>
           <span>{{filterChannel[0].title}}</span>
         </div>
@@ -79,7 +79,7 @@
 
             <div class="selected-contact-item-content"><img src="{{item.profile}}"
                 alt=""><span class="item-selected-name">{{item.displayName}}</span>
-              <img (click)="removeContact(i)" src="/assets/img/dialogClose.png" alt="">
+              <img (click)="removeContact(i)" src="assets/img/dialogClose.png" alt="">
             </div>
             }
 
@@ -104,7 +104,7 @@
             <div class="selected-contact-item-content-selected">
               <span><img src="{{item.profile}}" alt=""> <span class="item-selected-name">{{item.displayName}}</span></span>
               <img class="selected-contact-item-content-selected-close" (click)="removeContact(i)"
-                src="/assets/img/dialogClose.png" alt="">
+                src="assets/img/dialogClose.png" alt="">
             </div>
             }
           </div>

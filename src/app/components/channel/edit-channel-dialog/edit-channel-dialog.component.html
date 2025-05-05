@@ -1,24 +1,24 @@
 <section class="edit-channel">
     <div class="edit-channel-header">
         <div class="edit-channel-name">
-            <span><img src="/assets/img/tagChannelName.png" alt=""></span>
+            <span><img src="assets/img/tagChannelName.png" alt=""></span>
             <span>{{filterChannel[0].title}}</span>
         </div>
-        <span (click)="closeDialog()" class="edit-channel-header-close"><img src="/assets/img/dialogClose.png"
+        <span (click)="closeDialog()" class="edit-channel-header-close"><img src="assets/img/dialogClose.png"
                 alt=""></span>
     </div>
     @if(editChannelName){
     <div class="edit-channel-input">
         <div class="edit-channel-description-textarea">
             <div><span>Channel-Name</span>@if(filterChannel[0].creator == devspaceService.loggedInUserUid){<span (click)="editChannelName = false">Bearbeiten</span>} </div>
-            <div><span><img src="/assets/img/tagChannelName.png" alt=""></span> {{filterChannel[0].title}}</div>
+            <div><span><img src="assets/img/tagChannelName.png" alt=""></span> {{filterChannel[0].title}}</div>
         </div>
     </div>
     } @else{
     <div class="edit-channel-input-create">
         <div><span>Channel-Name</span><span (click)="saveChannelName()">Speichern</span></div>
         <div class="edit-channel-input-area" [class.edit-channel-name-input-Error]="channelNameInputError"><span><img
-                    src="/assets/img/tagChannelName.png" alt=""></span>
+                    src="assets/img/tagChannelName.png" alt=""></span>
             <input type="text" maxlength="20" (input)="maxCharsInputControll()" value="{{filterChannel[0].title}}"
                 placeholder="{{filterChannel[0].title}}" #channelInput class="edit-channel-name-input">
             <span>{{charsLeft}}</span>

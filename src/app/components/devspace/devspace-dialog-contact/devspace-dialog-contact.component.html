@@ -1,6 +1,6 @@
 <section class="devspace-dialog-Add-Contact">
     <div class="devspace-dialog-Add-Contact-Header"><span>Leute hinzufügen</span>
-        <span (click)="closeDialog()"><img src="/assets/img/dialogClose.png" alt=""></span>
+        <span (click)="closeDialog()"><img src="assets/img/dialogClose.png" alt=""></span>
     </div>
     <div class="devspace-dialog-Add-Contact-List">
         <div>
@@ -28,7 +28,7 @@
 
                 <div class="selected-contact-item-content"><img src="{{item.profile}}" alt="">
                     <span class="item-selected-name">{{item.displayName}}</span>
-                    <img (click)="removeContact(i)" src="/assets/img/dialogClose.png" alt="">
+                    <img (click)="removeContact(i)" src="assets/img/dialogClose.png" alt="">
                 </div>
                 }
 
@@ -55,7 +55,7 @@
                 <div class="selected-contact-item-content-selected">
                     <span><img src="{{item.profile}}" alt=""><span class="item-selected-name">{{item.displayName}}</span></span>
                     <img class="selected-contact-item-content-selected-close" (click)="removeContact(i)"
-                        src="/assets/img/dialogClose.png" alt="">
+                        src="assets/img/dialogClose.png" alt="">
                 </div>
                 }
             </div>
