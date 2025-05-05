@@ -111,6 +111,8 @@ export class DevspaceDialogContactComponent implements OnInit {
   }
 
   addChannel(): void {
+    this.devspaceService.openDirectMessage = false;
+    this.devspaceService.activeDMContact = null;
     const timestamp = new Date().toISOString();
     const baseChannel = {
       title: this.devspaceService.channelsName,
