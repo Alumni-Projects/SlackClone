@@ -5,10 +5,10 @@
     @if(!breakpoints.breankpointMain){
     <div class="devspace-header">
         <div class="devspace-logo">
-            <img src="/assets/img/WorkspaceLogo.png" alt="">
+            <img src="assets/img/WorkspaceLogo.png" alt="">
             <p>Devspace</p>
         </div>
-        <div class="devspace-edit-logo" (click)="openMessage()"><img src="/assets/img/DevEdit.png" alt=""></div>
+        <div class="devspace-edit-logo" (click)="openMessage()"><img src="assets/img/DevEdit.png" alt=""></div>
     </div>
     }
     <div class="devspace-channels">
@@ -19,11 +19,11 @@
                         [src]="imageUrl" alt="">
                 </span>
                 <div>
-                    <span><img src="/assets/img/workspaces.png" alt=""></span>
+                    <span><img src="assets/img/workspaces.png" alt=""></span>
                     <span>Channels</span>
                 </div>
             </div>
-            <span (click)="openDialog()" class="devspace-add-channel"><img src="/assets/img/addChannel.png"
+            <span (click)="openDialog()" class="devspace-add-channel"><img src="assets/img/addChannel.png"
                     alt=""></span>
         </div>
         @if(!activeChannel){
@@ -33,7 +33,7 @@
             @for(item of devspaceService.channels; track i; let i = $index){
             <div [class.activeChannel]="item.id === devspaceService.selectedChannelId"
                 class="devspace-channel-list-item" (click)="channelActiveClass(item.id ?? ''); closeMessage()">
-                <span><img src="/assets/img/tagChannelName.png" alt=""></span>
+                <span><img src="assets/img/tagChannelName.png" alt=""></span>
                 <div class="devspace-channel-list-item-name">
                     <span>{{item.title}}</span>
                 </div>
@@ -44,7 +44,7 @@
             </div>
             }
         </div>
-        <div class="devspace-add-channel-button" (click)="openDialog()"><img src="/assets/img/add_circle.png" alt="">
+        <div class="devspace-add-channel-button" (click)="openDialog()"><img src="assets/img/add_circle.png" alt="">
             <p>Channel hinzufügen</p>
         </div>
         }
@@ -55,7 +55,7 @@
             <span><img [class.active-Message-Icon]="directMessages" [class.active-Message-Icon-None]="!directMessages"
                     [src]="imageUrlMessage" alt=""></span>
             <div class="devspace-direct-messages-title-content">
-                <span><img src="/assets/img/account_circle.png" alt=""></span>
+                <span><img src="assets/img/account_circle.png" alt=""></span>
                 <span>Direktnachrichten</span>
             </div>
         </div>
@@ -81,7 +81,7 @@
         }
     </div>
     @if(breakpoints.breankpointMain){
-    <div class="devspace-edit-logo-mobile"> <img src="/assets/img/edit_square.png" alt=""></div>
+    <div class="devspace-edit-logo-mobile"> <img src="assets/img/edit_square.png" alt=""></div>
     }
 </section>
 }

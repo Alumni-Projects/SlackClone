@@ -542,7 +542,6 @@ export class FirestoreService {
       console.warn('not data from getUserDataForDm');
       return null;
     }
-
     const userRef = doc(this.firestore, 'users', userId);
     const userSnapshot = await getDoc(userRef);
     if (userSnapshot.exists()) {
@@ -594,8 +593,7 @@ export class FirestoreService {
     });
   }
 
-  async checkAndCreateDirectMessage(contactId: string, creatorId: string): Promise<string> {
-    
+  async checkAndCreateDirectMessage(contactId: string, creatorId: string): Promise<string> {    
     const isSelfDm = contactId === creatorId;
     const dmId = isSelfDm ? `${creatorId}_${creatorId}` : [contactId, creatorId].sort().join('_');    
     const dmRef = doc(this.firestore, `directMessages/${dmId}`);

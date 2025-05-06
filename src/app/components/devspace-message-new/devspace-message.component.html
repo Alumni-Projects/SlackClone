@@ -22,7 +22,7 @@
         @if(devspaceService.openChannelBarSearch){
         <div class="devspace-message-channel-search">
             @for(item of devspaceService.channels; track item; let i = $index){
-            <span (click)="selectChannelSearch(i)"><img src="/assets/img/tagChannelName.png" alt="">
+            <span (click)="selectChannelSearch(i)"><img src="assets/img/tagChannelName.png" alt="">
                 {{item.title}}</span>
             }
         </div>

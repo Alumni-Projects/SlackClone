@@ -53,9 +53,9 @@
                 </div>
                 }
                 <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/checkmark.png')"><img
-                        src="/assets/img/checkmark.png" alt=""></span>
+                        src="assets/img/checkmark.png" alt=""></span>
                 <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/ThumbsUp.png')"><img
-                        src="/assets/img/ThumbsUp.png" alt=""></span>
+                        src="assets/img/ThumbsUp.png" alt=""></span>
                 <span class="message-icon-hover" (click)="openEmojibar(i)" (mouseenter)="isHoveredReaction = true"
                     (mouseleave)="isHoveredReaction = false">
                     <img
@@ -125,9 +125,9 @@
                 </div>
                 }
                 <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/checkmark.png')"><img
-                        src="/assets/img/checkmark.png" alt=""></span>
+                        src="assets/img/checkmark.png" alt=""></span>
                 <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/ThumbsUp.png')"><img
-                        src="/assets/img/ThumbsUp.png" alt=""></span>
+                        src="assets/img/ThumbsUp.png" alt=""></span>
                 <span class="message-icon-hover" (click)="openEmojibar(i)" (mouseenter)="isHoveredReaction = true"
                     (mouseleave)="isHoveredReaction = false">
                     <img
@@ -179,14 +179,14 @@
     @if(this.messageSection === 'channel'){
     <div class="no-message">
         <div class="no-message-title">
-            <div ><img src="/assets/img/tagChannelName.png" alt=""></div>
+            <div ><img src="assets/img/tagChannelName.png" alt=""></div>
             <div class="no-message-title-name">{{this.devspaceService.channelNameForEmtpyMessage}}</div>
         </div>
 
         <div class="no-message-text">
             <div>Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels</div>
             <div class="no-message-text-channel">
-                <span><img src="/assets/img/tagHover.png"
+                <span><img src="assets/img/tagHover.png"
                         alt=""></span><span class="no-message-text-channel-title">{{this.devspaceService.channelNameForEmtpyMessage}}</span></div>
         </div>
     </div>
@@ -200,7 +200,7 @@
     
             <div class="no-message-text-dm">
                 <span>Diese Unterhaltung findet nur zwischen</span>
-                <span> <img src="/assets/img/at_hover.png" alt="">{{devspaceService.selectContactData.userData?.displayName}}</span>
+                <span> <img src="assets/img/at_hover.png" alt="">{{devspaceService.selectContactData.userData?.displayName}}</span>
                 <span>und dir statt</span>
             </div>
         </div>
