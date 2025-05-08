@@ -14,7 +14,7 @@ import { IconSize } from '@shared/Enums/iconSize';
 })
 export class ChooseAvatarComponent implements OnInit {
   [x: string]: any;
-  avatarImage = '/assets/avatar/avatar0.svg';
+  avatarImage = 'assets/avatar/avatar0.svg';
   username = 'Frederik Beck';
   iconColor = Color.Black;
   iconSize: string = IconSize.Small;
@@ -22,12 +22,12 @@ export class ChooseAvatarComponent implements OnInit {
   isMobile = false;
 
   avatars = [
-    { src: '/assets/avatar/avatar1.svg' },
-    { src: '/assets/avatar/avatar2.svg' },
-    { src: '/assets/avatar/avatar3.svg' },
-    { src: '/assets/avatar/avatar4.svg' },
-    { src: '/assets/avatar/avatar5.svg' },
-    { src: '/assets/avatar/avatar6.svg' }
+    { src: 'assets/avatar/avatar1.svg' },
+    { src: 'assets/avatar/avatar2.svg' },
+    { src: 'assets/avatar/avatar3.svg' },
+    { src: 'assets/avatar/avatar4.svg' },
+    { src: 'assets/avatar/avatar5.svg' },
+    { src: 'assets/avatar/avatar6.svg' }
   ];
 
   constructor(private breakpointObserver: BreakpointObserver) { }
@@ -37,7 +37,7 @@ export class ChooseAvatarComponent implements OnInit {
       this.avatarImage =
         this.avatars.length > 0
           ? this.avatars[0].src
-          : '/assets/avatar/avatar0.svg';
+          : 'assets/avatar/avatar0.svg';
     }
 
     this.breakpointObserver

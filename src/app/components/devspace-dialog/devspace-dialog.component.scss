@@ -32,7 +32,7 @@
             border-radius: 50%;
 
             & img {
-                content: url('/assets/img/closeHover.png');
+                content: url('../../../assets/img/closeHover.png');
             }
 
         }
@@ -63,7 +63,7 @@
 }
 
 .devspace-dialog-input {
-    background: url('/assets/img/inputPic.png') no-repeat 15px center;
+    background: url('../../../assets/img/inputPic.png') no-repeat 15px center;
     background-size: 23px 23px;
     padding-left: 45px;
     width: 100%;
