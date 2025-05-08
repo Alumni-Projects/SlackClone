@@ -77,16 +77,16 @@ export class DevspaceService {
 
   emojis = ['✅', '😊', '😂', '❤️', '👍', '🔥', '🎉', '💡', '😎', '🚀', '✨', '🙌', '🎶', '🥳', '💪', '🧐', '🌟', '🤩', '🍀', '🏆', '🤖', '👀', '💯', '🤗', '🤔', '😜', '😇', '😅', '🤝', '🎯', '🦾', '🕶️', '🐱', '🎨', '🏅', '💰', '🛠️', '📚', '📝', '📢', '🎤', '🌍', '🔑', '💌', '🕹️', '🔮', '🎭', '🛸', '👨‍💻', '👩‍💻', '🧠', '⚡', '🛤️', '⏳', '🌀', '💎', '🥇', '📈', '🗝️', '🃏', '🎲', '💥'];
   emojisRections = [
-    { emoji: '/assets/img/emojis/icon1.png' },
-    { emoji: '/assets/img/emojis/icon2.png' },
-    { emoji: '/assets/img/emojis/icon3.png' },
-    { emoji: '/assets/img/emojis/icon4.png' },
-    { emoji: '/assets/img/emojis/icon5.png' },
-    { emoji: '/assets/img/emojis/icon6.png' },
-    { emoji: '/assets/img/emojis/icon7.png' },
-    { emoji: '/assets/img/emojis/icon8.png' },
-    { emoji: '/assets/img/emojis/icon9.png' },
-    { emoji: '/assets/img/emojis/icon10.png' },
+    { emoji: 'assets/img/emojis/icon1.png' },
+    { emoji: 'assets/img/emojis/icon2.png' },
+    { emoji: 'assets/img/emojis/icon3.png' },
+    { emoji: 'assets/img/emojis/icon4.png' },
+    { emoji: 'assets/img/emojis/icon5.png' },
+    { emoji: 'assets/img/emojis/icon6.png' },
+    { emoji: 'assets/img/emojis/icon7.png' },
+    { emoji: 'assets/img/emojis/icon8.png' },
+    { emoji: 'assets/img/emojis/icon9.png' },
+    { emoji: 'assets/img/emojis/icon10.png' },
 
   ]
   accounts: DevspaceAccount[] = [];

@@ -61,7 +61,7 @@
             background-color: var(--bg-color);
 
             & img {
-                content: url('/assets/img/smiley_hover.png');
+                content: url('../../../assets/img/smiley_hover.png');
             }
         }
     }
@@ -72,7 +72,7 @@
             background-color: var(--bg-color);
 
             & img {
-                content: url('/assets/img/at_hover.png');
+                content: url('../../../assets/img/at_hover.png');
             }
         }
     }
@@ -85,7 +85,7 @@
 
     &:hover {
         & img {
-            content: url('/assets/img/send_hover.png');
+            content: url('../../../assets/img/send_hover.png');
         }
     }
 }
@@ -150,7 +150,7 @@
             border-radius: 35px;
 
             & img {
-                content: url('/assets/img/tagHover.png');
+                content: url('../../../assets/img/tagHover.png');
             }
         }
     }

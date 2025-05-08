@@ -8,6 +8,8 @@
     "prebuild:prod": "node set-env.js",
     "build:prod": "ng build --configuration production --base-href=/SlackClone/",
     "postbuild:prod": "node generate-404.js",
+    "build:test-prod": "ng build --configuration production --base-href=/SlackClone/",
+    "postbuild:test-prod": "node generate-404.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "npm lint:js && npm lint:css",

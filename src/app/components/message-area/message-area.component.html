@@ -21,7 +21,7 @@
                             <span class="message-icon-hover" (click)="openEditMessageEmoji(i)"
                                 (mouseenter)="isHoveredReaction = true" (mouseleave)="isHoveredReaction = false">
                                 <img
-                                    [src]="isHoveredReaction ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
+                                    [src]="isHoveredReaction ? 'assets/img/add_reaction.png' : 'assets/img/addReaction.png'"></span>
                         </div>
                         <div class="edit-message-area-buttons" [class.thread-btn]="messageSection === 'thread'">
                             <span (click)="cancelEditMessage()" class="button-secondary-message btn">Abbrechen</span>
@@ -52,22 +52,22 @@
                     }
                 </div>
                 }
-                <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/checkmark.png')"><img
+                <span class="message-icon-hover-check" (click)="checkMessage(i, 'assets/img/checkmark.png')"><img
                         src="assets/img/checkmark.png" alt=""></span>
-                <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/ThumbsUp.png')"><img
+                <span class="message-icon-hover-check" (click)="checkMessage(i, 'assets/img/ThumbsUp.png')"><img
                         src="assets/img/ThumbsUp.png" alt=""></span>
                 <span class="message-icon-hover" (click)="openEmojibar(i)" (mouseenter)="isHoveredReaction = true"
                     (mouseleave)="isHoveredReaction = false">
                     <img
-                        [src]="isHoveredReaction ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
+                        [src]="isHoveredReaction ? 'assets/img/add_reaction.png' : 'assets/img/addReaction.png'"></span>
                 @if(this.messageSection === 'channel'){
                 <span (click)="openThread(i)" class="message-icon-hover" (mouseenter)="isHoveredAnswer = true"
                     (mouseleave)="isHoveredAnswer = false">
-                    <img [src]="isHoveredAnswer ? '/assets/img/answer_hover.png' : '/assets/img/Answer.png'"></span>
+                    <img [src]="isHoveredAnswer ? 'assets/img/answer_hover.png' : 'assets/img/Answer.png'"></span>
                 }
                 <span (click)="editMessageOpen(i)" class="message-icon-hover" (mouseenter)="isHoveredEdit = true"
                     (mouseleave)="isHoveredEdit = false">
-                    <img [src]="isHoveredEdit ? '/assets/img/more_vert.png' : '/assets/img/edit.png'"></span>
+                    <img [src]="isHoveredEdit ? 'assets/img/more_vert.png' : 'assets/img/edit.png'"></span>
             </div>
             }
 
@@ -85,15 +85,14 @@
                 <div class="message-reactions" [class.thread-reactions]="messageSection === 'thread'">
                     @for(reaction of item.reactions; track j; let j = $index){
                     <div class="reaction-item" (click)="changeReaction(i,j)">
-                        <span class="reaction-img">@if(item.reactions![j].emoji.startsWith('/assets')){<img
-                                src="{{item.reactions![j].emoji}}" alt="">}@else{{{item.reactions![j].emoji}}}</span>
+                        <span class="reaction-img"><img src="{{item.reactions![j].emoji}}" alt=""></span>
                         <span>{{item.reactions![j].uids.length}}</span>
                     </div>
                     }
                     <span (click)="openEmojibar(i)" class="message-icon-hover" (mouseenter)="logHoverIn(i, 'creator')"
                         (mouseleave)="logHoverOut('creator')">
                         <img
-                            [src]="isHoveredReactionMessage == i ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
+                            [src]="isHoveredReactionMessage == i ? 'assets/img/add_reaction.png' : 'assets/img/addReaction.png'"></span>
 
                 </div>
 
@@ -124,18 +123,18 @@
                     }
                 </div>
                 }
-                <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/checkmark.png')"><img
+                <span class="message-icon-hover-check" (click)="checkMessage(i, 'assets/img/checkmark.png')"><img
                         src="assets/img/checkmark.png" alt=""></span>
-                <span class="message-icon-hover-check" (click)="checkMessage(i, '/assets/img/ThumbsUp.png')"><img
+                <span class="message-icon-hover-check" (click)="checkMessage(i, 'assets/img/ThumbsUp.png')"><img
                         src="assets/img/ThumbsUp.png" alt=""></span>
                 <span class="message-icon-hover" (click)="openEmojibar(i)" (mouseenter)="isHoveredReaction = true"
                     (mouseleave)="isHoveredReaction = false">
                     <img
-                        [src]="isHoveredReaction ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
+                        [src]="isHoveredReaction ? 'assets/img/add_reaction.png' : 'assets/img/addReaction.png'"></span>
                 @if(this.messageSection === 'channel'){
                 <span (click)="openThread(i)" class="message-icon-hover" (mouseenter)="isHoveredAnswer = true"
                     (mouseleave)="isHoveredAnswer = false">
-                    <img [src]="isHoveredAnswer ? '/assets/img/answer_hover.png' : '/assets/img/Answer.png'"></span>
+                    <img [src]="isHoveredAnswer ? 'assets/img/answer_hover.png' : 'assets/img/Answer.png'"></span>
                 }
 
             </div>
@@ -155,15 +154,14 @@
                     [class.thread-reactions]="messageSection === 'thread'">
                     @for(reaction of item.reactions; track j; let j = $index){
                     <div (click)="changeReaction(i,j)" class="reaction-item member-reaction ">
-                        <span class="reaction-img ">@if(item.reactions![j].emoji.startsWith('/assets')){<img
-                                src="{{item.reactions![j].emoji}}" alt="">}@else{{{item.reactions![j].emoji}}}</span>
+                        <span class="reaction-img "><img src="{{item.reactions![j].emoji}}" alt=""></span>
                         <span>{{item.reactions![j].uids.length}}</span>
                     </div>
                     }
                     <span (click)="openEmojibar(i)" class="message-icon-hover" (mouseenter)="logHoverIn(i, 'member')"
                         (mouseleave)="logHoverOut('member')">
                         <img
-                            [src]="isHoveredReactionMessageMember === i ? '/assets/img/add_reaction.png' : '/assets/img/addReaction.png'"></span>
+                            [src]="isHoveredReactionMessageMember === i ? 'assets/img/add_reaction.png' : 'assets/img/addReaction.png'"></span>
 
                 </div>
 
@@ -179,33 +177,35 @@
     @if(this.messageSection === 'channel'){
     <div class="no-message">
         <div class="no-message-title">
-            <div ><img src="assets/img/tagChannelName.png" alt=""></div>
+            <div><img src="assets/img/tagChannelName.png" alt=""></div>
             <div class="no-message-title-name">{{this.devspaceService.channelNameForEmtpyMessage}}</div>
         </div>
 
         <div class="no-message-text">
             <div>Du hast diesen Channel heute erstellt. Das ist der Anfang des Channels</div>
             <div class="no-message-text-channel">
-                <span><img src="assets/img/tagHover.png"
-                        alt=""></span><span class="no-message-text-channel-title">{{this.devspaceService.channelNameForEmtpyMessage}}</span></div>
+                <span><img src="assets/img/tagHover.png" alt=""></span><span
+                    class="no-message-text-channel-title">{{this.devspaceService.channelNameForEmtpyMessage}}</span>
+            </div>
         </div>
     </div>
     }
     @if(this.messageSection === 'directmessage'){
-        <div class="no-message-dm">
-            <div class="no-message-title-dm">
-                <div ><img src="{{devspaceService.selectContactData.userData?.profile}}" alt=""></div>
-                <div class="no-message-title-name">{{devspaceService.selectContactData.userData?.displayName}}</div>
-            </div>
-    
-            <div class="no-message-text-dm">
-                <span>Diese Unterhaltung findet nur zwischen</span>
-                <span> <img src="assets/img/at_hover.png" alt="">{{devspaceService.selectContactData.userData?.displayName}}</span>
-                <span>und dir statt</span>
-            </div>
+    <div class="no-message-dm">
+        <div class="no-message-title-dm">
+            <div><img src="{{devspaceService.selectContactData.userData?.profile}}" alt=""></div>
+            <div class="no-message-title-name">{{devspaceService.selectContactData.userData?.displayName}}</div>
         </div>
+
+        <div class="no-message-text-dm">
+            <span>Diese Unterhaltung findet nur zwischen</span>
+            <span> <img src="assets/img/at_hover.png"
+                    alt="">{{devspaceService.selectContactData.userData?.displayName}}</span>
+            <span>und dir statt</span>
+        </div>
+    </div>
     }
-    
+
     }
 
 

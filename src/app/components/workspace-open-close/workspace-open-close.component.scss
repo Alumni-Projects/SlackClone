@@ -29,7 +29,7 @@
         }
 
         & img {
-            content: url('/assets/img/Showmenu_hover.png');
+            content: url('../../../assets/img/Showmenu_hover.png');
         }
 
     }
@@ -38,7 +38,7 @@
 .close-menu {
     &:hover {
         & img {
-            content: url('/assets/img/Showmenu_open_hover.png');
+            content: url('../../../assets/img/Showmenu_open_hover.png');
         }
     }
 }

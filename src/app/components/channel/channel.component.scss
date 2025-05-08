@@ -55,13 +55,13 @@
 
         & span:nth-of-type(1) {
             & img:nth-of-type(1) {
-                content: url('/assets/img/tagHover.png');
+                content: url('../../../assets/img/tagHover.png');
             }
         }
 
         & span:nth-of-type(3) {
             & img:nth-of-type(1) {
-                content: url('/assets/img/keyboard_arrow_down_hover.png');
+                content: url('../../../assets/img/keyboard_arrow_down_hover.png');
             }
         }
     }
@@ -146,7 +146,7 @@
 
     &:hover {
         & img {
-            content: url('/assets/img/person_add_hover.png');
+            content: url('../../../assets/img/person_add_hover.png');
         }
 
         cursor: pointer;
@@ -199,7 +199,7 @@
             border-radius: 20px;
 
             & img {
-                content: url('/assets/img/closeHover.png');
+                content: url('../../../assets/img/closeHover.png');
             }
         }
     }
@@ -269,7 +269,7 @@
         cursor: pointer;
 
         & img {
-            content: url('/assets/img/person_add_hover.png');
+            content: url('../../../assets/img/person_add_hover.png');
         }
     }
 }
@@ -314,7 +314,7 @@
             border-radius: 20px;
 
             & img {
-                content: url('/assets/img/closeHover.png');
+                content: url('../../../assets/img/closeHover.png');
             }
         }
     }
@@ -451,7 +451,7 @@
         cursor: pointer;
 
         &:hover {
-            content: url('/assets/img/closeHover.png');
+            content: url('../../../assets/img/closeHover.png');
         }
     }
 }
@@ -483,7 +483,7 @@
         cursor: pointer;
 
         &:hover {
-            content: url('/assets/img/closeHover.png');
+            content: url('../../../assets/img/closeHover.png');
         }
     }
 }
@@ -516,7 +516,7 @@
     width: 24px;
     height: 24px;
 &:hover{    
-    content: url('/assets/img/closeHover.png');
+    content: url('../../../assets/img/closeHover.png');
 }
 }
 
