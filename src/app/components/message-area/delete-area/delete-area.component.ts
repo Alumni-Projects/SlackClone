@@ -17,9 +17,8 @@ export class DeleteAreaComponent {
     private firestore: FirestoreService,
     private dialogRef: MatDialogRef<DeleteAreaComponent>,
     private devspaceService: DevspaceService
-  ) {
 
-  }
+  ) { }
 
   closeDialog() {
     this.dialogRef.close();
@@ -46,8 +45,8 @@ export class DeleteAreaComponent {
         parentMessageId,
         threadId
       });
-    }else if (this.data.section === 'directmessage') {
-      console.log('directmessage');      
+    } else if (this.data.section === 'directmessage') {
+      console.log('directmessage');
       const message = this.data.message;
       const dmId = this.data.dmId;
       this.firestore.deleteMessage({

@@ -160,8 +160,6 @@
     font-size: var(--font-size-m);
     font-weight: var(--font-weight-normal);
     color: var(--white-color);
-
-
 }
 
 .message-member {
@@ -191,6 +189,35 @@
 
 }
 
+.message-icon-edit-bar {
+    position: absolute;
+    display: flex;
+    align-items: center;
+
+    right: 0;
+    top: 50px;
+    z-index: 100;
+    gap: 5px;
+
+    & span{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        & img{
+            width: 24px;
+            height: 24px;
+        }
+
+        &:hover{
+            background-color: var(--bg-color);
+            border-radius: 50%;
+        }
+    }
+}
+
 .message-icon-bar-member {
     position: absolute;
     right: 45px;
@@ -208,6 +235,17 @@
     border-bottom-left-radius: 25px;
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
+    background-color: var(--white-color);
+    border: 1px solid var(--light-purple);
+    padding: 3px 15px 3px 20px;
+}
+
+.icon-edit-bar-Style {
+    width: fit-content;
+    height: 46px;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: 25px;
     background-color: var(--white-color);
     border: 1px solid var(--light-purple);
     padding: 3px 15px 3px 20px;
@@ -522,7 +560,7 @@
     justify-content: end;
 }
 
-.no-message-title-dm{
+.no-message-title-dm {
     display: flex;
     align-items: end;
     gap: 10px;
@@ -531,6 +569,7 @@
     font-size: var(--font-size-ml);
     font-weight: var(--font-weight-extra-bold);
     color: var(--black-color);
+
     & img {
         width: 100px;
         height: 100px;
@@ -547,6 +586,7 @@
     gap: 5px;
     color: var(--grey-dark);
     flex-wrap: wrap;
+
     & span:nth-of-type(2) {
         color: var(--purple-3);
         display: flex;
