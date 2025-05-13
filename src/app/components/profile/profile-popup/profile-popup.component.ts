@@ -11,6 +11,9 @@ import { Color } from '@shared/Enums/color';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.component';
+import { AuthService } from '@shared/services/auth-service/auth.service';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
+import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 
 @Component({
   selector: 'app-profile-popup',
@@ -25,7 +28,7 @@ export class ProfilePopupComponent {
   @Output() close = new EventEmitter<void>();
   isClosing = false;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, public authService: AuthService, public firestore: FirestoreService, public devspaceService: DevspaceService) { }
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
@@ -46,11 +49,17 @@ export class ProfilePopupComponent {
     this.startCloseAnimation();
   }
 
-  startCloseAnimation() {
+  startCloseAnimation() {    
     this.isClosing = true;
     setTimeout(() => {
       this.isClosing = false;
       this.close.emit();
     }, 200);
+  }
+
+  logout() {
+    this.firestore.changeUserStatus(this.devspaceService.loggedInUserUid, false);
+    this.firestore.cleanupFirestoreListeners();
+    this.authService.logout();
   }
 }
