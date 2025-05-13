@@ -58,7 +58,7 @@ export class ProfilePopupComponent {
   }
 
   logout() {
-    this.firestore.changeUserStatusLogout(this.devspaceService.loggedInUserUid);
+    this.firestore.changeUserStatus(this.devspaceService.loggedInUserUid, false);
     this.firestore.cleanupFirestoreListeners();
     this.authService.logout();
   }

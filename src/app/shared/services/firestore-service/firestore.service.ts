@@ -157,7 +157,7 @@ export class FirestoreService {
   subscribeToUserChannels(userId: string): void {
     const channelsRef = collection(this.firestore, 'channel');
     const q = query(channelsRef, where('member', 'array-contains', userId));
-    const unsubscribe1 = onSnapshot(q, (querySnapshot) => {
+    const unsubscribeUserChannel = onSnapshot(q, (querySnapshot) => {
       const channels = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Devspace));
       this.channelsSubject.next(channels);
       querySnapshot.docChanges().forEach(change => {
@@ -169,7 +169,7 @@ export class FirestoreService {
       this.channelsSubject.next([]);
     });
 
-    this.snapshotUnsubscribers.push(unsubscribe1);
+    this.snapshotUnsubscribers.push(unsubscribeUserChannel);
   }
 
   async deleteChannelFromFirestore(channeluid: string): Promise<void> {
@@ -205,7 +205,7 @@ export class FirestoreService {
   }
   subscribeToMessages(channelId: string): void {
     const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
-     const unsubscribe2 = onSnapshot(messagesRef, async (querySnapshot) => {
+     const unsubscribeMessages = onSnapshot(messagesRef, async (querySnapshot) => {
       if (querySnapshot.empty) {
         this.messagesSubject.next([]);
         return;
@@ -223,12 +223,12 @@ export class FirestoreService {
       this.messagesSubject.next(messages);
     });
 
-    this.snapshotUnsubscribers.push(unsubscribe2);
+    this.snapshotUnsubscribers.push(unsubscribeMessages);
   }
 
   subscribeToThreadMessages(channelId: string, parentMessageId: string): void {
     const threadRef = collection(this.firestore, `channel/${channelId}/messages/${parentMessageId}/threads`);
-    const unsubscribe3 = onSnapshot(threadRef, async (querySnapshot) => {
+    const unsubscribeThreadMessage = onSnapshot(threadRef, async (querySnapshot) => {
       const threadMessages: ChatMessage[] = [];
       for (const doc of querySnapshot.docs) {
         const data = doc.data() as ChatMessage;
@@ -239,7 +239,7 @@ export class FirestoreService {
       this.threadMessagesSubject.next(threadMessages);
     });
 
-    this.snapshotUnsubscribers.push(unsubscribe3);
+    this.snapshotUnsubscribers.push(unsubscribeThreadMessage);
   }
 
   private async getUserData(uid: string): Promise<any> {
@@ -519,7 +519,7 @@ export class FirestoreService {
       const userData = await this.getUserDataForDm(otherUserId);
       dmData.push({ dmId, userData });
     }
-    const unsubscribe4 = onSnapshot(dmCollectionRef, (querySnapshot) => {
+    const unsubscribeDmUser = onSnapshot(dmCollectionRef, (querySnapshot) => {
       querySnapshot.docChanges().forEach((change) => {
         if (change.type !== 'added') return;
         const newDmId = change.doc.id;
@@ -540,7 +540,7 @@ export class FirestoreService {
       });
     });
 
-    this.snapshotUnsubscribers.push(unsubscribe4);
+    this.snapshotUnsubscribers.push(unsubscribeDmUser);
 
     return dmData;
   }
@@ -590,7 +590,7 @@ export class FirestoreService {
     }
     const messagesRef = collection(this.firestore, `directMessages/${dmId}/messages`);
     const q = query(messagesRef, orderBy('createdAt', 'asc'));
-    const unsubscribe5 = onSnapshot(q, async (querySnapshot) => {
+    const unsubscribeDm = onSnapshot(q, async (querySnapshot) => {
       const messages = await Promise.all(
         querySnapshot.docs.map(async (doc) => {
           const data = doc.data() as ChatMessage;
@@ -601,7 +601,7 @@ export class FirestoreService {
       this.directMessagesSubject.next(messages);
     });
 
-    this.snapshotUnsubscribers.push(unsubscribe5);
+    this.snapshotUnsubscribers.push(unsubscribeDm);
   }
 
   async checkAndCreateDirectMessage(contactId: string, creatorId: string): Promise<string> {
@@ -705,18 +705,17 @@ export class FirestoreService {
   this.snapshotUnsubscribers = [];
 }
 
-changeUserStatusLogout(userId: string): Promise<void> {
+changeUserStatus(userId: string, status: boolean): Promise<void> {
   const userRef = doc(this.firestore, `users/${userId}`);
-  return updateDoc(userRef, {
-    online: false
-  });
-}
-
-changeUserStatusLogin(userId: string): Promise<void> {
-  const userRef = doc(this.firestore, `users/${userId}`);
-  return updateDoc(userRef, {
-    online: true
-  });
+  if (status) {
+    return updateDoc(userRef, {
+      online: true
+    });
+  }else{
+    return updateDoc(userRef, {
+      online: false
+    });
+  }  
 }
 
 }
