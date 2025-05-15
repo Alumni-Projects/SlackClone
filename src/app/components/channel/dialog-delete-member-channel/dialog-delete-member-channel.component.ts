@@ -10,7 +10,7 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
 })
 export class DialogDeleteMemberChannelComponent {
 constructor (public firestore: FirestoreService,public dialog: MatDialog,@Inject(MAT_DIALOG_DATA) public data: { index: number; channelId: string; userId: string; userName: string } ) { 
-  console.log("Empfangene Daten im Dialog:", data);
+  
 }
 
 close() {

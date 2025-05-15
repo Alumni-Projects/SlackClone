@@ -30,6 +30,7 @@
 
 .message-area-creator {
     width: 100%;
+    height: auto;
     min-height: 141px;
     padding: 10px 45px 10px 45px;
     display: flex;
@@ -46,6 +47,7 @@
 
 .message-area-member {
     width: 100%;
+    height: auto;
     min-height: 141px;
     padding: 10px 45px 10px 45px;
     display: flex;
@@ -149,6 +151,7 @@
 .message-creator {
     display: flex;
     width: fit-content;
+    max-width: 100%;
     max-height: 120px;
     height: fit-content;
     overflow: auto;
@@ -286,16 +289,28 @@
 }
 
 .message-reactions {
-    max-width: 400px;
+    width: fit-content;
     height: auto;
     display: flex;
     overflow: auto;
 }
 
 .message-reactions-member {
-    max-width: 400px;
+    width: fit-content;
+    height: auto;
     display: flex;
     overflow: auto;
+}
+
+@media screen and (max-width: 1060px) {
+    .message-reactions {
+        max-width: 300px;
+    }
+
+    .message-reactions-member {
+        max-width: 300px;
+    }
+    
 }
 
 .reaction-item {

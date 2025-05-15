@@ -111,7 +111,7 @@ export class ChannelComponent implements OnInit {
   }
 
   profile(i: number) {
-    console.log("Profile", i);
+    
   }
 
   closeMember() {

@@ -84,8 +84,7 @@ export class FirestoreService {
     try {
       const userSnap = await getDoc(userRef);
       if (userSnap.exists()) {
-        const userData = userSnap.data();
-        console.log('User data from Firestore:', userData);
+        const userData = userSnap.data();       
         return userData;
       } else {
         console.log('No user data found in Firestore');
@@ -105,9 +104,7 @@ export class FirestoreService {
       if (!userSnap.exists()) {
         throw new Error('User not found. First create a document with saveUserToFirestore.');
       }
-
-      await updateDoc(userRef, updatedData);
-      console.log('User data updated in Firestore:', updatedData);
+      await updateDoc(userRef, updatedData);      
     } catch (error) {
       console.error('Error updating user in Firestore:', error);
       throw error;
