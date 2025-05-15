@@ -5,11 +5,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
+import { SearchbarComponent } from "../searchbar/searchbar.component";
 
 @Component({
   selector: 'app-devspace',
   imports: [
-    CommonModule,],
+    CommonModule,
+    SearchbarComponent
+],
   templateUrl: './devspace.component.html',
   styleUrl: './devspace.component.scss'
 })
@@ -56,6 +59,9 @@ export class DevspaceComponent {
     this.devspaceService.openChannel = false;
     this.devspaceService.channelMember = false;
     this.devspaceService.activeDMContact = null;
+    if(this.breakpoints.breankpointMain){
+      this.devspaceService.openDevspace = false;     
+    }
     setTimeout(() => {
       this.devspaceService.openChannel = true;
     }, 200);

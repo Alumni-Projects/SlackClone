@@ -7,6 +7,13 @@
     flex-direction: column;
     justify-content: space-between;
     padding-bottom: 40px;
+    @media screen and (max-width: 900px) {
+        border: none;
+        width: calc(100vw );
+        max-width: none;
+        min-width: unset;
+        border-radius: 0px;
+    }
 }
 
 .devspace-channel-header {
@@ -21,6 +28,11 @@
     align-items: center;
     justify-content: space-between;
 
+    @media screen and (max-width: 900px) {
+        border-radius: 0px;
+        
+    }
+
 }
 
 .devspace-channel-header-name {
@@ -32,18 +44,22 @@
     font-size: var(--font-size-title-default);
     font-weight: var(--font-weight-extra-bold);
     color: var(--black-color);
+    
+    
 
     & span:nth-of-type(1) {
-        & img:nth-of-type(1) {
+        & img:nth-of-type(1) {            
             width: 32px;
             height: 33px;
+            
         }
     }
 
     & span:nth-of-type(2) {
         & img:nth-of-type(2) {
-            width: 30px;
+            width: 30px;            
             height: 30px;
+            
         }
     }
 
@@ -75,6 +91,7 @@
     width: 192px;
     height: 46px;
     position: relative;
+    
 }
 
 .devspace-channel-header-member {

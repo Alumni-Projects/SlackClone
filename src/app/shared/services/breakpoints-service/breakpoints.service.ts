@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class BreakpointsService {
   public breankpointMain: boolean = false
   
-  public mobileQuery = window.matchMedia('(max-width: 768px)');
+  public mobileQuery = window.matchMedia('(max-width: 900px)');
   public isMobileSubject = new BehaviorSubject<boolean>(this.mobileQuery.matches);
   isMobile$ = this.isMobileSubject.asObservable();
 

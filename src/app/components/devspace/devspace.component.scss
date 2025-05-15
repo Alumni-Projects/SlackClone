@@ -1,5 +1,4 @@
 .devspace {
-
   width: 366px;
   height: 940px;
   background-color: var(--white-color);
@@ -11,6 +10,13 @@
   position: relative;
   overflow: auto;
   overflow-x: hidden;
+
+  @media screen and (max-width: 900px) {    
+    width: calc(100vw );
+    max-width: none;
+    min-width: unset;
+    border-radius: 0px;
+  }
 }
 
 .devspace-header {
@@ -253,7 +259,7 @@
   flex-direction: column;
   gap: 25px;
   margin-bottom: 30px;
-  
+
 }
 
 .devspace-direct-messages-title {
@@ -341,7 +347,7 @@
 }
 
 .devspace-direct-messages-icon {
-
+  display: flex;
   position: relative;
 
   & img {
@@ -349,10 +355,15 @@
     height: 50px;
   }
 
+  @media screen and (max-width: 400px) {
+   flex-shrink: 0;
+    
+  }
+
 }
 
 .devspace-direct-messages-name-area {
-  display: flex;  
+  display: flex;
 }
 
 .devspace-direct-messages-name {
@@ -363,6 +374,10 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media screen and (max-width: 400px) {
+    max-width: 80px;
+  }
 
 }
 

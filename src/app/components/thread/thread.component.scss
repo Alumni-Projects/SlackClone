@@ -200,3 +200,13 @@
     border: 1px solid var(--light-purple);
     
 }
+
+@media (max-width: 1500px){
+    .thread{
+    position: absolute;
+    right: 0;
+    top: 0;    
+    z-index: 10;
+    box-shadow: -10px 0 20px rgba(0, 0, 0, 0.2);
+    }
+}

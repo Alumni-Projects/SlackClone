@@ -9,10 +9,19 @@
   flex-direction: column;
   position: relative;
 
+  @media screen and (max-width: 900px) {
+    padding: 0px;
+  }
+
   .devspace-content {
     width: 100%;
     display: flex;
     gap: 20px;
+    position: relative;
+
+    @media screen and (max-width: 900px) {
+      gap: 0px;
+    }
 
     app-devspace {
       flex: 0 0 auto;
@@ -26,4 +35,3 @@
     }
   }
 }
-

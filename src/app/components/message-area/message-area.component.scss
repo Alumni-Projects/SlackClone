@@ -302,17 +302,6 @@
     overflow: auto;
 }
 
-@media screen and (max-width: 1060px) {
-    .message-reactions {
-        max-width: 300px;
-    }
-
-    .message-reactions-member {
-        max-width: 300px;
-    }
-    
-}
-
 .reaction-item {
     display: flex;
     width: 80px;
@@ -614,4 +603,15 @@
     }
 
 
+}
+
+@media screen and (min-width: 800px) and (max-width: 1200px) {
+    .message-reactions {
+        max-width: 300px;
+    }
+
+    .message-reactions-member {
+        max-width: 300px;
+    }
+    
 }

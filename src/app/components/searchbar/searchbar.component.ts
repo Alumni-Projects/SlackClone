@@ -34,7 +34,7 @@ import { collection, getDocs } from 'firebase/firestore';
   styleUrls: ['./searchbar.component.scss']
 })
 export class SearchbarComponent implements OnInit, OnDestroy {
-  @Input() variant: 'desktop' | 'mobile' = 'desktop';
+  @Input() variant: 'desktop' | 'mobile' | 'devspace' = 'desktop';
 
   searchControl = new FormControl('');
   placeholder = 'Suchen...';

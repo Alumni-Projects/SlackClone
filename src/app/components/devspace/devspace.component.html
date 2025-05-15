@@ -1,8 +1,12 @@
 @if(devspaceService.openDevspace){
 
 <section class="devspace">
+    @if(breakpoints.breankpointMain){
+    <app-searchbar variant="devspace"></app-searchbar>
+    }
+    
 
-    @if(!breakpoints.breankpointMain){
+    @if(!breakpoints.breankpointMain){         
     <div class="devspace-header">
         <div class="devspace-logo">
             <img src="assets/img/WorkspaceLogo.png" alt="">
@@ -11,6 +15,9 @@
         <div class="devspace-edit-logo" (click)="openMessage()"><img src="assets/img/DevEdit.png" alt=""></div>
     </div>
     }
+    
+       
+    
     <div class="devspace-channels">
         <div class="devspace-channel-title">
             <div class="devspace-channel-title-content" (click)="channelActive()">
