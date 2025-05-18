@@ -8,6 +8,7 @@ $bp-b: 900px;
 $bp-mb: 440px;
 $bp-sb:360px;
 $bp-ml:500px;
+$bp-sl:600px;
 
 // Mixin  Media Queries
 @mixin respond($breakpoint) {
@@ -29,5 +30,7 @@ $bp-ml:500px;
     @media (max-width: $bp-sb) { @content; }
   }@else if $breakpoint == ml {
     @media (max-width: $bp-ml) { @content; }
+  }@else if $breakpoint == sl {
+    @media (max-width: $bp-sl) { @content; }
   }
 }

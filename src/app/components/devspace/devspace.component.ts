@@ -71,6 +71,7 @@ export class DevspaceComponent {
     this.devspaceService.selectedChannelId = '';
     this.devspaceService.activeDMContact = i;
     this.devspaceService.openChannel = false;
+    this.devspaceService.openDevspace = false;
     this.devspaceService.openDirectMessage = false;
     this.devspaceService.selectContactDmId = this.devspaceService.dmAccounts[i].userData.uid;
     this.devspaceService.contactDmId = this.devspaceService.dmAccounts[i].dmId;

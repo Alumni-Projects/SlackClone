@@ -116,7 +116,11 @@
     max-height: 150px;
     padding: 10px 30px 10px 40px;
     gap: 20px;
-    flex-wrap: wrap;
+    
+
+    @include respond(ml) {
+            padding: 10px 20px 10px 20px;
+        }
 }
 
 .member-icon {
@@ -128,7 +132,17 @@
         width: 70px;
         height: 70px;
         flex-shrink: 0;
+
+        @include respond(ml) {
+            width: 50px;
+            height: 50px;
+        }
     }
+
+    @include respond(ml) {
+            width: 50px;
+            height: 50px;
+        }
 }
 
 .message-name {
@@ -150,6 +164,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: var(--font-weight-extra-bold);
+
+    @include respond(mb) {
+        max-width: 100px;
+    }
 }
 
 .create-time {

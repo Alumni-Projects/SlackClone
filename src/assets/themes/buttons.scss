@@ -33,11 +33,7 @@
         &:disabled {
             background-color: var(--grey-dark);
             border-color: var(--grey-dark);
-        }
-
-        @include respond(ml) {
-            transform: translateX(-10%);
-        }
+        }        
     }
 
     @if $variant =='secondary-message' {        

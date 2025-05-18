@@ -1,5 +1,5 @@
 <div class="chat-topbar">
-  @if(breakpoints.breankpointMain && devspaceService.openChannel || breakpoints.breankpointMain && devspaceService.openMessage){
+  @if(breakpoints.breankpointMain && devspaceService.openChannel || breakpoints.breankpointMain && devspaceService.openMessage || breakpoints.breankpointMain && devspaceService.openDirectMessage){
   <div class="logo" (click)="openDevspace()">
     <img class="arrow" src="assets/img/arrowDev.png" alt="">
     <img src="assets/img/WorkspaceLogo.png" alt="Logo" />

@@ -35,7 +35,7 @@ export class DashboardComponent {
     this.devspaceService.Firestore.channels$.subscribe(channels => {
     });
     this.breakpoints.isMobile$.subscribe(value => {
-      if (this.devspaceService.openChannel && value) { this.devspaceService.openDevspace = false; }
+      if (this.devspaceService.openChannel && value || this.devspaceService.openMessage && value || this.devspaceService.openDirectMessage && value) { this.devspaceService.openDevspace = false; }
     });
   }
 
