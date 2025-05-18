@@ -15,6 +15,7 @@ import { DevspaceAccount } from '@shared/interface/devspace-account';
 export class FirestoreService {
   private app: FirebaseApp;
   public firestore: Firestore;
+  private snapshotUnsubscribers: (() => void)[] = [];
   private channelsSubject = new BehaviorSubject<Devspace[]>([]);
   channels$ = this.channelsSubject.asObservable();
   lastAddedChannel: Devspace | null = null;
@@ -156,7 +157,7 @@ export class FirestoreService {
   subscribeToUserChannels(userId: string): void {
     const channelsRef = collection(this.firestore, 'channel');
     const q = query(channelsRef, where('member', 'array-contains', userId));
-    onSnapshot(q, (querySnapshot) => {
+    const unsubscribeUserChannel = onSnapshot(q, (querySnapshot) => {
       const channels = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Devspace));
       this.channelsSubject.next(channels);
       querySnapshot.docChanges().forEach(change => {
@@ -167,6 +168,8 @@ export class FirestoreService {
     }, (error) => {
       this.channelsSubject.next([]);
     });
+
+    this.snapshotUnsubscribers.push(unsubscribeUserChannel);
   }
 
   async deleteChannelFromFirestore(channeluid: string): Promise<void> {
@@ -202,7 +205,7 @@ export class FirestoreService {
   }
   subscribeToMessages(channelId: string): void {
     const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
-    onSnapshot(messagesRef, async (querySnapshot) => {
+     const unsubscribeMessages = onSnapshot(messagesRef, async (querySnapshot) => {
       if (querySnapshot.empty) {
         this.messagesSubject.next([]);
         return;
@@ -219,11 +222,13 @@ export class FirestoreService {
       });
       this.messagesSubject.next(messages);
     });
+
+    this.snapshotUnsubscribers.push(unsubscribeMessages);
   }
 
   subscribeToThreadMessages(channelId: string, parentMessageId: string): void {
     const threadRef = collection(this.firestore, `channel/${channelId}/messages/${parentMessageId}/threads`);
-    onSnapshot(threadRef, async (querySnapshot) => {
+    const unsubscribeThreadMessage = onSnapshot(threadRef, async (querySnapshot) => {
       const threadMessages: ChatMessage[] = [];
       for (const doc of querySnapshot.docs) {
         const data = doc.data() as ChatMessage;
@@ -233,6 +238,8 @@ export class FirestoreService {
       threadMessages.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
       this.threadMessagesSubject.next(threadMessages);
     });
+
+    this.snapshotUnsubscribers.push(unsubscribeThreadMessage);
   }
 
   private async getUserData(uid: string): Promise<any> {
@@ -512,7 +519,7 @@ export class FirestoreService {
       const userData = await this.getUserDataForDm(otherUserId);
       dmData.push({ dmId, userData });
     }
-    onSnapshot(dmCollectionRef, (querySnapshot) => {
+    const unsubscribeDmUser = onSnapshot(dmCollectionRef, (querySnapshot) => {
       querySnapshot.docChanges().forEach((change) => {
         if (change.type !== 'added') return;
         const newDmId = change.doc.id;
@@ -532,6 +539,8 @@ export class FirestoreService {
         });
       });
     });
+
+    this.snapshotUnsubscribers.push(unsubscribeDmUser);
 
     return dmData;
   }
@@ -581,7 +590,7 @@ export class FirestoreService {
     }
     const messagesRef = collection(this.firestore, `directMessages/${dmId}/messages`);
     const q = query(messagesRef, orderBy('createdAt', 'asc'));
-    onSnapshot(q, async (querySnapshot) => {
+    const unsubscribeDm = onSnapshot(q, async (querySnapshot) => {
       const messages = await Promise.all(
         querySnapshot.docs.map(async (doc) => {
           const data = doc.data() as ChatMessage;
@@ -591,11 +600,13 @@ export class FirestoreService {
       );
       this.directMessagesSubject.next(messages);
     });
+
+    this.snapshotUnsubscribers.push(unsubscribeDm);
   }
 
-  async checkAndCreateDirectMessage(contactId: string, creatorId: string): Promise<string> {    
+  async checkAndCreateDirectMessage(contactId: string, creatorId: string): Promise<string> {
     const isSelfDm = contactId === creatorId;
-    const dmId = isSelfDm ? `${creatorId}_${creatorId}` : [contactId, creatorId].sort().join('_');    
+    const dmId = isSelfDm ? `${creatorId}_${creatorId}` : [contactId, creatorId].sort().join('_');
     const dmRef = doc(this.firestore, `directMessages/${dmId}`);
     const dmDoc = await getDoc(dmRef);
 
@@ -688,5 +699,23 @@ export class FirestoreService {
       }
     }
   }
+
+  cleanupFirestoreListeners(): void {
+  this.snapshotUnsubscribers.forEach(unsub => unsub());
+  this.snapshotUnsubscribers = [];
+}
+
+changeUserStatus(userId: string, status: boolean): Promise<void> {
+  const userRef = doc(this.firestore, `users/${userId}`);
+  if (status) {
+    return updateDoc(userRef, {
+      online: true
+    });
+  }else{
+    return updateDoc(userRef, {
+      online: false
+    });
+  }  
+}
 
 }
