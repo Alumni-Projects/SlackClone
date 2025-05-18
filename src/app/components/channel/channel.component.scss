@@ -1,3 +1,5 @@
+@use '@themes/mixins.scss' as *;
+
 .devspace-channel {
     height: 940px;
     background-color: var(--white-color);
@@ -7,9 +9,10 @@
     flex-direction: column;
     justify-content: space-between;
     padding-bottom: 40px;
-    @media screen and (max-width: 900px) {
+
+    @include respond(b) {
         border: none;
-        width: calc(100vw );
+        width: calc(100vw);
         max-width: none;
         min-width: unset;
         border-radius: 0px;
@@ -28,9 +31,10 @@
     align-items: center;
     justify-content: space-between;
 
-    @media screen and (max-width: 900px) {
+    @include respond(b) {
         border-radius: 0px;
-        
+        padding: 25px 16px 25px 16px;
+
     }
 
 }
@@ -44,22 +48,22 @@
     font-size: var(--font-size-title-default);
     font-weight: var(--font-weight-extra-bold);
     color: var(--black-color);
-    
-    
+
+
 
     & span:nth-of-type(1) {
-        & img:nth-of-type(1) {            
+        & img:nth-of-type(1) {
             width: 32px;
             height: 33px;
-            
+
         }
     }
 
     & span:nth-of-type(2) {
         & img:nth-of-type(2) {
-            width: 30px;            
+            width: 30px;
             height: 30px;
-            
+
         }
     }
 
@@ -91,7 +95,12 @@
     width: 192px;
     height: 46px;
     position: relative;
-    
+
+    @include respond(b) {
+        justify-content: end;
+        width: fit-content;
+    }
+
 }
 
 .devspace-channel-header-member {
@@ -174,6 +183,11 @@
 .devspace-channel-app-message-input-area {
     padding-left: 45px;
     padding-right: 45px;
+
+    @include respond(b) {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
 }
 
 .devspace-channel-header-member-list {
@@ -192,6 +206,14 @@
     top: 60px;
     right: 0px;
     z-index: 100;
+
+    @include respond(mb) {
+        width: 340px;
+    }
+
+    @include respond(sb) {
+        width: 320px;
+    }
 }
 
 .devspace-channel-header-member-list-title {
@@ -307,6 +329,14 @@
     top: 60px;
     right: 0px;
     z-index: 100;
+
+    @include respond(mb) {
+        width: 340px;
+    }
+
+    @include respond(sb) {
+        width: 320px;
+    }
 }
 
 .devspace-channel-header-member-added-header {
@@ -418,7 +448,7 @@
     font-weight: var(--font-weight-normal);
     line-height: 100%;
     padding-right: 20px;
-    padding-left: 10px;    
+    padding-left: 10px;
     color: black;
     cursor: pointer;
 
@@ -435,7 +465,7 @@
         }
     }
 
-    &:hover {   
+    &:hover {
         background-color: var(--bg-color);
         border-radius: 35px;
     }
@@ -457,6 +487,7 @@
     background-color: var(--bg-color);
     border-radius: 35px;
     padding: 3px 20px 3px 20px;
+
     & img:nth-of-type(1) {
         width: 34px;
         height: 34px;
@@ -521,20 +552,21 @@
     cursor: pointer;
 }
 
-.devspace-channel-header-member-added-button{
+.devspace-channel-header-member-added-button {
     width: 100%;
     display: flex;
     justify-content: end;
     align-items: center;
 }
 
-.member-delete{
+.member-delete {
     cursor: pointer;
     width: 24px;
     height: 24px;
-&:hover{    
-    content: url('../../../assets/img/closeHover.png');
-}
+
+    &:hover {
+        content: url('../../../assets/img/closeHover.png');
+    }
 }
 
 .selected-Contacts {
@@ -559,12 +591,12 @@
     background-color: var(--white-color);
 }
 
-.message-area{
+.message-area {
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
     overflow: auto;
     width: 100%;
     height: 80%;
-    padding: 20px 0px;  
-    position: relative;  
+    padding: 20px 0px;
+    position: relative;
 }

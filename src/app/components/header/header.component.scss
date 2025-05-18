@@ -9,8 +9,11 @@
   justify-content: space-between;
   gap: 20px;
 
-  @include respond(m) {
-    padding-left: 20px;
+  @include respond(b) {
+    padding: 0 20px;
+
+    margin-top: 20px;
+
   }
 }
 
@@ -21,6 +24,12 @@
   flex-shrink: 0;
   gap: 10px;
   width: auto;
+  cursor: pointer;
+
+  .arrow {
+    width: 25px;
+    height: 25px;
+  }
 
   @include respond(m) {
     width: auto;
@@ -34,6 +43,7 @@
     width: 45px;
     height: auto;
     flex-shrink: 0;
+
     @include respond(xs) {
       width: 70px;
       height: auto;
@@ -49,9 +59,11 @@
       display: block;
       font-size: var(--font-size-xl);
     }
+
     @include respond(m) {
       display: none;
     }
+
     @include respond(l) {
       display: block;
     }
@@ -60,6 +72,7 @@
 
 .header {
   cursor: pointer;
+
   &-username {
     display: none;
     white-space: nowrap;
@@ -82,10 +95,12 @@
     transition: all 125ms ease-in-out;
     flex-shrink: 0;
     justify-content: end;
+
     @include respond(s) {
       gap: 20px;
     }
   }
+
   &-icon-img {
     position: relative;
 
@@ -93,12 +108,14 @@
       width: 45px;
 
       height: auto;
+
       @include respond(s) {
         width: 70px;
         gap: 20px;
       }
     }
   }
+
   &-icon-arrow {
     width: 30px;
     height: 30px;
@@ -111,15 +128,24 @@
       }
 
       .header-icon-arrow {
-        content: url('../../../assets/img/keyboard_arrow_down_hover.png');
+        content: url('../../../assets/img/keyboard_arrow_down_hover.png');    
       }
     }
+
+
   }
+
+  @include respond(b) {
+     & mat-icon{
+       display: none;
+     }
+    }
 }
 
 .active-Account-Icon-header {
   bottom: -6px;
   left: 33.33px;
+
   @include respond(s) {
     bottom: -3px;
     left: 50px;

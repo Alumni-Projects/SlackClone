@@ -12,6 +12,7 @@ import { Devspace } from '@shared/interface/devspace';
 import { MessageAreaComponent } from '@components/message-area/message-area.component';
 import { DialogDeleteMemberChannelComponent } from './dialog-delete-member-channel/dialog-delete-member-channel.component';
 import { ChatMessage } from '@shared/interface/chat-message';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 
 
 
@@ -33,14 +34,15 @@ export class ChannelComponent implements OnInit {
   isDisabled = true;
   openSelect = false;
   memberValue = '';
+  loadingOn = true;
   messages: ChatMessage[] = [];
-  constructor(public devspaceService: DevspaceService, public dialog: MatDialog, public firestore: FirestoreService) {
+  constructor(public devspaceService: DevspaceService, public dialog: MatDialog, public firestore: FirestoreService, public breakpoints: BreakpointsService) {
     this.accounts = this.devspaceService.accounts;
     this.accountSelected = [];
   }
   
 
-  ngOnInit(): void {
+  ngOnInit(): void {   
     this.subscriptions = this.firestore.channels$.subscribe(channels => {
       this.filterChannel = channels.filter(
         channel => this.devspaceService.selectedChannelId == channel.id
@@ -48,7 +50,7 @@ export class ChannelComponent implements OnInit {
       this.filterContacts();
       this.filterContactForAddInput();
     });
-    if (this.devspaceService.selectedChannelId) {
+    if (this.devspaceService.selectedChannelId) {      
       this.firestore.subscribeToMessages(this.devspaceService.selectedChannelId);      
       this.firestore.messages$.subscribe(messages => {
         this.messages = messages;        
@@ -59,6 +61,8 @@ export class ChannelComponent implements OnInit {
     this.devspaceService.channelNameforThread = this.filterChannel[0].title!;
 
     this.devspaceService.channelNameForEmtpyMessage = this.filterChannel[0].title!;
+
+    
   }
 
   get filteredAccounts(): DevspaceAccount[] {

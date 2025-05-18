@@ -157,7 +157,7 @@
                 <div (click)="openThread(i)"><span class="thread-count"> {{item.threadCount}} Antworten</span></div>
                 }
                 @if(item.reactions!.length > 0){
-                <div class="message-reactions-member member-reaction"
+                <div class="message-reactions member-reaction"
                     [class.thread-reactions]="messageSection === 'thread'">
                     @for(reaction of item.reactions; track j; let j = $index){
                     <div (click)="changeReaction(i,j)" class="reaction-item member-reaction ">

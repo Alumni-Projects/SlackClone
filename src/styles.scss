@@ -10,6 +10,7 @@
 
 
 
+
 html {
     @include mat.theme((color: (theme-type: light,
                 primary: mat.$azure-palette,
@@ -309,7 +310,9 @@ body {
 // Dialog width
 .cdk-overlay-pane.mat-mdc-dialog-panel {
     max-width: none !important;
+    
 }
+
 
 // select contact name
 .item-selected-name{
@@ -317,6 +320,10 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @include respond(mb) {
+        max-width: 100px;
+    }
 }
 
 // scrollbar

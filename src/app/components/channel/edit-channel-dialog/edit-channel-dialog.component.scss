@@ -1,3 +1,4 @@
+@use '@themes/mixins.scss' as *;
 .edit-channel {
   width: 872px;
   height: 616px;
@@ -9,6 +10,17 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @include respond(b) {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    padding: 20px;
+  }
+}
+
+::ng-deep .cdk-overlay-pane.edit-channel-dialog {
+  margin-top: 100px !important;
 }
 
 ::ng-deep .mat-mdc-dialog-surface {
@@ -181,6 +193,15 @@
     font-size: var(--font-size-title-default);
     font-weight: var(--font-weight-normal);
     color: var(--purple-3);
+
+    @include respond(ml) {
+      width: 300px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    
   }
 }
 
@@ -189,6 +210,10 @@
   height: 49px;
   display: flex;
   justify-content: end;
+
+  @include respond(ml) {
+    margin-top: 25px;
+  }
   
 }
 

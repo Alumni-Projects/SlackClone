@@ -7,6 +7,7 @@ import { MatIcon } from '@angular/material/icon';
 import { IconSize } from '@shared/Enums/iconSize';
 import { Color } from '@shared/Enums/color';
 import { SearchbarComponent } from '@components/searchbar/searchbar.component';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,9 @@ export class HeaderComponent {
   constructor(
     public devspaceService: DevspaceService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public breakpoints: BreakpointsService
+
   ) {}
 
   openProfilePopup(): void {
@@ -32,5 +35,18 @@ export class HeaderComponent {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  openDevspace(): void {
+    this.closeMessage();
+    this.devspaceService.openDevspace = true;
+  }
+  closeMessage(): void {
+    this.devspaceService.activeDMContact = null;
+    this.devspaceService.selectedChannelId = '';
+    this.devspaceService.openChannel = false;
+    this.devspaceService.openThread = false;
+    this.devspaceService.openDirectMessage = false;
+    this.devspaceService.openMessage = false;
   }
 }

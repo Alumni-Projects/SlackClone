@@ -4,6 +4,10 @@ $bp-s: 480px;
 $bp-m: 900px;
 $bp-l: 1024px;
 $bp-xl: 1200px;
+$bp-b: 900px;
+$bp-mb: 440px;
+$bp-sb:360px;
+$bp-ml:500px;
 
 // Mixin  Media Queries
 @mixin respond($breakpoint) {
@@ -17,5 +21,13 @@ $bp-xl: 1200px;
     @media (min-width: $bp-l) { @content; }
   } @else if $breakpoint == xl {
     @media (min-width: $bp-xl) { @content; }
+  }@else if $breakpoint == b {
+    @media (max-width: $bp-b) { @content; }
+  }@else if $breakpoint == mb {
+    @media (max-width: $bp-mb) { @content; }
+  }@else if $breakpoint == sb {
+    @media (max-width: $bp-sb) { @content; }
+  }@else if $breakpoint == ml {
+    @media (max-width: $bp-ml) { @content; }
   }
 }

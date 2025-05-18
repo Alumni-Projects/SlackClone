@@ -1,3 +1,5 @@
+@use '@themes/mixins.scss' as *;
+
 .thread {
     width: 485px;
     height: 940px;
@@ -5,14 +7,20 @@
     border-radius: 30px;
     display: flex;
     flex-direction: column;
+
+    @include respond(b) {
+        border-radius: 0;
+        width: 100vw;
+
+    }
 }
 
-.thread-header-title-name{
-    font-size: var(--font-size-error)!important;
-    font-weight: var(--font-weight-normal)!important;
+.thread-header-title-name {
+    font-size: var(--font-size-error) !important;
+    font-weight: var(--font-weight-normal) !important;
     line-height: 100%;
     letter-spacing: 0;
-    color: var(--secondary-color)!important;
+    color: var(--secondary-color) !important;
 }
 
 .message-area-wrapper {
@@ -21,7 +29,7 @@
 }
 
 .message-area {
-    width: 100%;    
+    width: 100%;
 }
 
 .message-input {
@@ -37,6 +45,10 @@
     display: flex;
     justify-content: space-between;
     padding: 32px 40px 32px 40px;
+
+    @include respond(b) {
+        border-radius: 0;
+    }
 }
 
 .thread-header-title {
@@ -184,7 +196,7 @@
     gap: 20px;
 }
 
-.thread-count{
+.thread-count {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -195,18 +207,18 @@
     color: var(--light-purple);
 }
 
-.thread-count-stripes{
+.thread-count-stripes {
     flex-grow: 1;
     border: 1px solid var(--light-purple);
-    
+
 }
 
-@media (max-width: 1500px){
-    .thread{
-    position: absolute;
-    right: 0;
-    top: 0;    
-    z-index: 10;
-    box-shadow: -10px 0 20px rgba(0, 0, 0, 0.2);
+@media (max-width: 1500px) {
+    .thread {
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 100;
+        box-shadow: -10px 0 20px rgba(0, 0, 0, 0.2);
     }
 }

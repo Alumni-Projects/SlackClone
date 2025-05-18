@@ -88,6 +88,9 @@ export class DevspaceComponent {
     this.devspaceService.openDirectMessage = false;
     this.devspaceService.openThread = false;
     this.devspaceService.activeDMContact = null;
+    if(this.breakpoints.breankpointMain){
+      this.devspaceService.openDevspace = false;     
+    }
   }
 
   closeMessage() {

@@ -7,6 +7,10 @@
       <span><img src="assets/img/keyboard_arrow_down.png" alt=""></span>
     </div>
     <div class="devspace-channel-header-member-area">
+    @if(breakpoints.breankpointMain){
+      <span (click)="openMember()" class="devspace-channel-header-member-add"><img src="assets/img/person_add.png"
+          alt=""></span>
+    }@else {
       <div class="devspace-channel-header-member" (click)="openMember()">
         <div class="devspace-channel-header-member-icon" >
           @for(item of filterContact; track i; let i = $index){
@@ -20,6 +24,9 @@
       <span (click)="openMemberAdd()" class="devspace-channel-header-member-add"><img src="assets/img/person_add.png"
           alt=""></span>
       }
+    }
+    
+      
 
       @if(devspaceService.channelMember){
       <div class="devspace-channel-header-member-list">
