@@ -6,15 +6,21 @@
   height: 70px;
   width: 100%;
   margin-bottom: 20px;
-  justify-content: space-between;
-  gap: 20px;
+  padding-left: 40px;
+  padding-right: 20px;
 
   @include respond(b) {
     padding: 0 20px;
-
     margin-top: 20px;
 
   }
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-grow: 1;
 }
 
 .logo {
@@ -24,6 +30,7 @@
   flex-shrink: 0;
   gap: 10px;
   width: auto;
+  margin-right: 114px;
   cursor: pointer;
 
   .arrow {
@@ -74,6 +81,8 @@
   cursor: pointer;
 
   &-username {
+    text-align: right;
+    width: 200px;
     display: none;
     white-space: nowrap;
     overflow: hidden;
@@ -82,6 +91,7 @@
     font-weight: var(--font-weight-extra-bold);
     line-height: 100%;
     color: var(--black-color);
+    margin-left: 20px;
 
     @include respond(m) {
       display: block;
@@ -103,10 +113,12 @@
 
   &-icon-img {
     position: relative;
+    display: flex;
+    flex-shrink: 0;
 
     & img {
-      width: 45px;
 
+      width: 45px;
       height: auto;
 
       @include respond(s) {
@@ -128,21 +140,29 @@
       }
 
       .header-icon-arrow {
-        content: url('../../../assets/img/keyboard_arrow_down_hover.png');    
+        content: url('../../../assets/img/keyboard_arrow_down_hover.png');
       }
     }
-
-
   }
 
   @include respond(b) {
-     & mat-icon{
-       display: none;
-     }
+    & mat-icon {
+      display: none;
     }
+  }
 }
 
 .active-Account-Icon-header {
+  bottom: -6px;
+  left: 33.33px;
+
+  @include respond(s) {
+    bottom: -3px;
+    left: 50px;
+  }
+}
+
+.active-Account-Icon-None-header {
   bottom: -6px;
   left: 33.33px;
 

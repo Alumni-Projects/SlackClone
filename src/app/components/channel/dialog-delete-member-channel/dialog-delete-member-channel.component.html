@@ -1,13 +1,14 @@
 <section class="member-delete-dialog">
 
+    <div class="member-close"><span (click)="close()"><img src="assets/img/dialogClose.png" alt=""></span></div>
     <div class="member-delete-dialog-header">
-        <span>Möchten Sie wirklich den Benutzer </span> 
-        <span class="name-Member">{{data.userName}}</span> 
+        <span>Möchten Sie wirklich den Benutzer </span>
+        <span class="name-Member">{{data.userName}}</span>
         <span> aus dem Channel entfernen?</span>
     </div>
 
     <div class="member-delete-dialog-button">
-        <span class="button-primary" (click)="close()">schließen</span>
+        <span class="button-secondary-message" (click)="close()">schließen</span>
         <span class="button-primary" (click)="deleteMember()">entfernen</span>
     </div>
 

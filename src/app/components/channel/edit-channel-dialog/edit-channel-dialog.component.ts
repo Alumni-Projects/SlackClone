@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 import { Subscription } from 'rxjs';
+import { EditDeleteChannelComponent } from '../edit-delete-channel/edit-delete-channel.component';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 
 @Component({
   selector: 'app-edit-channel-dialog',
@@ -22,7 +24,8 @@ export class EditChannelDialogComponent implements OnInit {
   channelNameInputError = false;
   charsOver = false;
   charsEmpty = false;
-  constructor(public dialog: MatDialog, public devspaceService: DevspaceService, public firestore: FirestoreService, private cdr: ChangeDetectorRef) { }
+  constructor(public dialog: MatDialog, public devspaceService: DevspaceService, 
+    public firestore: FirestoreService, public breakpoints: BreakpointsService) { }
   ngOnInit(): void {
     this.subscriptions = this.firestore.channels$.subscribe(channels => {
       this.filterChannel = channels.filter(
@@ -79,21 +82,15 @@ export class EditChannelDialogComponent implements OnInit {
     }
   }
 
-  leaveChannel() {
-    const channelid = this.filterChannel[0].id;
-    if (this.filterChannel[0].creator == this.devspaceService.loggedInUserUid) {
-      this.firestore.deleteChannelFromFirestore(channelid);
-      this.devspaceService.openChannel = false;
-      this.devspaceService.selectedChannelId = '';
-    } else {
-      this.devspaceService.selectedChannelId = '';
-      this.devspaceService.openChannel = false;
-      setTimeout(() => {
-        const memberChange = false;
-        this.firestore.changeChannelMembers(channelid, this.devspaceService.loggedInUserUid, memberChange);
-      }, 100)
-    }
-    this.closeDialog();
+ 
+
+  openEditDeleteDialog() {
+    this.dialog.open(EditDeleteChannelComponent, {
+      data: {
+        channel: this.filterChannel[0],        
+      }
+
+    });
   }
 
 }

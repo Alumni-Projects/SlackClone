@@ -6,27 +6,28 @@
     <span class="logo-text">Devspace</span>
   </div>
   }@else {
-  <div class="logo">
+  <div class="logo" (click)="closeMessage()">
     <img src="assets/logo.svg" alt="Logo" />
     <span class="logo-text">DABubble</span>
   </div>
   }
-
+<div class="header-container">
   <app-searchbar variant="desktop"></app-searchbar>
 
   <div class="header">
     <div class="header-icon" (click)="openProfilePopup()">
       <span class="header-username">{{
-        devspaceService.accounts[0].displayName
+        mainAccount!.displayName
         }}</span>
       <span class="header-icon-img">
-        <img src="{{devspaceService.accounts[0].profile}}" alt="" />@if(devspaceService.accounts[0].online){<span
+        <img src="{{mainAccount!.profile}}" alt="" />@if(mainAccount!.online){<span
           class="active-Account-Icon-header"></span>
         }@else{<span class="active-Account-Icon-None-header"></span>}
       </span>
 
       <mat-icon>keyboard_arrow_down</mat-icon>
     </div>
+  </div>
   </div>
 </div>
 <app-profile-popup [isOpen]="isProfileOpen" (close)="isProfileOpen = false"></app-profile-popup>

@@ -39,14 +39,16 @@
       class="search-item"
       *ngFor="let user of searchResults.users"
       [user]="user"
-      [currentUserUid]="devspaceService.loggedInUserUid"
+      [currentUserUid]="devspaceService.loggedInUserUid" 
+      (userClicked)="goToUser(user.uid!)"     
     ></app-user-list-item>
 
     <div *ngIf="searchResults.messages.length > 0">
-      <div>
+      <div >
         <span
-          *ngFor="let msg of searchResults.messages"
+          *ngFor="let msg of searchResults.messages; let i = index"
           class="search-item-message"
+          (click)="goToChannel(searchResults.messages[i].channelId!)"
         >
           <span class="message-icon">
             <mat-icon>chat_bubble_outline</mat-icon>

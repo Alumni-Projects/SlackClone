@@ -1,8 +1,10 @@
+import { Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DevspaceDialogComponent } from '@components/devspace-dialog/devspace-dialog.component';
 import { Devspace } from '@shared/interface/devspace';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
@@ -16,7 +18,10 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
 export class MessageInputAreaComponent {
   @ViewChild('messageInput') messageInput!: ElementRef;
   @Input() context!: 'message' | 'channel' | 'thread' | 'directmessage';
-  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef, public firestore: FirestoreService, public dialog: MatDialog) {
+  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef, 
+    public firestore: FirestoreService, 
+    public dialog: MatDialog, 
+    public breakpoints: BreakpointsService) {
   }
 
 
@@ -231,6 +236,10 @@ export class MessageInputAreaComponent {
       })
     }
     this.devspaceService.openMessage = false;
+
+    if(this.breakpoints.breankpointMain) {
+      this.devspaceService.openDevspace = true;
+    }
 
   }
 

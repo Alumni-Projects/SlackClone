@@ -10,13 +10,23 @@
     @if(editChannelName){
     <div class="edit-channel-input">
         <div class="edit-channel-description-textarea">
-            <div><span>Channel-Name</span>@if(filterChannel[0].creator == devspaceService.loggedInUserUid){<span (click)="editChannelName = false">Bearbeiten</span>} </div>
+            <div><span>Channel-Name</span>@if(filterChannel[0].creator == devspaceService.loggedInUserUid){
+                @if(breakpoints.breankpointMain){<span class="edit-mobile" (click)="editChannelName = false"><img
+                        src="assets/img/pen.png" alt=""></span>}@else{
+                <span (click)="editChannelName = false">Bearbeiten</span>
+                }
+                }
+            </div>
             <div><span><img src="assets/img/tagChannelName.png" alt=""></span> {{filterChannel[0].title}}</div>
         </div>
     </div>
     } @else{
     <div class="edit-channel-input-create">
-        <div><span>Channel-Name</span><span (click)="saveChannelName()">Speichern</span></div>
+        <div><span>Channel-Name</span>@if(breakpoints.breankpointMain){
+            <span class="edit-mobile-close" (click)="saveChannelName()"><img src="assets/img/checkEdit.png"
+                    alt=""></span>
+            }@else{<span (click)="saveChannelName()">Speichern</span>}
+        </div>
         <div class="edit-channel-input-area" [class.edit-channel-name-input-Error]="channelNameInputError"><span><img
                     src="assets/img/tagChannelName.png" alt=""></span>
             <input type="text" maxlength="20" (input)="maxCharsInputControll()" value="{{filterChannel[0].title}}"
@@ -39,7 +49,12 @@
     @if(editChannelDescription){
     <div class="edit-channel-description-input">
         <div class="edit-channel-description-textarea">
-            <div><span>Beschreibung</span> @if(filterChannel[0].creator == devspaceService.loggedInUserUid){<span (click)="editChannelDescription = false">Bearbeiten</span>}</div>
+            <div><span>Beschreibung</span> @if(filterChannel[0].creator == devspaceService.loggedInUserUid)
+                {@if(breakpoints.breankpointMain){
+                <span class="edit-mobile" (click)="editChannelDescription = false"><span><img src="assets/img/pen.png"
+                            alt=""></span></span>
+                }@else{<span (click)="editChannelDescription = false">Bearbeiten</span>}}
+            </div>
             <div>{{filterChannel[0].description}}</div>
         </div>
         <div></div>
@@ -51,7 +66,11 @@
     } @else{
     <div class="edit-channel-description-input-create">
         <div class="edit-channel-description-textarea-create">
-            <div><span>Beschreibung</span><span (click)="saveChannelDescription()">Speichern</span></div>
+            <div><span>Beschreibung</span>@if(breakpoints.breankpointMain){
+                <span class="edit-mobile-close" (click)="saveChannelDescription()"><img src="assets/img/checkEdit.png"
+                        alt=""></span>
+                }@else{<span (click)="saveChannelDescription()">Speichern</span>}
+            </div>
             <textarea value="{{filterChannel[0].description}}" placeholder="Hier dein Text"
                 #channelDescriptionInput></textarea>
         </div>
@@ -63,6 +82,7 @@
 
     }
 
-    <div class="edit-channel-leave" (click)="leaveChannel()"><span class="button-primary">Channel verlassen</span></div>
+    <div class="edit-channel-leave" (click)="openEditDeleteDialog()"><span class="button-primary">Channel
+            verlassen</span></div>
 
 </section>

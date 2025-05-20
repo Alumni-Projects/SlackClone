@@ -44,9 +44,16 @@ export class ProfilePopupComponent {
   openProfileDialog() {
     this.dialog.open(ProfileDialogComponent, {
       width: '500px',
-      panelClass: 'profile-menu'
+      panelClass: 'profile-menu',
+      data: { user: this.filterContact(this.devspaceService.loggedInUserUid) }
     });
     this.startCloseAnimation();
+  }
+
+  filterContact(userId: string) {
+    const data = this.devspaceService.accounts.find(account => account.uid === userId);
+    return data;
+
   }
 
   startCloseAnimation() {    

@@ -143,5 +143,8 @@ export class DevspaceDialogContactComponent implements OnInit {
     const last = this.firestore.lastAddedChannel;
     this.devspaceService.selectedChannelId = last?.id || '';
     this.devspaceService.openChannel = true;
+    if(this.breakpoints.breankpointMain){
+      this.devspaceService.openDevspace = false;      
+    }
   }
 }

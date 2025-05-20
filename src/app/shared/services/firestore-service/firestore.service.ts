@@ -715,4 +715,11 @@ changeUserStatus(userId: string, status: boolean): Promise<void> {
   }  
 }
 
+logUserUpdateName(userId: string, name: string): Promise<void> {
+  const userRef = doc(this.firestore, `users/${userId}`);
+  return updateDoc(userRef, {
+    displayName: name
+  });
+}
+
 }

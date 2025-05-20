@@ -71,7 +71,9 @@ export class DevspaceComponent {
     this.devspaceService.selectedChannelId = '';
     this.devspaceService.activeDMContact = i;
     this.devspaceService.openChannel = false;
-    this.devspaceService.openDevspace = false;
+    if(this.breakpoints.breankpointMain){
+      this.devspaceService.openDevspace = false;     
+    }
     this.devspaceService.openDirectMessage = false;
     this.devspaceService.selectContactDmId = this.devspaceService.dmAccounts[i].userData.uid;
     this.devspaceService.contactDmId = this.devspaceService.dmAccounts[i].dmId;
@@ -88,7 +90,7 @@ export class DevspaceComponent {
     this.devspaceService.openChannel = false;
     this.devspaceService.openDirectMessage = false;
     this.devspaceService.openThread = false;
-    this.devspaceService.activeDMContact = null;
+    this.devspaceService.activeDMContact = null;    
     if(this.breakpoints.breankpointMain){
       this.devspaceService.openDevspace = false;     
     }

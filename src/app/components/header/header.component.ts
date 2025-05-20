@@ -8,6 +8,7 @@ import { IconSize } from '@shared/Enums/iconSize';
 import { Color } from '@shared/Enums/color';
 import { SearchbarComponent } from '@components/searchbar/searchbar.component';
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
+import { DevspaceAccount } from '@shared/interface/devspace-account';
 
 @Component({
   selector: 'app-header',
@@ -20,21 +21,19 @@ export class HeaderComponent {
   isProfileOpen = false;
   Color = Color;
   IconSize = IconSize;
+  mainAccount;
 
   constructor(
-    public devspaceService: DevspaceService,
-    private authService: AuthService,
+    public devspaceService: DevspaceService,    
     private dialog: MatDialog,
     public breakpoints: BreakpointsService
 
-  ) {}
+  ) {    
+    this.mainAccount = this.devspaceService.accounts.find(acc => acc.uid === this.devspaceService.loggedInUserUid);    
+  }
 
   openProfilePopup(): void {
     this.isProfileOpen = !this.isProfileOpen;
-  }
-
-  logout(): void {
-    this.authService.logout();
   }
 
   openDevspace(): void {

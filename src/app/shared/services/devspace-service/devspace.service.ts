@@ -13,6 +13,7 @@ export class DevspaceService {
   activeDMContact: number | null = null;
   selectContactDmId: string | null = null;
   selectContactData: any | null = null;
+  sendMessageUser: string | null = null;
   channelMember = false;
   channelMemberAdded = false;
   channelsName = '';
@@ -28,7 +29,7 @@ export class DevspaceService {
   openContactBar = false;
   openChannelBar = false;
   openContactBarSearch = false;
-  openChannelBarSearch = false;
+  openChannelBarSearch = false;  
   loggedInUserUid: string = '';
   channelArray = new BehaviorSubject<any[]>([]);
   contactArray = new BehaviorSubject<any[]>([]);
@@ -89,7 +90,7 @@ export class DevspaceService {
     { emoji: 'assets/img/emojis/icon10.png' },
 
   ]
-  accounts: DevspaceAccount[] = [];
+  accounts: DevspaceAccount[] = []; 
 
   dmAccounts: any[] = [];
   closAllMessage() {
