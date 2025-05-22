@@ -56,7 +56,7 @@ export class ProfilePopupComponent {
 
   }
 
-  startCloseAnimation() {    
+  startCloseAnimation() {
     this.isClosing = true;
     setTimeout(() => {
       this.isClosing = false;
@@ -64,8 +64,8 @@ export class ProfilePopupComponent {
     }, 200);
   }
 
-  logout() {
-    this.firestore.changeUserStatus(this.devspaceService.loggedInUserUid, false);
+  async logout() {
+    await this.firestore.changeUserStatus(this.devspaceService.loggedInUserUid, false);
     this.firestore.cleanupFirestoreListeners();
     this.authService.logout();
   }

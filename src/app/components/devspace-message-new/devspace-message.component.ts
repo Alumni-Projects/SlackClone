@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 export class DevspaceMessageComponent implements OnDestroy {
   @ViewChild('addInput') addInput!: ElementRef;
   clearInputMessageSubscription!: Subscription;
+  sendMessageUserSubscription?: Subscription;
 
 
   constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef, private zone: NgZone,) {
@@ -25,34 +26,38 @@ export class DevspaceMessageComponent implements OnDestroy {
 
 
   ngOnDestroy() {
-    if (this.clearInputMessageSubscription) {
-      this.clearInputMessageSubscription.unsubscribe();
-    }
+    this.sendMessageUserSubscription?.unsubscribe();
+    this.clearInputMessageSubscription?.unsubscribe();
   }
 
-  checkPlaceholder() {
-    const div = this.addInput.nativeElement;
-    if (!div.textContent?.trim()) {
-      div.classList.add('placeholder-active');
-    } else {
-      div.classList.remove('placeholder-active');
-    }
-  }
+
+
+ 
 
   ngAfterViewInit() {
-    if (this.devspaceService.sendMessageUser != null) {    
-    this.insertContactByName(this.devspaceService.sendMessageUser);
-    this.devspaceService.sendMessageUser = null;  }
     this.checkPlaceholder();
+    this.sendMessageUserSubscription = this.devspaceService.sendMessageUser$.subscribe(user => {
+      if (user) {
+        this.zone.runOutsideAngular(() => {
+          setTimeout(() => {
+            this.insertContactByName(user);
+            this.checkPlaceholder();
+          }, 0);
+        });
+      }
+    });   
+
     this.inputSearchAddMessage();
     const observer = new MutationObserver(() => {
       this.updateContactAndChannelArrays();
     });
-    const config = { characterData: true, subtree: true };
+
+    const config = { childList: true, characterData: true, subtree: true };
     observer.observe(this.addInput.nativeElement, config);
     if (!this.devspaceService.openMessage) {
       observer.disconnect();
     }
+
     if (this.devspaceService.openMessage) {
       this.clearInputMessageSubscription = this.devspaceService.clearInputMessage$.subscribe((clearInput) => {
         if (clearInput) {
@@ -72,7 +77,17 @@ export class DevspaceMessageComponent implements OnDestroy {
     });
   }
 
-
+ checkPlaceholder() {
+    const div = this.addInput.nativeElement;
+    const hasText = div.textContent?.trim().length > 0;
+    const hasContactSpans = div.querySelectorAll('span[data-contact-input="true"]').length > 0;
+    const hasChannelSpans = div.querySelectorAll('span[data-channel-Input="true"]').length > 0;
+    if (!hasText && !hasContactSpans && !hasChannelSpans) {
+      div.classList.add('placeholder-active');
+    } else {
+      div.classList.remove('placeholder-active');
+    }
+  }
 
   inputSearchAddMessage() {
     this.addInput.nativeElement.addEventListener('input', () => {
@@ -122,10 +137,10 @@ export class DevspaceMessageComponent implements OnDestroy {
   }
 
   selectContactSearch(i: number): void {
-  this.devspaceService.openContactBarSearch = false;
-  const contactName = this.devspaceService.accounts[i].displayName;
-  this.insertContactByName(contactName);
-}
+    this.devspaceService.openContactBarSearch = false;
+    const contactName = this.devspaceService.accounts[i].displayName;
+    this.insertContactByName(contactName);
+  }
 
   selectChannelSearch(i: number) {
     this.devspaceService.openChannelBarSearch = false;
@@ -180,59 +195,59 @@ export class DevspaceMessageComponent implements OnDestroy {
   }
 
   insertContactByName(contactName: string): void {
-  const messageDiv = this.addInput.nativeElement as HTMLDivElement;
-  const selection = window.getSelection();
-  if (!selection || selection.rangeCount === 0) return;
+    const messageDiv = this.addInput.nativeElement as HTMLDivElement;
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return;
 
-  const range = selection.getRangeAt(0);
-  const existingContacts = messageDiv.querySelectorAll('span[data-contact-Input="true"]');
-  for (const contact of existingContacts) {
-    if (contact.textContent === "@" + contactName) {
-      range.collapse(false);
-      return;
+    const range = selection.getRangeAt(0);
+    const existingContacts = messageDiv.querySelectorAll('span[data-contact-Input="true"]');
+    for (const contact of existingContacts) {
+      if (contact.textContent === "@" + contactName) {
+        range.collapse(false);
+        return;
+      }
     }
-  }
 
-  if (messageDiv.textContent?.trim() === "") {
-    range.setStart(messageDiv, 0);
-    range.setEnd(messageDiv, 0);
-  } else {
-    const lastChild = messageDiv.lastChild;
-    if (lastChild && lastChild.nodeType === Node.TEXT_NODE) {
-      range.setStart(lastChild, lastChild.textContent?.length || 0);
-      range.setEnd(lastChild, lastChild.textContent?.length || 0);
+    if (messageDiv.textContent?.trim() === "") {
+      range.setStart(messageDiv, 0);
+      range.setEnd(messageDiv, 0);
     } else {
-      range.setStart(messageDiv, messageDiv.childNodes.length);
-      range.setEnd(messageDiv, messageDiv.childNodes.length);
+      const lastChild = messageDiv.lastChild;
+      if (lastChild && lastChild.nodeType === Node.TEXT_NODE) {
+        range.setStart(lastChild, lastChild.textContent?.length || 0);
+        range.setEnd(lastChild, lastChild.textContent?.length || 0);
+      } else {
+        range.setStart(messageDiv, messageDiv.childNodes.length);
+        range.setEnd(messageDiv, messageDiv.childNodes.length);
+      }
     }
+
+    range.deleteContents();
+
+    const textBeforeCursor = range.startContainer.textContent?.slice(0, range.startOffset) || "";
+    if (textBeforeCursor.endsWith("@")) {
+      const updatedText = textBeforeCursor.slice(0, -1);
+      range.startContainer.textContent = updatedText + range.startContainer.textContent?.slice(range.startOffset);
+      range.setStart(range.startContainer, updatedText.length);
+      range.setEnd(range.startContainer, updatedText.length);
+    }
+
+    const nameToInsert = '@' + contactName;
+    const span = document.createElement('span');
+    span.classList.add('contactInput');
+    span.style.color = 'var(--mail-blue)';
+    span.textContent = nameToInsert;
+    span.contentEditable = "false";
+    span.dataset['contactInput'] = "true";
+
+    range.insertNode(span);
+    this.cdRef.detectChanges();
+
+    const newRange = document.createRange();
+    newRange.setStartAfter(span);
+    newRange.setEndAfter(span);
+    selection.removeAllRanges();
+    selection.addRange(newRange);
+    this.cdRef.detectChanges();
   }
-
-  range.deleteContents();
-
-  const textBeforeCursor = range.startContainer.textContent?.slice(0, range.startOffset) || "";
-  if (textBeforeCursor.endsWith("@")) {
-    const updatedText = textBeforeCursor.slice(0, -1);
-    range.startContainer.textContent = updatedText + range.startContainer.textContent?.slice(range.startOffset);
-    range.setStart(range.startContainer, updatedText.length);
-    range.setEnd(range.startContainer, updatedText.length);
-  }
-
-  const nameToInsert = '@' + contactName;
-  const span = document.createElement('span');
-  span.classList.add('contactInput');
-  span.style.color = 'var(--mail-blue)';
-  span.textContent = nameToInsert;
-  span.contentEditable = "false";
-  span.dataset['contactInput'] = "true";
-
-  range.insertNode(span);
-  this.cdRef.detectChanges();
-
-  const newRange = document.createRange();
-  newRange.setStartAfter(span);
-  newRange.setEndAfter(span);
-  selection.removeAllRanges();
-  selection.addRange(newRange);
-  this.cdRef.detectChanges();
-}
 }

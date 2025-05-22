@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { User } from 'firebase/auth';
-import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc, collection, getDocs, query, where, onSnapshot, addDoc, deleteDoc, arrayRemove, arrayUnion, serverTimestamp, orderBy } from 'firebase/firestore';
+import { Firestore, doc, setDoc, getDoc, getFirestore, updateDoc, collection, getDocs, query, where, onSnapshot, addDoc, deleteDoc, arrayRemove, arrayUnion, serverTimestamp, orderBy, writeBatch } from 'firebase/firestore';
 import { firebaseConfig } from '../../../../environments/environment';
 import { Devspace } from '@shared/interface/devspace';
 import { BehaviorSubject } from 'rxjs';
 import { ChatMessage } from '@shared/interface/chat-message';
 import { ChatReaction } from '@shared/interface/chat-reactions';
-import { DevspaceAccount } from '@shared/interface/devspace-account';
+
 
 @Injectable({
   providedIn: 'root'
@@ -85,7 +85,7 @@ export class FirestoreService {
     try {
       const userSnap = await getDoc(userRef);
       if (userSnap.exists()) {
-        const userData = userSnap.data();       
+        const userData = userSnap.data();
         return userData;
       } else {
         console.log('No user data found in Firestore');
@@ -105,7 +105,7 @@ export class FirestoreService {
       if (!userSnap.exists()) {
         throw new Error('User not found. First create a document with saveUserToFirestore.');
       }
-      await updateDoc(userRef, updatedData);      
+      await updateDoc(userRef, updatedData);
     } catch (error) {
       console.error('Error updating user in Firestore:', error);
       throw error;
@@ -202,7 +202,7 @@ export class FirestoreService {
   }
   subscribeToMessages(channelId: string): void {
     const messagesRef = collection(this.firestore, `channel/${channelId}/messages`);
-     const unsubscribeMessages = onSnapshot(messagesRef, async (querySnapshot) => {
+    const unsubscribeMessages = onSnapshot(messagesRef, async (querySnapshot) => {
       if (querySnapshot.empty) {
         this.messagesSubject.next([]);
         return;
@@ -698,28 +698,42 @@ export class FirestoreService {
   }
 
   cleanupFirestoreListeners(): void {
-  this.snapshotUnsubscribers.forEach(unsub => unsub());
-  this.snapshotUnsubscribers = [];
-}
+    this.snapshotUnsubscribers.forEach(unsub => unsub());
+    this.snapshotUnsubscribers = [];
+  }
 
-changeUserStatus(userId: string, status: boolean): Promise<void> {
-  const userRef = doc(this.firestore, `users/${userId}`);
-  if (status) {
-    return updateDoc(userRef, {
-      online: true
-    });
-  }else{
-    return updateDoc(userRef, {
-      online: false
-    });
-  }  
-}
+  changeUserStatus(userId: string, status: boolean): Promise<void> {
+    const userRef = doc(this.firestore, `users/${userId}`);
+    if (status) {
+      return updateDoc(userRef, {
+        online: true
+      });
+    } else {
+      return updateDoc(userRef, {
+        online: false
+      });
+    }
+  }
 
-logUserUpdateName(userId: string, name: string): Promise<void> {
-  const userRef = doc(this.firestore, `users/${userId}`);
-  return updateDoc(userRef, {
-    displayName: name
+  logUserUpdateName(userId: string, name: string): Promise<void> {
+    const userRef = doc(this.firestore, `users/${userId}`);
+    return updateDoc(userRef, {
+      displayName: name
+    });
+  }
+
+  async deleteUserDm(dmId: string): Promise<void> {
+  const dmRef = doc(this.firestore, `directMessages/${dmId}`);
+  const messagesRef = collection(this.firestore, `directMessages/${dmId}/messages`);  
+  const messagesSnapshot = await getDocs(messagesRef);
+  const batch = writeBatch(this.firestore);
+  messagesSnapshot.forEach((doc) => {
+    batch.delete(doc.ref);
   });
+  await batch.commit();
+
+ 
+  await deleteDoc(dmRef);
 }
 
 }

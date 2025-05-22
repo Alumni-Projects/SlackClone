@@ -59,6 +59,8 @@ export class DevspaceComponent {
     this.devspaceService.openChannel = false;
     this.devspaceService.channelMember = false;
     this.devspaceService.activeDMContact = null;
+    this.devspaceService.sendMessageUser$.next(null);
+    this.devspaceService.sendMessageUserData$.next(null);
     if(this.breakpoints.breankpointMain){
       this.devspaceService.openDevspace = false;     
     }
@@ -78,6 +80,8 @@ export class DevspaceComponent {
     this.devspaceService.selectContactDmId = this.devspaceService.dmAccounts[i].userData.uid;
     this.devspaceService.contactDmId = this.devspaceService.dmAccounts[i].dmId;
     this.devspaceService.selectContactData = this.devspaceService.dmAccounts[i];
+    this.devspaceService.sendMessageUser$.next(null);
+    this.devspaceService.sendMessageUserData$.next(null);
     this.firestore.subscribeToDirectMessage(this.devspaceService.loggedInUserUid, this.devspaceService.selectContactDmId!);
     setTimeout(() => {
       this.devspaceService.openDirectMessage = true;

@@ -25,24 +25,24 @@ export class EditDeleteChannelComponent {
       this.firestore.deleteChannelFromFirestore(channelid);
       this.devspaceService.openChannel = false;
       this.devspaceService.selectedChannelId = '';
-      if(this.breakpoints.breankpointMain){
-      this.devspaceService.openDevspace = true;      
-    }
+      if (this.breakpoints.breankpointMain) {
+        this.devspaceService.openDevspace = true;
+      }
 
     } else {
       this.devspaceService.selectedChannelId = '';
       this.devspaceService.openChannel = false;
-      if(this.breakpoints.breankpointMain){
-      this.devspaceService.openDevspace = true;      
-    }
+      if (this.breakpoints.breankpointMain) {
+        this.devspaceService.openDevspace = true;
+      }
       setTimeout(() => {
         const memberChange = false;
         this.firestore.changeChannelMembers(channelid, this.devspaceService.loggedInUserUid, memberChange);
       }, 100)
     }
 
-    if(this.breakpoints.breankpointMain){
-      this.devspaceService.openDevspace = true;      
+    if (this.breakpoints.breankpointMain) {
+      this.devspaceService.openDevspace = true;
     }
     this.dialog.closeAll();
   }

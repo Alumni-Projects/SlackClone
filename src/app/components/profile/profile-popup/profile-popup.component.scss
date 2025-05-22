@@ -145,6 +145,10 @@
     align-items: center;
     gap: 16px;
 
+    &:hover {
+      color: var(--purple-3);
+    }
+
     @include respond(s) {
       justify-content: center;
 

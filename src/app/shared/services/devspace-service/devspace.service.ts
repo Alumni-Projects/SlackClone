@@ -13,7 +13,8 @@ export class DevspaceService {
   activeDMContact: number | null = null;
   selectContactDmId: string | null = null;
   selectContactData: any | null = null;
-  sendMessageUser: string | null = null;
+  sendMessageUser$ = new BehaviorSubject<string | null>(null);
+  sendMessageUserData$ = new BehaviorSubject<any | null>(null);
   channelMember = false;
   channelMemberAdded = false;
   channelsName = '';

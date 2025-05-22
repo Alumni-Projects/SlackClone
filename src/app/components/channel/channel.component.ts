@@ -60,10 +60,7 @@ export class ChannelComponent implements OnInit {
       console.error('No selected channel ID found');
     }
     this.devspaceService.channelNameforThread = this.filterChannel[0].title!;
-
     this.devspaceService.channelNameForEmtpyMessage = this.filterChannel[0].title!;
-
-
   }
 
   get filteredAccounts(): DevspaceAccount[] {
@@ -108,8 +105,6 @@ export class ChannelComponent implements OnInit {
 
   }
 
-
-
   openMember() {
     this.devspaceService.channelMember = !this.devspaceService.channelMember;
     this.devspaceService.channelMemberAdded = false;
@@ -133,7 +128,6 @@ export class ChannelComponent implements OnInit {
   openMemberAdd() {
     this.devspaceService.channelMember = false;
     this.devspaceService.channelMemberAdded = !this.devspaceService.channelMemberAdded;
-
   }
 
   closeMemberAdded() {
@@ -197,7 +191,5 @@ export class ChannelComponent implements OnInit {
       console.error("Error when adding members:", error);
     }
   }
-
-
 
 }

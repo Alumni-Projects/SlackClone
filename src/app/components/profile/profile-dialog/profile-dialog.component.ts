@@ -1,4 +1,4 @@
-import { Component, Inject} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,22 +25,22 @@ export class ProfileDialogComponent {
   IconSize = IconSize;
   isProfileOpen = false;
   editName = false;
-  constructor(private dialogRef: MatDialogRef<ProfileDialogComponent> , 
-    @Inject(MAT_DIALOG_DATA) public data: any, 
-    public devspaceService: DevspaceService, 
+  constructor(private dialogRef: MatDialogRef<ProfileDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public devspaceService: DevspaceService,
     public firestoreService: FirestoreService,
-  public breakpoints: BreakpointsService,) {   
-    
+    public breakpoints: BreakpointsService,) {
+
   }
 
   async saveName(name: string) {
-    const userId = this.data.user.uid;     
+    const userId = this.data.user.uid;
     this.data.user.displayName = name;
     this.loadNewNameOfPage(name);
     await this.firestoreService.logUserUpdateName(userId, name);
     this.closeAll();
     this.editName = false;
-    
+
   }
 
   closeAll() {
@@ -53,21 +53,25 @@ export class ProfileDialogComponent {
     this.devspaceService.activeDMContact = null;
   }
 
-  loadNewNameOfPage(name: string) {    
+  loadNewNameOfPage(name: string) {
     const nameAccount: any = this.devspaceService.dmAccounts.find(x => x.userData.uid === this.data.user.uid);
     nameAccount.userData.displayName = name;
   }
 
-  sendMessage(){
-    this.devspaceService.openMessage = true;
+  sendMessage() {
+    this.devspaceService.openMessage = false;
     this.devspaceService.openChannel = false;
     this.devspaceService.openDirectMessage = false;
     this.devspaceService.openThread = false;
     this.devspaceService.activeDMContact = null;
-    if(this.breakpoints.breankpointMain){
-      this.devspaceService.openDevspace = false;     
+    if (this.breakpoints.breankpointMain) {
+      this.devspaceService.openDevspace = false;
     }
-    this.devspaceService.sendMessageUser = this.data.user.displayName;    
+    this.devspaceService.sendMessageUser$.next(null); 
+    this.devspaceService.sendMessageUserData$.next(null);
+    this.devspaceService.sendMessageUser$.next(this.data.user.displayName);
+    this.devspaceService.sendMessageUserData$.next(this.data.user);
+    this.devspaceService.openMessage = true;
     this.dialogRef.close();
   }
 }

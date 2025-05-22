@@ -51,9 +51,4 @@ export class DashboardComponent {
   async loadDmUsers() {
     this.devspaceService.dmAccounts = await this.firestore.findDmUsers(this.devspaceService.loggedInUserUid);
   }
-
-
-
-
-
 }

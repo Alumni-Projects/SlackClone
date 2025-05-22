@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { MessageInputAreaComponent } from '@components/message-input-area/message-input-area.component';
 import { MessageAreaComponent } from "../message-area/message-area.component";
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteMessagesMemberComponent } from './delete-messages-member/delete-messages-member.component';
 
 
 @Component({
@@ -12,6 +15,12 @@ import { DevspaceService } from '@shared/services/devspace-service/devspace.serv
 })
 export class DevspaceMessageDirectComponent {
 
-  constructor(public devspaceService: DevspaceService) { }
+  constructor(public devspaceService: DevspaceService,
+    public firestore: FirestoreService,
+    public dialog: MatDialog) { }
+
+  deleteDirectMessage() {
+    this.dialog.open(DeleteMessagesMemberComponent);
+  }
 
 }
