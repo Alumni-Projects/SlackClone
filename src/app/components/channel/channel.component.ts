@@ -12,12 +12,14 @@ import { Devspace } from '@shared/interface/devspace';
 import { MessageAreaComponent } from '@components/message-area/message-area.component';
 import { DialogDeleteMemberChannelComponent } from './dialog-delete-member-channel/dialog-delete-member-channel.component';
 import { ChatMessage } from '@shared/interface/chat-message';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
+import { ProfileDialogComponent } from '@components/profile/profile-dialog/profile-dialog.component';
 
 
 
 @Component({
   selector: 'app-channel',
-  imports: [MessageInputAreaComponent, CommonModule, FormsModule,MessageAreaComponent, ],
+  imports: [MessageInputAreaComponent, CommonModule, FormsModule, MessageAreaComponent,],
   templateUrl: './channel.component.html',
   styleUrl: './channel.component.scss'
 })
@@ -33,31 +35,31 @@ export class ChannelComponent implements OnInit {
   isDisabled = true;
   openSelect = false;
   memberValue = '';
+  loadingOn = true;
   messages: ChatMessage[] = [];
-  constructor(public devspaceService: DevspaceService, public dialog: MatDialog, public firestore: FirestoreService) {
+  constructor(public devspaceService: DevspaceService, public dialog: MatDialog, public firestore: FirestoreService, public breakpoints: BreakpointsService) {
     this.accounts = this.devspaceService.accounts;
     this.accountSelected = [];
   }
-  
+
 
   ngOnInit(): void {
     this.subscriptions = this.firestore.channels$.subscribe(channels => {
       this.filterChannel = channels.filter(
         channel => this.devspaceService.selectedChannelId == channel.id
-      );      
+      );
       this.filterContacts();
       this.filterContactForAddInput();
     });
     if (this.devspaceService.selectedChannelId) {
-      this.firestore.subscribeToMessages(this.devspaceService.selectedChannelId);      
+      this.firestore.subscribeToMessages(this.devspaceService.selectedChannelId);
       this.firestore.messages$.subscribe(messages => {
-        this.messages = messages;        
+        this.messages = messages;
       });
     } else {
       console.error('No selected channel ID found');
     }
     this.devspaceService.channelNameforThread = this.filterChannel[0].title!;
-
     this.devspaceService.channelNameForEmtpyMessage = this.filterChannel[0].title!;
   }
 
@@ -79,7 +81,7 @@ export class ChannelComponent implements OnInit {
 
   filterContactForAddInput() {
     const channel = this.filterChannel[0];
-  
+
     this.filtedContacts = this.accounts.filter(member =>
       !channel?.member?.includes(member.uid)
     );
@@ -87,23 +89,21 @@ export class ChannelComponent implements OnInit {
 
   openEditChannelDialog() {
     this.dialog.open(EditChannelDialogComponent, {
-      position: { top: '200px' }
+
     });
   }
 
-  openDeleteMemberDialog(i:number) {
+  openDeleteMemberDialog(i: number) {
     this.dialog.open(DialogDeleteMemberChannelComponent, {
       data: {
         index: i,
         channelId: this.devspaceService.selectedChannelId,
         userId: this.filterContact[i].uid,
         userName: this.filterContact[i].displayName
-      }      
+      }
     });
-    
-  }
 
-  
+  }
 
   openMember() {
     this.devspaceService.channelMember = !this.devspaceService.channelMember;
@@ -111,7 +111,13 @@ export class ChannelComponent implements OnInit {
   }
 
   profile(i: number) {
-    console.log("Profile", i);
+    const user = this.filterContact[i];
+  this.dialog.open(ProfileDialogComponent, {
+    width: '500px',
+    data: {
+      user
+    }
+    });
   }
 
   closeMember() {
@@ -122,12 +128,11 @@ export class ChannelComponent implements OnInit {
   openMemberAdd() {
     this.devspaceService.channelMember = false;
     this.devspaceService.channelMemberAdded = !this.devspaceService.channelMemberAdded;
-    
   }
 
   closeMemberAdded() {
-    this.devspaceService.channelMember = false;    
-    this.accountSelected= [];
+    this.devspaceService.channelMember = false;
+    this.accountSelected = [];
     this.memberValue = '';
     this.devspaceService.channelMemberAdded = false;
   }
@@ -169,24 +174,22 @@ export class ChannelComponent implements OnInit {
     this.contactSelect.nativeElement.focus();
   }
 
-  async addMember() { 
-    const memberChange = true;   
-    const channelId = this.filterChannel[0].id;     
+  async addMember() {
+    const memberChange = true;
+    const channelId = this.filterChannel[0].id;
     const promises = this.accountSelected.map(user => {
       if (!user.uid || !channelId) {
         throw new Error("user.uid not null or undifined");
       }
       return this.firestore.changeChannelMembers(channelId, user.uid, memberChange);
     });
-  
+
     try {
-      await Promise.all(promises);      
+      await Promise.all(promises);
       this.closeMemberAdded();
     } catch (error) {
       console.error("Error when adding members:", error);
     }
   }
-
-
 
 }

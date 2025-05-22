@@ -1,4 +1,4 @@
-<section class="devspace-channel" >
+<section class="devspace-channel">
   <div class="devspace-channel-header">
 
     <div class="devspace-channel-header-name" (click)="openEditChannelDialog()">
@@ -7,8 +7,12 @@
       <span><img src="assets/img/keyboard_arrow_down.png" alt=""></span>
     </div>
     <div class="devspace-channel-header-member-area">
+      @if(breakpoints.breankpointMain){
+      <span (click)="openMember()" class="devspace-channel-header-member-add"><img src="assets/img/person_add.png"
+          alt=""></span>
+      }@else {
       <div class="devspace-channel-header-member" (click)="openMember()">
-        <div class="devspace-channel-header-member-icon" >
+        <div class="devspace-channel-header-member-icon">
           @for(item of filterContact; track i; let i = $index){
           @if(i < 3) { <span><img src="{{item.profile}}" alt=""></span>
             }
@@ -20,6 +24,9 @@
       <span (click)="openMemberAdd()" class="devspace-channel-header-member-add"><img src="assets/img/person_add.png"
           alt=""></span>
       }
+      }
+
+
 
       @if(devspaceService.channelMember){
       <div class="devspace-channel-header-member-list">
@@ -42,8 +49,7 @@
               <span (click)="profile(i)" class="item-selected-name">{{item.displayName}}</span>
 
               @if(filterChannel[0].creator === devspaceService.loggedInUserUid){
-              <span class="member-delete"
-                (click)="openDeleteMemberDialog(i)">
+              <span class="member-delete" (click)="openDeleteMemberDialog(i)">
                 <img src="assets/img/dialogClose.png" alt=""></span>
               }
               }
@@ -69,20 +75,18 @@
         <div class="devspace-channel-header-member-added-header"><span>Leute hinzufügen</span>
           <span (click)="closeMemberAdded()"><img src="assets/img/dialogClose.png" alt=""></span>
         </div>
-        <div class="devspace-channel-header-member-added-Title"> <span><img src="assets/img/tagHover.png"
-              alt=""></span>
+        <div class="devspace-channel-header-member-added-Title"> <span><img src="assets/img/tagHover.png" alt=""></span>
           <span>{{filterChannel[0].title}}</span>
         </div>
         <div class="devspace-dialog-add-contact-list-selected-contact" (click)="focusInput()">
           <div class="selected-Contacts-area">
             @for(item of accountSelected.slice(0,1); track item.displayName; let i = $index){
 
-            <div class="selected-contact-item-content"><img src="{{item.profile}}"
-                alt=""><span class="item-selected-name">{{item.displayName}}</span>
+            <div class="selected-contact-item-content"><img src="{{item.profile}}" alt=""><span
+                class="item-selected-name">{{item.displayName}}</span>
               <img (click)="removeContact(i)" src="assets/img/dialogClose.png" alt="">
             </div>
             }
-
             @if(accountSelected.length > 1){<span class="selected-Contact-Count" (click)="SelectContact()">+
               {{accountSelected.length -
               1}}</span>}
@@ -93,7 +97,8 @@
             @for(item of filteredAccounts; track item.displayName; let i = $index){
             <div class="selected-Contact-Item-member" (click)="selectContact(i)"><span><img src="{{item.profile}}"
                   alt="">@if(devspaceService.accounts[i].online){<span class="active-Account-Icon"></span>
-                }@else{<span class="active-Account-Icon-None"></span>}</span> <span class="item-selected-name">{{item.displayName}}</span></div>
+                }@else{<span class="active-Account-Icon-None"></span>}</span> <span
+                class="item-selected-name">{{item.displayName}}</span></div>
             }@empty {
             <div>Keine Kontakte gefunden</div>
             }
@@ -102,7 +107,8 @@
           <div class="selected-Contacts">
             @for(item of accountSelected; track item.displayName; let i = $index){
             <div class="selected-contact-item-content-selected">
-              <span><img src="{{item.profile}}" alt=""> <span class="item-selected-name">{{item.displayName}}</span></span>
+              <span><img src="{{item.profile}}" alt=""> <span
+                  class="item-selected-name">{{item.displayName}}</span></span>
               <img class="selected-contact-item-content-selected-close" (click)="removeContact(i)"
                 src="assets/img/dialogClose.png" alt="">
             </div>

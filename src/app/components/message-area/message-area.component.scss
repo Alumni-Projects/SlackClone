@@ -1,3 +1,5 @@
+@use '@themes/mixins.scss' as *;
+
 .message-areas {
     padding: 20px 0;
     height: 100%;
@@ -30,6 +32,7 @@
 
 .message-area-creator {
     width: 100%;
+    height: auto;
     min-height: 141px;
     padding: 10px 45px 10px 45px;
     display: flex;
@@ -42,10 +45,15 @@
         background-color: var(--bg-color);
     }
 
+    @include respond (ml) {
+        padding: 10px 20px 10px 20px;
+    }
+
 }
 
 .message-area-member {
     width: 100%;
+    height: auto;
     min-height: 141px;
     padding: 10px 45px 10px 45px;
     display: flex;
@@ -61,6 +69,10 @@
         .message-member {
             background-color: var(--white-color);
         }
+    }
+
+    @include respond (mb) {
+        gap: 15px;
     }
 }
 
@@ -102,6 +114,7 @@
 .member-name-area {
     display: flex;
     align-items: center;
+
 }
 
 .member-name {
@@ -117,6 +130,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
 
+    @include respond (mb) {
+        width: 100px;
+    }
 }
 
 
@@ -126,6 +142,11 @@
     & img {
         width: 70px;
         height: 70px;
+
+        @include respond (ml) {
+            width: 50px;
+            height: 50px;
+        }
 
     }
 }
@@ -149,6 +170,7 @@
 .message-creator {
     display: flex;
     width: fit-content;
+    max-width: 100%;
     max-height: 120px;
     height: fit-content;
     overflow: auto;
@@ -199,19 +221,20 @@
     z-index: 100;
     gap: 5px;
 
-    & span{
+    & span {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 40px;
         height: 40px;
         cursor: pointer;
-        & img{
+
+        & img {
             width: 24px;
             height: 24px;
         }
 
-        &:hover{
+        &:hover {
             background-color: var(--bg-color);
             border-radius: 50%;
         }
@@ -286,16 +309,20 @@
 }
 
 .message-reactions {
-    max-width: 400px;
+    width: fit-content;
     height: auto;
     display: flex;
     overflow: auto;
-}
 
-.message-reactions-member {
-    max-width: 400px;
-    display: flex;
-    overflow: auto;
+    @include respond(b) {
+        width: 300px;
+
+    }
+
+    @include respond(mb) {
+        width: 230px;
+
+    }
 }
 
 .reaction-item {
@@ -415,12 +442,27 @@
     background-color: var(--bg-color);
     height: 180px;
     padding: 10px 10px 10px 10px;
+    width: 100%;
+    @include respond(sb) {
+        padding: 10px 10px 10px 2px;
+    }
+
+    
 }
 
 .edit-profile-pic {
     width: 70px;
     height: 70px;
     flex-shrink: 0;
+
+    @include respond(ml) {
+        width: 50px;
+        height: 50px;
+    }
+
+    @include respond(mb) {
+        display: none;
+    }
 }
 
 .edit-message-area {
@@ -434,12 +476,15 @@
     &:hover {
         border: 1px solid var(--primary-color);
     }
+
+     
 }
 
 .edit-message-area-text {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
 }
 
 .edit-text {
@@ -455,6 +500,8 @@
         color: var(--black-color);
 
     }
+
+   
 }
 
 .edit-message-area-button {
@@ -466,13 +513,21 @@
     height: 50px;
     display: flex;
     gap: 20px;
+
+    @include respond(ml) {
+        gap: 10px;
+    }
 }
 
 .btn {
     display: flex;
     justify-content: center;
     width: 140px;
-    height: 50px;
+    height: 50px; 
+    
+    @include respond(ml) {
+        width: 100px;
+    }
 }
 
 .emoji-bar-edit {
@@ -508,6 +563,10 @@
     padding-left: 45px;
     flex-direction: column;
     justify-content: end;
+
+    @include respond(mb) {
+        height: 500px;
+    }
 }
 
 .no-message-title {
@@ -534,6 +593,7 @@
     font-size: var(--font-size-l);
     font-weight: var(--font-weight-normal);
     padding: 6px 0;
+    flex-wrap: wrap;
 
 
     .no-message-text-channel {
@@ -558,6 +618,10 @@
     padding-left: 45px;
     flex-direction: column;
     justify-content: end;
+
+    @include respond(mb) {
+        padding-left: 25px;
+    }
 }
 
 .no-message-title-dm {
@@ -573,6 +637,11 @@
     & img {
         width: 100px;
         height: 100px;
+
+        @include respond(mb) {
+            width: 70px;
+            height: 70px;
+        }
     }
 }
 
@@ -591,12 +660,32 @@
         color: var(--purple-3);
         display: flex;
         align-items: center;
+        @include respond(sl) {
+            width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     }
 
     & img {
         width: 20px;
         height: 20px;
     }
+}
 
+.no-message-title-name{
+    @include respond(sl) {
+        width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1200px) {
+    .message-reactions {
+        max-width: 300px;
+    }
 
 }

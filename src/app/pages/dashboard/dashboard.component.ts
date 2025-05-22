@@ -6,6 +6,7 @@ import { DevspaceComponent } from '@components/devspace/devspace.component';
 import { HeaderComponent } from '@components/header/header.component';
 import { ThreadComponent } from '@components/thread/thread.component';
 import { WorkspaceOpenCloseComponent } from '@components/workspace-open-close/workspace-open-close.component';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
@@ -24,14 +25,17 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
- constructor(public devspaceService: DevspaceService, public firestore: FirestoreService) {}
-  
-   ngOnInit() {
+  constructor(public devspaceService: DevspaceService, public firestore: FirestoreService, public breakpoints: BreakpointsService) { }
+
+  ngOnInit() {
     this.loadUsers();
     this.loadLoggedInUser();
     this.loadDmUsers();
     this.firestore.subscribeToUserChannels(this.devspaceService.loggedInUserUid);
     this.devspaceService.Firestore.channels$.subscribe(channels => {
+    });
+    this.breakpoints.isMobile$.subscribe(value => {
+      if (this.devspaceService.openChannel && value || this.devspaceService.openMessage && value || this.devspaceService.openDirectMessage && value) { this.devspaceService.openDevspace = false; }
     });
   }
 
@@ -40,14 +44,11 @@ export class DashboardComponent {
     this.devspaceService.accounts = users;
   }
 
-loadLoggedInUser() {
+  loadLoggedInUser() {
     this.devspaceService.loggedInUserUid = '0Yda2KEMxrPCMdtTzfYUpGvuWRB3';
   }
 
   async loadDmUsers() {
-    this.devspaceService.dmAccounts = await this.firestore.findDmUsers(this.devspaceService.loggedInUserUid);    
+    this.devspaceService.dmAccounts = await this.firestore.findDmUsers(this.devspaceService.loggedInUserUid);
   }
-
-
-
 }

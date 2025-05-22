@@ -1,3 +1,4 @@
+@use '@themes/mixins.scss' as *;
 @mixin button-style($variant: 'primary', $has-icon: false) {
     height: 49px;
     border-radius: 25px;
@@ -32,7 +33,7 @@
         &:disabled {
             background-color: var(--grey-dark);
             border-color: var(--grey-dark);
-        }
+        }        
     }
 
     @if $variant =='secondary-message' {        

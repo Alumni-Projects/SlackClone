@@ -30,8 +30,7 @@ export class AuthService {
         if (user.isAnonymous) {
           this.router.navigate(['/dashboard']);
         } else if (user.emailVerified) {
-          this.firestoreService.fetchUserFromFirestore(user.uid).then(userData => {
-            console.log('User data loaded:', userData);
+          this.firestoreService.fetchUserFromFirestore(user.uid).then(userData => {            
             this.router.navigate(['/dashboard']);
           });
         }
@@ -114,8 +113,7 @@ export class AuthService {
       const userCredential = await signInAnonymously(this.auth);
       const user = userCredential.user;
       const profile = this.avatars[Math.floor(Math.random() * this.avatars.length)];
-      await this.firestoreService.saveGuestToFirestore(user, profile);
-      console.log('Logged in as guest:', user.uid);
+      await this.firestoreService.saveGuestToFirestore(user, profile);      
     } catch (error) {
       console.error('Guest login error:', error);
       throw error;

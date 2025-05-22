@@ -6,12 +6,21 @@
   height: 70px;
   width: 100%;
   margin-bottom: 20px;
-  justify-content: space-between;
-  gap: 20px;
+  padding-left: 40px;
+  padding-right: 20px;
 
-  @include respond(m) {
-    padding-left: 20px;
+  @include respond(b) {
+    padding: 0 20px;
+    margin-top: 20px;
+
   }
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-grow: 1;
 }
 
 .logo {
@@ -21,6 +30,13 @@
   flex-shrink: 0;
   gap: 10px;
   width: auto;
+  margin-right: 114px;
+  cursor: pointer;
+
+  .arrow {
+    width: 25px;
+    height: 25px;
+  }
 
   @include respond(m) {
     width: auto;
@@ -34,6 +50,7 @@
     width: 45px;
     height: auto;
     flex-shrink: 0;
+
     @include respond(xs) {
       width: 70px;
       height: auto;
@@ -49,9 +66,11 @@
       display: block;
       font-size: var(--font-size-xl);
     }
+
     @include respond(m) {
       display: none;
     }
+
     @include respond(l) {
       display: block;
     }
@@ -60,7 +79,10 @@
 
 .header {
   cursor: pointer;
+
   &-username {
+    text-align: right;
+    width: 200px;
     display: none;
     white-space: nowrap;
     overflow: hidden;
@@ -69,6 +91,7 @@
     font-weight: var(--font-weight-extra-bold);
     line-height: 100%;
     color: var(--black-color);
+    margin-left: 20px;
 
     @include respond(m) {
       display: block;
@@ -82,23 +105,29 @@
     transition: all 125ms ease-in-out;
     flex-shrink: 0;
     justify-content: end;
+
     @include respond(s) {
       gap: 20px;
     }
   }
+
   &-icon-img {
     position: relative;
+    display: flex;
+    flex-shrink: 0;
 
     & img {
-      width: 45px;
 
+      width: 45px;
       height: auto;
+
       @include respond(s) {
         width: 70px;
         gap: 20px;
       }
     }
   }
+
   &-icon-arrow {
     width: 30px;
     height: 30px;
@@ -115,11 +144,28 @@
       }
     }
   }
+
+  @include respond(b) {
+    & mat-icon {
+      display: none;
+    }
+  }
 }
 
 .active-Account-Icon-header {
   bottom: -6px;
   left: 33.33px;
+
+  @include respond(s) {
+    bottom: -3px;
+    left: 50px;
+  }
+}
+
+.active-Account-Icon-None-header {
+  bottom: -6px;
+  left: 33.33px;
+
   @include respond(s) {
     bottom: -3px;
     left: 50px;

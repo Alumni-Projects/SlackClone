@@ -1,8 +1,10 @@
+import { Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DevspaceDialogComponent } from '@components/devspace-dialog/devspace-dialog.component';
 import { Devspace } from '@shared/interface/devspace';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
 
@@ -16,7 +18,10 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
 export class MessageInputAreaComponent {
   @ViewChild('messageInput') messageInput!: ElementRef;
   @Input() context!: 'message' | 'channel' | 'thread' | 'directmessage';
-  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef, public firestore: FirestoreService, public dialog: MatDialog) {
+  constructor(public devspaceService: DevspaceService, private cdRef: ChangeDetectorRef,
+    public firestore: FirestoreService,
+    public dialog: MatDialog,
+    public breakpoints: BreakpointsService) {
   }
 
 
@@ -210,18 +215,25 @@ export class MessageInputAreaComponent {
     const channel = this.filterChannelFromNewMessage(this.devspaceService.channelArray.value);
     const contact = this.filterContactFromNewMessage(this.devspaceService.contactArray.value);
     const creatorId = this.devspaceService.loggedInUserUid;
+    const sendMessageUserData = this.devspaceService.sendMessageUserData$.getValue();
     if (channel.length > 0) {
       for (let i = 0; i < channel.length; i++) {
         this.firestore.addMessageToChannel(channel[i]!.id!, message, creatorId);
       }
     }
-    if (contact.length == 1) {
+
+    if (sendMessageUserData != null && contact.length == 0) {
+      const dmId = await this.firestore.checkAndCreateDirectMessage(sendMessageUserData!.uid!, creatorId);
+      this.firestore.addMessageToDirectMessage(dmId, message, creatorId);
+      
+
+    } else if (contact.length == 1) {
       for (let i = 0; i < contact.length; i++) {
         const dmId = await this.firestore.checkAndCreateDirectMessage(contact[i]!.uid!, creatorId);
         this.firestore.addMessageToDirectMessage(dmId, message, creatorId);
       }
     } else if (contact.length > 1) {
-      this.devspaceService.createNewChannel= false;
+      this.devspaceService.createNewChannel = false;
       this.devspaceService.createNewChannelFromNewMessage = true;
       this.dialog.open(DevspaceDialogComponent, {
         data: {
@@ -231,6 +243,14 @@ export class MessageInputAreaComponent {
       })
     }
     this.devspaceService.openMessage = false;
+    
+
+    if (this.breakpoints.breankpointMain) {
+      this.devspaceService.openDevspace = true;
+    }
+    this.devspaceService.sendMessageUser$.next(null);
+    this.devspaceService.sendMessageUserData$.next(null);
+    this.devspaceService.dmAccounts = await this.firestore.findDmUsers(this.devspaceService.loggedInUserUid);
 
   }
 

@@ -1,52 +1,72 @@
 <mat-dialog-content class="profile-dialog">
   <div class="profile-dialog-title-wrapper">
+    @if(editName){
+    <h2>Dein Profil bearbeiten</h2>
+    }@else {
     <h2>Profil</h2>
-    <button mat-icon-button class="close-btn" (click)="closeDialog()">
-      <mat-icon
-        [style.font-size]="'24px'"
-        [style.color]="'black'"
-        class="arrow-icon"
-      >
-        close
-      </mat-icon>
+    }
+    <button class="close-btn" (click)="closeDialog()">
+      <div class="close-icon"><img src="assets/img/dialogClose.png" alt=""></div>
     </button>
   </div>
 
   <div class="profile-header">
-    <img
-      class="profile-img"
-      src="assets/avatar/avatar3.svg"
-      alt="Profile picture"
-    />
+    <img class="profile-img" src="{{data.user.profile}}" alt="Profile picture" />
+  </div>
+  @if(editName){
+  <div class="profile-edit">
+    <div class="profile-edit-header">
+      <span class="edit-header-icon"><img src="assets/img/account_circle.png" alt=""></span>
+      <span class="edit-header-text">Vollständiger Name</span>
+    </div>
+    <div class="edit-input"><input type="text" value="{{data.user.displayName}}" #nameInput></div>
+    <div class="btn-container--center">
+      <button class="button-secondary-message" (click)="editName = false">Abbrechen</button>
+      <button class="button-primary" (click)="saveName(nameInput.value)">Speichern</button>
+    </div>
   </div>
 
+
+  }@else {
   <div class="profile-info-item">
-    <h3>Steffen Hoffmann</h3>
+    <div class="profile-info-item-name">
+      <span>{{data.user.displayName}}</span>
+      @if(data.user.uid === devspaceService.loggedInUserUid){<span (click)="editName = true">Bearbeiten</span>}
+    </div>
+    @if(data.user.online){
     <div class="status">
       <div class="status-indicator"></div>
       <div class="status-text">Aktiv</div>
     </div>
+    }@else {
+    <div class="status">
+      <div class="status-offline"></div>
+      <div class="status-text">Abwesend</div>
+    </div>
+    }
+
   </div>
 
   <div class="profile-info">
     <div class="profile-info-item">
       <div class="profile-info-item-mail">
-        <mat-icon
-          [style.font-size]="IconSize.Medium"
-          [style.IconColor]="IconColor.White"
-        >
+        <mat-icon [style.font-size]="IconSize.Medium" [style.IconColor]="IconColor.White">
           mail_outline
         </mat-icon>
 
         <strong>E-Mail-Adresse</strong>
       </div>
-      <a href="mailto:thehoffman@beispiel.com">thehofeispiel.com</a>
+      <a href="mailto:{{data.user.email}}">{{data.user.email}}</a>
     </div>
   </div>
+  @if(data.user.uid !== devspaceService.loggedInUserUid){
   <div class="btn-container btn-container--center">
-    <button class="button-primary">
-      <mat-icon [style.font-size]="IconSize.Medium"> mail_outline </mat-icon
-      >Nachricht
+    <button class="button-primary send-message" (click)="sendMessage()">
+      <mat-icon [style.font-size]="IconSize.Medium"> mail_outline </mat-icon>Nachricht
     </button>
   </div>
+  }
+
+  }
+
 </mat-dialog-content>

@@ -5,11 +5,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
+import { SearchbarComponent } from "../searchbar/searchbar.component";
 
 @Component({
   selector: 'app-devspace',
   imports: [
-    CommonModule,],
+    CommonModule,
+    SearchbarComponent
+],
   templateUrl: './devspace.component.html',
   styleUrl: './devspace.component.scss'
 })
@@ -56,6 +59,11 @@ export class DevspaceComponent {
     this.devspaceService.openChannel = false;
     this.devspaceService.channelMember = false;
     this.devspaceService.activeDMContact = null;
+    this.devspaceService.sendMessageUser$.next(null);
+    this.devspaceService.sendMessageUserData$.next(null);
+    if(this.breakpoints.breankpointMain){
+      this.devspaceService.openDevspace = false;     
+    }
     setTimeout(() => {
       this.devspaceService.openChannel = true;
     }, 200);
@@ -65,10 +73,15 @@ export class DevspaceComponent {
     this.devspaceService.selectedChannelId = '';
     this.devspaceService.activeDMContact = i;
     this.devspaceService.openChannel = false;
+    if(this.breakpoints.breankpointMain){
+      this.devspaceService.openDevspace = false;     
+    }
     this.devspaceService.openDirectMessage = false;
     this.devspaceService.selectContactDmId = this.devspaceService.dmAccounts[i].userData.uid;
     this.devspaceService.contactDmId = this.devspaceService.dmAccounts[i].dmId;
     this.devspaceService.selectContactData = this.devspaceService.dmAccounts[i];
+    this.devspaceService.sendMessageUser$.next(null);
+    this.devspaceService.sendMessageUserData$.next(null);
     this.firestore.subscribeToDirectMessage(this.devspaceService.loggedInUserUid, this.devspaceService.selectContactDmId!);
     setTimeout(() => {
       this.devspaceService.openDirectMessage = true;
@@ -81,7 +94,10 @@ export class DevspaceComponent {
     this.devspaceService.openChannel = false;
     this.devspaceService.openDirectMessage = false;
     this.devspaceService.openThread = false;
-    this.devspaceService.activeDMContact = null;
+    this.devspaceService.activeDMContact = null;    
+    if(this.breakpoints.breankpointMain){
+      this.devspaceService.openDevspace = false;     
+    }
   }
 
   closeMessage() {

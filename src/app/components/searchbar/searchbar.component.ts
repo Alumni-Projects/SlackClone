@@ -20,6 +20,10 @@ import { Devspace } from '@shared/interface/devspace';
 import { DevspaceAccount } from '@shared/interface/devspace-account';
 import { ChatMessage } from '@shared/interface/chat-message';
 import { collection, getDocs } from 'firebase/firestore';
+import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
+import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
+import { ProfileDialogComponent } from '@components/profile/profile-dialog/profile-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-searchbar',
@@ -34,7 +38,7 @@ import { collection, getDocs } from 'firebase/firestore';
   styleUrls: ['./searchbar.component.scss']
 })
 export class SearchbarComponent implements OnInit, OnDestroy {
-  @Input() variant: 'desktop' | 'mobile' = 'desktop';
+  @Input() variant: 'desktop' | 'mobile' | 'devspace' = 'desktop';
 
   searchControl = new FormControl('');
   placeholder = 'Suchen...';
@@ -49,10 +53,10 @@ export class SearchbarComponent implements OnInit, OnDestroy {
     users: DevspaceAccount[];
     messages: ChatMessage[];
   } = {
-    channels: [],
-    users: [],
-    messages: []
-  };
+      channels: [],
+      users: [],
+      messages: []
+    };
 
   allChannels: Devspace[] = [];
   allUsers: DevspaceAccount[] = [];
@@ -63,14 +67,16 @@ export class SearchbarComponent implements OnInit, OnDestroy {
   constructor(
     public devspaceService: DevspaceService,
     private eRef: ElementRef,
-    private router: Router
-  ) {}
+    private router: Router,
+    public firestore: FirestoreService,
+    public breakpoints: BreakpointsService,
+    public dialog: MatDialog
+  ) { }
 
   async ngOnInit(): Promise<void> {
     this.channelSubscription =
       this.devspaceService.Firestore.channels$.subscribe((channels) => {
         this.allChannels = channels;
-        console.log('Channels in Searchbar geladen:', channels);
       });
 
     this.allUsers = this.devspaceService.accounts;
@@ -89,7 +95,7 @@ export class SearchbarComponent implements OnInit, OnDestroy {
 
   filterResults(term: string): void {
     this.showResults = true;
-    this.hasSearched = !!term; // 🛠️ DAS HIER MUSS REIN
+    this.hasSearched = !!term;
 
     if (!term) {
       this.searchResults = { channels: [], users: [], messages: [] };
@@ -136,19 +142,69 @@ export class SearchbarComponent implements OnInit, OnDestroy {
 
   goToChannel(channelId: string): void {
     this.devspaceService.selectedChannelId = channelId;
+    this.devspaceService.activeDMContact = null;
     this.devspaceService.openMessage = false;
     this.devspaceService.openDirectMessage = false;
-    this.devspaceService.openChannel = true;
-
+    this.devspaceService.openChannel = false;
+    if (this.breakpoints.breankpointMain) {
+      this.devspaceService.openDevspace = false;
+    }
+    setTimeout(() => {
+      this.devspaceService.openChannel = true;
+    }, 100);
     this.searchControl.setValue('');
     this.showResults = false;
     this.hasSearched = false;
   }
 
   goToUser(userId: string): void {
-    this.router.navigate(['/profile', userId]);
+    this.devspaceService.activeDMContact = this.filterActiveDMContact(userId);
+    if (this.devspaceService.activeDMContact !== -1) {
+      this.devspaceService.selectedChannelId = "";
+      this.devspaceService.openMessage = false;
+      this.devspaceService.openDirectMessage = false;
+      this.devspaceService.selectContactDmId = userId;
+      this.devspaceService.openChannel = false;
+      this.devspaceService.selectContactData = this.filterActiveContactDATA(userId);
+      if (this.breakpoints.breankpointMain) {
+        this.devspaceService.openDevspace = false;
+      }
+      this.firestore.subscribeToDirectMessage(this.devspaceService.loggedInUserUid, this.devspaceService.selectContactDmId!);
+      setTimeout(() => {
+        this.devspaceService.openDirectMessage = true;
+      }, 200);
+    } else {
+      this.devspaceService.activeDMContact = null;
+      this.devspaceService.openMessage = false;
+      this.devspaceService.openDirectMessage = false;
+      this.devspaceService.openChannel = false;
+      this.devspaceService.selectedChannelId = "";          
+       this.dialog.open(ProfileDialogComponent, {
+      width: '500px',
+      panelClass: 'profile-menu',
+      data:{user: this.filterContact(userId)} 
+      
+    });
+    }
+
     this.searchControl.setValue('');
     this.showResults = false;
+  }
+
+  filterActiveDMContact(userId: string) {
+    const index = this.devspaceService.dmAccounts.findIndex(account => account.userData.uid === userId);
+    return index;
+  }
+
+  filterActiveContactDATA(userId: string) {
+    const data = this.devspaceService.dmAccounts.find(account => account.userData.uid === userId);
+    return data;
+  }
+
+  filterContact(userId: string) {
+    const data = this.devspaceService.accounts.find(account => account.uid === userId);
+    return data;
+
   }
 
   goToMessage(msg: ChatMessage): void {

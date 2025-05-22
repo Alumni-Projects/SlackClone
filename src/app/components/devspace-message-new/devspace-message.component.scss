@@ -1,6 +1,11 @@
+@use '@themes/mixins.scss' as *;
 .app-message-input-area{
     padding-left: 71px;
     padding-right: 71px;
+    @include respond(b) {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
 }
 
 .devspace-message-area {
@@ -12,6 +17,11 @@
     flex-direction: column;
     justify-content: space-between;
     padding-bottom: 40px;
+ @include respond(b) {    
+    border-radius: 0;
+    
+  }
+
 }
 
 .devspace-message-add-area-input {

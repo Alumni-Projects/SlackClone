@@ -8,6 +8,8 @@
             </span>
             <span class="devspace-direct-messages-name"> {{devspaceService.selectContactData.userData?.displayName}}</span>            
         </div>
+
+        <span class="close" (click)="deleteDirectMessage()"><img src="assets/img/dialogClose.png" alt=""></span>
     </div>
 
     <div class="message-area"><app-message-area [messageSection]="'directmessage'"></app-message-area></div>

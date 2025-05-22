@@ -44,12 +44,19 @@ export class ProfilePopupComponent {
   openProfileDialog() {
     this.dialog.open(ProfileDialogComponent, {
       width: '500px',
-      panelClass: 'profile-menu'
+      panelClass: 'profile-menu',
+      data: { user: this.filterContact(this.devspaceService.loggedInUserUid) }
     });
     this.startCloseAnimation();
   }
 
-  startCloseAnimation() {    
+  filterContact(userId: string) {
+    const data = this.devspaceService.accounts.find(account => account.uid === userId);
+    return data;
+
+  }
+
+  startCloseAnimation() {
     this.isClosing = true;
     setTimeout(() => {
       this.isClosing = false;
@@ -57,8 +64,8 @@ export class ProfilePopupComponent {
     }, 200);
   }
 
-  logout() {
-    this.firestore.changeUserStatus(this.devspaceService.loggedInUserUid, false);
+  async logout() {
+    await this.firestore.changeUserStatus(this.devspaceService.loggedInUserUid, false);
     this.firestore.cleanupFirestoreListeners();
     this.authService.logout();
   }

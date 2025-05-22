@@ -1,3 +1,5 @@
+@use '@themes/mixins.scss' as *;
+
 .edit-channel {
   width: 872px;
   height: 616px;
@@ -9,6 +11,17 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  @include respond(b) {
+    max-width: 100%;
+    height: 100%;
+    border-radius: 0;
+    padding: 20px;
+  }
+}
+
+::ng-deep .cdk-overlay-pane.edit-channel-dialog {
+  margin-top: 100px !important;
 }
 
 ::ng-deep .mat-mdc-dialog-surface {
@@ -73,7 +86,7 @@
   border-radius: 20px;
 }
 
-.edit-channel-input-create{
+.edit-channel-input-create {
   width: 100%;
   height: 105px;
   display: flex;
@@ -97,13 +110,14 @@
       font-size: var(--font-size-m);
       font-weight: var(--font-weight-normal);
       color: var(--purple-3);
+
       &:hover {
         cursor: pointer;
         font-weight: var(--font-weight-extra-bold);
         scale: 1.05;
-        color: var(--primary-color);        
-      }      
-    }    
+        color: var(--primary-color);
+      }
+    }
   }
 }
 
@@ -167,32 +181,46 @@
 
 }
 
-.edit-channel-creator{
+.edit-channel-creator {
   display: flex;
   flex-direction: column;
   gap: 20px;
 
-  & span:nth-of-type(1){
+  & span:nth-of-type(1) {
     font-size: var(--font-size-m);
     font-weight: var(--font-weight-extra-bold);
     color: var(--black-color);
   }
-  & span:nth-of-type(2){
+
+  & span:nth-of-type(2) {
     font-size: var(--font-size-title-default);
     font-weight: var(--font-weight-normal);
     color: var(--purple-3);
+
+    @include respond(ml) {
+      width: 300px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+
   }
 }
 
-.edit-channel-leave{
+.edit-channel-leave {
   width: 100%;
   height: 49px;
   display: flex;
   justify-content: end;
-  
+
+  @include respond(b) {
+    margin-top: 25px;
+  }
+
 }
 
-.edit-channel-input-area{
+.edit-channel-input-area {
   position: relative;
   display: flex;
   align-items: center;
@@ -202,71 +230,80 @@
   border: 1px solid var(--light-purple);
   border-radius: 30px;
   padding: 18px 20px 18px 20px;
-  &:hover{
+
+  &:hover {
     border: 1px solid var(--purple-3);
     cursor: pointer;
   }
-  & span{
-    & img{
+
+  & span {
+    & img {
       width: 23px;
       height: 23px;
     }
+
     color: var(--mail-blue);
     font-weight: var(--font-weight-extra-bold);
-   
+
   }
-  & input{
+
+  & input {
     width: 100%;
     height: 25px;
     border: none;
     font-size: var(--font-size-m);
-    font-weight: var(--font-weight-normal);    
+    font-weight: var(--font-weight-normal);
     color: var(--black-color);
     cursor: pointer;
-    &:focus{
+
+    &:focus {
       outline: none;
     }
   }
 
 }
 
-.edit-channel-name-input-Error{
-  border: 1px solid var(--error-msg); 
-  &:hover{
+.edit-channel-name-input-Error {
+  border: 1px solid var(--error-msg);
+
+  &:hover {
     border: 1px solid var(--error-msg);
   }
 }
 
-.edit-channel-name-Error{
+.edit-channel-name-Error {
   width: 100%;
-  height: 30px;    
+  height: 30px;
   margin-left: 10px;
   margin-top: -25px;
-  & span{
-      color: var(--error-msg);
-      font-size: var(--font-size-error);
+
+  & span {
+    color: var(--error-msg);
+    font-size: var(--font-size-error);
   }
 }
 
-.edit-channel-description-input-create{
+.edit-channel-description-input-create {
   width: 100%;
   height: 248px;
   display: flex;
   flex-direction: column;
-  gap: 30px;  
+  gap: 30px;
+
   & div:nth-of-type(2) {
     width: calc(100% - 52px);
     border: 1px solid var(--light-purple);
-   margin-left: 26px;
+    margin-left: 26px;
   }
 }
 
-.edit-channel-description-textarea-create{
+.edit-channel-description-textarea-create {
   display: flex;
   flex-direction: column;
   gap: 20px;
+
   & div:nth-of-type(1) {
-    display: flex;    
+    display: flex;
     align-items: center;
     justify-content: space-between;
     padding-right: 20px;
@@ -282,32 +319,84 @@
       font-size: var(--font-size-m);
       font-weight: var(--font-weight-normal);
       color: var(--purple-3);
+
       &:hover {
         cursor: pointer;
         font-weight: var(--font-weight-extra-bold);
         scale: 1.05;
-        color: var(--primary-color);        
-      }      
-    }    
+        color: var(--primary-color);
+      }
+    }
   }
 
-  & textarea{
+  & textarea {
     width: 100%;
     height: 100px;
     border: 1px solid var(--light-purple);
     border-radius: 30px;
     padding: 15px 20px;
     resize: none;
-    
+
     cursor: pointer;
-    &:focus{
+
+    &:focus {
       outline: none;
     }
 
-    &:hover{
+    &:hover {
       border: 1px solid var(--purple-3);
     }
   }
 
-  
+
+}
+
+.edit-mobile {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: var(--bg-color);
+  border-radius: 30px;
+  transition: all 125ms ease-in-out;
+
+  & img {
+    width: 25px;
+    height: 25px;
+  }
+
+  &:hover {
+    & img {
+      width: 22px;
+      height: 22px;
+      content: url("../../../../assets/img/penHover.png");
+    }
+  }
+
+}
+
+.edit-mobile-close {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: var(--bg-color);
+  border-radius: 30px;
+
+  & img {
+    width: 25px;
+    height: 25px;
+  }
+
+  &:hover {
+    & img {
+      width: 24px;
+      height: 24px;
+      content: url("../../../../assets/img/checkEditHover.png");
+    }
+  }
 }

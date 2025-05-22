@@ -10,6 +10,7 @@
 
 
 
+
 html {
     @include mat.theme((color: (theme-type: light,
                 primary: mat.$azure-palette,
@@ -46,6 +47,7 @@ html {
     --light-purple: #adb0d9;
     --purple-3: #535af1;
     --online-green: #92c83e;
+    --offline-gray:#686868;
     --mail-blue: #1381ff;
     --error-msg: #ED1E79;
 }
@@ -180,6 +182,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: #eceefe;
+    scroll-behavior: smooth;
     font-size: var(--font-size-m);
     font-weight: var(--font-weight-bold);
     background: var(--bg-color);
@@ -309,14 +312,23 @@ body {
 // Dialog width
 .cdk-overlay-pane.mat-mdc-dialog-panel {
     max-width: none !important;
+    
 }
+
 
 // select contact name
 .item-selected-name{
-    max-width: 150px;
+    max-width:  150px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    @include respond(mb) {
+        max-width: 100px;
+    }
 }
 
 // scrollbar

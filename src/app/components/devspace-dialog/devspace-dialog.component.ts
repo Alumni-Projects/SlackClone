@@ -25,7 +25,7 @@ export class DevspaceDialogComponent {
   constructor(private dialog: MatDialog, public devspaceService: DevspaceService, public breakpoints: BreakpointsService, @Inject(MAT_DIALOG_DATA) public data: any, public firestore: FirestoreService) { }
 
   closeDialog() {
-    this.dialog.closeAll();
+    this.dialog.closeAll();    
   }
   async createChannel() {
     if (this.devspaceService.createNewChannel) {
@@ -69,7 +69,6 @@ export class DevspaceDialogComponent {
 
     }
 
-
   }
 
   openDialog() {
@@ -88,5 +87,8 @@ export class DevspaceDialogComponent {
     const last = this.firestore.lastAddedChannel;
     this.devspaceService.selectedChannelId = last?.id || '';
     this.devspaceService.openChannel = true;
+    if(this.breakpoints.breankpointMain){
+      this.devspaceService.openDevspace = false;      
+    }
   }
 }
