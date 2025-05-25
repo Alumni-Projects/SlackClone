@@ -17,10 +17,10 @@
   <div class="header">
     <div class="header-icon" (click)="openProfilePopup()">
       <span class="header-username">{{
-        mainAccount!.displayName
+        devspaceService.mainAccount!.displayName
         }}</span>
       <span class="header-icon-img">
-        <img src="{{mainAccount!.profile}}" alt="" />@if(mainAccount!.online){<span
+        <img src="{{devspaceService.mainAccount!.profile}}" alt=""/>@if(devspaceService.mainAccount!.online){<span
           class="active-Account-Icon-header"></span>
         }@else{<span class="active-Account-Icon-None-header"></span>}
       </span>

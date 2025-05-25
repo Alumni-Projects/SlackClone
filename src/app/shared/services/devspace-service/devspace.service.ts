@@ -15,6 +15,7 @@ export class DevspaceService {
   selectContactData: any | null = null;
   sendMessageUser$ = new BehaviorSubject<string | null>(null);
   sendMessageUserData$ = new BehaviorSubject<any | null>(null);
+  mainAccount: any;
   channelMember = false;
   channelMemberAdded = false;
   channelsName = '';

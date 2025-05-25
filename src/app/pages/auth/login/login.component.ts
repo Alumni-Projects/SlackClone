@@ -14,11 +14,12 @@ import { AuthService } from '@shared/services/auth-service/auth.service';
 export class LoginComponent {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(8)]);
-
   emailLoginError: any = null;
   googleLoginError: any = null;
 
   constructor(private router: Router, private authService: AuthService) { }
+
+ 
 
   navigateTo(target: string) {
     this.router.navigate(['/' + target]);
@@ -44,7 +45,7 @@ export class LoginComponent {
     }
   }
 
-  async loginAsGuest() {
+  async loginAsGuest() {    
     try {
       await this.authService.loginAsGuest();
       this.emailLoginError = null;

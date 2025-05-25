@@ -83,7 +83,7 @@
             <span class="title-auth">Wähle deinen Avatar</span>
         </div>
         <div class="selected">
-            <img src="assets/avatar/{{selectedAvatar}}" alt="Avatar">
+            <img src="{{selectedAvatar}}" alt="Avatar">
         </div>
 
         <div class="selected-user">
@@ -97,7 +97,7 @@
 
             <div class="avatars">
                 @for (avatar of avatars; track $index) {
-                <img class="" src="assets/avatar/{{avatar}}" alt="{{avatar}}" (click)="selectAvatar(avatar)">
+                <img class="" src="{{avatar}}" alt="{{avatar}}" (click)="selectAvatar(avatar)">
                 }
             </div>
         </div>
@@ -107,7 +107,7 @@
         </div>
         }
         <div class="btn-container">
-            <button [disabled]="registerForm.invalid || !isChecked || selectedAvatar === 'avatar0.svg'"
+            <button [disabled]="registerForm.invalid || !isChecked || selectedAvatar === 'assets/avatar/avatar0.svg'"
                 class="button-primary" (click)="createUser()">Erstellen</button>
         </div>
         }
