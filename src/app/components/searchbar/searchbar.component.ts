@@ -117,12 +117,17 @@ export class SearchbarComponent implements OnInit, OnDestroy {
 
   async loadAllMessages(): Promise<ChatMessage[]> {
     const messages: ChatMessage[] = [];
+    const userId = this.devspaceService.loggedInUserUid;
     const channelSnapshot = await getDocs(
       collection(this.devspaceService.Firestore.firestore, 'channel')
     );
 
     for (const channelDoc of channelSnapshot.docs) {
-      const channelId = channelDoc.id;
+      const channelData = channelDoc.data();
+      const channelId = channelDoc.id;      
+      if (!channelData['member'] || !channelData['member'].includes(userId)) {
+      continue;
+    }
       const messagesRef = collection(
         this.devspaceService.Firestore.firestore,
         `channel/${channelId}/messages`
