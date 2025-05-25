@@ -124,11 +124,21 @@ export class AuthService {
     this.user = null;
     this.router.navigate(['/login']);
     this.deleteArraysLogout();
+    this.closeAllMenus();
   }
 
   deleteArraysLogout() {
     this.devspaceService.accounts = [];
     this.devspaceService.dmAccounts = [];    
+  }
+
+  closeAllMenus() {    
+    this.devspaceService.openMessage = false;    
+    this.devspaceService.openChannel = false;
+    this.devspaceService.openThread = false;
+    this.devspaceService.openDirectMessage = false;
+    this.devspaceService.activeDMContact = null;
+    this.devspaceService.selectedChannelId = '';   
   }
 
   async sendVerification(): Promise<void> {
