@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Auth, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signInAnonymously, signOut, User, sendEmailVerification, updateProfile, sendPasswordResetEmail, updateEmail, onAuthStateChanged, confirmPasswordReset, verifyPasswordResetCode, getAdditionalUserInfo, applyActionCode, reload } from 'firebase/auth';
 import { FirebaseApp, initializeApp } from 'firebase/app';
-import { firebaseConfig} from '../../../../environments/environment';
+import { firebaseConfig,guestLogin} from '../../../../environments/environment';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../firestore-service/firestore.service';
 import { BehaviorSubject } from 'rxjs';
 import { DevspaceService } from '../devspace-service/devspace.service';
-import { guestLogin } from '../../../../environments/environment.dev';
+
 @Injectable({
   providedIn: 'root'
 })
