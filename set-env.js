@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const envConfig = `
-  export const firebaseConfig = {
+export const firebaseConfig = {
   production: true,
   apiKey: "${process.env.API_KEY}",
   authDomain: "${process.env.AUTH_DOMAIN}",
@@ -14,11 +14,11 @@ const envConfig = `
   appId: "${process.env.APP_ID}",
   measurementId: "${process.env.MEASUREMENT_ID}"
 };
-`;
-export const guestLogin = {
-    email: "${process.env.GUEST_EMAIL}",
-    password: "${process.env.GUEST_PASSWORD}"
-  };
 
+export const guestLogin = {
+  email: "${process.env.GUEST_EMAIL}",
+  password: "${process.env.GUEST_PASSWORD}"
+};
+`;
 
 fs.writeFileSync('./src/environments/environment.prod.ts', envConfig);
