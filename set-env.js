@@ -15,5 +15,10 @@ const envConfig = `
   measurementId: "${process.env.MEASUREMENT_ID}"
 };
 `;
+export const guestLogin = {
+    email: "${process.env.GUEST_EMAIL}",
+    password: "${process.env.GUEST_PASSWORD}"
+  };
+
 
 fs.writeFileSync('./src/environments/environment.prod.ts', envConfig);
