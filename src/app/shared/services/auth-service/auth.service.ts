@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signInAnonymously, signOut, User, sendEmailVerification, updateProfile, sendPasswordResetEmail, updateEmail, onAuthStateChanged, confirmPasswordReset, verifyPasswordResetCode, getAdditionalUserInfo, applyActionCode, reload } from 'firebase/auth';
 import { FirebaseApp, initializeApp } from 'firebase/app';
-import { firebaseConfig,guestLogin} from '../../../../environments/environment';
+import { firebaseConfig } from '../../../../environments/environment';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../firestore-service/firestore.service';
 import { BehaviorSubject } from 'rxjs';
@@ -31,14 +31,13 @@ export class AuthService {
     this.auth = getAuth(this.app);
     onAuthStateChanged(this.auth, (user) => {
       this.user = user;
-      this.userSubject.next(user);     
+      this.userSubject.next(user);
       if (user) {
-        const isGuest = user.email === guestLogin.email;
-        if (isGuest || user.emailVerified) {           
-        this.firestoreService.fetchUserFromFirestore(user.uid).then(userData => {
+        if (user.emailVerified) {
+          this.firestoreService.fetchUserFromFirestore(user.uid).then(userData => {
             this.router.navigate(['/dashboard']);
           });
-      }
+        }
       }
     });
   }
@@ -91,7 +90,7 @@ export class AuthService {
       const userCredential = await signInWithPopup(this.auth, new GoogleAuthProvider());
       const user = userCredential.user;
       const additionalUserInfo = getAdditionalUserInfo(userCredential);
-      if (additionalUserInfo?.isNewUser) {        
+      if (additionalUserInfo?.isNewUser) {
         const profile = (additionalUserInfo!.profile as { picture: string }).picture;
         await this.firestoreService.saveUserToFirestore(user, profile);
         this.router.navigate(['/dashboard']);
@@ -111,13 +110,6 @@ export class AuthService {
     }
   }
 
-  async loginAsGuest() {
-    const { email, password } = guestLogin;
-    const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
-    const user = userCredential.user;
-    this.userSubject.next(user);
-  }
-
   async logout(): Promise<void> {
     await signOut(this.auth);
     this.userSubject.next(null);
@@ -129,16 +121,16 @@ export class AuthService {
 
   deleteArraysLogout() {
     this.devspaceService.accounts = [];
-    this.devspaceService.dmAccounts = [];    
+    this.devspaceService.dmAccounts = [];
   }
 
-  closeAllMenus() {    
-    this.devspaceService.openMessage = false;    
+  closeAllMenus() {
+    this.devspaceService.openMessage = false;
     this.devspaceService.openChannel = false;
     this.devspaceService.openThread = false;
     this.devspaceService.openDirectMessage = false;
     this.devspaceService.activeDMContact = null;
-    this.devspaceService.selectedChannelId = '';   
+    this.devspaceService.selectedChannelId = '';
   }
 
   async sendVerification(): Promise<void> {
