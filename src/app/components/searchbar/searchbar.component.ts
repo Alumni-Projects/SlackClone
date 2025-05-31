@@ -77,11 +77,8 @@ export class SearchbarComponent implements OnInit, OnDestroy {
     this.channelSubscription =
       this.devspaceService.Firestore.channels$.subscribe((channels) => {
         this.allChannels = channels;
-      });
-
-    this.allUsers = this.devspaceService.accounts;
+      });    
     this.allMessages = await this.loadAllMessages();
-
     this.searchControl.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((term: string | null) => {
@@ -96,6 +93,7 @@ export class SearchbarComponent implements OnInit, OnDestroy {
   filterResults(term: string): void {
     this.showResults = true;
     this.hasSearched = !!term;
+    this.allUsers = this.devspaceService.accounts;
 
     if (!term) {
       this.searchResults = { channels: [], users: [], messages: [] };
@@ -119,12 +117,17 @@ export class SearchbarComponent implements OnInit, OnDestroy {
 
   async loadAllMessages(): Promise<ChatMessage[]> {
     const messages: ChatMessage[] = [];
+    const userId = this.devspaceService.loggedInUserUid;
     const channelSnapshot = await getDocs(
       collection(this.devspaceService.Firestore.firestore, 'channel')
     );
 
     for (const channelDoc of channelSnapshot.docs) {
-      const channelId = channelDoc.id;
+      const channelData = channelDoc.data();
+      const channelId = channelDoc.id;      
+      if (!channelData['member'] || !channelData['member'].includes(userId)) {
+      continue;
+    }
       const messagesRef = collection(
         this.devspaceService.Firestore.firestore,
         `channel/${channelId}/messages`

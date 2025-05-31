@@ -17,7 +17,7 @@ export class RegisterComponent {
   @ViewChild(OverlayComponent) overlayRef!: OverlayComponent;
   isChecked = false;
   continue = false;
-  selectedAvatar = 'avatar0.svg';
+  selectedAvatar = 'assets/avatar/avatar0.svg';
 
   errorMessage: any = null
 

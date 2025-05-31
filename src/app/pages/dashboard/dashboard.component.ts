@@ -6,9 +6,11 @@ import { DevspaceComponent } from '@components/devspace/devspace.component';
 import { HeaderComponent } from '@components/header/header.component';
 import { ThreadComponent } from '@components/thread/thread.component';
 import { WorkspaceOpenCloseComponent } from '@components/workspace-open-close/workspace-open-close.component';
+import { AuthService } from '@shared/services/auth-service/auth.service';
 import { BreakpointsService } from '@shared/services/breakpoints-service/breakpoints.service';
 import { DevspaceService } from '@shared/services/devspace-service/devspace.service';
 import { FirestoreService } from '@shared/services/firestore-service/firestore.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,12 +26,16 @@ import { FirestoreService } from '@shared/services/firestore-service/firestore.s
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
-  constructor(public devspaceService: DevspaceService, public firestore: FirestoreService, public breakpoints: BreakpointsService) { }
+export class DashboardComponent {  
+  private userSub!: Subscription;
+  constructor(public devspaceService: DevspaceService, public firestore: FirestoreService, public breakpoints: BreakpointsService
+    , public auth: AuthService) { }
 
-  ngOnInit() {
-    this.loadUsers();
-    this.loadLoggedInUser();
+  async ngOnInit() {
+    this.userSub = this.auth.user$.subscribe(user => {      
+    });
+    await this.loadLoggedInUser();
+    await this.loadUsers();
     this.loadDmUsers();
     this.firestore.subscribeToUserChannels(this.devspaceService.loggedInUserUid);
     this.devspaceService.Firestore.channels$.subscribe(channels => {
@@ -39,13 +45,19 @@ export class DashboardComponent {
     });
   }
 
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
+  }
+
   async loadUsers() {
     const users = await this.firestore.fetchUserFromFirestoreAll();
     this.devspaceService.accounts = users;
+    this.devspaceService.mainAccount = this.devspaceService.accounts.find(acc => acc.uid === this.devspaceService.loggedInUserUid)
   }
 
-  loadLoggedInUser() {
-    this.devspaceService.loggedInUserUid = '0Yda2KEMxrPCMdtTzfYUpGvuWRB3';
+  async loadLoggedInUser() {
+    this.devspaceService.loggedInUserUid = this.auth.getUser()!.uid;
+    await this.firestore.changeUserStatus(this.devspaceService.loggedInUserUid, true);
   }
 
   async loadDmUsers() {

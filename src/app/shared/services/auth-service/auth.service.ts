@@ -4,6 +4,9 @@ import { FirebaseApp, initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../../../environments/environment';
 import { Router } from '@angular/router';
 import { FirestoreService } from '../firestore-service/firestore.service';
+import { BehaviorSubject } from 'rxjs';
+import { DevspaceService } from '../devspace-service/devspace.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,32 +14,32 @@ export class AuthService {
   private app: FirebaseApp;
   public auth: Auth;
   public user: User | null = null;
+  public userSubject = new BehaviorSubject<User | null>(null);
+  user$ = this.userSubject.asObservable();
 
   public avatars = [
-    'avatar1.svg',
-    'avatar2.svg',
-    'avatar3.svg',
-    'avatar4.svg',
-    'avatar5.svg',
-    'avatar6.svg',
+    'assets/avatar/avatar1.svg',
+    'assets/avatar/avatar2.svg',
+    'assets/avatar/avatar3.svg',
+    'assets/avatar/avatar4.svg',
+    'assets/avatar/avatar5.svg',
+    'assets/avatar/avatar6.svg',
   ]
 
-  constructor(private router: Router, private firestoreService: FirestoreService) {
+  constructor(private router: Router, private firestoreService: FirestoreService, public devspaceService: DevspaceService) {
     this.app = initializeApp(firebaseConfig);
     this.auth = getAuth(this.app);
     onAuthStateChanged(this.auth, (user) => {
       this.user = user;
+      this.userSubject.next(user);
       if (user) {
-        if (user.isAnonymous) {
-          this.router.navigate(['/dashboard']);
-        } else if (user.emailVerified) {
-          this.firestoreService.fetchUserFromFirestore(user.uid).then(userData => {            
+        if (user.emailVerified) {
+          this.firestoreService.fetchUserFromFirestore(user.uid).then(userData => {
             this.router.navigate(['/dashboard']);
           });
         }
       }
     });
-
   }
 
   async registerWithEmail(email: string, password: string, displayName: string, profile: string): Promise<void> {
@@ -87,9 +90,8 @@ export class AuthService {
       const userCredential = await signInWithPopup(this.auth, new GoogleAuthProvider());
       const user = userCredential.user;
       const additionalUserInfo = getAdditionalUserInfo(userCredential);
-
       if (additionalUserInfo?.isNewUser) {
-        const profile = this.avatars[Math.floor(Math.random() * this.avatars.length)];
+        const profile = (additionalUserInfo!.profile as { picture: string }).picture;
         await this.firestoreService.saveUserToFirestore(user, profile);
         this.router.navigate(['/dashboard']);
         return;
@@ -108,21 +110,27 @@ export class AuthService {
     }
   }
 
-  async loginAsGuest(): Promise<void> {
-    try {
-      const userCredential = await signInAnonymously(this.auth);
-      const user = userCredential.user;
-      const profile = this.avatars[Math.floor(Math.random() * this.avatars.length)];
-      await this.firestoreService.saveGuestToFirestore(user, profile);      
-    } catch (error) {
-      console.error('Guest login error:', error);
-      throw error;
-    }
-  }
-
   async logout(): Promise<void> {
     await signOut(this.auth);
+    this.userSubject.next(null);
+    this.user = null;
     this.router.navigate(['/login']);
+    this.deleteArraysLogout();
+    this.closeAllMenus();
+  }
+
+  deleteArraysLogout() {
+    this.devspaceService.accounts = [];
+    this.devspaceService.dmAccounts = [];
+  }
+
+  closeAllMenus() {
+    this.devspaceService.openMessage = false;
+    this.devspaceService.openChannel = false;
+    this.devspaceService.openThread = false;
+    this.devspaceService.openDirectMessage = false;
+    this.devspaceService.activeDMContact = null;
+    this.devspaceService.selectedChannelId = '';
   }
 
   async sendVerification(): Promise<void> {

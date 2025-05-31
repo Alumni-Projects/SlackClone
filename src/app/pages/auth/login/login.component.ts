@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { Router } from '@angular/router';
 import { AuthService } from '@shared/services/auth-service/auth.service';
+import { guestLogin } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +15,12 @@ import { AuthService } from '@shared/services/auth-service/auth.service';
 export class LoginComponent {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(8)]);
-
   emailLoginError: any = null;
   googleLoginError: any = null;
 
   constructor(private router: Router, private authService: AuthService) { }
+
+
 
   navigateTo(target: string) {
     this.router.navigate(['/' + target]);
@@ -46,7 +48,7 @@ export class LoginComponent {
 
   async loginAsGuest() {
     try {
-      await this.authService.loginAsGuest();
+      await this.authService.loginWithEmail(guestLogin.email, guestLogin.password);
       this.emailLoginError = null;
     } catch (error: any) {
       console.error('Guest login error:', error);

@@ -20,16 +20,15 @@ import { DevspaceAccount } from '@shared/interface/devspace-account';
 export class HeaderComponent {
   isProfileOpen = false;
   Color = Color;
-  IconSize = IconSize;
-  mainAccount;
+  IconSize = IconSize;  
 
   constructor(
     public devspaceService: DevspaceService,    
     private dialog: MatDialog,
     public breakpoints: BreakpointsService
 
-  ) {    
-    this.mainAccount = this.devspaceService.accounts.find(acc => acc.uid === this.devspaceService.loggedInUserUid);    
+  ) {
+     
   }
 
   openProfilePopup(): void {
