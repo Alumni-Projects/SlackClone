@@ -26,15 +26,13 @@ import { Subscription } from 'rxjs';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
-  isAnonymous = false;
+export class DashboardComponent {  
   private userSub!: Subscription;
   constructor(public devspaceService: DevspaceService, public firestore: FirestoreService, public breakpoints: BreakpointsService
-  ,public auth: AuthService) { }
+    , public auth: AuthService) { }
 
   async ngOnInit() {
-     this.userSub = this.auth.user$.subscribe(user => {
-      this.isAnonymous = !!user?.isAnonymous;
+    this.userSub = this.auth.user$.subscribe(user => {      
     });
     await this.loadLoggedInUser();
     await this.loadUsers();
@@ -47,7 +45,7 @@ export class DashboardComponent {
     });
   }
 
-   ngOnDestroy() {
+  ngOnDestroy() {
     this.userSub.unsubscribe();
   }
 
@@ -57,14 +55,9 @@ export class DashboardComponent {
     this.devspaceService.mainAccount = this.devspaceService.accounts.find(acc => acc.uid === this.devspaceService.loggedInUserUid)
   }
 
-   async loadLoggedInUser() {   
-    if (this.isAnonymous) {
-      this.devspaceService.loggedInUserUid = '34AIndSsa2QhAkjvWW2x';
-      await this.firestore.changeUserStatus(this.devspaceService.loggedInUserUid, true);      
-    } else {
-      this.devspaceService.loggedInUserUid = this.auth.getUser()!.uid;
-      await this.firestore.changeUserStatus(this.devspaceService.loggedInUserUid, true);      
-    }
+  async loadLoggedInUser() {
+    this.devspaceService.loggedInUserUid = this.auth.getUser()!.uid;
+    await this.firestore.changeUserStatus(this.devspaceService.loggedInUserUid, true);
   }
 
   async loadDmUsers() {
