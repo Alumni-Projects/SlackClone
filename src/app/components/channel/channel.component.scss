@@ -35,7 +35,8 @@
 
     @include respond(b) {
         border-radius: 0px;
-        padding: 25px 16px 25px 16px;
+        padding: 10px 16px 10px 16px;
+        height: auto;
 
     }
 

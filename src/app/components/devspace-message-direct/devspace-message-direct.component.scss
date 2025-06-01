@@ -30,6 +30,13 @@
   border-top-right-radius: 30px;
   padding: 25px 45px 25px 45px;
 
+  @include respond(b) {
+        border-radius: 0px;
+        padding: 10px 16px 10px 16px;
+        height: auto;
+
+    }
+
 }
 
 .devspace-direct-account {
