@@ -1,7 +1,7 @@
 @use '@themes/mixins.scss' as *;
 
 .devspace-channel {
-    height: 940px;
+    height: calc(100vh - 126px);
     background-color: var(--white-color);
     border-radius: 30px;
     display: flex;
@@ -16,6 +16,8 @@
         max-width: none;
         min-width: unset;
         border-radius: 0px;
+        height: calc(100vh - 110px);
+        margin-bottom: 0px;
     }
 }
 

@@ -1,7 +1,7 @@
 @use '@themes/mixins.scss' as *;
 
 .devspace-direct-message {
-  height: 940px;
+  height: calc(100vh - 126px);
   background-color: var(--white-color);
   border-radius: 30px;
   display: flex;
@@ -9,6 +9,12 @@
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 40px;
+
+  @include respond(b) {
+    border-radius: 0;
+    height: calc(100vh - 110px);
+    margin-bottom: 0px;
+  }
 
 }
 
