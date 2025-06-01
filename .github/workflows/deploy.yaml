@@ -36,6 +36,8 @@ jobs:
           MESSAGING_SENDER_ID: ${{ secrets.MESSAGING_SENDER_ID }}
           APP_ID: ${{ secrets.APP_ID }}
           MEASUREMENT_ID: ${{ secrets.MEASUREMENT_ID }}
+          GUEST_EMAIL: ${{secrets.GUEST_EMAIL}}
+          GUEST_PASSWORD: ${{secrets.GUEST_PASSWORD}}
         run: pnpm run build:prod && cp -r dist/slack-clone/browser github-pages
 
       - name: Upload Build Artifact
