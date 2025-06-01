@@ -137,11 +137,13 @@
 
 
 .profile-pic {
+    display: flex;
     flex-shrink: 0;
 
     & img {
         width: 70px;
         height: 70px;
+        border-radius: 42px;
 
         @include respond (ml) {
             width: 50px;
