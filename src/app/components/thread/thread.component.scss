@@ -2,7 +2,7 @@
 
 .thread {
     width: 485px;
-    height: 940px;
+    height: calc(100vh - 126px);
     background-color: var(--white-color);
     border-radius: 30px;
     display: flex;
@@ -11,7 +11,8 @@
     @include respond(b) {
         border-radius: 0;
         width: 100vw;
-
+        height: calc(100vh - 75px);
+        margin-bottom: 0px;        
     }
 }
 
@@ -46,8 +47,11 @@
     justify-content: space-between;
     padding: 32px 40px 32px 40px;
 
-    @include respond(b) {
-        border-radius: 0;
+   @include respond(b) {
+        border-radius: 0px;
+        padding: 10px 16px 10px 16px;
+        height: auto;
+
     }
 }
 
@@ -116,11 +120,11 @@
     max-height: auto;
     padding: 10px 30px 10px 40px;
     gap: 20px;
-    
+
 
     @include respond(ml) {
-            padding: 10px 20px 10px 20px;
-        }
+        padding: 10px 20px 10px 20px;
+    }
 }
 
 .member-icon {
@@ -129,6 +133,7 @@
     height: 70px;
 
     & img {
+        border-radius: 42px;
         width: 70px;
         height: 70px;
         flex-shrink: 0;
@@ -140,9 +145,9 @@
     }
 
     @include respond(ml) {
-            width: 50px;
-            height: 50px;
-        }
+        width: 50px;
+        height: 50px;
+    }
 }
 
 .message-name {
@@ -205,6 +210,7 @@
     font-weight: var(--font-weight-normal);
     line-height: 100%;
     letter-spacing: 0;
+
     @include respond(b) {
         max-width: 100%;
     }

@@ -11,8 +11,8 @@
 
   @include respond(b) {
     padding: 0 20px;
-    margin-top: 20px;
-
+    margin-top: 0px;
+    margin-bottom: 5px;
   }
 }
 
@@ -51,8 +51,13 @@
     height: auto;
     flex-shrink: 0;
 
-    @include respond(xs) {
+    @include respond(m) {
       width: 70px;
+      height: auto;
+    }
+
+    @include respond(b) {
+      width: 50px;
       height: auto;
     }
   }
@@ -126,6 +131,18 @@
         width: 70px;
         gap: 20px;
       }
+
+      @include respond(b) {
+        width: 60px;
+        gap: 20px;
+
+    }
+
+     @include respond(mb) {
+        width: 50px;
+        gap: 20px;
+
+    }
     }
   }
 
