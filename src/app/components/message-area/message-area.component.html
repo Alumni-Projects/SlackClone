@@ -3,11 +3,14 @@
     @for(item of activeMessages ; track i; let i = $index){
     @if(item.creator == devspaceService.loggedInUserUid){
     <div class="message">
+        @if(showDate(i)){
         <div class="message-time">
             <div></div>
             <div class="time">{{item.createdAt | formatMessageDate}}</div>
             <div></div>
         </div>
+        }
+
         @if(devspaceService.creatorMessageOn[messageSection] &&
         devspaceService.selectedCreatorMessageIndex[messageSection] === i){
         <div class="edit-message" (mouseenter)="editIndex = i" (mouseleave)="leaveEditArea()">
@@ -56,7 +59,7 @@
                 @if(editMessageBarIndex === i && editMessageBar){
                 <div class="message-icon-edit-bar icon-edit-bar-Style">
                     <span (click)="deleteMessage(i)"><img src="assets/img/trash.png" alt=""></span>
-                    <span (click)="editMessageOpen(i)"><img src="assets/img/pen.png" alt=""></span> 
+                    <span (click)="editMessageOpen(i)"><img src="assets/img/pen.png" alt=""></span>
                 </div>
                 }
                 <span class="message-icon-hover-check" (click)="checkMessage(i, 'assets/img/checkmark.png')"><img
@@ -112,11 +115,13 @@
     </div>
     }@else{
     <div class="message">
+        @if(showDate(i)){
         <div class="message-time">
             <div></div>
             <div class="time">{{item.createdAt | formatMessageDate}}</div>
             <div></div>
         </div>
+        }
         <div class="message-area-member" (mouseenter)=" hoveredIndexMember = i"
             (mouseleave)="onLeaveMessageArea('member')">
             @if(hoveredIndexMember == i){
@@ -157,8 +162,7 @@
                 <div (click)="openThread(i)"><span class="thread-count"> {{item.threadCount}} Antworten</span></div>
                 }
                 @if(item.reactions!.length > 0){
-                <div class="message-reactions member-reaction"
-                    [class.thread-reactions]="messageSection === 'thread'">
+                <div class="message-reactions member-reaction" [class.thread-reactions]="messageSection === 'thread'">
                     @for(reaction of item.reactions; track j; let j = $index){
                     <div (click)="changeReaction(i,j)" class="reaction-item member-reaction ">
                         <span class="reaction-img "><img src="{{item.reactions![j].emoji}}" alt=""></span>

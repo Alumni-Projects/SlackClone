@@ -431,7 +431,17 @@ closeSmileyBar() {
   this.activeEmojiBarIndexEdit = null;
 }
 
+showDate(i: number): boolean {
+  if (i === 0) return true;
 
+  const current = this.activeMessages[i];
+  const previous = this.activeMessages[i - 1];
 
+  const currentDate = new Date(current.createdAt).toDateString();
+  const previousDate = new Date(previous.createdAt).toDateString();
+
+  return currentDate !== previousDate;
+
+}
 }
 
